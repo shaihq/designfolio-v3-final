@@ -560,72 +560,71 @@ export default function HeroSection({ activeTab: propActiveTab, onTabChange }: H
                     </div>
 
                     <div className="p-8 sm:p-10 flex flex-col items-center gap-5">
-                      <div className={cn(
-                        "w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300",
-                        isDragging ? "bg-[#FF553E] text-white scale-110 shadow-lg shadow-[#FF553E]/30" : "bg-[#FF553E]/10 text-[#FF553E]"
-                      )}>
-                        <Upload className="w-7 h-7" />
-                      </div>
-                      
-                      <div className="space-y-1.5 text-center">
-                        <AnimatePresence mode="wait">
-                          {conversionError ? (
-                            <motion.div
-                              key="error"
-                              initial={{ opacity: 0, y: 5 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, y: -5 }}
-                              className="px-4 py-2 rounded-lg bg-destructive/10 border border-destructive/20"
-                            >
-                              <p className="text-destructive text-sm font-medium">
-                                {conversionError}
-                              </p>
-                            </motion.div>
-                          ) : (
-                            <motion.div
-                              key="instructions"
-                              initial={{ opacity: 0, y: 5 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              exit={{ opacity: 0, y: -5 }}
-                            >
-                              <p className="text-lg sm:text-xl font-semibold text-foreground">
-                                Click to upload or drag and drop
-                              </p>
-                              <p className="text-muted-foreground text-sm">
-                                PDF, DOCX, or TXT (max. 10MB)
-                              </p>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
+                      {isConverting ? (
+                        <AIThinkingBlock />
+                      ) : (
+                        <>
+                          <div className={cn(
+                            "w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300",
+                            isDragging ? "bg-[#FF553E] text-white scale-110 shadow-lg shadow-[#FF553E]/30" : "bg-[#FF553E]/10 text-[#FF553E]"
+                          )}>
+                            <Upload className="w-7 h-7" />
+                          </div>
+                          
+                          <div className="space-y-1.5 text-center">
+                            <AnimatePresence mode="wait">
+                              {conversionError ? (
+                                <motion.div
+                                  key="error"
+                                  initial={{ opacity: 0, y: 5 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  exit={{ opacity: 0, y: -5 }}
+                                  className="px-4 py-2 rounded-lg bg-destructive/10 border border-destructive/20"
+                                >
+                                  <p className="text-destructive text-sm font-medium">
+                                    {conversionError}
+                                  </p>
+                                </motion.div>
+                              ) : (
+                                <motion.div
+                                  key="instructions"
+                                  initial={{ opacity: 0, y: 5 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  exit={{ opacity: 0, y: -5 }}
+                                >
+                                  <p className="text-lg sm:text-xl font-semibold text-foreground">
+                                    {isDragging ? "Drop your resume here" : "Click to upload or drag and drop"}
+                                  </p>
+                                  <p className="text-muted-foreground text-sm">
+                                    PDF, DOCX, or TXT (max. 10MB)
+                                  </p>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </div>
 
-                      <div className="w-full max-w-xs mx-auto pt-2">
-                        <Input 
-                          type="file" 
-                          className="hidden" 
-                          id="resume-upload"
-                          accept=".pdf,.docx,.txt"
-                          data-testid="input-resume-file"
-                          onChange={handleFileUpload}
-                          disabled={isConverting}
-                        />
-                        <Button 
-                          asChild
-                          disabled={isConverting}
-                          className="w-full rounded-full h-12 text-base font-semibold bg-[#FF553E] hover:bg-[#E64935] text-white border-none transition-transform active:scale-[0.98]"
-                        >
-                          <label htmlFor="resume-upload" className="cursor-pointer flex items-center justify-center gap-2">
-                            {isConverting ? (
-                              <>
-                                <Loader2 className="w-5 h-5 animate-spin" />
-                                Processing...
-                              </>
-                            ) : (
-                              "Select Resume"
-                            )}
-                          </label>
-                        </Button>
-                      </div>
+                          <div className="w-full max-w-xs mx-auto pt-2">
+                            <Input 
+                              type="file" 
+                              className="hidden" 
+                              id="resume-upload"
+                              accept=".pdf,.docx,.txt"
+                              data-testid="input-resume-file"
+                              onChange={handleFileUpload}
+                              disabled={isConverting}
+                            />
+                            <Button 
+                              asChild
+                              disabled={isConverting}
+                              className="w-full rounded-full h-12 text-base font-semibold bg-[#FF553E] hover:bg-[#E64935] text-white border-none transition-transform active:scale-[0.98]"
+                            >
+                              <label htmlFor="resume-upload" className="cursor-pointer flex items-center justify-center gap-2">
+                                Select Resume
+                              </label>
+                            </Button>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
