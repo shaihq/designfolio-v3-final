@@ -4,11 +4,8 @@ import { storage } from "./storage";
 import { randomBytes } from "crypto";
 import { z } from "zod";
 import multer from "multer";
-import { createRequire } from "module";
+import pdf from "pdf-extraction";
 import { getAiCompletion } from "./ai";
-
-const require = createRequire(import.meta.url);
-const pdf = require("pdf-parse");
 
 interface MulterRequest extends Request {
   file?: Express.Multer.File;
@@ -35,9 +32,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let text = "";
       if (req.file.mimetype === "application/pdf") {
         try {
-          // Use default import for pdf-parse which is usually exported as a function or object with a function
-          const pdfParser = typeof pdf === 'function' ? pdf : (pdf as any).default || (pdf as any);
-          const data = await pdfParser(req.file.buffer);
+          const data = await pdf(req.file.buffer);
           text = data.text;
         } catch (pdfError: any) {
           console.error("PDF parsing error:", pdfError);
