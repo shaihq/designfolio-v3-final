@@ -253,7 +253,7 @@ export default function Dashboard() {
   const [scrollOffset, setScrollOffset] = useState(0);
   const rafRef = useRef<number | null>(null);
   const pinBoardRef = useRef<HTMLDivElement>(null);
-  const [user] = useState({
+  const [user, setUser] = useState({
     name: "Shai!",
     role: "A 0→1 Product Designer with 6 years of experience. I design and develop digital products, create prototypes, and design interfaces.",
     avatar: "",
@@ -264,6 +264,50 @@ export default function Dashboard() {
       "Design Thinking"
     ]
   });
+
+  useEffect(() => {
+    const pendingData = localStorage.getItem('pending-portfolio-data');
+    if (pendingData) {
+      try {
+        const data = JSON.parse(pendingData);
+        if (data.user) {
+          setUser({
+            name: data.user.name || "Shai!",
+            role: data.user.role || "",
+            avatar: "",
+            categories: data.user.categories || []
+          });
+        }
+        if (data.workExperiences) {
+          setWorkExperiences(data.workExperiences.map((exp: any, i: number) => ({
+            id: Date.now() + i,
+            role: exp.role,
+            company: exp.company,
+            period: exp.period,
+            description: exp.description,
+            logo: `https://api.dicebear.com/7.x/initials/svg?seed=${exp.company}`
+          })));
+        }
+        if (data.caseStudies) {
+          setCaseStudies(data.caseStudies.map((cs: any, i: number) => ({
+            id: Date.now() + i + 100,
+            title: cs.title,
+            description: cs.description,
+            category: cs.category,
+            image: i % 2 === 0 ? "/casestudyux1.svg" : "/casestudyux2.svg",
+            isHidden: false
+          })));
+        }
+        toast({
+          title: "Portfolio Imported",
+          description: "We've pre-filled your dashboard with content from your resume!",
+        });
+        localStorage.removeItem('pending-portfolio-data');
+      } catch (e) {
+        console.error("Error applying pending data", e);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const checkIfMobileOrTablet = () => {

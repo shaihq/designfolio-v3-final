@@ -48,12 +48,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "The uploaded file appears to be empty or too short." });
       }
 
-      const prompt = `Based on the following resume text, generate a professional portfolio website content in a clear, structured text format. Include sections like About Me, Experience, Skills, and Projects. Focus on making it ready to be displayed as a portfolio.
-      
+      const prompt = `Based on the following resume text, extract and generate professional portfolio content.
+      You MUST return the data in the following JSON format:
+      {
+        "user": {
+          "name": "Full Name",
+          "role": "Short professional bio/headline",
+          "categories": ["Skill Category 1", "Skill Category 2"]
+        },
+        "workExperiences": [
+          {
+            "role": "Job Title",
+            "company": "Company Name",
+            "period": "Years",
+            "description": "Short achievement"
+          }
+        ],
+        "caseStudies": [
+          {
+            "title": "Project Title",
+            "description": "Project overview",
+            "category": "Project Category"
+          }
+        ]
+      }
+
       Resume Text:
       ${text}`;
 
-      const content = await getAiCompletion(prompt);
+      const aiResponse = await getAiCompletion(prompt);
+      
+      // Try to parse the AI response as JSON
+      let content;
+      try {
+        // Find JSON block if AI wrapped it in markdown
+        const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
+        content = jsonMatch ? JSON.parse(jsonMatch[0]) : JSON.parse(aiResponse);
+      } catch (e) {
+        // Fallback if not valid JSON
+        content = { raw: aiResponse };
+      }
+
       res.json({ content });
     } catch (error) {
       console.error("Conversion error:", error);
