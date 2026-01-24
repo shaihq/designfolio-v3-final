@@ -1,0 +1,55 @@
+Refund & Cancellation Policy
+
+Effective Date: October 31, 2025
+
+At Designfolio Labs LLP, we value transparency and fairness in every transaction. This Refund & Cancellation Policy outlines how payments, refunds, and cancellations are handled for all products and services offered under the Designfolio brand.
+
+1. Nature of Our Product
+
+Designfolio is a SaaS-based website builder that provides users with instant access to premium tools and templates after successful payment. Because access is delivered immediately upon purchase, the product is considered a digital good that cannot be returned or revoked once delivered.
+
+2. Payment Terms
+
+All payments are one-time lifetime purchases made securely through Razorpay.
+
+Once a payment is successfully completed, the user gains instant access to the Designfolio Pro features.
+
+No recurring or subscription-based charges are applied unless explicitly introduced and agreed to by the user in the future.
+
+3. Refund Policy
+
+All purchases are non-refundable.
+
+Since the product is digital and access is provided immediately, Designfolio does not issue refunds once an account has been activated.
+
+Refunds will only be considered in exceptional cases such as:
+
+Duplicate payments due to a technical error.
+
+Payment deducted but access not delivered within 24 hours.
+
+If any such case arises, users must email shai@designfolio.me
+ within 48 hours of the transaction, including payment proof and account details. Each request will be reviewed individually.
+
+4. Cancellations
+
+As Designfolio operates on a lifetime access model, there is no recurring billing and therefore no cancellation of subscriptions.
+
+Users may choose to discontinue using the service at any time; however, no refunds or partial credits will be issued for unused access.
+
+5. Payment Disputes
+
+If a payment dispute or chargeback is initiated with a bank or payment provider, Designfolio Labs LLP reserves the right to suspend the associated account until the matter is resolved. We encourage customers to contact us first to resolve any payment-related issues quickly.
+
+6. Contact for Payment Support
+
+For all payment or refund-related queries:
+📩 Email: shai@designfolio.me
+
+🕒 Response Time: Within 48 hours (Mon – Fri)
+🏢 Address: No. 87, 1st Floor, 4th Cross St, Phase-1, Tirumalai Nagar, Perungudi, Chennai, Tamil Nadu 600096
+
+7. Policy Updates
+
+This policy may be updated from time to time to reflect changes in business or legal requirements. The latest version will always be available at designfolio.me/refund-policy
+.

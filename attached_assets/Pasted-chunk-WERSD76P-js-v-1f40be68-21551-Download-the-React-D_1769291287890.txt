@@ -1,0 +1,76 @@
+chunk-WERSD76P.js?v=1f40be68:21551 Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
+chunk-WERSD76P.js?v=1f40be68:521 Warning: validateDOMNesting(...): <div> cannot appear as a descendant of <p>.
+    at div
+    at Typewriter (https://035a81a9-9d8d-4af3-8231-6e7ad7802fb5-00-1jltsv71ieyy2.sisko.replit.dev/src/components/ui/typewriter.tsx:22:3)
+    at p
+    at div
+    at MotionComponent (https://035a81a9-9d8d-4af3-8231-6e7ad7802fb5-00-1jltsv71ieyy2.sisko.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/framer-motion.js?v=1f40be68:6602:40)
+    at div
+    at MotionComponent (https://035a81a9-9d8d-4af3-8231-6e7ad7802fb5-00-1jltsv71ieyy2.sisko.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/framer-motion.js?v=1f40be68:6602:40)
+    at PresenceChild (https://035a81a9-9d8d-4af3-8231-6e7ad7802fb5-00-1jltsv71ieyy2.sisko.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/framer-motion.js?v=1f40be68:7808:24)
+    at AnimatePresence (https://035a81a9-9d8d-4af3-8231-6e7ad7802fb5-00-1jltsv71ieyy2.sisko.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/framer-motion.js?v=1f40be68:7866:26)
+    at div
+    at div
+    at section
+    at HeroSection (https://035a81a9-9d8d-4af3-8231-6e7ad7802fb5-00-1jltsv71ieyy2.sisko.replit.dev/src/components/HeroSection.tsx:29:50)
+    at div
+    at div
+    at Home (https://035a81a9-9d8d-4af3-8231-6e7ad7802fb5-00-1jltsv71ieyy2.sisko.replit.dev/src/pages/Home.tsx:32:37)
+    at Route (https://035a81a9-9d8d-4af3-8231-6e7ad7802fb5-00-1jltsv71ieyy2.sisko.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=1f40be68:191:16)
+    at Switch (https://035a81a9-9d8d-4af3-8231-6e7ad7802fb5-00-1jltsv71ieyy2.sisko.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=1f40be68:247:17)
+    at Router
+    at Provider2 (https://035a81a9-9d8d-4af3-8231-6e7ad7802fb5-00-1jltsv71ieyy2.sisko.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=1f40be68:59:15)
+    at TooltipProvider (https://035a81a9-9d8d-4af3-8231-6e7ad7802fb5-00-1jltsv71ieyy2.sisko.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=1f40be68:2885:5)
+    at QueryClientProvider (https://035a81a9-9d8d-4af3-8231-6e7ad7802fb5-00-1jltsv71ieyy2.sisko.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=1f40be68:2805:3)
+    at App
+printWarning @ chunk-WERSD76P.js?v=1f40be68:521
+error @ chunk-WERSD76P.js?v=1f40be68:505
+validateDOMNesting @ chunk-WERSD76P.js?v=1f40be68:8256
+createInstance @ chunk-WERSD76P.js?v=1f40be68:8328
+completeWork @ chunk-WERSD76P.js?v=1f40be68:16290
+completeUnitOfWork @ chunk-WERSD76P.js?v=1f40be68:19224
+performUnitOfWork @ chunk-WERSD76P.js?v=1f40be68:19206
+workLoopSync @ chunk-WERSD76P.js?v=1f40be68:19137
+renderRootSync @ chunk-WERSD76P.js?v=1f40be68:19116
+performConcurrentWorkOnRoot @ chunk-WERSD76P.js?v=1f40be68:18678
+workLoop @ chunk-WERSD76P.js?v=1f40be68:197
+flushWork @ chunk-WERSD76P.js?v=1f40be68:176
+performWorkUntilDeadline @ chunk-WERSD76P.js?v=1f40be68:384
+HeroSection.tsx:50  POST https://035a81a9-9d8d-4af3-8231-6e7ad7802fb5-00-1jltsv71ieyy2.sisko.replit.dev/api/convert-resume 400 (Bad Request)
+processFile @ HeroSection.tsx:50
+handleDrop @ HeroSection.tsx:99
+callCallback2 @ chunk-WERSD76P.js?v=1f40be68:3674
+invokeGuardedCallbackDev @ chunk-WERSD76P.js?v=1f40be68:3699
+invokeGuardedCallback @ chunk-WERSD76P.js?v=1f40be68:3733
+invokeGuardedCallbackAndCatchFirstError @ chunk-WERSD76P.js?v=1f40be68:3736
+executeDispatch @ chunk-WERSD76P.js?v=1f40be68:7014
+processDispatchQueueItemsInOrder @ chunk-WERSD76P.js?v=1f40be68:7034
+processDispatchQueue @ chunk-WERSD76P.js?v=1f40be68:7043
+dispatchEventsForPlugins @ chunk-WERSD76P.js?v=1f40be68:7051
+(anonymous) @ chunk-WERSD76P.js?v=1f40be68:7174
+batchedUpdates$1 @ chunk-WERSD76P.js?v=1f40be68:18913
+batchedUpdates @ chunk-WERSD76P.js?v=1f40be68:3579
+dispatchEventForPluginEventSystem @ chunk-WERSD76P.js?v=1f40be68:7173
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-WERSD76P.js?v=1f40be68:5478
+dispatchEvent @ chunk-WERSD76P.js?v=1f40be68:5472
+dispatchDiscreteEvent @ chunk-WERSD76P.js?v=1f40be68:5449
+HeroSection.tsx:63 Error converting resume: Error: There was an error processing your PDF. Please try a different file.
+    at processFile (HeroSection.tsx:57:15)
+processFile @ HeroSection.tsx:63
+await in processFile
+handleDrop @ HeroSection.tsx:99
+callCallback2 @ chunk-WERSD76P.js?v=1f40be68:3674
+invokeGuardedCallbackDev @ chunk-WERSD76P.js?v=1f40be68:3699
+invokeGuardedCallback @ chunk-WERSD76P.js?v=1f40be68:3733
+invokeGuardedCallbackAndCatchFirstError @ chunk-WERSD76P.js?v=1f40be68:3736
+executeDispatch @ chunk-WERSD76P.js?v=1f40be68:7014
+processDispatchQueueItemsInOrder @ chunk-WERSD76P.js?v=1f40be68:7034
+processDispatchQueue @ chunk-WERSD76P.js?v=1f40be68:7043
+dispatchEventsForPlugins @ chunk-WERSD76P.js?v=1f40be68:7051
+(anonymous) @ chunk-WERSD76P.js?v=1f40be68:7174
+batchedUpdates$1 @ chunk-WERSD76P.js?v=1f40be68:18913
+batchedUpdates @ chunk-WERSD76P.js?v=1f40be68:3579
+dispatchEventForPluginEventSystem @ chunk-WERSD76P.js?v=1f40be68:7173
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-WERSD76P.js?v=1f40be68:5478
+dispatchEvent @ chunk-WERSD76P.js?v=1f40be68:5472
+dispatchDiscreteEvent @ chunk-WERSD76P.js?v=1f40be68:5449
