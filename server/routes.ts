@@ -31,25 +31,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       let text = "";
       if (req.file.mimetype === "application/pdf") {
-        try {
-          const require = createRequire(import.meta.url);
-          const pdf = require("pdf-parse");
-          const data = await pdf(req.file.buffer);
-          text = data.text;
-          
-          // Validate that we actually got meaningful text
-          if (!text || text.trim().length < 50) {
-            throw new Error("Could not extract sufficient text from PDF. It might be an image-only PDF or protected.");
-          }
-        } catch (pdfError: any) {
-          console.error("PDF Parsing Error:", pdfError);
-          // If it's a validation error we threw, use that message
-          const errorMessage = pdfError.message?.includes("sufficient text") 
-            ? "We couldn't read your resume text. Please ensure it's not a scanned image and try a different PDF or a TXT file."
-            : `Technical error parsing PDF: ${pdfError.message || 'Unknown error'}. Please try a different file.`;
-          
-          return res.status(400).json({ message: errorMessage });
-        }
+        return res.status(400).json({
+          message: "PDF files are currently not supported. Please copy your resume text and paste it directly, or upload a .txt file."
+        });
       } else {
         text = req.file.buffer.toString("utf-8");
         if (!text || text.trim().length < 50) {
