@@ -7,6 +7,9 @@ import multer from "multer";
 import { createRequire } from "module";
 import { getAiCompletion } from "./ai";
 
+const require = createRequire(import.meta.url);
+const pdf = require("pdf-parse");
+
 interface MulterRequest extends Request {
   file?: Express.Multer.File;
 }
@@ -31,14 +34,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       let text = "";
       if (req.file.mimetype === "application/pdf") {
-        return res.status(400).json({
-          message: "PDF files are currently not supported. Please copy your resume text and paste it directly, or upload a .txt file."
-        });
+        try {
+          const data = await pdf(req.file.buffer);
+          text = data.text;
+        } catch (pdfError: any) {
+          console.error("PDF parsing error:", pdfError);
+          return res.status(400).json({ 
+            message: "Technical error parsing PDF: " + (pdfError.message || "Unknown error") + ". Please try a different file." 
+          });
+        }
       } else {
         text = req.file.buffer.toString("utf-8");
-        if (!text || text.trim().length < 50) {
-          return res.status(400).json({ message: "The uploaded file appears to be empty or too short." });
-        }
+      }
+
+      if (!text || text.trim().length < 50) {
+        return res.status(400).json({ message: "The uploaded file appears to be empty or too short." });
       }
 
       const prompt = `Based on the following resume text, generate a professional portfolio website content in a clear, structured text format. Include sections like About Me, Experience, Skills, and Projects. Focus on making it ready to be displayed as a portfolio.
