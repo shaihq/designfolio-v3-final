@@ -11,6 +11,7 @@ import { TextEffect } from "@/components/ui/text-effect";
 import { SegmentedControl } from "@/components/ui/segmented-control";
 import { ResultPopup } from "./ResultPopup";
 import { cn } from "@/lib/utils";
+import AIThinkingBlock from "@/components/ui/ai-thinking-block";
 
 interface HeroSectionProps {
   activeTab?: string;
