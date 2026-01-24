@@ -7,9 +7,6 @@ import multer from "multer";
 import { createRequire } from "module";
 import { getAiCompletion } from "./ai";
 
-const require = createRequire(import.meta.url);
-const pdf = require("pdf-parse");
-
 interface MulterRequest extends Request {
   file?: Express.Multer.File;
 }
@@ -35,6 +32,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let text = "";
       if (req.file.mimetype === "application/pdf") {
         try {
+          const require = createRequire(import.meta.url);
+          const pdf = require("pdf-parse");
           const data = await pdf(req.file.buffer);
           text = data.text;
           
