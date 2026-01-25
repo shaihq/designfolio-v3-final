@@ -53,7 +53,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       {
         "user": {
           "name": "Full Name",
-          "role": "Short professional bio/headline",
+          "role": "A concise, impactful one-liner that describes who the person is and their professional essence (e.g., 'Passionate about building products that solve real-world problems' or 'Transforming complex data into actionable business strategies'). DO NOT use a simple job title or role name here.",
           "aboutMe": "A friendly, humane 2-3 sentence introduction about the person's interests and professional philosophy.",
           "categories": ["Skill Category 1", "Skill Category 2", "Skill Category 3", "Skill Category 4", "Skill Category 5", "Skill Category 6"],
           "skills": [
