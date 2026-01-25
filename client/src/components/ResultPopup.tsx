@@ -219,26 +219,35 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                         </div>
                       </div>
                       
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {content.caseStudies?.map((project: any, i: number) => (
-                          <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3, delay: 0.1 }} className="group relative">
-                            <div className="w-full h-full bg-white border border-border/10 rounded-2xl overflow-hidden shadow-[0_1px_4px_rgba(0,0,0,0.02)] transition-all duration-300 flex flex-col min-h-[360px] group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] group-hover:border-border/20 group-hover:-translate-y-1">
-                              <div className="w-full h-48 flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-[#FCF9F6] to-[#F5F1ED]">
-                                <img src={i % 2 === 0 ? "/casestudyux1.svg" : "/casestudyux2.svg"} alt={project.title} className="w-20 h-20 object-contain group-hover:scale-110 transition-transform duration-500 opacity-20" />
-                                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                                  <div className="bg-white/80 backdrop-blur-md p-2 rounded-full shadow-lg"><ArrowUpRight className="w-4 h-4" /></div>
+                          <motion.div
+                            key={i}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: i * 0.1 }}
+                            className="group relative"
+                          >
+                            <div className="bg-white dark:bg-card rounded-xl lg:rounded-2xl border border-border overflow-hidden shadow-lg flex flex-col relative z-20 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 h-full">
+                              <div className="aspect-video relative overflow-hidden bg-gradient-to-br from-[#FCF9F6] to-[#F5F1ED]">
+                                <img
+                                  src={i % 2 === 0 ? "/casestudyux1.svg" : "/casestudyux2.svg"}
+                                  alt={project.title}
+                                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                />
+                                <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                  <div className="bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg">
+                                    <ArrowUpRight className="w-5 h-5 text-foreground" />
+                                  </div>
                                 </div>
                               </div>
-                              <div className="p-5 flex-1 flex flex-col justify-between">
-                                <div>
-                                  <Badge className="text-[10px] font-medium bg-muted/50 text-muted-foreground border-none px-2 py-0 mb-2 no-default-hover-elevate">{project.category}</Badge>
-                                  <h3 className="text-base font-semibold mb-1 text-foreground leading-tight">{project.title}</h3>
-                                  <p className="text-xs text-foreground/40 line-clamp-2 leading-relaxed font-medium">{project.description}</p>
-                                </div>
-                                <div className="flex items-center gap-2 mt-4 pt-4 border-t border-border/5">
-                                  <div className="flex -space-x-2">{[1, 2, 3].map((_, i) => (<div key={i} className="w-5 h-5 rounded-full border-2 border-white bg-muted/30" />))}</div>
-                                  <span className="text-[10px] text-foreground/30 font-medium">+12 views</span>
-                                </div>
+                              <div className="p-5 flex-1 flex flex-col">
+                                <h3 className="font-heading text-lg font-semibold text-foreground mb-1 line-clamp-2 min-h-[3rem]">
+                                  {project.title}
+                                </h3>
+                                <p className="text-sm text-foreground/50">
+                                  {project.category}
+                                </p>
                               </div>
                             </div>
                           </motion.div>
