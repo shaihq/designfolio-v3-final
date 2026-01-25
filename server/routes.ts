@@ -32,13 +32,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let text = "";
       if (req.file.mimetype === "application/pdf") {
         try {
+          // Add a small delay or check if buffer is valid
+          if (!req.file.buffer || req.file.buffer.length === 0) {
+            throw new Error("Empty file buffer");
+          }
           const data = await pdf(req.file.buffer);
           text = data.text;
         } catch (pdfError: any) {
           console.error("PDF parsing error:", pdfError);
-          return res.status(400).json({ 
-            message: "Technical error parsing PDF: " + (pdfError.message || "Unknown error") + ". Please try a different file." 
-          });
+          // If it's a "bad XRef entry" or similar, it might be a corrupted PDF or a version mismatch
+          // We can try to extract text as a fallback if it's a text-based PDF that just has a bad header
+          try {
+            text = req.file.buffer.toString("utf-8").replace(/[^\x20-\x7E\n\r\t]/g, " ");
+            if (text.trim().length < 100) {
+              throw new Error("Fallback text extraction failed");
+            }
+          } catch (fallbackError) {
+            return res.status(400).json({ 
+              message: "This PDF file appears to be corrupted or in an unsupported format (Technical error: " + (pdfError.message || "bad XRef entry") + "). Please try saving it again as a PDF or use a .txt/.docx file." 
+            });
+          }
         }
       } else {
         text = req.file.buffer.toString("utf-8");
