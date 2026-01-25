@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   X, Check, Sparkle, Mail, Linkedin, Instagram, Dribbble, ArrowUpRight, 
@@ -87,7 +88,7 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
     onClose();
   };
 
-  return (
+  return createPortal(
     <AnimatePresence>
       <div className="fixed inset-0 z-[999999] flex items-center justify-center p-4 sm:p-8">
         <motion.div
@@ -613,6 +614,7 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
           </div>
         </motion.div>
       </div>
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }
