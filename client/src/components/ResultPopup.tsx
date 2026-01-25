@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Check } from "lucide-react";
+import { X, Check, Sparkles, Plus } from "lucide-react";
 import { Button } from "./ui/button";
+import { Badge } from "./ui/badge";
+import { Card } from "./ui/card";
 
 interface ResultPopupProps {
   content: any;
@@ -46,66 +48,111 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
           </div>
           <div className="flex-1 overflow-y-auto p-6 sm:p-10">
             {isStructured ? (
-              <div className="space-y-8">
-                <section>
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4">Profile</h3>
-                  <div className="bg-secondary/30 p-4 rounded-xl border">
-                    <p className="text-lg font-medium">{content.user?.name}</p>
-                    <p className="text-muted-foreground">{content.user?.role}</p>
-                    <div className="flex flex-wrap gap-2 mt-3">
-                      {content.user?.categories?.map((cat: string, i: number) => (
-                        <span key={i} className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-md border border-primary/20">
-                          {cat}
-                        </span>
-                      ))}
-                    </div>
-
-                    {content.user?.skills && (
-                      <div className="mt-6 space-y-3">
-                        <p className="text-sm font-medium text-muted-foreground">Skills</p>
-                        <div className="space-y-2">
-                          {content.user.skills.map((skill: any, i: number) => (
-                            <div key={i} className="space-y-1">
-                              <div className="flex justify-between text-xs">
-                                <span>{skill.name}</span>
-                                <span>{skill.level}%</span>
-                              </div>
-                              <div className="h-1.5 w-full bg-secondary rounded-full overflow-hidden">
-                                <div 
-                                  className="h-full bg-primary transition-all duration-500" 
-                                  style={{ width: `${skill.level}%` }}
-                                />
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+              <div className="space-y-12">
+                {/* Hero Section */}
+                <section className="flex flex-col items-start gap-6">
+                  <div className="space-y-4">
+                    <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-foreground">
+                      Hey, I'm <span className="text-[#FF553E]">{content.user?.name?.split(' ')[0] || "Shai"}</span>!
+                    </h1>
+                    <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl leading-relaxed">
+                      {content.user?.role}
+                    </p>
                   </div>
+                  
+                  <div className="flex flex-wrap gap-2">
+                    {content.user?.categories?.map((cat: string, i: number) => (
+                      <Badge 
+                        key={i} 
+                        variant="secondary"
+                        className="bg-white/50 backdrop-blur-sm border-border/50 text-foreground px-4 py-1.5 rounded-full text-sm font-medium hover-elevate"
+                      >
+                        {cat}
+                      </Badge>
+                    ))}
+                  </div>
+
+                  {content.user?.skills && (
+                    <div className="w-full max-w-md mt-4 p-6 bg-white/40 backdrop-blur-md rounded-2xl border border-white/20 shadow-sm">
+                      <div className="flex items-center gap-2 mb-4">
+                        <Sparkles className="w-4 h-4 text-[#FF553E]" />
+                        <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Expertise</h3>
+                      </div>
+                      <div className="space-y-4">
+                        {content.user.skills.slice(0, 4).map((skill: any, i: number) => (
+                          <div key={i} className="space-y-1.5">
+                            <div className="flex justify-between text-xs font-medium">
+                              <span>{skill.name}</span>
+                              <span className="text-muted-foreground">{skill.level}%</span>
+                            </div>
+                            <div className="h-1.5 w-full bg-black/5 rounded-full overflow-hidden">
+                              <motion.div 
+                                initial={{ width: 0 }}
+                                animate={{ width: `${skill.level}%` }}
+                                transition={{ duration: 1, delay: i * 0.1 }}
+                                className="h-full bg-[#FF553E]"
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </section>
 
+                {/* Experience Section */}
                 <section>
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4">Experience</h3>
-                  <div className="space-y-3">
+                  <div className="flex items-center gap-2 mb-6">
+                    <div className="h-px flex-1 bg-border/50" />
+                    <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground px-4">Experience</h3>
+                    <div className="h-px flex-1 bg-border/50" />
+                  </div>
+                  <div className="grid gap-4">
                     {content.workExperiences?.map((exp: any, i: number) => (
-                      <div key={i} className="bg-secondary/30 p-4 rounded-xl border">
-                        <p className="font-medium">{exp.role} @ {exp.company}</p>
-                        <p className="text-xs text-muted-foreground mb-2">{exp.period}</p>
-                        <p className="text-sm">{exp.description}</p>
-                      </div>
+                      <Card key={i} className="bg-white/50 backdrop-blur-sm border-0 shadow-sm p-6 hover-elevate transition-all">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                          <div>
+                            <h4 className="font-bold text-lg">{exp.role}</h4>
+                            <p className="text-[#FF553E] font-medium">{exp.company}</p>
+                          </div>
+                          <Badge variant="outline" className="w-fit rounded-full px-4 py-1 border-border/50">
+                            {exp.period}
+                          </Badge>
+                        </div>
+                        <p className="mt-4 text-muted-foreground text-sm leading-relaxed">
+                          {exp.description}
+                        </p>
+                      </Card>
                     ))}
                   </div>
                 </section>
 
+                {/* Projects Section */}
                 <section>
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4">Projects</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex items-center gap-2 mb-6">
+                    <div className="h-px flex-1 bg-border/50" />
+                    <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground px-4">Selected Works</h3>
+                    <div className="h-px flex-1 bg-border/50" />
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {content.caseStudies?.map((cs: any, i: number) => (
-                      <div key={i} className="bg-secondary/30 p-4 rounded-xl border">
-                        <p className="font-medium">{cs.title}</p>
-                        <p className="text-xs text-primary mb-2">{cs.category}</p>
-                        <p className="text-sm text-muted-foreground">{cs.description}</p>
-                      </div>
+                      <Card key={i} className="group overflow-hidden border-0 shadow-sm hover-elevate transition-all bg-white">
+                        <div className="aspect-video bg-muted/30 relative flex items-center justify-center p-8">
+                          <div className="absolute inset-0 bg-gradient-to-br from-[#FF553E]/5 to-transparent" />
+                          <div className="w-20 h-20 rounded-2xl bg-white shadow-xl flex items-center justify-center">
+                            <Plus className="w-8 h-8 text-[#FF553E] group-hover:rotate-90 transition-transform duration-500" />
+                          </div>
+                        </div>
+                        <div className="p-6">
+                          <Badge className="mb-3 bg-[#FF553E]/10 text-[#FF553E] border-none hover:bg-[#FF553E]/10">
+                            {cs.category}
+                          </Badge>
+                          <h4 className="font-bold text-lg mb-2">{cs.title}</h4>
+                          <p className="text-sm text-muted-foreground line-clamp-2">
+                            {cs.description}
+                          </p>
+                        </div>
+                      </Card>
                     ))}
                   </div>
                 </section>
@@ -116,16 +163,26 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
               </div>
             )}
           </div>
-          <div className="p-4 border-t flex justify-end gap-3">
-            <Button variant="outline" onClick={onClose}>Discard</Button>
-            <Button className="bg-[#FF553E] hover:bg-[#E64935]" onClick={handleApply}>
-              {isStructured ? (
-                <>
-                  <Check className="w-4 h-4 mr-2" />
-                  Pre-fill My Dashboard
-                </>
-              ) : "Close Preview"}
-            </Button>
+          <div className="p-6 border-t flex flex-col sm:flex-row items-center justify-between gap-4 bg-white/80 backdrop-blur-md">
+            <p className="text-sm text-muted-foreground italic">
+              Looks good? Click confirm to populate your dashboard.
+            </p>
+            <div className="flex gap-3 w-full sm:w-auto">
+              <Button variant="outline" className="flex-1 sm:flex-none rounded-full px-8" onClick={onClose}>
+                Discard
+              </Button>
+              <Button 
+                className="flex-1 sm:flex-none bg-[#FF553E] hover:bg-[#E64935] text-white rounded-full px-8 shadow-lg shadow-[#FF553E]/20" 
+                onClick={handleApply}
+              >
+                {isStructured ? (
+                  <>
+                    <Check className="w-4 h-4 mr-2" />
+                    Confirm & Start Designing
+                  </>
+                ) : "Close Preview"}
+              </Button>
+            </div>
           </div>
         </motion.div>
       </div>
