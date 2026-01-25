@@ -4,8 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   X, Check, Sparkle, Mail, Linkedin, Instagram, Dribbble, ArrowUpRight, 
   Plus, Sparkles, Pencil, FileText, Smartphone, Monitor, Search, Layers,
-  Trash2, GripVertical, Paintbrush, Upload, Lock, Crown, Eye, EyeOff,
-  RotateCcw, Bell
+  Trash2, GripVertical, Paintbrush, Upload, Lock, Crown, Eye, EyeOff, Bell
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
@@ -118,30 +117,29 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                   <Lock className="w-3 h-3" />
                   <span className="truncate">your-new-portfolio.designfolio.me</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <RotateCcw className="w-3 h-3 text-foreground/20" />
-                  <Plus className="w-3 h-3 text-foreground/20" />
-                </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 w-[140px] justify-end">
+            <div className="flex items-center gap-2 justify-end">
               {isStructured && (
-                <Button 
-                  onClick={handleApply} 
-                  className="bg-[#FF553E] hover:bg-[#FF553E]/90 text-white rounded-full h-8 px-4 text-xs font-bold shadow-sm active-elevate-2 transition-all"
-                >
-                  Open in Editor
-                </Button>
+                <>
+                  <Button 
+                    variant="outline"
+                    onClick={onClose} 
+                    className="rounded-full h-8 px-4 text-xs font-bold border-border/50 transition-all"
+                    data-testid="button-discard"
+                  >
+                    Discard
+                  </Button>
+                  <Button 
+                    onClick={handleApply} 
+                    className="bg-[#FF553E] hover:bg-[#FF553E]/90 text-white rounded-full h-8 px-4 text-xs font-bold shadow-sm active-elevate-2 transition-all"
+                    data-testid="button-open-editor"
+                  >
+                    Open in Editor
+                  </Button>
+                </>
               )}
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                onClick={onClose} 
-                className="rounded-full h-7 w-7 hover:bg-black/5 dark:hover:bg-white/5"
-              >
-                <X className="w-4 h-4 text-foreground/40" />
-              </Button>
             </div>
           </div>
 
