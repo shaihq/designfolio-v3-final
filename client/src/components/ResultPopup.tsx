@@ -124,14 +124,14 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                   <Button 
                     variant="outline"
                     onClick={onClose} 
-                    className="rounded-full h-8 px-4 text-xs font-bold border-border/50 transition-all focus-visible:ring-0 focus-visible:ring-offset-0"
+                    className="rounded-full h-8 px-4 text-xs font-bold border-border/50 transition-all focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     data-testid="button-discard"
                   >
                     Discard
                   </Button>
                   <Button 
                     onClick={handleApply} 
-                    className="bg-[#FF553E] hover:bg-[#FF553E]/90 text-white rounded-full h-8 px-4 text-xs font-bold shadow-sm active-elevate-2 transition-all focus-visible:ring-0 focus-visible:ring-offset-0"
+                    className="bg-[#FF553E] hover:bg-[#FF553E]/90 text-white rounded-full h-8 px-4 text-xs font-bold shadow-sm active-elevate-2 transition-all focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                     data-testid="button-open-editor"
                   >
                     Open in Editor
@@ -141,10 +141,10 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
             </div>
           </div>
 
-          {/* Subtle feedback message below bar */}
-          <div className="bg-white/80 dark:bg-black/20 px-6 py-2 border-b border-border/10 flex items-center justify-center gap-2">
-            <Sparkles className="w-3 h-3 text-[#FF553E]" />
-            <span className="text-[10px] uppercase tracking-[0.1em] font-bold text-foreground/50">
+          {/* Info bar message below bar */}
+          <div className="bg-[#e8f0fe] dark:bg-[#1a2733] px-6 py-2 border-b border-[#d2e3fc] dark:border-[#2d3a4b] flex items-center justify-center gap-2">
+            <Sparkles className="w-3 h-3 text-[#1a73e8]" />
+            <span className="text-[10px] uppercase tracking-[0.1em] font-bold text-[#1a73e8] dark:text-[#8ab4f8]">
               This is a preview — Open in editor to save and publish your portfolio
             </span>
           </div>
