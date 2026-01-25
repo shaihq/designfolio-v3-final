@@ -64,7 +64,8 @@ import {
   ThumbsUp,
   ChevronLeft,
   ChevronRight,
-  Home
+  Home,
+  Building
 } from "lucide-react";
 import { SiBehance } from "react-icons/si";
 import { Link } from "wouter";
@@ -1909,14 +1910,14 @@ export default function Dashboard() {
             </Button>
           </div>
           
-          <div className="space-y-8">
+          <div className="space-y-6">
             {workExperiences.map((exp, idx) => (
               <div 
                 key={exp.id} 
                 className="group"
                 data-testid={`card-work-experience-${exp.id}`}
               >
-                <div className="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-2 md:gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-[130px_1fr] gap-1 md:gap-6">
                   <div className="shrink-0">
                     <span 
                       className="text-xs font-medium text-foreground/40 uppercase tracking-wider"
@@ -1927,16 +1928,19 @@ export default function Dashboard() {
                   </div>
                   
                   <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-3">
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-2">
                       <h3 className="font-semibold text-base text-foreground" data-testid={`text-experience-role-${exp.id}`}>
                         {exp.role}
                       </h3>
                       <span className="text-foreground/30">at</span>
-                      <div className="flex items-center gap-2">
-                        <Avatar className="w-5 h-5 rounded-md">
-                          <AvatarImage src={exp.logo} alt={exp.company} />
-                          <AvatarFallback className="bg-primary/10 text-[8px] font-bold text-primary">{exp.company.substring(0, 2)}</AvatarFallback>
-                        </Avatar>
+                      <div className="flex items-center gap-1.5">
+                        {exp.logo ? (
+                          <img src={exp.logo} alt={exp.company} className="w-5 h-5 rounded object-contain" />
+                        ) : (
+                          <div className="w-5 h-5 rounded bg-primary/10 flex items-center justify-center">
+                            <Building className="w-3 h-3 text-primary" />
+                          </div>
+                        )}
                         <span className="font-semibold text-base text-foreground" data-testid={`text-experience-company-${exp.id}`}>
                           {exp.company}
                         </span>
@@ -1949,7 +1953,7 @@ export default function Dashboard() {
                 </div>
                 
                 {idx < workExperiences.length - 1 && (
-                  <div className="mt-8 border-b border-border/10" />
+                  <div className="mt-6 border-b border-border/10" />
                 )}
               </div>
             ))}
