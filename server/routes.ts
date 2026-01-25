@@ -54,16 +54,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
         "user": {
           "name": "Full Name",
           "role": "Short professional bio/headline",
+          "aboutMe": "A friendly, humane 2-3 sentence introduction about the person's interests and professional philosophy.",
           "categories": ["Skill Category 1", "Skill Category 2", "Skill Category 3", "Skill Category 4", "Skill Category 5", "Skill Category 6"],
           "skills": [
             {"name": "Skill Name", "level": 0-100}
-          ]
+          ],
+          "contact": {
+            "email": "Email address",
+            "phone": "Phone number or null",
+            "location": "City, Country or null"
+          }
         },
         "workExperiences": [
           {
             "role": "Job Title",
             "company": "Company Name",
-            "period": "Years",
+            "period": "Years (e.g. 2020 - 2023)",
             "description": "Short achievement"
           }
         ],
@@ -76,7 +82,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ]
       }
 
-      CRITICAL: For the "categories" array, you MUST provide at least 6 professional skills. Extract them from the resume, or if fewer are found, infer highly relevant complementary skills based on their role.
+      CRITICAL: 
+      1. For the "categories" array, you MUST provide at least 6 professional skills. 
+      2. The "aboutMe" section should be written in first person and sound natural.
+      3. For the footer, extract contact details. If not found, use realistic placeholders.
 
       Resume Text:
       ${text}`;
