@@ -23,6 +23,10 @@ export async function getAiCompletion(prompt: string) {
       ],
     });
 
+    if (!completion.choices || completion.choices.length === 0) {
+      throw new Error("No completion choices returned from OpenRouter");
+    }
+
     return completion.choices[0].message.content;
   } catch (error) {
     console.error("OpenRouter API Error:", error);
