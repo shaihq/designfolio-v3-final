@@ -54,7 +54,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         "user": {
           "name": "Full Name",
           "role": "Short professional bio/headline",
-          "categories": ["Skill Category 1", "Skill Category 2"]
+          "categories": ["Skill Category 1", "Skill Category 2"],
+          "skills": [
+            {"name": "Skill Name", "level": 0-100}
+          ]
         },
         "workExperiences": [
           {

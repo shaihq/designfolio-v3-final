@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type PasswordResetToken, type InsertPasswordResetToken } from "@shared/schema";
+import { type User, type InsertUser, type PasswordResetToken, type InsertPasswordResetToken, type Portfolio, type InsertPortfolio } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 // modify the interface with any CRUD methods
@@ -13,15 +13,20 @@ export interface IStorage {
   createPasswordResetToken(tokenData: InsertPasswordResetToken): Promise<PasswordResetToken>;
   getPasswordResetToken(token: string): Promise<PasswordResetToken | undefined>;
   deletePasswordResetToken(token: string): Promise<void>;
+  
+  createPortfolio(portfolio: InsertPortfolio): Promise<Portfolio>;
+  getPortfolio(id: string): Promise<Portfolio | undefined>;
 }
 
 export class MemStorage implements IStorage {
   private users: Map<string, User>;
   private passwordResetTokens: Map<string, PasswordResetToken>;
+  private portfolios: Map<string, Portfolio>;
 
   constructor() {
     this.users = new Map();
     this.passwordResetTokens = new Map();
+    this.portfolios = new Map();
   }
 
   async getUser(id: string): Promise<User | undefined> {
@@ -72,6 +77,21 @@ export class MemStorage implements IStorage {
 
   async deletePasswordResetToken(token: string): Promise<void> {
     this.passwordResetTokens.delete(token);
+  }
+
+  async createPortfolio(insertPortfolio: InsertPortfolio): Promise<Portfolio> {
+    const id = randomUUID();
+    const portfolio: Portfolio = {
+      ...insertPortfolio,
+      id,
+      createdAt: new Date(),
+    };
+    this.portfolios.set(id, portfolio);
+    return portfolio;
+  }
+
+  async getPortfolio(id: string): Promise<Portfolio | undefined> {
+    return this.portfolios.get(id);
   }
 }
 

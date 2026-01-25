@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, timestamp, jsonb } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -16,6 +16,13 @@ export const passwordResetTokens = pgTable("password_reset_tokens", {
   expiresAt: timestamp("expires_at").notNull(),
 });
 
+export const portfolios = pgTable("portfolios", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id"), // Optional if not logged in
+  content: jsonb("content").notNull(), // Stores the structured JSON from AI
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -25,7 +32,14 @@ export const insertPasswordResetTokenSchema = createInsertSchema(passwordResetTo
   id: true,
 });
 
+export const insertPortfolioSchema = createInsertSchema(portfolios).omit({
+  id: true,
+  createdAt: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type PasswordResetToken = typeof passwordResetTokens.$inferSelect;
 export type InsertPasswordResetToken = z.infer<typeof insertPasswordResetTokenSchema>;
+export type Portfolio = typeof portfolios.$inferSelect;
+export type InsertPortfolio = z.infer<typeof insertPortfolioSchema>;
