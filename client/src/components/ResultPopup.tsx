@@ -101,7 +101,7 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-5xl h-[90vh] bg-background border border-border rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+          className="relative w-full max-w-5xl h-[90vh] bg-background border-[6px] border-white/20 rounded-2xl shadow-2xl flex flex-col overflow-hidden backdrop-blur-md"
         >
           {/* Chrome-style Top Bar */}
           <div className="bg-[#f1f3f4] dark:bg-[#202124] border-b border-border/50 flex items-center h-12 px-4 shrink-0">
@@ -112,11 +112,9 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
             </div>
             
             <div className="flex-1 flex justify-center px-4">
-              <div className="bg-white dark:bg-[#2a2a2a] rounded-lg h-8 px-4 flex items-center justify-between border border-black/5 dark:border-white/5 w-full max-w-lg shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
-                <div className="flex items-center gap-2 text-[11px] text-foreground/40 font-medium">
-                  <Lock className="w-3 h-3" />
-                  <span className="truncate">your-new-portfolio.designfolio.me</span>
-                </div>
+              <div className="bg-white dark:bg-[#2a2a2a] rounded-lg h-8 px-4 flex items-center gap-2 border border-black/5 dark:border-white/5 w-fit min-w-[240px] shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
+                <Lock className="w-3 h-3 text-foreground/40" />
+                <span className="text-[11px] text-foreground/40 font-medium truncate">your-new-portfolio.designfolio.me</span>
               </div>
             </div>
 
@@ -126,14 +124,14 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                   <Button 
                     variant="outline"
                     onClick={onClose} 
-                    className="rounded-full h-8 px-4 text-xs font-bold border-border/50 transition-all"
+                    className="rounded-full h-8 px-4 text-xs font-bold border-border/50 transition-all focus-visible:ring-0 focus-visible:ring-offset-0"
                     data-testid="button-discard"
                   >
                     Discard
                   </Button>
                   <Button 
                     onClick={handleApply} 
-                    className="bg-[#FF553E] hover:bg-[#FF553E]/90 text-white rounded-full h-8 px-4 text-xs font-bold shadow-sm active-elevate-2 transition-all"
+                    className="bg-[#FF553E] hover:bg-[#FF553E]/90 text-white rounded-full h-8 px-4 text-xs font-bold shadow-sm active-elevate-2 transition-all focus-visible:ring-0 focus-visible:ring-offset-0"
                     data-testid="button-open-editor"
                   >
                     Open in Editor
