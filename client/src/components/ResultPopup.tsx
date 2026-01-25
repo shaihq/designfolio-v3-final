@@ -105,16 +105,16 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
           className="relative w-full max-w-5xl h-[90vh] bg-background border border-border rounded-2xl shadow-2xl flex flex-col overflow-hidden"
         >
           <div className="flex items-center justify-between p-4 border-b">
-            <h2 className="text-xl font-heading font-semibold">
-              {isStructured ? "Generated Portfolio Structure" : "Your Portfolio Content"}
+            <h2 className="text-sm font-medium text-foreground/50">
+              Hope you like your new portfolio!
             </h2>
             <div className="flex items-center gap-2">
               {isStructured && (
                 <Button onClick={handleApply} className="bg-[#FF553E] hover:bg-[#FF553E]/90 text-white rounded-full px-6">
-                  Apply to Dashboard
+                  Open in Editor
                 </Button>
               )}
-              <Button variant="ghost" size="icon" onClick={onClose}>
+              <Button variant="ghost" size="icon" onClick={onClose} className="rounded-full">
                 <X className="w-5 h-5" />
               </Button>
             </div>
