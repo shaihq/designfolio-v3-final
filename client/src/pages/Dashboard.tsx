@@ -1934,13 +1934,7 @@ export default function Dashboard() {
                       </h3>
                       <span className="text-foreground/30">at</span>
                       <div className="flex items-center gap-1.5">
-                        {exp.logo ? (
-                          <img src={exp.logo} alt={exp.company} className="w-5 h-5 rounded object-contain" />
-                        ) : (
-                          <div className="w-5 h-5 rounded bg-primary/10 flex items-center justify-center">
-                            <Building className="w-3 h-3 text-primary" />
-                          </div>
-                        )}
+                        <Building className="w-4 h-4 text-foreground/40" />
                         <span className="font-semibold text-base text-foreground" data-testid={`text-experience-company-${exp.id}`}>
                           {exp.company}
                         </span>
