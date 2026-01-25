@@ -62,46 +62,58 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const prompt = `Based on the following resume text, extract and generate professional portfolio content.
-      You MUST return the data in the following JSON format:
-      {
-        "user": {
-          "name": "Full Name",
-          "role": "A concise, impactful one-liner that describes who the person is and their professional essence (e.g., 'Passionate about building products that solve real-world problems' or 'Transforming complex data into actionable business strategies'). DO NOT use a simple job title or role name here.",
-          "aboutMe": "A friendly, humane 2-3 sentence introduction about the person's interests and professional philosophy.",
-          "categories": ["Skill Category 1", "Skill Category 2", "Skill Category 3", "Skill Category 4", "Skill Category 5", "Skill Category 6"],
-          "skills": [
-            {"name": "Skill Name", "level": 0-100}
-          ],
-          "contact": {
-            "email": "Email address",
-            "phone": "Phone number or null",
-            "location": "City, Country or null"
-          }
-        },
-        "workExperiences": [
-          {
-            "role": "Job Title",
-            "company": "Company Name",
-            "period": "Years (e.g. 2020 - 2023)",
-            "description": "Short achievement"
-          }
-        ],
-        "caseStudies": [
-          {
-            "title": "Project Title",
-            "description": "Project overview",
-            "category": "Project Category"
-          }
-        ]
-      }
 
-      CRITICAL: 
-      1. For the "categories" array, you MUST provide at least 6 professional skills. 
-      2. The "aboutMe" section should be written in first person and sound natural.
-      3. For the footer, extract contact details. If not found, use realistic placeholders.
+You MUST return the data in the following JSON format:
+{
+  "user": {
+    "name": "Friendly first-name introduction in the format: 'Hey, I’m {First Name}!'",
+    "role": "A single-sentence professional intro (max 20 words) written in a humane, confident tone with subtle swag. This should describe what the person does and specializes in. Avoid job-title-only lines and avoid buzzwords like 'passionate', 'results-driven', 'dedicated', 'impactful'. No exclamation marks.",
+    "aboutMe": "A friendly, humane 2-3 sentence introduction about the person's interests and professional philosophy.",
+    "categories": ["Skill Category 1", "Skill Category 2", "Skill Category 3", "Skill Category 4", "Skill Category 5", "Skill Category 6"],
+    "skills": [
+      {"name": "Skill Name", "level": 0-100}
+    ],
+    "contact": {
+      "email": "Email address",
+      "phone": "Phone number or null",
+      "location": "City, Country or null"
+    }
+  },
+  "workExperiences": [
+    {
+      "role": "Job Title",
+      "company": "Company Name",
+      "period": "Years (e.g. 2020 - 2023)",
+      "description": "Short achievement"
+    }
+  ],
+  "caseStudies": [
+    {
+      "title": "Project Title",
+      "description": "Project overview",
+      "category": "Project Category"
+    }
+  ]
+}
 
-      Resume Text:
-      ${text}`;
+CRITICAL HEADER RULES:
+1. The "name" must always be in the format: "Hey, I’m {First Name}!"
+2. The "role" must be exactly ONE sentence, max 20 words, humane and confident with subtle swag.
+   - Write as if the person is casually introducing themselves to a recruiter they admire.
+   - Avoid corporate or resume-style language.
+   - Do NOT use buzzwords like “passionate”, “results-driven”, “dedicated”, “hard-working”, “impactful”.
+3. The "categories" array MUST contain a minimum of 6 and a maximum of 8 skills.
+   - Each category must be 1–3 words.
+   - All categories must be FULLY UPPERCASE.
+   - Prefer domains and strengths over tools unless highly relevant.
+
+GENERAL RULES:
+1. The "aboutMe" section should be written in first person and sound natural.
+2. Do NOT invent companies, roles, or achievements not present in the resume.
+3. For the footer, extract contact details. If not found, use realistic placeholders.
+
+Resume Text:
+\${text}\`;
 
       const aiResponse = await getAiCompletion(prompt);
       
