@@ -142,9 +142,10 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
           </div>
 
           {/* Subtle feedback message below bar */}
-          <div className="bg-white/50 dark:bg-black/10 px-6 py-2 border-b border-border/10 flex justify-center">
-            <span className="text-[10px] uppercase tracking-[0.1em] font-bold text-foreground/30">
-              Hope you like your new portfolio!
+          <div className="bg-white/80 dark:bg-black/20 px-6 py-2 border-b border-border/10 flex items-center justify-center gap-2">
+            <Sparkles className="w-3 h-3 text-[#FF553E]" />
+            <span className="text-[10px] uppercase tracking-[0.1em] font-bold text-foreground/50">
+              This is a preview — Open in editor to save and publish your portfolio
             </span>
           </div>
           
