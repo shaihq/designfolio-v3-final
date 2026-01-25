@@ -1,28 +1,17 @@
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Check, ArrowRight } from "lucide-react";
 
 function FeatureCta({ children, testId }: { children: string; testId: string }) {
   return (
-    <button 
-      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium border-2 transition-all group"
-      style={{
-        borderColor: '#000000',
-        color: '#000000',
-        backgroundColor: 'transparent'
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.backgroundColor = '#000000';
-        e.currentTarget.style.color = '#ffffff';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.backgroundColor = 'transparent';
-        e.currentTarget.style.color = '#000000';
-      }}
+    <Button 
+      variant="outline"
+      className="rounded-full font-medium transition-all group px-5 h-11 no-default-hover-elevate no-default-active-elevate hover:bg-foreground hover:text-background"
       data-testid={testId}
     >
       {children}
-      <ArrowRight className="w-4 h-4" />
-    </button>
+      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+    </Button>
   );
 }
 
