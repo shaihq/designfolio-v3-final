@@ -1894,8 +1894,8 @@ export default function Dashboard() {
           delay: index * 0.1
         }}
       >
-        <Card className="bg-white border-0 rounded-2xl p-6 mt-0 mb-3" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
-          <div className="flex items-center justify-between mb-6">
+        <Card className="bg-white border-0 rounded-2xl p-6 md:p-8 mt-0 mb-3" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
+          <div className="flex items-center justify-between mb-8">
             <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider" data-testid="text-work-experience-title">
               Work Experience
             </h2>
@@ -1909,38 +1909,48 @@ export default function Dashboard() {
             </Button>
           </div>
           
-          <div className="space-y-4">
-            {workExperiences.map((exp) => (
+          <div className="space-y-8">
+            {workExperiences.map((exp, idx) => (
               <div 
                 key={exp.id} 
-                className="group flex gap-5 p-4 rounded-2xl border border-border/30 bg-[#F5F3F1] hover-elevate transition-all duration-300"
+                className="group"
                 data-testid={`card-work-experience-${exp.id}`}
               >
-                <div className="shrink-0">
-                  <Avatar className="w-12 h-12 rounded-xl border border-border/50">
-                    <AvatarImage src={exp.logo} alt={exp.company} />
-                    <AvatarFallback className="bg-muted text-xs">{exp.company.substring(0, 2)}</AvatarFallback>
-                  </Avatar>
-                </div>
-                
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between mb-1">
-                    <h3 className="font-semibold text-base truncate" data-testid={`text-experience-role-${exp.id}`}>
-                      {exp.role}
-                    </h3>
-                    <span className="text-xs font-medium text-foreground/40 shrink-0" data-testid={`text-experience-period-${exp.id}`}>
+                <div className="grid grid-cols-1 md:grid-cols-[140px_1fr] gap-2 md:gap-8">
+                  <div className="shrink-0">
+                    <span 
+                      className="text-xs font-medium text-foreground/40 uppercase tracking-wider"
+                      data-testid={`text-experience-period-${exp.id}`}
+                    >
                       {exp.period}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-sm font-medium text-foreground/60" data-testid={`text-experience-company-${exp.id}`}>
-                      {exp.company}
-                    </span>
+                  
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-3">
+                      <h3 className="font-semibold text-base text-foreground" data-testid={`text-experience-role-${exp.id}`}>
+                        {exp.role}
+                      </h3>
+                      <span className="text-foreground/30">at</span>
+                      <div className="flex items-center gap-2">
+                        <Avatar className="w-5 h-5 rounded-md">
+                          <AvatarImage src={exp.logo} alt={exp.company} />
+                          <AvatarFallback className="bg-primary/10 text-[8px] font-bold text-primary">{exp.company.substring(0, 2)}</AvatarFallback>
+                        </Avatar>
+                        <span className="font-semibold text-base text-foreground" data-testid={`text-experience-company-${exp.id}`}>
+                          {exp.company}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-sm text-foreground/60 leading-relaxed max-w-xl" data-testid={`text-experience-description-${exp.id}`}>
+                      {exp.description}
+                    </p>
                   </div>
-                  <p className="text-sm text-foreground/50 leading-relaxed line-clamp-2" data-testid={`text-experience-description-${exp.id}`}>
-                    {exp.description}
-                  </p>
                 </div>
+                
+                {idx < workExperiences.length - 1 && (
+                  <div className="mt-8 border-b border-border/10" />
+                )}
               </div>
             ))}
           </div>
