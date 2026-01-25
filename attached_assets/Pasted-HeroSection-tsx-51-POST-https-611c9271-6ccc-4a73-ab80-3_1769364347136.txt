@@ -1,0 +1,38 @@
+HeroSection.tsx:51  POST https://611c9271-6ccc-4a73-ab80-36d7d1aab91d-00-2cx2cft6fqjom.sisko.replit.dev/api/convert-resume 500 (Internal Server Error)
+processFile @ HeroSection.tsx:51
+handleFileUpload @ HeroSection.tsx:73
+callCallback2 @ chunk-WERSD76P.js?v=0a6e42e7:3674
+invokeGuardedCallbackDev @ chunk-WERSD76P.js?v=0a6e42e7:3699
+invokeGuardedCallback @ chunk-WERSD76P.js?v=0a6e42e7:3733
+invokeGuardedCallbackAndCatchFirstError @ chunk-WERSD76P.js?v=0a6e42e7:3736
+executeDispatch @ chunk-WERSD76P.js?v=0a6e42e7:7014
+processDispatchQueueItemsInOrder @ chunk-WERSD76P.js?v=0a6e42e7:7034
+processDispatchQueue @ chunk-WERSD76P.js?v=0a6e42e7:7043
+dispatchEventsForPlugins @ chunk-WERSD76P.js?v=0a6e42e7:7051
+(anonymous) @ chunk-WERSD76P.js?v=0a6e42e7:7174
+batchedUpdates$1 @ chunk-WERSD76P.js?v=0a6e42e7:18913
+batchedUpdates @ chunk-WERSD76P.js?v=0a6e42e7:3579
+dispatchEventForPluginEventSystem @ chunk-WERSD76P.js?v=0a6e42e7:7173
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-WERSD76P.js?v=0a6e42e7:5478
+dispatchEvent @ chunk-WERSD76P.js?v=0a6e42e7:5472
+dispatchDiscreteEvent @ chunk-WERSD76P.js?v=0a6e42e7:5449
+HeroSection.tsx:64 Error converting resume: Error: Failed to convert resume
+    at processFile (HeroSection.tsx:58:15)
+processFile @ HeroSection.tsx:64
+await in processFile
+handleFileUpload @ HeroSection.tsx:73
+callCallback2 @ chunk-WERSD76P.js?v=0a6e42e7:3674
+invokeGuardedCallbackDev @ chunk-WERSD76P.js?v=0a6e42e7:3699
+invokeGuardedCallback @ chunk-WERSD76P.js?v=0a6e42e7:3733
+invokeGuardedCallbackAndCatchFirstError @ chunk-WERSD76P.js?v=0a6e42e7:3736
+executeDispatch @ chunk-WERSD76P.js?v=0a6e42e7:7014
+processDispatchQueueItemsInOrder @ chunk-WERSD76P.js?v=0a6e42e7:7034
+processDispatchQueue @ chunk-WERSD76P.js?v=0a6e42e7:7043
+dispatchEventsForPlugins @ chunk-WERSD76P.js?v=0a6e42e7:7051
+(anonymous) @ chunk-WERSD76P.js?v=0a6e42e7:7174
+batchedUpdates$1 @ chunk-WERSD76P.js?v=0a6e42e7:18913
+batchedUpdates @ chunk-WERSD76P.js?v=0a6e42e7:3579
+dispatchEventForPluginEventSystem @ chunk-WERSD76P.js?v=0a6e42e7:7173
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-WERSD76P.js?v=0a6e42e7:5478
+dispatchEvent @ chunk-WERSD76P.js?v=0a6e42e7:5472
+dispatchDiscreteEvent @ chunk-WERSD76P.js?v=0a6e42e7:5449
