@@ -81,6 +81,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const aiResponse = await getAiCompletion(prompt);
       
+      if (!aiResponse) {
+        throw new Error("AI failed to generate response");
+      }
+
       // Try to parse the AI response as JSON
       let content;
       try {

@@ -84,6 +84,7 @@ export class MemStorage implements IStorage {
     const portfolio: Portfolio = {
       ...insertPortfolio,
       id,
+      userId: insertPortfolio.userId || null,
       createdAt: new Date(),
     };
     this.portfolios.set(id, portfolio);

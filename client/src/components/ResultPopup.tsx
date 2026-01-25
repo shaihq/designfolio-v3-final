@@ -59,6 +59,28 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                         </span>
                       ))}
                     </div>
+
+                    {content.user?.skills && (
+                      <div className="mt-6 space-y-3">
+                        <p className="text-sm font-medium text-muted-foreground">Skills</p>
+                        <div className="space-y-2">
+                          {content.user.skills.map((skill: any, i: number) => (
+                            <div key={i} className="space-y-1">
+                              <div className="flex justify-between text-xs">
+                                <span>{skill.name}</span>
+                                <span>{skill.level}%</span>
+                              </div>
+                              <div className="h-1.5 w-full bg-secondary rounded-full overflow-hidden">
+                                <div 
+                                  className="h-full bg-primary transition-all duration-500" 
+                                  style={{ width: `${skill.level}%` }}
+                                />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </section>
 
