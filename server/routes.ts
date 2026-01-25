@@ -113,7 +113,7 @@ GENERAL RULES:
 3. For the footer, extract contact details. If not found, use realistic placeholders.
 
 Resume Text:
-\${text}\`;
+${text}`;
 
       const aiResponse = await getAiCompletion(prompt);
       
