@@ -81,9 +81,7 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
   
   const handleApply = () => {
     if (isStructured) {
-      // Save to localStorage for Dashboard to pick up
       localStorage.setItem('pending-portfolio-data', JSON.stringify(content));
-      // Navigate to dashboard
       window.location.href = '/dashboard';
     }
     onClose();
@@ -109,28 +107,29 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
             <h2 className="text-xl font-heading font-semibold">
               {isStructured ? "Generated Portfolio Structure" : "Your Portfolio Content"}
             </h2>
-            <Button variant="ghost" size="icon" onClick={onClose}>
-              <X className="w-5 h-5" />
-            </Button>
+            <div className="flex items-center gap-2">
+              {isStructured && (
+                <Button onClick={handleApply} className="bg-[#FF553E] hover:bg-[#FF553E]/90 text-white rounded-full px-6">
+                  Apply to Dashboard
+                </Button>
+              )}
+              <Button variant="ghost" size="icon" onClick={onClose}>
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
           </div>
-          <div className="flex-1 overflow-y-auto p-6 sm:p-10">
+          <div className="flex-1 overflow-y-auto p-6 sm:p-10 bg-[#F8F7F5]">
             {isStructured ? (
               <div className="max-w-4xl mx-auto space-y-3">
                 {/* Profile Card */}
                 <div className="z-10 mb-3">
                   <Card className="bg-white border-0 rounded-2xl relative" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
-                    {/* Edit Button - Top Right */}
                     <div className="absolute top-4 right-4 z-10">
-                      <Button 
-                        variant="outline" 
-                        size="icon"
-                        className="rounded-full h-11 w-11"
-                      >
+                      <Button variant="outline" size="icon" className="rounded-full h-11 w-11">
                         <Pencil className="w-5 h-5" />
                       </Button>
                     </div>
 
-                    {/* Profile Info */}
                     <div className="p-6 sm:p-8 pb-6">
                       <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
                         <TooltipProvider>
@@ -140,11 +139,13 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                                 <motion.div 
                                   initial={{ opacity: 0, filter: "blur(10px)", scale: 0.95 }}
                                   animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
+                                  whileHover={{ 
+                                    scale: 1.05,
+                                    boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03)"
+                                  }}
                                   className="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl flex items-center justify-center relative overflow-hidden shrink-0 bg-[#f6f2ef] preserve-3d" 
-                                  style={{ 
-                                    backgroundColor: '#F5F3F1',
-                                    perspective: "1000px"
-                                  }} 
+                                  style={{ backgroundColor: '#F5F3F1', perspective: "1000px" }} 
+                                  data-testid="avatar-profile"
                                 >
                                   <img 
                                     src="/advanced.png" 
@@ -154,10 +155,7 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                                 </motion.div>
                               </TooltipTrigger>
                             </Magnetic>
-                            <TooltipContent 
-                              side="top" 
-                              className="bg-[#1A1A1A] text-white border-0 px-4 py-2 rounded-xl flex items-center gap-2 shadow-xl"
-                            >
+                            <TooltipContent side="top" className="bg-[#1A1A1A] text-white border-0 px-4 py-2 rounded-xl flex items-center gap-2 shadow-xl">
                               <span className="text-sm font-medium">Happy to have you here</span>
                               <img src="/handshake.png" alt="Handshake" className="w-5 h-5 object-contain" />
                             </TooltipContent>
@@ -177,7 +175,7 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                             initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
                             animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
                             transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1], delay: 0.3 }}
-                            className="text-sm sm:text-base text-foreground/50 leading-relaxed max-w-2xl" 
+                            className="text-sm sm:text-base text-foreground/50 leading-relaxed max-w-2xl font-medium" 
                           >
                             {content.user?.role}
                           </motion.p>
@@ -185,10 +183,7 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                       </div>
                     </div>
                     
-                    {/* Skills Banner Strip */}
-                    <div 
-                      className="relative overflow-hidden border-t border-border/10 py-3 bg-[#F8F7F5] rounded-b-2xl" 
-                    >
+                    <div className="relative overflow-hidden border-t border-border/10 py-3 bg-[#F8F7F5] rounded-b-2xl">
                       <div className="flex gap-4 animate-scroll px-8 opacity-40">
                         {(content.user?.categories || []).concat(content.user?.categories || []).map((category: string, index: number) => (
                           <div key={index} className="flex items-center gap-3 shrink-0">
@@ -204,82 +199,45 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                 </div>
 
                 <div className="mt-3">
-                  {/* My Works Section */}
+                  {/* Works Section */}
                   <motion.div
                     key="works"
                     layout
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.01 }}
-                    transition={{
-                      duration: 0.7,
-                      ease: [0.21, 0.47, 0.32, 0.98],
-                    }}
+                    transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}
                   >
-                    <Card className="bg-white border-0 rounded-2xl p-6 mt-0 mb-3" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
+                    <Card className="bg-white border-0 rounded-2xl p-6 mb-3" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
                       <div className="flex items-center justify-between mb-4">
-                        <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider">
-                          My works
-                        </h2>
+                        <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider">My works</h2>
                         <div className="flex items-center gap-3">
-                          <motion.svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="currentColor"
-                            className="text-foreground/30"
-                            animate={{ rotate: 360 }}
-                            transition={{
-                              duration: 3,
-                              repeat: Infinity,
-                              ease: "linear"
-                            }}
-                          >
+                          <motion.svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-foreground/30" animate={{ rotate: 360 }} transition={{ duration: 3, repeat: Infinity, ease: "linear" }}>
                             <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" />
                           </motion.svg>
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            className="rounded-full h-11 w-11"
-                          >
-                            <Plus className="w-5 h-5" />
-                          </Button>
+                          <Button variant="outline" size="icon" className="rounded-full h-11 w-11"><Plus className="w-5 h-5" /></Button>
                         </div>
                       </div>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {content.caseStudies?.map((project: any, i: number) => (
-                          <motion.div
-                            key={project.id || i}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.3 }}
-                            className="group relative"
-                          >
-                            <div 
-                              className="w-full h-full bg-white border border-border/10 rounded-2xl overflow-hidden shadow-[0_1px_4px_rgba(0,0,0,0.02)] transition-all duration-300 flex flex-col min-h-[360px]"
-                            >
+                          <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3, delay: 0.1 }} className="group relative">
+                            <div className="w-full h-full bg-white border border-border/10 rounded-2xl overflow-hidden shadow-[0_1px_4px_rgba(0,0,0,0.02)] transition-all duration-300 flex flex-col min-h-[360px] group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] group-hover:border-border/20 group-hover:-translate-y-1">
                               <div className="w-full h-48 flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-[#FCF9F6] to-[#F5F1ED]">
-                                <img 
-                                  src={i % 2 === 0 ? "/casestudyux1.svg" : "/casestudyux2.svg"}
-                                  alt={project.title} 
-                                  className="w-20 h-20 object-contain group-hover:scale-110 transition-transform duration-500 opacity-20"
-                                />
+                                <img src={i % 2 === 0 ? "/casestudyux1.svg" : "/casestudyux2.svg"} alt={project.title} className="w-20 h-20 object-contain group-hover:scale-110 transition-transform duration-500 opacity-20" />
                                 <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                                  <div className="bg-white/80 backdrop-blur-md p-2 rounded-full shadow-lg">
-                                    <ArrowUpRight className="w-4 h-4" />
-                                  </div>
+                                  <div className="bg-white/80 backdrop-blur-md p-2 rounded-full shadow-lg"><ArrowUpRight className="w-4 h-4" /></div>
                                 </div>
                               </div>
                               <div className="p-5 flex-1 flex flex-col justify-between">
                                 <div>
-                                  <Badge className="text-[10px] font-medium bg-muted/50 text-muted-foreground border-none px-2 py-0 mb-2 no-default-hover-elevate">
-                                    {project.category}
-                                  </Badge>
+                                  <Badge className="text-[10px] font-medium bg-muted/50 text-muted-foreground border-none px-2 py-0 mb-2 no-default-hover-elevate">{project.category}</Badge>
                                   <h3 className="text-base font-semibold mb-1 text-foreground leading-tight">{project.title}</h3>
-                                  <p className="text-xs text-foreground/40 line-clamp-2 leading-relaxed font-medium">
-                                    {project.description}
-                                  </p>
+                                  <p className="text-xs text-foreground/40 line-clamp-2 leading-relaxed font-medium">{project.description}</p>
+                                </div>
+                                <div className="flex items-center gap-2 mt-4 pt-4 border-t border-border/5">
+                                  <div className="flex -space-x-2">{[1, 2, 3].map((_, i) => (<div key={i} className="w-5 h-5 rounded-full border-2 border-white bg-muted/30" />))}</div>
+                                  <span className="text-[10px] text-foreground/30 font-medium">+12 views</span>
                                 </div>
                               </div>
                             </div>
@@ -293,6 +251,7 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                   <motion.div
                     key="work_experience"
                     layout
+                    id="section-work-experience"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.01 }}
@@ -303,34 +262,51 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                   >
                     <Card className="bg-white border-0 rounded-2xl p-6 mb-3" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
                       <div className="flex items-center justify-between mb-6">
-                        <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider">
+                        <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider" data-testid="text-work-experience-title">
                           Work Experience
                         </h2>
-                        <Button
+                        <Button 
                           variant="outline"
                           size="icon"
                           className="rounded-full h-11 w-11"
+                          data-testid="button-add-work-experience"
                         >
                           <Plus className="w-5 h-5" />
                         </Button>
                       </div>
-                      <div className="space-y-6">
+                      
+                      <div className="space-y-4">
                         {content.workExperiences?.map((exp: any, i: number) => (
-                          <div key={i} className="flex gap-4 group">
-                            <div className="w-12 h-12 rounded-xl bg-[#F5F3F1] flex items-center justify-center shrink-0 border border-black/[0.03]">
-                              <img 
-                                src={`https://api.dicebear.com/7.x/initials/svg?seed=${exp.company}`}
-                                alt={exp.company}
-                                className="w-8 h-8 rounded-lg"
-                              />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex justify-between items-start mb-1">
-                                <h3 className="font-semibold text-base truncate">{exp.role}</h3>
-                                <span className="text-xs text-foreground/40 whitespace-nowrap ml-2 font-medium uppercase tracking-wider">{exp.period}</span>
+                          <div 
+                            key={i} 
+                            className="group flex gap-5 p-4 rounded-2xl border border-border/30 bg-[#F5F3F1] hover-elevate transition-all duration-300"
+                            data-testid={`card-work-experience-${i}`}
+                          >
+                            <div className="shrink-0">
+                              <div className="w-12 h-12 rounded-xl border border-border/50 bg-white flex items-center justify-center overflow-hidden">
+                                <img 
+                                  src={`https://api.dicebear.com/7.x/initials/svg?seed=${exp.company}`}
+                                  alt={exp.company}
+                                  className="w-8 h-8 rounded-lg"
+                                />
                               </div>
-                              <p className="text-[#FF553E] text-sm font-medium mb-2">{exp.company}</p>
-                              <p className="text-sm text-foreground/50 leading-relaxed font-medium">
+                            </div>
+                            
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center justify-between mb-1">
+                                <h3 className="font-semibold text-base truncate" data-testid={`text-experience-role-${i}`}>
+                                  {exp.role}
+                                </h3>
+                                <span className="text-xs font-medium text-foreground/40 shrink-0" data-testid={`text-experience-period-${i}`}>
+                                  {exp.period}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-2 mb-2">
+                                <span className="text-sm font-medium text-foreground/60" data-testid={`text-experience-company-${i}`}>
+                                  {exp.company}
+                                </span>
+                              </div>
+                              <p className="text-sm text-foreground/50 leading-relaxed line-clamp-2" data-testid={`text-experience-description-${i}`}>
                                 {exp.description}
                               </p>
                             </div>
@@ -344,6 +320,7 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                   <motion.div
                     key="about"
                     layout
+                    id="section-about"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.01 }}
@@ -352,29 +329,31 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                       ease: [0.21, 0.47, 0.32, 0.98],
                     }}
                   >
-                    <Card className="bg-white border-0 rounded-2xl p-6 mb-3" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
+                    <Card className="bg-white border-0 rounded-2xl p-6 mt-0 mb-3" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
                       <div className="flex items-center justify-between mb-6">
-                        <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider">
+                        <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider" data-testid="text-about-title">
                           About Me
                         </h2>
                         <Button
                           variant="outline"
                           size="icon"
                           className="rounded-full h-11 w-11"
+                          data-testid="button-edit-about"
                         >
                           <Pencil className="w-5 h-5" />
                         </Button>
                       </div>
-                      <div className="space-y-4 text-foreground/80 leading-relaxed mb-8 font-medium">
-                        <p>
-                          {content.user?.aboutMe || "I am a passionate product designer dedicated to creating intuitive and impactful digital experiences. I specialize in bridging the gap between user needs and business goals through thoughtful design and prototyping."}
+                      <div className="space-y-4 text-foreground/80 leading-relaxed mb-8">
+                        <p data-testid="text-about-description-1">
+                          {content.user?.aboutMe || "I am a passionate product designer dedicated to creating intuitive and impactful digital experiences. With over 6 years of experience, I specialize in bridging the gap between user needs and business goals through thoughtful design and prototyping."}
                         </p>
                       </div>
 
-                      {/* Pin Board */}
+                      {/* Pin Board (Authentic Pegboard) */}
                       <div className="relative group/pegboard mb-8">
                         <div className="absolute inset-0 bg-black/5 rounded-2xl translate-y-[2px] translate-x-[1px] blur-[3px] pointer-events-none" />
-                        <div className="relative w-full aspect-[16/9] bg-[#FFFFFF] rounded-2xl shadow-[0_1px_4px_rgba(0,0,0,0.02)] z-10 overflow-visible border border-black/[0.03]">
+
+                        <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] bg-[#FFFFFF] rounded-2xl shadow-[0_1px_4px_rgba(0,0,0,0.02)] z-10 overflow-visible border border-black/[0.03]">
                           <div
                             className="absolute inset-0 pointer-events-none rounded-2xl"
                             style={{
@@ -387,20 +366,37 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                             }}
                           />
                           <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')] overflow-hidden" />
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <motion.div
-                              initial={{ rotate: -5 }}
-                              className="w-32 aspect-[4/3] p-1 bg-white shadow-[0_8px_16px_rgba(0,0,0,0.06),0_2px_4px_rgba(0,0,0,0.02)] rounded-sm"
-                            >
-                              <div className="w-full h-full overflow-hidden rounded-sm bg-[#f6f2ef] flex items-center justify-center">
-                                <img src="/advanced.png" className="w-16 h-16" alt="" />
-                              </div>
-                              <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 flex items-center justify-center pointer-events-none z-20">
-                                <div className="w-5 h-5 rounded-full bg-[#FF553E] shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_-1px_2px_rgba(0,0,0,0.2)] relative" />
-                              </div>
-                            </motion.div>
-                          </div>
+                          <div className="absolute inset-0 bg-gradient-to-tr from-black/[0.01] via-transparent to-white/[0.05] pointer-events-none overflow-hidden" />
+                          
+                          <motion.div
+                            initial={{ rotate: -5, left: '20%', top: '25%', x: '-50%', y: '-50%' }}
+                            animate={{ left: '20%', top: '25%', x: '-50%', y: '-50%' }}
+                            className="absolute w-24 sm:w-28 md:w-36 lg:w-40 aspect-[4/3] p-1 bg-white shadow-[0_8px_16px_rgba(0,0,0,0.06),0_2px_4px_rgba(0,0,0,0.02)] z-10 rounded-sm"
+                          >
+                            <div className="w-full h-full overflow-hidden rounded-sm">
+                              <img src="/portraits/portrait1.png" alt="" className="w-full h-full object-cover" />
+                            </div>
+                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 flex items-center justify-center z-20">
+                              <div className="w-5 h-5 rounded-full bg-[#FF553E] shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_-1px_2px_rgba(0,0,0,0.2)]" />
+                            </div>
+                          </motion.div>
+
+                          <motion.div
+                            initial={{ rotate: 3, left: '80%', top: '30%', x: '-50%', y: '-50%' }}
+                            animate={{ left: '80%', top: '30%', x: '-50%', y: '-50%' }}
+                            className="absolute w-28 sm:w-32 md:w-40 lg:w-44 aspect-square p-1 bg-white shadow-[0_8px_16px_rgba(0,0,0,0.06),0_2px_4px_rgba(0,0,0,0.02)] z-20 rounded-sm"
+                          >
+                            <div className="w-full h-full overflow-hidden rounded-sm">
+                              <img src="/portraits/portrait2.png" alt="" className="w-full h-full object-cover" />
+                            </div>
+                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 flex items-center justify-center z-20">
+                              <div className="w-5 h-5 rounded-full bg-[#FF553E] shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_-1px_2px_rgba(0,0,0,0.2)]" />
+                            </div>
+                          </motion.div>
                         </div>
+                      </div>
+                      <div className="text-center text-[10px] text-foreground/20 font-medium tracking-widest uppercase pointer-events-none mb-4">
+                        Try moving things around :)
                       </div>
                     </Card>
                   </motion.div>
@@ -409,6 +405,7 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                   <motion.div
                     key="testimonials"
                     layout
+                    id="section-testimonials"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.01 }}
@@ -417,45 +414,113 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                       ease: [0.21, 0.47, 0.32, 0.98],
                     }}
                   >
-                    <Card className="bg-white border-0 rounded-2xl p-6 mb-3" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
-                      <div className="flex items-center justify-between mb-6">
-                        <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider">
-                          What people say
+                    <Card className="bg-white border-0 rounded-2xl p-6 mt-0 mb-3" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
+                      <div className="flex items-center justify-between mb-4">
+                        <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider" data-testid="text-testimonials-title">
+                          Testimonials
                         </h2>
                         <Button
                           variant="outline"
                           size="icon"
                           className="rounded-full h-11 w-11"
+                          data-testid="button-add-testimonial"
                         >
                           <Plus className="w-5 h-5" />
                         </Button>
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                         {[
-                          { name: "Sarah Chen", company: "Stripe", text: "Morgan's approach to design thinking transformed how our team tackles complex problems." },
-                          { name: "James Rodriguez", company: "Airbnb", text: "Working with Morgan was a game-changer for our design system." }
-                        ].map((t, i) => (
-                          <div key={i} className="p-6 rounded-2xl bg-[#F8F7F5] border border-black/[0.03] flex flex-col justify-between min-h-[160px]">
-                            <p className="text-sm text-foreground/70 mb-4 italic font-medium leading-relaxed">"{t.text}"</p>
-                            <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded-full bg-border/20 flex items-center justify-center text-xs font-bold border border-black/5">
-                                {t.name.split(' ').map(n => n[0]).join('')}
-                              </div>
-                              <div>
-                                <p className="text-sm font-semibold text-foreground">{t.name}</p>
-                                <p className="text-[11px] text-foreground/40 font-medium uppercase tracking-wider">{t.company}</p>
-                              </div>
+                          { id: 1, name: "Sarah Chen", company: "Stripe", text: "Morgan's approach to design thinking transformed how our team tackles complex problems." },
+                          { id: 2, name: "James Rodriguez", company: "Airbnb", text: "Working with Morgan was a game-changer for our design system." }
+                        ].map((t, idx) => (
+                          <motion.div
+                            key={t.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: idx * 0.1 }}
+                            className="group rounded-2xl p-6 flex flex-col relative transition-all duration-300 bg-white hover-elevate shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_12px_rgba(0,0,0,0.04)]"
+                            data-testid={`card-testimonial-${t.id}`}
+                          >
+                            <div className="mb-4 mt-2 flex items-center justify-between">
+                              <svg width="24" height="20" viewBox="0 0 40 32" fill="none" className="text-foreground/20">
+                                <path d="M0 13.5C0 7.5 2.5 2.5 7.5 -1.5L10.5 1.5C7 4.5 5 8 5 12C5 12.5 5.1 13 5.2 13.5C6 13 7 12.5 8.5 12.5C10.5 12.5 12 13 13.5 14.5C15 16 15.5 18 15.5 20C15.5 22 15 24 13.5 25.5C12 27 10.5 27.5 8.5 27.5C6 27.5 4 26.5 2.5 24.5C1 22.5 0 19.5 0 15.5V13.5ZM24 13.5C24 7.5 26.5 2.5 31.5 -1.5L34.5 1.5C31 4.5 29 8 29 12C29 12.5 29.1 13 29.2 13.5C30 13 31 12.5 32.5 12.5C34.5 12.5 36 13 37.5 14.5C39 16 39.5 18 39.5 20C39.5 22 39 24 37.5 25.5C36 27 34.5 27.5 32.5 27.5C30 27.5 28 26.5 26.5 24.5C25 22.5 24 19.5 24 15.5V13.5Z" fill="currentColor"/>
+                              </svg>
+                              <Button variant="ghost" size="icon" className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <Pencil className="w-4 h-4" />
+                              </Button>
                             </div>
-                          </div>
+                            <p className="text-base leading-relaxed mb-8 flex-1 text-foreground/80">
+                              {t.text}
+                            </p>
+                            <div className="flex items-center justify-between gap-3 mt-auto">
+                              <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-full bg-[#FFB088] flex items-center justify-center text-white text-xs font-bold">
+                                  {t.name.split(' ').map(n => n[0]).join('')}
+                                </div>
+                                <div>
+                                  <h3 className="font-semibold text-sm mb-0.5 text-foreground">{t.name}</h3>
+                                  <p className="text-xs text-foreground/60">{t.company}</p>
+                                </div>
+                              </div>
+                              <Linkedin className="w-5 h-5 text-foreground/20" />
+                            </div>
+                          </motion.div>
                         ))}
                       </div>
                     </Card>
                   </motion.div>
 
-                  {/* Footer */}
+                  {/* Toolbox Section */}
+                  <motion.div
+                    key="toolbox"
+                    layout
+                    id="section-toolbox"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.01 }}
+                    transition={{
+                      duration: 0.7,
+                      ease: [0.21, 0.47, 0.32, 0.98],
+                    }}
+                  >
+                    <Card className="bg-white border-0 rounded-2xl p-6 mt-0 mb-3 overflow-visible" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
+                      <div className="flex items-center justify-between mb-4">
+                        <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider">
+                          Toolbox
+                        </h2>
+                        <Button variant="outline" size="icon" className="rounded-full h-11 w-11">
+                          <Plus className="w-5 h-5" />
+                        </Button>
+                      </div>
+
+                      <div className="relative mt-2 overflow-x-hidden overflow-y-visible -mx-6 px-6">
+                        <div className="absolute left-0 top-0 bottom-0 w-24 md:w-20 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
+                        <div className="absolute right-0 top-0 bottom-0 w-24 md:w-20 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />
+
+                        <div className="flex group">
+                          <div className="flex animate-scroll group-hover:[animation-play-state:paused] py-4">
+                            {["Figma", "Figjam", "Maze", "Webflow", "Protopie", "Jitter", "Figma", "Figjam", "Maze", "Webflow", "Protopie", "Jitter"].map((tool, idx) => (
+                              <div
+                                key={idx}
+                                className="bg-white border border-border/30 rounded-2xl p-3 md:p-4 hover-elevate mx-2 shrink-0 flex items-center justify-center w-16 h-16 md:w-20 md:h-20 cursor-default"
+                              >
+                                <div className="w-8 h-8 md:w-10 md:h-10 bg-muted rounded flex items-center justify-center text-[10px] font-bold text-foreground/40">
+                                  {tool.substring(0, 2).toUpperCase()}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  </motion.div>
+
+                  {/* Footer Section */}
                   <motion.footer
                     key="footer"
                     layout
+                    id="footer"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.01 }}
@@ -498,6 +563,7 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                             variant="outline" 
                             size="icon"
                             className="rounded-full h-11 w-11"
+                            data-testid="button-edit-footer"
                           >
                             <Pencil className="w-5 h-5" />
                           </Button>
@@ -531,31 +597,10 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                 </div>
               </div>
             ) : (
-              <div className="prose dark:prose-invert max-w-none whitespace-pre-wrap font-sans text-foreground/90">
-                {content.raw || content}
-              </div>
+              <pre className="p-4 bg-muted rounded-lg overflow-x-auto whitespace-pre-wrap font-mono text-sm">
+                {content.raw || JSON.stringify(content, null, 2)}
+              </pre>
             )}
-          </div>
-          <div className="p-6 border-t flex flex-col sm:flex-row items-center justify-between gap-4 bg-white/80 backdrop-blur-md">
-            <p className="text-sm text-muted-foreground italic">
-              Looks good? Click confirm to populate your dashboard.
-            </p>
-            <div className="flex gap-3 w-full sm:w-auto">
-              <Button variant="outline" className="flex-1 sm:flex-none rounded-full px-8" onClick={onClose}>
-                Discard
-              </Button>
-              <Button 
-                className="flex-1 sm:flex-none bg-[#FF553E] hover:bg-[#E64935] text-white rounded-full px-8 shadow-lg shadow-[#FF553E]/20" 
-                onClick={handleApply}
-              >
-                {isStructured ? (
-                  <>
-                    <Check className="w-4 h-4 mr-2" />
-                    Confirm & Start Designing
-                  </>
-                ) : "Close Preview"}
-              </Button>
-            </div>
           </div>
         </motion.div>
       </div>
