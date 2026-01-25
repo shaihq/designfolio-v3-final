@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Check, Sparkles, Plus } from "lucide-react";
+import { X, Check, Sparkle } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { Card } from "./ui/card";
@@ -48,114 +48,106 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
           </div>
           <div className="flex-1 overflow-y-auto p-6 sm:p-10">
             {isStructured ? (
-              <div className="space-y-12">
-                {/* Hero Section */}
-                <section className="flex flex-col items-start gap-6">
-                  <div className="space-y-4">
-                    <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-foreground">
-                      Hey, I'm <span className="text-[#FF553E]">{content.user?.name?.split(' ')[0] || "Shai"}</span>!
-                    </h1>
-                    <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-                      {content.user?.role}
-                    </p>
-                  </div>
-                  
-                  <div className="flex flex-wrap gap-2">
-                    {content.user?.categories?.map((cat: string, i: number) => (
-                      <Badge 
-                        key={i} 
-                        variant="secondary"
-                        className="bg-white/50 backdrop-blur-sm border-border/50 text-foreground px-4 py-1.5 rounded-full text-sm font-medium hover-elevate"
-                      >
-                        {cat}
-                      </Badge>
-                    ))}
-                  </div>
-
-                  {content.user?.skills && (
-                    <div className="w-full max-w-md mt-4 p-6 bg-white/40 backdrop-blur-md rounded-2xl border border-white/20 shadow-sm">
-                      <div className="flex items-center gap-2 mb-4">
-                        <Sparkles className="w-4 h-4 text-[#FF553E]" />
-                        <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">Expertise</h3>
+              <div className="max-w-4xl mx-auto space-y-3">
+                {/* Profile Card - Exact Dashboard Replica */}
+                <div className="z-10 mb-3">
+                  <Card className="bg-white border-0 rounded-2xl relative" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
+                    {/* Profile Info */}
+                    <div className="p-6 sm:p-8 pb-6">
+                      <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
+                        <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl flex items-center justify-center relative overflow-hidden shrink-0 bg-[#f6f2ef]">
+                          <img 
+                            src="/advanced.png" 
+                            alt={content.user?.name} 
+                            className="w-16 h-16 sm:w-24 sm:h-24 object-contain"
+                          />
+                        </div>
+                        
+                        <div className="flex-1">
+                          <h1 className="text-2xl sm:text-3xl font-semibold mb-2 font-heading">
+                            Hey, I'm {content.user?.name?.split(' ')[0] || "Shai"}!
+                          </h1>
+                          <p className="text-sm sm:text-base text-foreground/50 leading-relaxed max-w-2xl">
+                            {content.user?.role}
+                          </p>
+                        </div>
                       </div>
-                      <div className="space-y-4">
-                        {content.user.skills.slice(0, 4).map((skill: any, i: number) => (
-                          <div key={i} className="space-y-1.5">
-                            <div className="flex justify-between text-xs font-medium">
-                              <span>{skill.name}</span>
-                              <span className="text-muted-foreground">{skill.level}%</span>
-                            </div>
-                            <div className="h-1.5 w-full bg-black/5 rounded-full overflow-hidden">
-                              <motion.div 
-                                initial={{ width: 0 }}
-                                animate={{ width: `${skill.level}%` }}
-                                transition={{ duration: 1, delay: i * 0.1 }}
-                                className="h-full bg-[#FF553E]"
-                              />
-                            </div>
+                    </div>
+                    
+                    {/* Skills Banner Strip */}
+                    <div className="relative overflow-hidden border-t border-border/10 py-3 bg-[#F8F7F5] rounded-b-2xl">
+                      <div className="flex gap-4 animate-scroll px-8 opacity-40">
+                        {(content.user?.categories || []).concat(content.user?.categories || []).map((category: string, index: number) => (
+                          <div key={index} className="flex items-center gap-3 shrink-0">
+                            <span className="text-[12px] font-medium whitespace-nowrap uppercase text-[#0A0A0A] tracking-normal">
+                              {category}
+                            </span>
+                            <Sparkle className="w-2.5 h-2.5 fill-[#0A0A0A] text-[#0A0A0A]" />
                           </div>
                         ))}
                       </div>
                     </div>
-                  )}
-                </section>
+                  </Card>
+                </div>
 
-                {/* Experience Section */}
-                <section>
-                  <div className="flex items-center gap-2 mb-6">
-                    <div className="h-px flex-1 bg-border/50" />
-                    <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground px-4">Experience</h3>
-                    <div className="h-px flex-1 bg-border/50" />
-                  </div>
-                  <div className="grid gap-4">
+                {/* Experience Card */}
+                <Card className="bg-white border-0 rounded-2xl p-6 mb-3" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
+                  <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider mb-6">
+                    Work Experience
+                  </h2>
+                  <div className="space-y-6">
                     {content.workExperiences?.map((exp: any, i: number) => (
-                      <Card key={i} className="bg-white/50 backdrop-blur-sm border-0 shadow-sm p-6 hover-elevate transition-all">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                          <div>
-                            <h4 className="font-bold text-lg">{exp.role}</h4>
-                            <p className="text-[#FF553E] font-medium">{exp.company}</p>
-                          </div>
-                          <Badge variant="outline" className="w-fit rounded-full px-4 py-1 border-border/50">
-                            {exp.period}
-                          </Badge>
+                      <div key={i} className="flex gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-[#F5F3F1] flex items-center justify-center shrink-0">
+                          <img 
+                            src={`https://api.dicebear.com/7.x/initials/svg?seed=${exp.company}`}
+                            alt={exp.company}
+                            className="w-8 h-8 rounded-lg"
+                          />
                         </div>
-                        <p className="mt-4 text-muted-foreground text-sm leading-relaxed">
-                          {exp.description}
-                        </p>
-                      </Card>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex justify-between items-start mb-1">
+                            <h3 className="font-semibold text-base truncate">{exp.role}</h3>
+                            <span className="text-xs text-foreground/40 whitespace-nowrap ml-2">{exp.period}</span>
+                          </div>
+                          <p className="text-[#FF553E] text-sm font-medium mb-2">{exp.company}</p>
+                          <p className="text-sm text-foreground/50 leading-relaxed line-clamp-2">
+                            {exp.description}
+                          </p>
+                        </div>
+                      </div>
                     ))}
                   </div>
-                </section>
+                </Card>
 
-                {/* Projects Section */}
-                <section>
-                  <div className="flex items-center gap-2 mb-6">
-                    <div className="h-px flex-1 bg-border/50" />
-                    <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground px-4">Selected Works</h3>
-                    <div className="h-px flex-1 bg-border/50" />
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Works Section */}
+                <Card className="bg-white border-0 rounded-2xl p-6 mb-3" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
+                  <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider mb-6">
+                    My works
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {content.caseStudies?.map((cs: any, i: number) => (
-                      <Card key={i} className="group overflow-hidden border-0 shadow-sm hover-elevate transition-all bg-white">
-                        <div className="aspect-video bg-muted/30 relative flex items-center justify-center p-8">
-                          <div className="absolute inset-0 bg-gradient-to-br from-[#FF553E]/5 to-transparent" />
-                          <div className="w-20 h-20 rounded-2xl bg-white shadow-xl flex items-center justify-center">
-                            <Plus className="w-8 h-8 text-[#FF553E] group-hover:rotate-90 transition-transform duration-500" />
-                          </div>
+                      <div key={i} className="bg-white border-0 rounded-2xl overflow-hidden relative shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_2px_8px_rgba(0,0,0,0.04)]">
+                        <div className="w-full h-48 flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-[#FCF9F6] to-[#F5F1ED]">
+                          <img 
+                            src={i % 2 === 0 ? "/casestudyux1.svg" : "/casestudyux2.svg"}
+                            className="w-20 h-20 opacity-20"
+                            alt=""
+                          />
                         </div>
-                        <div className="p-6">
-                          <Badge className="mb-3 bg-[#FF553E]/10 text-[#FF553E] border-none hover:bg-[#FF553E]/10">
+                        <div className="p-4">
+                          <Badge className="text-[10px] font-medium bg-muted/50 text-muted-foreground border-none px-2 py-0 mb-2">
                             {cs.category}
                           </Badge>
-                          <h4 className="font-bold text-lg mb-2">{cs.title}</h4>
-                          <p className="text-sm text-muted-foreground line-clamp-2">
+                          <h3 className="text-sm font-semibold mb-1 truncate">{cs.title}</h3>
+                          <p className="text-[11px] text-muted-foreground line-clamp-2 leading-relaxed">
                             {cs.description}
                           </p>
                         </div>
-                      </Card>
+                      </div>
                     ))}
                   </div>
-                </section>
+                </Card>
               </div>
             ) : (
               <div className="prose dark:prose-invert max-w-none whitespace-pre-wrap font-sans text-foreground/90">
