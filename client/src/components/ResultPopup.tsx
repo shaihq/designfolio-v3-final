@@ -104,21 +104,54 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           className="relative w-full max-w-5xl h-[90vh] bg-background border border-border rounded-2xl shadow-2xl flex flex-col overflow-hidden"
         >
-          <div className="flex items-center justify-between p-4 border-b">
-            <h2 className="text-sm font-medium text-foreground/50">
-              Hope you like your new portfolio!
-            </h2>
-            <div className="flex items-center gap-2">
+          {/* Chrome-style Top Bar */}
+          <div className="bg-[#f1f3f4] dark:bg-[#202124] border-b border-border/50 flex items-center h-12 px-4 shrink-0">
+            <div className="flex gap-1.5 w-[72px]">
+              <div className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e]"></div>
+              <div className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]"></div>
+              <div className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]"></div>
+            </div>
+            
+            <div className="flex-1 flex justify-center px-4">
+              <div className="bg-white dark:bg-[#2a2a2a] rounded-lg h-8 px-4 flex items-center justify-between border border-black/5 dark:border-white/5 w-full max-w-lg shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
+                <div className="flex items-center gap-2 text-[11px] text-foreground/40 font-medium">
+                  <Lock className="w-3 h-3" />
+                  <span className="truncate">your-new-portfolio.designfolio.me</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <RotateCcw className="w-3 h-3 text-foreground/20" />
+                  <Plus className="w-3 h-3 text-foreground/20" />
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 w-[140px] justify-end">
               {isStructured && (
-                <Button onClick={handleApply} className="bg-[#FF553E] hover:bg-[#FF553E]/90 text-white rounded-full px-6">
+                <Button 
+                  onClick={handleApply} 
+                  className="bg-[#FF553E] hover:bg-[#FF553E]/90 text-white rounded-full h-8 px-4 text-xs font-bold shadow-sm active-elevate-2 transition-all"
+                >
                   Open in Editor
                 </Button>
               )}
-              <Button variant="ghost" size="icon" onClick={onClose} className="rounded-full">
-                <X className="w-5 h-5" />
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={onClose} 
+                className="rounded-full h-7 w-7 hover:bg-black/5 dark:hover:bg-white/5"
+              >
+                <X className="w-4 h-4 text-foreground/40" />
               </Button>
             </div>
           </div>
+
+          {/* Subtle feedback message below bar */}
+          <div className="bg-white/50 dark:bg-black/10 px-6 py-2 border-b border-border/10 flex justify-center">
+            <span className="text-[10px] uppercase tracking-[0.1em] font-bold text-foreground/30">
+              Hope you like your new portfolio!
+            </span>
+          </div>
+          
           <div className="flex-1 overflow-y-auto p-6 sm:p-10 bg-[#F8F7F5]">
             {isStructured ? (
               <div className="max-w-4xl mx-auto space-y-3">
