@@ -170,7 +170,7 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                             transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
                             className="text-2xl sm:text-3xl font-semibold mb-2 font-heading" 
                           >
-                            Hey, I'm {content.user?.name?.split(' ')[0] || "Shai"}!
+                            Hey, I'm {content.user?.name || "Shai"}!
                           </motion.h1>
                           <motion.p 
                             initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
