@@ -18,7 +18,8 @@ export default function Navbar() {
   return (
     <div className="fixed top-0 left-0 right-0 z-[9999] transition-all duration-700 pt-3 px-4 pointer-events-none">
       <nav 
-        className="w-full mx-auto transition-all duration-700 ease-in-out border border-border backdrop-blur-md rounded-full shadow-sm max-w-[640px] bg-background/80 pointer-events-auto"
+        className="w-full mx-auto transition-all duration-700 ease-in-out border border-border backdrop-blur-md rounded-full shadow-sm max-w-[640px] bg-white/80 dark:bg-[#1a1a1a]/80 pointer-events-auto"
+        style={{ background: 'linear-gradient(180deg, #fff6 10%, #fffc)' }}
       >
         <div className="transition-all duration-700 ease-in-out px-4 sm:px-6">
           <div className="flex items-center justify-between h-14 sm:h-16">
