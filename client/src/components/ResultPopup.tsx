@@ -125,12 +125,6 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                 {/* Profile Card */}
                 <div className="z-10 mb-3">
                   <Card className="bg-white border-0 rounded-2xl relative" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
-                    <div className="absolute top-4 right-4 z-10">
-                      <Button variant="outline" size="icon" className="rounded-full h-11 w-11">
-                        <Pencil className="w-5 h-5" />
-                      </Button>
-                    </div>
-
                     <div className="p-6 sm:p-8 pb-6">
                       <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
                         <TooltipProvider>
@@ -170,7 +164,7 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                             transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
                             className="text-2xl sm:text-3xl font-semibold mb-2 font-heading" 
                           >
-                            Hey, I'm {content.user?.name || "Shai"}!
+                            {content.user?.name || "Shai!"}
                           </motion.h1>
                           <motion.p 
                             initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
@@ -216,7 +210,6 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                           <motion.svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-foreground/30" animate={{ rotate: 360 }} transition={{ duration: 3, repeat: Infinity, ease: "linear" }}>
                             <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" />
                           </motion.svg>
-                          <Button variant="outline" size="icon" className="rounded-full h-11 w-11"><Plus className="w-5 h-5" /></Button>
                         </div>
                       </div>
                       
@@ -275,14 +268,6 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                         <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider" data-testid="text-work-experience-title">
                           Work Experience
                         </h2>
-                        <Button 
-                          variant="outline"
-                          size="icon"
-                          className="rounded-full h-11 w-11"
-                          data-testid="button-add-work-experience"
-                        >
-                          <Plus className="w-5 h-5" />
-                        </Button>
                       </div>
                       
                       <div className="space-y-4">
@@ -344,14 +329,6 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                         <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider" data-testid="text-about-title">
                           About Me
                         </h2>
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="rounded-full h-11 w-11"
-                          data-testid="button-edit-about"
-                        >
-                          <Pencil className="w-5 h-5" />
-                        </Button>
                       </div>
                       <div className="space-y-4 text-foreground/80 leading-relaxed mb-8">
                         <p data-testid="text-about-description-1">
@@ -429,14 +406,6 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                         <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider" data-testid="text-testimonials-title">
                           Testimonials
                         </h2>
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="rounded-full h-11 w-11"
-                          data-testid="button-add-testimonial"
-                        >
-                          <Plus className="w-5 h-5" />
-                        </Button>
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">

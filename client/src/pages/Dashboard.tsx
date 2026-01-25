@@ -1389,7 +1389,7 @@ export default function Dashboard() {
                       className="text-2xl sm:text-3xl font-semibold mb-2 font-heading" 
                       data-testid="text-user-name"
                     >
-                      Hey, I'm {user.name}!
+                      {user.name}
                     </motion.h1>
                     <motion.p 
                       initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
