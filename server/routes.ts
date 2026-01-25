@@ -54,7 +54,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         "user": {
           "name": "Full Name",
           "role": "Short professional bio/headline",
-          "categories": ["Skill Category 1", "Skill Category 2"],
+          "categories": ["Skill Category 1", "Skill Category 2", "Skill Category 3", "Skill Category 4", "Skill Category 5", "Skill Category 6"],
           "skills": [
             {"name": "Skill Name", "level": 0-100}
           ]
@@ -75,6 +75,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         ]
       }
+
+      CRITICAL: For the "categories" array, you MUST provide at least 6 professional skills. Extract them from the resume, or if fewer are found, infer highly relevant complementary skills based on their role.
 
       Resume Text:
       ${text}`;
