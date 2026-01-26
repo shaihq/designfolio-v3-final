@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   X, Check, Sparkle, Mail, Linkedin, Instagram, Dribbble, ArrowUpRight, 
   Plus, Sparkles, Pencil, FileText, Smartphone, Monitor, Search, Layers,
-  Trash2, GripVertical, Paintbrush, Upload, Lock, Crown, Eye, EyeOff, Bell
+  Trash2, GripVertical, Paintbrush, Upload, Lock, Crown, Eye, EyeOff, Bell,
+  Building, ThumbsUp
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
@@ -194,7 +195,7 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                             transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
                             className="text-2xl sm:text-3xl font-semibold mb-2 font-heading" 
                           >
-                            {content.user?.name || "Shai!"}
+                            {content.user?.name || "Shai Krishna"}
                           </motion.h1>
                           <motion.p 
                             initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
@@ -202,13 +203,13 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                             transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1], delay: 0.3 }}
                             className="text-sm sm:text-base text-foreground/50 leading-relaxed max-w-2xl font-medium" 
                           >
-                            {content.user?.role}
+                            {content.user?.role || "A 0→1 Product Designer with 6 years of experience. I design and develop digital products, create prototypes, and design interfaces."}
                           </motion.p>
                         </div>
                       </div>
                     </div>
                     
-                    <div className="relative overflow-hidden border-t border-border/10 py-3 bg-[#F8F7F5] rounded-b-2xl">
+                    <div className="relative overflow-hidden border-t border-border/10 py-3 bg-[#F8F7F5] rounded-b-2xl" data-testid="container-categories">
                       <div className="flex gap-4 animate-scroll px-8 opacity-40">
                         {(content.user?.categories || []).concat(content.user?.categories || []).map((category: string, index: number) => (
                           <div key={index} className="flex items-center gap-3 shrink-0">
@@ -379,9 +380,12 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
 
                       {/* Pin Board (Authentic Pegboard) */}
                       <div className="relative group/pegboard mb-8">
+                        {/* Realistic Board Depth/Shadow - Even more subtle */}
                         <div className="absolute inset-0 bg-black/5 rounded-2xl translate-y-[2px] translate-x-[1px] blur-[3px] pointer-events-none" />
 
                         <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-[16/9] bg-[#FFFFFF] rounded-2xl shadow-[0_1px_4px_rgba(0,0,0,0.02)] z-10 overflow-visible border border-black/[0.03]">
+                          
+                          {/* Authentic Pegboard Holes Pattern - Centered Repeating Background */}
                           <div
                             className="absolute inset-0 pointer-events-none rounded-2xl"
                             style={{
@@ -393,34 +397,66 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                               backgroundClip: 'content-box',
                             }}
                           />
+
+                          {/* Subtle Material Grain */}
                           <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')] overflow-hidden" />
+
+                          {/* Lighting */}
                           <div className="absolute inset-0 bg-gradient-to-tr from-black/[0.01] via-transparent to-white/[0.05] pointer-events-none overflow-hidden" />
                           
-                          <motion.div
-                            initial={{ rotate: -5, left: '20%', top: '25%', x: '-50%', y: '-50%' }}
-                            animate={{ left: '20%', top: '25%', x: '-50%', y: '-50%' }}
-                            className="absolute w-24 sm:w-28 md:w-36 lg:w-40 aspect-[4/3] p-1 bg-white shadow-[0_8px_16px_rgba(0,0,0,0.06),0_2px_4px_rgba(0,0,0,0.02)] z-10 rounded-sm"
-                          >
-                            <div className="w-full h-full overflow-hidden rounded-sm">
-                              <img src="/portraits/portrait1.png" alt="" className="w-full h-full object-cover" />
+                          {/* Photo 1 */}
+                        <motion.div
+                          initial={{ rotate: -5, left: '20%', top: '25%', x: '-50%', y: '-50%' }}
+                          animate={{ left: '20%', top: '25%', x: '-50%', y: '-50%' }}
+                          className="absolute w-24 sm:w-28 md:w-36 lg:w-40 aspect-[4/3] p-1 bg-white shadow-[0_8px_16px_rgba(0,0,0,0.06),0_2px_4px_rgba(0,0,0,0.02)] z-10 rounded-sm"
+                        >
+                          <div className="w-full h-full overflow-hidden rounded-sm">
+                            <img 
+                              src="/portraits/portrait1.png" 
+                              alt="Portrait 1" 
+                              className="w-full h-full object-cover pointer-events-none"
+                            />
+                          </div>
+                          {/* Realistic Pin */}
+                          <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 flex items-center justify-center pointer-events-none z-20">
+                            {/* Pin Head (Plastic) */}
+                            <div className="w-5 h-5 rounded-full bg-[#FF553E] shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_-1px_2px_rgba(0,0,0,0.2)] relative">
+                              {/* Highlight/Reflection */}
+                              <div className="absolute top-1 left-1.5 w-1.5 h-1.5 bg-white/40 rounded-full blur-[0.5px]" />
+                              {/* Subtle Depth Gradient */}
+                              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-black/10 to-transparent" />
                             </div>
-                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 flex items-center justify-center z-20">
-                              <div className="w-5 h-5 rounded-full bg-[#FF553E] shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_-1px_2px_rgba(0,0,0,0.2)]" />
-                            </div>
-                          </motion.div>
+                            {/* Pin Needle Shadow */}
+                            <div className="absolute top-4 w-[1px] h-2 bg-black/20 blur-[0.5px] -rotate-12" />
+                          </div>
+                        </motion.div>
 
-                          <motion.div
-                            initial={{ rotate: 3, left: '80%', top: '30%', x: '-50%', y: '-50%' }}
-                            animate={{ left: '80%', top: '30%', x: '-50%', y: '-50%' }}
-                            className="absolute w-28 sm:w-32 md:w-40 lg:w-44 aspect-square p-1 bg-white shadow-[0_8px_16px_rgba(0,0,0,0.06),0_2px_4px_rgba(0,0,0,0.02)] z-20 rounded-sm"
-                          >
-                            <div className="w-full h-full overflow-hidden rounded-sm">
-                              <img src="/portraits/portrait2.png" alt="" className="w-full h-full object-cover" />
+                        {/* Photo 2 */}
+                        <motion.div
+                          initial={{ rotate: 3, left: '80%', top: '30%', x: '-50%', y: '-50%' }}
+                          animate={{ left: '80%', top: '30%', x: '-50%', y: '-50%' }}
+                          className="absolute w-28 sm:w-32 md:w-40 lg:w-44 aspect-square p-1 bg-white shadow-[0_8px_16px_rgba(0,0,0,0.06),0_2px_4px_rgba(0,0,0,0.02)] z-20 rounded-sm"
+                        >
+                          <div className="w-full h-full overflow-hidden rounded-sm">
+                            <img 
+                              src="/portraits/portrait2.png" 
+                              alt="Portrait 2" 
+                              className="w-full h-full object-cover pointer-events-none"
+                            />
+                          </div>
+                          {/* Realistic Pin */}
+                          <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 flex items-center justify-center pointer-events-none z-20">
+                            {/* Pin Head (Plastic) */}
+                            <div className="w-5 h-5 rounded-full bg-[#FF553E] shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_-1px_2px_rgba(0,0,0,0.2)] relative">
+                              {/* Highlight/Reflection */}
+                              <div className="absolute top-1 left-1.5 w-1.5 h-1.5 bg-white/40 rounded-full blur-[0.5px]" />
+                              {/* Subtle Depth Gradient */}
+                              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-black/10 to-transparent" />
                             </div>
-                            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-6 h-6 flex items-center justify-center z-20">
-                              <div className="w-5 h-5 rounded-full bg-[#FF553E] shadow-[0_2px_4px_rgba(0,0,0,0.2),inset_0_-1px_2px_rgba(0,0,0,0.2)]" />
-                            </div>
-                          </motion.div>
+                            {/* Pin Needle Shadow */}
+                            <div className="absolute top-4 w-[1px] h-2 bg-black/20 blur-[0.5px] -rotate-12" />
+                          </div>
+                        </motion.div>
                         </div>
                       </div>
                       <div className="text-center text-[10px] text-foreground/20 font-medium tracking-widest uppercase pointer-events-none mb-4">
@@ -449,44 +485,43 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                         </h2>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                        {[
-                          { id: 1, name: "Sarah Chen", company: "Stripe", text: "Morgan's approach to design thinking transformed how our team tackles complex problems." },
-                          { id: 2, name: "James Rodriguez", company: "Airbnb", text: "Working with Morgan was a game-changer for our design system." }
-                        ].map((t, idx) => (
-                          <motion.div
-                            key={t.id}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: idx * 0.1 }}
-                            className="group rounded-2xl p-6 flex flex-col relative transition-all duration-300 bg-white hover-elevate shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_12px_rgba(0,0,0,0.04)]"
-                            data-testid={`card-testimonial-${t.id}`}
-                          >
-                            <div className="mb-4 mt-2 flex items-center justify-between">
-                              <svg width="24" height="20" viewBox="0 0 40 32" fill="none" className="text-foreground/20">
-                                <path d="M0 13.5C0 7.5 2.5 2.5 7.5 -1.5L10.5 1.5C7 4.5 5 8 5 12C5 12.5 5.1 13 5.2 13.5C6 13 7 12.5 8.5 12.5C10.5 12.5 12 13 13.5 14.5C15 16 15.5 18 15.5 20C15.5 22 15 24 13.5 25.5C12 27 10.5 27.5 8.5 27.5C6 27.5 4 26.5 2.5 24.5C1 22.5 0 19.5 0 15.5V13.5ZM24 13.5C24 7.5 26.5 2.5 31.5 -1.5L34.5 1.5C31 4.5 29 8 29 12C29 12.5 29.1 13 29.2 13.5C30 13 31 12.5 32.5 12.5C34.5 12.5 36 13 37.5 14.5C39 16 39.5 18 39.5 20C39.5 22 39 24 37.5 25.5C36 27 34.5 27.5 32.5 27.5C30 27.5 28 26.5 26.5 24.5C25 22.5 24 19.5 24 15.5V13.5Z" fill="currentColor"/>
-                              </svg>
-                              <Button variant="ghost" size="icon" className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <Pencil className="w-4 h-4" />
-                              </Button>
-                            </div>
-                            <p className="text-base leading-relaxed mb-8 flex-1 text-foreground/80">
-                              {t.text}
-                            </p>
-                            <div className="flex items-center justify-between gap-3 mt-auto">
-                              <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-[#FFB088] flex items-center justify-center text-white text-xs font-bold">
-                                  {t.name.split(' ').map(n => n[0]).join('')}
-                                </div>
-                                <div>
-                                  <h3 className="font-semibold text-sm mb-0.5 text-foreground">{t.name}</h3>
-                                  <p className="text-xs text-foreground/60">{t.company}</p>
-                                </div>
+                      <div className="mt-6 -mx-10 px-10 overflow-visible">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-visible py-4">
+                          {[
+                            { id: 1, name: "Sarah Chen", company: "Stripe", text: "Morgan's approach to design thinking transformed how our team tackles complex problems." },
+                            { id: 2, name: "James Rodriguez", company: "Airbnb", text: "Working with Morgan was a game-changer for our design system." }
+                          ].map((testimonial, idx) => (
+                            <motion.div
+                              key={testimonial.id}
+                              initial={{ opacity: 0, y: 20 }}
+                              whileInView={{ opacity: 1, y: 0 }}
+                              viewport={{ once: true, amount: 0.2 }}
+                              transition={{ duration: 0.5, delay: idx * 0.1 }}
+                              className="group rounded-2xl p-6 flex flex-col relative transition-all duration-300 h-full bg-white hover-elevate shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_12px_rgba(0,0,0,0.04)]"
+                            >
+                              <div className="mb-4 mt-2 flex items-center justify-between">
+                                <svg width="24" height="20" viewBox="0 0 40 32" fill="none" className="text-foreground/20">
+                                  <path d="M0 13.5C0 7.5 2.5 2.5 7.5 -1.5L10.5 1.5C7 4.5 5 8 5 12C5 12.5 5.1 13 5.2 13.5C6 13 7 12.5 8.5 12.5C10.5 12.5 12 13 13.5 14.5C15 16 15.5 18 15.5 20C15.5 22 15 24 13.5 25.5C12 27 10.5 27.5 8.5 27.5C6 27.5 4 26.5 2.5 24.5C1 22.5 0 19.5 0 15.5V13.5ZM24 13.5C24 7.5 26.5 2.5 31.5 -1.5L34.5 1.5C31 4.5 29 8 29 12C29 12.5 29.1 13 29.2 13.5C30 13 31 12.5 32.5 12.5C34.5 12.5 36 13 37.5 14.5C39 16 39.5 18 39.5 20C39.5 22 39 24 37.5 25.5C36 27 34.5 27.5 32.5 27.5C30 27.5 28 26.5 26.5 24.5C25 22.5 24 19.5 24 15.5V13.5Z" fill="currentColor"/>
+                                </svg>
                               </div>
-                              <Linkedin className="w-5 h-5 text-foreground/20" />
-                            </div>
-                          </motion.div>
-                        ))}
+                              <p className="text-base leading-relaxed mb-8 flex-1 text-foreground/80">
+                                {testimonial.text}
+                              </p>
+                              <div className="flex items-center justify-between gap-3 mt-auto">
+                                <div className="flex items-center gap-3">
+                                  <div className="w-10 h-10 rounded-full bg-[#FFB088] flex items-center justify-center text-white text-xs font-bold">
+                                    {testimonial.name.split(' ').map(n => n[0]).join('')}
+                                  </div>
+                                  <div>
+                                    <h3 className="font-semibold text-sm mb-0.5 text-foreground">{testimonial.name}</h3>
+                                    <p className="text-xs text-foreground/60">{testimonial.company}</p>
+                                  </div>
+                                </div>
+                                <Linkedin className="w-5 h-5 text-foreground/20" />
+                              </div>
+                            </motion.div>
+                          ))}
+                        </div>
                       </div>
                     </Card>
                   </motion.div>
