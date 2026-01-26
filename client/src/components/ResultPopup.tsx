@@ -311,11 +311,11 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                         {content.workExperiences?.map((exp: any, i: number) => (
                           <div 
                             key={i} 
-                            className="group flex gap-5 p-4 rounded-2xl border border-border/30 bg-[#F5F3F1] hover-elevate transition-all duration-300"
+                            className="group flex gap-5 p-4 rounded-2xl border border-black/[0.03] bg-white hover-elevate transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
                             data-testid={`card-work-experience-${i}`}
                           >
                             <div className="shrink-0">
-                              <div className="w-12 h-12 rounded-xl border border-border/50 bg-white flex items-center justify-center overflow-hidden">
+                              <div className="w-12 h-12 rounded-xl border border-black/[0.05] bg-white flex items-center justify-center overflow-hidden shadow-sm">
                                 <img 
                                   src={`https://api.dicebear.com/7.x/initials/svg?seed=${exp.company}`}
                                   alt={exp.company}
@@ -326,15 +326,15 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                             
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center justify-between mb-1">
-                                <h3 className="font-semibold text-base truncate" data-testid={`text-experience-role-${i}`}>
+                                <h3 className="font-semibold text-base truncate text-foreground" data-testid={`text-experience-role-${i}`}>
                                   {exp.role}
                                 </h3>
-                                <span className="text-xs font-medium text-foreground/40 shrink-0" data-testid={`text-experience-period-${i}`}>
+                                <span className="text-[10px] font-bold text-foreground/20 uppercase tracking-widest shrink-0" data-testid={`text-experience-period-${i}`}>
                                   {exp.period}
                                 </span>
                               </div>
                               <div className="flex items-center gap-2 mb-2">
-                                <span className="text-sm font-medium text-foreground/60" data-testid={`text-experience-company-${i}`}>
+                                <span className="text-sm font-medium text-foreground/40" data-testid={`text-experience-company-${i}`}>
                                   {exp.company}
                                 </span>
                               </div>
