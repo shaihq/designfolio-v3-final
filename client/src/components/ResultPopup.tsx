@@ -583,71 +583,130 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                       duration: 0.7,
                       ease: [0.21, 0.47, 0.32, 0.98],
                     }}
-                    className="relative pb-12"
+                    className="pb-20"
                   >
-                    <Card className="bg-white border-0 rounded-2xl overflow-hidden" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
-                      <div className="p-8 sm:p-12">
-                        <div className="flex flex-col md:flex-row justify-between items-start gap-12">
-                          <div className="space-y-6 max-w-sm">
-                            <h2 className="text-3xl font-semibold leading-tight font-heading">
-                              Let's build something <span className="text-[#FF553E]">great</span> together.
-                            </h2>
-                            <div className="flex flex-col gap-3">
-                              <div className="flex items-center gap-2 text-foreground/60 group cursor-pointer hover:text-[#FF553E] transition-colors">
-                                <Mail className="w-4 h-4" />
-                                <span className="text-sm font-medium">{content.user?.contact?.email || 'hello@example.com'}</span>
-                                <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all" />
+                    <div className="max-w-4xl mx-auto">
+                      <div
+                        className="relative bg-white p-8 shadow-sm rounded-2xl overflow-hidden"
+                      >
+                        <div className="flex flex-col gap-3">
+                          <div className="flex flex-col">
+                            <motion.div
+                              className="flex flex-col sm:flex-row sm:items-center justify-between py-3 sm:py-2.5 border-b border-border/10 group gap-1 sm:gap-4"
+                              data-testid="footer-item-resume"
+                              initial={{ opacity: 0, x: -20 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              viewport={{ once: false, amount: 0.8 }}
+                              transition={{ duration: 0.5, delay: 0 }}
+                            >
+                              <span className="text-sm sm:text-base text-foreground/50">Resume</span>
+                              <button
+                                className="group/resume text-sm sm:text-base font-medium hover:underline underline-offset-4 cursor-pointer text-left sm:text-right flex items-center justify-start sm:justify-end gap-1.5"
+                              >
+                                <span>View Resume</span>
+                              </button>
+                            </motion.div>
+
+                            <motion.div
+                              className="flex flex-col sm:flex-row sm:items-center justify-between py-3 sm:py-2.5 border-b border-border/10 group gap-1 sm:gap-4"
+                              data-testid="footer-item-mail"
+                              initial={{ opacity: 0, x: -20 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              viewport={{ once: false, amount: 0.8 }}
+                              transition={{ duration: 0.5, delay: 0.1 }}
+                            >
+                              <span className="text-sm sm:text-base text-foreground/50">Mail</span>
+                              <a
+                                href={`mailto:${content.user?.contact?.email || 'hello@example.com'}`}
+                                className="text-sm sm:text-base font-medium hover:underline underline-offset-4 break-all sm:break-normal text-left sm:text-right"
+                              >
+                                {content.user?.contact?.email || 'hello@example.com'}
+                              </a>
+                            </motion.div>
+
+                            <motion.div
+                              className="flex flex-col sm:flex-row sm:items-center justify-between py-3 sm:py-2.5 border-b border-border/10 group gap-1 sm:gap-4"
+                              data-testid="footer-item-phone"
+                              initial={{ opacity: 0, x: -20 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              viewport={{ once: false, amount: 0.8 }}
+                              transition={{ duration: 0.5, delay: 0.2 }}
+                            >
+                              <span className="text-sm sm:text-base text-foreground/50">Phone number</span>
+                              <span className="text-sm sm:text-base font-medium text-left sm:text-right">
+                                {content.user?.contact?.phone || '+1 (000)-000-0000'}
+                              </span>
+                            </motion.div>
+
+                            <motion.div
+                              className="flex flex-col sm:flex-row sm:items-center justify-between py-3 sm:py-2.5 border-b border-border/10 group gap-1 sm:gap-4"
+                              data-testid="footer-item-blogs"
+                              initial={{ opacity: 0, x: -20 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              viewport={{ once: false, amount: 0.8 }}
+                              transition={{ duration: 0.5, delay: 0.3 }}
+                            >
+                              <span className="text-sm sm:text-base text-foreground/50">Blogs</span>
+                              <a href="https://medium.com" target="_blank" rel="noopener noreferrer" className="text-sm sm:text-base font-medium hover:underline underline-offset-4 text-left sm:text-right">Medium</a>
+                            </motion.div>
+
+                            <motion.div
+                              className="flex flex-col sm:flex-row sm:items-center justify-between py-3 sm:py-2.5 border-b border-border/10 group gap-1 sm:gap-4"
+                              data-testid="footer-item-socials"
+                              initial={{ opacity: 0, x: -20 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              viewport={{ once: false, amount: 0.8 }}
+                              transition={{ duration: 0.5, delay: 0.4 }}
+                            >
+                              <span className="text-sm sm:text-base text-foreground/50">Socials</span>
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-sm sm:text-base font-medium hover:underline underline-offset-4">LinkedIn</a>
+                                <span className="text-foreground/20">•</span>
+                                <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-sm sm:text-base font-medium hover:underline underline-offset-4">X</a>
+                                <span className="text-foreground/20">•</span>
+                                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-sm sm:text-base font-medium hover:underline underline-offset-4">Instagram</a>
+                                <span className="text-foreground/20">•</span>
+                                <a href="https://dribbble.com" target="_blank" rel="noopener noreferrer" className="text-sm sm:text-base font-medium hover:underline underline-offset-4">Dribbble</a>
                               </div>
-                              <div className="flex items-center gap-2 text-foreground/60">
-                                <span className="text-sm font-medium">{content.user?.contact?.location || 'San Francisco, CA'}</span>
-                              </div>
-                            </div>
+                            </motion.div>
                           </div>
 
-                          <div className="flex flex-wrap gap-4">
-                            {[Linkedin, Instagram, Dribbble, SiBehance].map((Icon, i) => (
-                              <Button key={i} variant="outline" size="icon" className="rounded-full h-11 w-11 hover:bg-[#FF553E] hover:text-white transition-all border-black/[0.05]">
-                                <Icon className="w-4 h-4" />
-                              </Button>
-                            ))}
+                          <div className="pt-6 flex flex-col items-center justify-center gap-4">
+                            <Button 
+                              variant="outline" 
+                              size="icon"
+                              className="rounded-full h-11 w-11"
+                              data-testid="button-edit-footer"
+                            >
+                              <Pencil className="w-5 h-5" />
+                            </Button>
+                            <svg
+                              width="120"
+                              height="40"
+                              viewBox="0 0 120 40"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="text-foreground/20"
+                            >
+                              <motion.path
+                                d="M10 20C17 13 23 27 30 20C37 13 43 27 50 20C57 13 63 27 70 20C77 13 83 27 90 20C97 13 103 27 110 20"
+                                stroke="currentColor"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                initial={{ pathLength: 0, opacity: 0 }}
+                                whileInView={{ pathLength: 1, opacity: 1 }}
+                                transition={{
+                                  pathLength: { duration: 2, ease: "easeInOut" },
+                                  opacity: { duration: 0.3 }
+                                }}
+                              />
+                            </svg>
+                            <CrypticText text={`© ${content.user?.name?.toUpperCase() || "SHAI KRISHNA"}`} className="text-[11px] font-bold uppercase tracking-[0.3em] text-foreground/20" />
                           </div>
-                        </div>
-
-                        <div className="pt-12 flex flex-col items-center justify-center gap-4">
-                          <Button 
-                            variant="outline" 
-                            size="icon"
-                            className="rounded-full h-11 w-11"
-                            data-testid="button-edit-footer"
-                          >
-                            <Pencil className="w-5 h-5" />
-                          </Button>
-                          <svg
-                            width="120"
-                            height="40"
-                            viewBox="0 0 120 40"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="text-foreground/20"
-                          >
-                            <motion.path
-                              d="M10 20C17 13 23 27 30 20C37 13 43 27 50 20C57 13 63 27 70 20C77 13 83 27 90 20C97 13 103 27 110 20"
-                              stroke="currentColor"
-                              strokeWidth="2.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              initial={{ pathLength: 0, opacity: 0 }}
-                              whileInView={{ pathLength: 1, opacity: 1 }}
-                              transition={{
-                                pathLength: { duration: 2, ease: "easeInOut" },
-                                opacity: { duration: 0.3 }
-                              }}
-                            />
-                          </svg>
-                          <CrypticText text={`© ${content.user?.name?.toUpperCase() || "SHAI KRISHNA"}`} className="text-[11px] font-bold uppercase tracking-[0.3em] text-foreground/20" />
                         </div>
                       </div>
-                    </Card>
+                    </div>
                   </motion.footer>
                 </div>
               </div>
