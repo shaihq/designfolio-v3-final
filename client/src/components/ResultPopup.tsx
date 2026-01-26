@@ -142,14 +142,6 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
             </div>
           </div>
 
-          {/* Info bar message below bar */}
-          <div className="bg-[#e8f0fe] dark:bg-[#1a2733] px-6 py-2 border-b border-[#d2e3fc] dark:border-[#2d3a4b] flex items-center justify-center gap-2">
-            <Sparkles className="w-3 h-3 text-[#1a73e8]" />
-            <span className="text-[10px] uppercase tracking-[0.1em] font-bold text-[#1a73e8] dark:text-[#8ab4f8]">
-              This is a preview — Open in editor to save and publish your portfolio
-            </span>
-          </div>
-          
           <div className="flex-1 overflow-y-auto p-6 sm:p-10 bg-[#F8F7F5]">
             {isStructured ? (
               <div className="max-w-4xl mx-auto space-y-3">
@@ -715,6 +707,21 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                 {content.raw || JSON.stringify(content, null, 2)}
               </pre>
             )}
+          </div>
+          
+          {/* Subtle sticky footer */}
+          <div className="bg-[#F8F7F5] border-t border-border/10 px-4 py-2.5 flex items-center justify-center shrink-0">
+            <span className="text-xs text-foreground/40">
+              This is a preview —{' '}
+              <button 
+                onClick={handleApply}
+                className="text-foreground/60 hover:text-foreground underline underline-offset-2 transition-colors"
+                data-testid="link-open-editor-footer"
+              >
+                Open in editor
+              </button>
+              {' '}to save and publish your portfolio
+            </span>
           </div>
         </motion.div>
       </div>
