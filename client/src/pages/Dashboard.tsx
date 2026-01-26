@@ -662,6 +662,18 @@ export default function Dashboard() {
   };
   const [isNavVisible, setIsNavVisible] = useState(true);
   const [isFooterPanelOpen, setIsFooterPanelOpen] = useState(false);
+  const [isAboutMePanelOpen, setIsAboutMePanelOpen] = useState(false);
+  const [aboutMeText, setAboutMeText] = useState("I am a passionate product designer dedicated to creating intuitive and impactful digital experiences. With over 6 years of experience, I specialize in bridging the gap between user needs and business goals through thoughtful design and prototyping.");
+  const [pegboardImages, setPegboardImages] = useState([
+    { id: 1, src: "/portraits/portrait1.png", alt: "Portrait 1" },
+    { id: 2, src: "/portraits/portrait2.png", alt: "Portrait 2" },
+    { id: 3, src: "/portraits/portrait3.png", alt: "Portrait 3" },
+    { id: 4, src: "/portraits/portrait4.png", alt: "Portrait 4" },
+  ]);
+  const [pegboardStickers, setPegboardStickers] = useState([
+    { id: 1, src: "/portraits/sticker1.png", alt: "Sticker 1" },
+    { id: 2, src: "/portraits/sticker2.png", alt: "Sticker 2" },
+  ]);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [visibleTestimonials, setVisibleTestimonials] = useState<Set<number>>(new Set());
   const [isTemplateDialogOpen, setIsTemplateDialogOpen] = useState(false);
@@ -1149,7 +1161,7 @@ export default function Dashboard() {
         />
       )}
       {/* Main Content */}
-      <div className="flex-1 w-full min-w-0 transition-all duration-300 relative z-10" style={{ marginRight: !isMobileOrTablet && (isThemePanelOpen || isEditTestimonialOpen || isFooterPanelOpen) ? '320px' : '0' }}>
+      <div className="flex-1 w-full min-w-0 transition-all duration-300 relative z-10" style={{ marginRight: !isMobileOrTablet && (isThemePanelOpen || isEditTestimonialOpen || isFooterPanelOpen || isAboutMePanelOpen) ? '320px' : '0' }}>
         <div className="max-w-4xl mx-auto px-6">
           {/* Floating Navbar */}
           <div 
@@ -1636,7 +1648,7 @@ export default function Dashboard() {
                         About Me
                       </h2>
                       <Button
-                        onClick={() => setIsThemePanelOpen(true)}
+                        onClick={() => setIsAboutMePanelOpen(true)}
                         className="bg-white border border-border text-foreground rounded-full px-4 py-2 flex items-center gap-2 hover-elevate transition-all h-10"
                         data-testid="button-edit-about"
                       >
@@ -1646,7 +1658,7 @@ export default function Dashboard() {
                     </div>
                     <div className="space-y-4 text-foreground/80 leading-relaxed mb-8">
                       <p data-testid="text-about-description-1">
-                        I am a passionate product designer dedicated to creating intuitive and impactful digital experiences. With over 6 years of experience, I specialize in bridging the gap between user needs and business goals through thoughtful design and prototyping.
+                        {aboutMeText}
                       </p>
                     </div>
 
@@ -2557,6 +2569,118 @@ export default function Dashboard() {
         </div>
       )}
 
+      {/* About Me Edit Panel - Desktop */}
+      {!isMobileOrTablet && (
+        <div 
+          className={`fixed right-0 top-0 h-full bg-white border-l border-border transition-transform duration-300 z-40 ${
+            isAboutMePanelOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+          style={{ width: '320px' }}
+        >
+          <div className="flex flex-col h-full">
+            <div className="flex items-center justify-between p-6 border-b border-border pt-[16px] pb-[16px]">
+              <h2 className="text-lg font-semibold" data-testid="text-about-me-panel-title">Edit About Me</h2>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsAboutMePanelOpen(false)}
+                className="h-8 w-8"
+                data-testid="button-close-about-me-panel"
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+            <div className="flex-1 overflow-auto p-6 space-y-8">
+              <div className="space-y-4">
+                <Label className="text-xs font-semibold uppercase tracking-wider text-foreground/40 px-1">About Text</Label>
+                <textarea
+                  value={aboutMeText}
+                  onChange={(e) => setAboutMeText(e.target.value)}
+                  className="w-full min-h-[120px] p-4 rounded-2xl border-2 border-border bg-white resize-none focus:outline-none focus:border-foreground/30 focus:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 text-sm leading-relaxed"
+                  placeholder="Tell visitors about yourself..."
+                  data-testid="textarea-about-me"
+                />
+              </div>
+
+              <div className="space-y-4">
+                <Label className="text-xs font-semibold uppercase tracking-wider text-foreground/40 px-1">Pegboard Photos</Label>
+                <div className="grid grid-cols-2 gap-3">
+                  {pegboardImages.map((img, idx) => (
+                    <div key={img.id} className="relative group aspect-square rounded-xl overflow-hidden border-2 border-border bg-muted/30">
+                      <img src={img.src} alt={img.alt} className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 bg-white/20 hover:bg-white/30 text-white"
+                          data-testid={`button-edit-photo-${idx + 1}`}
+                        >
+                          <Pencil className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 bg-white/20 hover:bg-white/30 text-white"
+                          onClick={() => setPegboardImages(prev => prev.filter(i => i.id !== img.id))}
+                          data-testid={`button-delete-photo-${idx + 1}`}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                  <div 
+                    className="aspect-square rounded-xl border-2 border-dashed border-border bg-muted/20 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-muted/30 transition-colors"
+                    data-testid="button-add-photo"
+                  >
+                    <Plus className="w-6 h-6 text-foreground/40" />
+                    <span className="text-xs text-foreground/40 font-medium">Add Photo</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-4">
+                <Label className="text-xs font-semibold uppercase tracking-wider text-foreground/40 px-1">Stickers</Label>
+                <div className="grid grid-cols-2 gap-3">
+                  {pegboardStickers.map((sticker, idx) => (
+                    <div key={sticker.id} className="relative group aspect-square rounded-xl overflow-hidden border-2 border-border bg-muted/30 p-2">
+                      <img src={sticker.src} alt={sticker.alt} className="w-full h-full object-contain" />
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 bg-white/20 hover:bg-white/30 text-white"
+                          onClick={() => setPegboardStickers(prev => prev.filter(s => s.id !== sticker.id))}
+                          data-testid={`button-delete-sticker-${idx + 1}`}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                  <div 
+                    className="aspect-square rounded-xl border-2 border-dashed border-border bg-muted/20 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-muted/30 transition-colors"
+                    data-testid="button-add-sticker"
+                  >
+                    <Plus className="w-6 h-6 text-foreground/40" />
+                    <span className="text-xs text-foreground/40 font-medium">Add Sticker</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="p-6 border-t border-border bg-white sticky bottom-0">
+              <Button 
+                className="w-full h-11 rounded-full font-semibold"
+                onClick={() => setIsAboutMePanelOpen(false)}
+                data-testid="button-save-about-me"
+              >
+                Save Changes
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Mobile Footer Panel */}
       {isMobileOrTablet && (
         <Sheet open={isFooterPanelOpen} onOpenChange={setIsFooterPanelOpen}>
@@ -2592,6 +2716,96 @@ export default function Dashboard() {
             </div>
             <div className="p-6 border-t border-border">
               <Button className="w-full h-11 rounded-full font-semibold">
+                Save Changes
+              </Button>
+            </div>
+          </SheetContent>
+        </Sheet>
+      )}
+
+      {/* About Me Edit Panel - Mobile */}
+      {isMobileOrTablet && (
+        <Sheet open={isAboutMePanelOpen} onOpenChange={setIsAboutMePanelOpen}>
+          <SheetContent className="w-full sm:max-w-md p-0 flex flex-col h-full">
+            <div className="flex items-center justify-between p-6 border-b border-border pt-[16px] pb-[16px]">
+              <h2 className="text-lg font-semibold" data-testid="text-about-me-panel-title-mobile">Edit About Me</h2>
+            </div>
+            <div className="flex-1 overflow-auto p-6 space-y-6">
+              <div className="space-y-3">
+                <Label className="text-xs font-semibold uppercase tracking-wider text-foreground/50">About Text</Label>
+                <textarea
+                  value={aboutMeText}
+                  onChange={(e) => setAboutMeText(e.target.value)}
+                  className="w-full min-h-[100px] p-3 rounded-xl border border-border bg-white resize-none focus:outline-none focus:border-foreground/30 transition-all text-sm leading-relaxed"
+                  placeholder="Tell visitors about yourself..."
+                  data-testid="textarea-about-me-mobile"
+                />
+              </div>
+
+              <div className="space-y-3">
+                <Label className="text-xs font-semibold uppercase tracking-wider text-foreground/50">Pegboard Photos</Label>
+                <div className="grid grid-cols-2 gap-2">
+                  {pegboardImages.map((img, idx) => (
+                    <div key={img.id} className="relative group aspect-square rounded-lg overflow-hidden border border-border bg-muted/30">
+                      <img src={img.src} alt={img.alt} className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-7 w-7 bg-white/20 text-white"
+                          onClick={() => setPegboardImages(prev => prev.filter(i => i.id !== img.id))}
+                          data-testid={`button-delete-photo-mobile-${idx + 1}`}
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                  <div 
+                    className="aspect-square rounded-lg border border-dashed border-border bg-muted/20 flex flex-col items-center justify-center gap-1 cursor-pointer"
+                    data-testid="button-add-photo-mobile"
+                  >
+                    <Plus className="w-5 h-5 text-foreground/40" />
+                    <span className="text-[10px] text-foreground/40 font-medium">Add</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <Label className="text-xs font-semibold uppercase tracking-wider text-foreground/50">Stickers</Label>
+                <div className="grid grid-cols-2 gap-2">
+                  {pegboardStickers.map((sticker, idx) => (
+                    <div key={sticker.id} className="relative group aspect-square rounded-lg overflow-hidden border border-border bg-muted/30 p-2">
+                      <img src={sticker.src} alt={sticker.alt} className="w-full h-full object-contain" />
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-7 w-7 bg-white/20 text-white"
+                          onClick={() => setPegboardStickers(prev => prev.filter(s => s.id !== sticker.id))}
+                          data-testid={`button-delete-sticker-mobile-${idx + 1}`}
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                  <div 
+                    className="aspect-square rounded-lg border border-dashed border-border bg-muted/20 flex flex-col items-center justify-center gap-1 cursor-pointer"
+                    data-testid="button-add-sticker-mobile"
+                  >
+                    <Plus className="w-5 h-5 text-foreground/40" />
+                    <span className="text-[10px] text-foreground/40 font-medium">Add</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="p-6 border-t border-border">
+              <Button 
+                className="w-full h-11 rounded-full font-semibold"
+                onClick={() => setIsAboutMePanelOpen(false)}
+                data-testid="button-save-about-me-mobile"
+              >
                 Save Changes
               </Button>
             </div>
