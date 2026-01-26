@@ -1636,12 +1636,12 @@ export default function Dashboard() {
                         About Me
                       </h2>
                       <Button
-                        size="icon"
-                        variant="ghost"
-                        className="h-8 w-8 text-foreground/30 hover:text-foreground transition-colors"
+                        onClick={() => setIsThemePanelOpen(true)}
+                        className="bg-white border border-border text-foreground rounded-full px-4 py-2 flex items-center gap-2 hover-elevate transition-all h-10"
                         data-testid="button-edit-about"
                       >
                         <Pencil className="w-4 h-4" />
+                        <span className="text-sm font-medium">Edit</span>
                       </Button>
                     </div>
                     <div className="space-y-4 text-foreground/80 leading-relaxed mb-8">
