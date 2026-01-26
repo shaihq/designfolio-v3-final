@@ -243,34 +243,41 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                         </div>
                       </div>
                       
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {content.caseStudies?.map((project: any, i: number) => (
                           <motion.div
                             key={i}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: i * 0.1 }}
-                            className="group relative"
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.3, delay: i * 0.1 }}
+                            className="group"
                           >
-                            <div className="bg-white dark:bg-card rounded-xl lg:rounded-2xl border border-border overflow-hidden shadow-lg flex flex-col relative z-20 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 h-full">
-                              <div className="aspect-video relative overflow-hidden bg-gradient-to-br from-[#FCF9F6] to-[#F5F1ED]">
-                                <img
+                            <div className="bg-white dark:bg-card rounded-2xl border border-border overflow-hidden shadow-sm flex flex-col relative transition-all duration-300 hover:shadow-md h-full">
+                              <div 
+                                className="w-full h-48 flex items-center justify-center relative overflow-hidden"
+                                style={{
+                                  background: 'linear-gradient(135deg, #FCF9F6 0%, #F9F5F1 50%, #F5F1ED 100%)'
+                                }}
+                              >
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/[0.02] to-transparent" />
+                                <motion.img
                                   src={i % 2 === 0 ? "/casestudyux1.svg" : "/casestudyux2.svg"}
                                   alt={project.title}
-                                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                  className="w-24 h-24 object-contain opacity-20 transition-transform duration-500 group-hover:scale-110"
                                 />
-                                <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                  <div className="bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg">
-                                    <ArrowUpRight className="w-5 h-5 text-foreground" />
-                                  </div>
-                                </div>
                               </div>
                               <div className="p-5 flex-1 flex flex-col">
-                                <h3 className="font-heading text-lg font-semibold text-foreground mb-1 line-clamp-2 min-h-[3rem]">
+                                <div className="mb-2">
+                                  <span className="text-[10px] font-medium bg-muted/50 text-muted-foreground px-2 py-0.5 rounded-full uppercase tracking-wider">
+                                    {project.category}
+                                  </span>
+                                </div>
+                                <h3 className="font-heading text-base font-semibold text-foreground mb-1 line-clamp-2">
                                   {project.title}
                                 </h3>
-                                <p className="text-sm text-foreground/50">
-                                  {project.category}
+                                <p className="text-xs text-foreground/50 leading-relaxed line-clamp-2">
+                                  {project.description}
                                 </p>
                               </div>
                             </div>
