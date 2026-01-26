@@ -2674,7 +2674,7 @@ export default function Dashboard() {
             </div>
             <div className="p-6 border-t border-border bg-white sticky bottom-0">
               <Button 
-                className="w-full h-11 rounded-full font-semibold"
+                className="w-full h-11 rounded-full font-semibold bg-foreground text-background hover:bg-foreground/90"
                 onClick={() => setIsAboutMePanelOpen(false)}
                 data-testid="button-save-about-me"
               >
@@ -2810,7 +2810,7 @@ export default function Dashboard() {
             </div>
             <div className="p-6 border-t border-border">
               <Button 
-                className="w-full h-11 rounded-full font-semibold"
+                className="w-full h-11 rounded-full font-semibold bg-foreground text-background hover:bg-foreground/90"
                 onClick={() => setIsAboutMePanelOpen(false)}
                 data-testid="button-save-about-me-mobile"
               >
