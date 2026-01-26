@@ -2629,13 +2629,15 @@ export default function Dashboard() {
                       </div>
                     </div>
                   ))}
-                  <div 
-                    className="aspect-square rounded-xl border-2 border-dashed border-border bg-muted/20 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-muted/30 transition-colors"
-                    data-testid="button-add-photo"
-                  >
-                    <Plus className="w-6 h-6 text-foreground/40" />
-                    <span className="text-xs text-foreground/40 font-medium">Add Photo</span>
-                  </div>
+                  {pegboardImages.length < 4 && (
+                    <div 
+                      className="aspect-square rounded-xl border-2 border-dashed border-border bg-muted/20 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-muted/30 transition-colors"
+                      data-testid="button-add-photo"
+                    >
+                      <Plus className="w-6 h-6 text-foreground/40" />
+                      <span className="text-xs text-foreground/40 font-medium">Add Photo</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -2658,13 +2660,15 @@ export default function Dashboard() {
                       </div>
                     </div>
                   ))}
-                  <div 
-                    className="aspect-square rounded-xl border-2 border-dashed border-border bg-muted/20 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-muted/30 transition-colors"
-                    data-testid="button-add-sticker"
-                  >
-                    <Plus className="w-6 h-6 text-foreground/40" />
-                    <span className="text-xs text-foreground/40 font-medium">Add Sticker</span>
-                  </div>
+                  {pegboardStickers.length < 2 && (
+                    <div 
+                      className="aspect-square rounded-xl border-2 border-dashed border-border bg-muted/20 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-muted/30 transition-colors"
+                      data-testid="button-add-sticker"
+                    >
+                      <Plus className="w-6 h-6 text-foreground/40" />
+                      <span className="text-xs text-foreground/40 font-medium">Add Sticker</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -2761,13 +2765,15 @@ export default function Dashboard() {
                       </div>
                     </div>
                   ))}
-                  <div 
-                    className="aspect-square rounded-lg border border-dashed border-border bg-muted/20 flex flex-col items-center justify-center gap-1 cursor-pointer"
-                    data-testid="button-add-photo-mobile"
-                  >
-                    <Plus className="w-5 h-5 text-foreground/40" />
-                    <span className="text-[10px] text-foreground/40 font-medium">Add</span>
-                  </div>
+                  {pegboardImages.length < 4 && (
+                    <div 
+                      className="aspect-square rounded-lg border border-dashed border-border bg-muted/20 flex flex-col items-center justify-center gap-1 cursor-pointer"
+                      data-testid="button-add-photo-mobile"
+                    >
+                      <Plus className="w-5 h-5 text-foreground/40" />
+                      <span className="text-[10px] text-foreground/40 font-medium">Add</span>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -2790,13 +2796,15 @@ export default function Dashboard() {
                       </div>
                     </div>
                   ))}
-                  <div 
-                    className="aspect-square rounded-lg border border-dashed border-border bg-muted/20 flex flex-col items-center justify-center gap-1 cursor-pointer"
-                    data-testid="button-add-sticker-mobile"
-                  >
-                    <Plus className="w-5 h-5 text-foreground/40" />
-                    <span className="text-[10px] text-foreground/40 font-medium">Add</span>
-                  </div>
+                  {pegboardStickers.length < 2 && (
+                    <div 
+                      className="aspect-square rounded-lg border border-dashed border-border bg-muted/20 flex flex-col items-center justify-center gap-1 cursor-pointer"
+                      data-testid="button-add-sticker-mobile"
+                    >
+                      <Plus className="w-5 h-5 text-foreground/40" />
+                      <span className="text-[10px] text-foreground/40 font-medium">Add</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
