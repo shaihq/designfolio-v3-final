@@ -300,48 +300,52 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
                       ease: [0.21, 0.47, 0.32, 0.98],
                     }}
                   >
-                    <Card className="bg-white border-0 rounded-2xl p-6 mb-3" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
-                      <div className="flex items-center justify-between mb-6">
+                    <Card className="bg-white border-0 rounded-2xl p-6 mt-0 mb-3" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
+                      <div className="flex items-center justify-between mb-4">
                         <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider" data-testid="text-work-experience-title">
                           Work Experience
                         </h2>
                       </div>
                       
-                      <div className="space-y-4">
-                        {content.workExperiences?.map((exp: any, i: number) => (
+                      <div className="space-y-6">
+                        {content.workExperiences?.map((exp: any, idx: number) => (
                           <div 
-                            key={i} 
-                            className="group flex gap-5 p-4 rounded-2xl border border-black/[0.03] bg-white hover-elevate transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
-                            data-testid={`card-work-experience-${i}`}
+                            key={idx} 
+                            className="group"
+                            data-testid={`card-work-experience-${idx}`}
                           >
-                            <div className="shrink-0">
-                              <div className="w-12 h-12 rounded-xl border border-black/[0.05] bg-white flex items-center justify-center overflow-hidden shadow-sm">
-                                <img 
-                                  src={`https://api.dicebear.com/7.x/initials/svg?seed=${exp.company}`}
-                                  alt={exp.company}
-                                  className="w-8 h-8 rounded-lg"
-                                />
-                              </div>
-                            </div>
-                            
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center justify-between mb-1">
-                                <h3 className="font-semibold text-base truncate text-foreground" data-testid={`text-experience-role-${i}`}>
-                                  {exp.role}
-                                </h3>
-                                <span className="text-[10px] font-bold text-foreground/20 uppercase tracking-widest shrink-0" data-testid={`text-experience-period-${i}`}>
+                            <div className="grid grid-cols-1 md:grid-cols-[130px_1fr] gap-1 md:gap-6">
+                              <div className="shrink-0">
+                                <span 
+                                  className="text-xs font-medium text-foreground/40 uppercase tracking-wider"
+                                  data-testid={`text-experience-period-${idx}`}
+                                >
                                   {exp.period}
                                 </span>
                               </div>
-                              <div className="flex items-center gap-2 mb-2">
-                                <span className="text-sm font-medium text-foreground/40" data-testid={`text-experience-company-${i}`}>
-                                  {exp.company}
-                                </span>
+                              
+                              <div className="flex-1 min-w-0">
+                                <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-2">
+                                  <h3 className="font-semibold text-base text-foreground" data-testid={`text-experience-role-${idx}`}>
+                                    {exp.role}
+                                  </h3>
+                                  <span className="text-foreground/30">at</span>
+                                  <div className="flex items-center gap-1.5">
+                                    <Building className="w-4 h-4 text-foreground/40" />
+                                    <span className="font-semibold text-base text-foreground" data-testid={`text-experience-company-${idx}`}>
+                                      {exp.company}
+                                    </span>
+                                  </div>
+                                </div>
+                                <p className="text-sm text-foreground/60 leading-relaxed max-w-xl" data-testid={`text-experience-description-${idx}`}>
+                                  {exp.description}
+                                </p>
                               </div>
-                              <p className="text-sm text-foreground/50 leading-relaxed line-clamp-2" data-testid={`text-experience-description-${i}`}>
-                                {exp.description}
-                              </p>
                             </div>
+                            
+                            {idx < content.workExperiences.length - 1 && (
+                              <div className="mt-6 border-b border-border/10" />
+                            )}
                           </div>
                         ))}
                       </div>
