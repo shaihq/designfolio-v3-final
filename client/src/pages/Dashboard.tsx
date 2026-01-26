@@ -1631,9 +1631,19 @@ export default function Dashboard() {
                   }}
                 >
                   <Card className="bg-white border-0 rounded-2xl p-6 mt-0 mb-3" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
-                    <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider mb-6" data-testid="text-about-title">
-                      About Me
-                    </h2>
+                    <div className="flex items-center justify-between mb-6">
+                      <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider" data-testid="text-about-title">
+                        About Me
+                      </h2>
+                      <Button
+                        size="icon"
+                        variant="ghost"
+                        className="h-8 w-8 text-foreground/30 hover:text-foreground transition-colors"
+                        data-testid="button-edit-about"
+                      >
+                        <Pencil className="w-4 h-4" />
+                      </Button>
+                    </div>
                     <div className="space-y-4 text-foreground/80 leading-relaxed mb-8">
                       <p data-testid="text-about-description-1">
                         I am a passionate product designer dedicated to creating intuitive and impactful digital experiences. With over 6 years of experience, I specialize in bridging the gap between user needs and business goals through thoughtful design and prototyping.
