@@ -709,19 +709,22 @@ export function ResultPopup({ content, onClose }: ResultPopupProps) {
             )}
           </div>
           
-          {/* Subtle sticky footer */}
-          <div className="bg-[#F8F7F5] border-t border-border/10 px-4 py-2.5 flex items-center justify-center shrink-0">
-            <span className="text-xs text-foreground/40">
-              This is a preview —{' '}
-              <button 
-                onClick={handleApply}
-                className="text-foreground/60 hover:text-foreground underline underline-offset-2 transition-colors"
-                data-testid="link-open-editor-footer"
-              >
-                Open in editor
-              </button>
-              {' '}to save and publish your portfolio
-            </span>
+          {/* Faded footer with gradient */}
+          <div className="relative shrink-0">
+            <div className="absolute inset-x-0 -top-8 h-8 bg-gradient-to-t from-[#F8F7F5] to-transparent pointer-events-none" />
+            <div className="bg-[#F8F7F5] px-4 py-3 flex items-center justify-center">
+              <span className="text-[11px] text-foreground/50 tracking-wide">
+                This is a preview —{' '}
+                <button 
+                  onClick={handleApply}
+                  className="text-[#FF553E] hover:text-[#E64935] font-medium underline underline-offset-2 transition-colors"
+                  data-testid="link-open-editor-footer"
+                >
+                  Open in editor
+                </button>
+                {' '}to save and publish your portfolio
+              </span>
+            </div>
           </div>
         </motion.div>
       </div>
