@@ -662,8 +662,38 @@ export default function Dashboard() {
   };
   const [isNavVisible, setIsNavVisible] = useState(true);
   const [isFooterPanelOpen, setIsFooterPanelOpen] = useState(false);
+  const [uploadedResume, setUploadedResume] = useState<{ name: string; size: string } | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [isAboutMePanelOpen, setIsAboutMePanelOpen] = useState(false);
-  const [aboutMeText, setAboutMeText] = useState("I am a passionate product designer dedicated to creating intuitive and impactful digital experiences. With over 6 years of experience, I specialize in bridging the gap between user needs and business goals through thoughtful design and prototyping.");
+  const handleResumeUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast({
+          title: "File too large",
+          description: "Please upload a PDF smaller than 5MB",
+          variant: "destructive"
+        });
+        return;
+      }
+      if (file.type !== "application/pdf") {
+        toast({
+          title: "Invalid file type",
+          description: "Please upload a PDF file",
+          variant: "destructive"
+        });
+        return;
+      }
+      setUploadedResume({
+        name: file.name,
+        size: (file.size / (1024 * 1024)).toFixed(2) + "MB"
+      });
+      toast({
+        title: "Resume uploaded",
+        description: `${file.name} has been successfully attached.`,
+      });
+    }
+  };
   const [pegboardImages, setPegboardImages] = useState([
     { id: 1, src: "/portraits/portrait1.png", alt: "Portrait 1" },
     { id: 2, src: "/portraits/portrait2.png", alt: "Portrait 2" },
@@ -2486,19 +2516,49 @@ export default function Dashboard() {
             <div className="flex-1 overflow-auto p-6 space-y-8">
               <div className="space-y-4">
                 <Label className="text-xs font-semibold uppercase tracking-wider text-foreground/40 px-1">Resume</Label>
+                <input 
+                  type="file" 
+                  ref={fileInputRef} 
+                  onChange={handleResumeUpload} 
+                  accept=".pdf" 
+                  className="hidden" 
+                />
                 <div 
-                  className="p-8 rounded-[2rem] border-2 border-border/40 bg-white hover-elevate transition-all duration-300 group cursor-pointer"
+                  onClick={() => fileInputRef.current?.click()}
+                  className={`p-8 rounded-[2rem] border-2 transition-all duration-300 group cursor-pointer ${
+                    uploadedResume 
+                      ? 'border-primary/20 bg-primary/[0.02]' 
+                      : 'border-border/40 bg-white hover-elevate'
+                  }`}
                 >
                   <div className="flex flex-col items-center gap-4 text-center">
-                    <div className="w-14 h-14 rounded-2xl bg-muted/30 flex items-center justify-center">
-                      <Upload className="w-7 h-7 text-foreground/30 group-hover:text-primary transition-colors" />
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-colors ${
+                      uploadedResume ? 'bg-primary/10' : 'bg-muted/30'
+                    }`}>
+                      {uploadedResume ? (
+                        <FileText className="w-7 h-7 text-primary" />
+                      ) : (
+                        <Upload className="w-7 h-7 text-foreground/30 group-hover:text-primary transition-colors" />
+                      )}
                     </div>
                     <div>
-                      <h4 className="text-base font-semibold text-foreground">Update Resume</h4>
-                      <p className="text-sm text-foreground/40 mt-1 font-medium">PDF format only • Max 5MB</p>
+                      <h4 className="text-base font-semibold text-foreground">
+                        {uploadedResume ? uploadedResume.name : 'Update Resume'}
+                      </h4>
+                      <p className="text-sm text-foreground/40 mt-1 font-medium">
+                        {uploadedResume ? `Size: ${uploadedResume.size}` : 'PDF format only • Max 5MB'}
+                      </p>
                     </div>
-                    <Button variant="outline" size="lg" className="w-full rounded-full h-12 border-2 border-border/50 bg-white hover:bg-muted/50 font-semibold">
-                      Choose File
+                    <Button 
+                      variant={uploadedResume ? "ghost" : "outline"} 
+                      size="lg" 
+                      className={`w-full rounded-full h-12 border-2 font-semibold ${
+                        uploadedResume 
+                          ? 'border-transparent text-primary hover:bg-primary/5' 
+                          : 'border-border/50 bg-white hover:bg-muted/50'
+                      }`}
+                    >
+                      {uploadedResume ? 'Change File' : 'Choose File'}
                     </Button>
                   </div>
                 </div>
@@ -2696,12 +2756,42 @@ export default function Dashboard() {
               {/* Reuse the same form content from desktop but adapted for mobile */}
               <div className="space-y-4">
                 <Label className="text-xs font-semibold uppercase tracking-wider text-foreground/50">Resume</Label>
-                <div className="p-4 rounded-xl border border-border bg-card/50">
+                <div 
+                  onClick={() => fileInputRef.current?.click()}
+                  className={`p-4 rounded-xl border transition-all duration-300 group cursor-pointer ${
+                    uploadedResume 
+                      ? 'border-primary/20 bg-primary/[0.02]' 
+                      : 'border-border bg-card/50'
+                  }`}
+                >
                   <div className="flex flex-col items-center gap-3 text-center">
-                    <Upload className="w-6 h-6 text-primary" />
-                    <h4 className="text-sm font-semibold">Update Resume</h4>
-                    <Button variant="outline" size="sm" className="w-full">
-                      Choose File
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
+                      uploadedResume ? 'bg-primary/10' : 'bg-muted/30'
+                    }`}>
+                      {uploadedResume ? (
+                        <FileText className="w-5 h-5 text-primary" />
+                      ) : (
+                        <Upload className="w-5 h-5 text-primary group-hover:text-primary/80" />
+                      )}
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-semibold">
+                        {uploadedResume ? uploadedResume.name : 'Update Resume'}
+                      </h4>
+                      {uploadedResume && (
+                        <p className="text-xs text-foreground/40 mt-0.5 font-medium">
+                          Size: {uploadedResume.size}
+                        </p>
+                      )}
+                    </div>
+                    <Button 
+                      variant={uploadedResume ? "ghost" : "outline"} 
+                      size="sm" 
+                      className={`w-full font-semibold ${
+                        uploadedResume ? 'text-primary' : ''
+                      }`}
+                    >
+                      {uploadedResume ? 'Change File' : 'Choose File'}
                     </Button>
                   </div>
                 </div>
