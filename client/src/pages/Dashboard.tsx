@@ -665,6 +665,7 @@ export default function Dashboard() {
   const [uploadedResume, setUploadedResume] = useState<{ name: string; size: string } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isAboutMePanelOpen, setIsAboutMePanelOpen] = useState(false);
+  const [aboutMeText, setAboutMeText] = useState("I am a passionate product designer dedicated to creating intuitive and impactful digital experiences. With over 6 years of experience, I specialize in bridging the gap between user needs and business goals through thoughtful design and prototyping.");
   const handleResumeUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
