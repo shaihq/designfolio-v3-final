@@ -1527,12 +1527,21 @@ export default function Dashboard() {
                       <div className="flex items-center gap-2">
                         <Button
                           variant="outline"
-                          size="icon"
-                          className={`rounded-full h-11 w-11 transition-colors ${hiddenSections.includes('works') ? 'text-amber-500 border-amber-500/50 bg-amber-50/10' : ''}`}
+                          className={`rounded-full h-11 px-6 transition-colors gap-2 ${hiddenSections.includes('works') ? 'text-amber-500 border-amber-500/50 bg-amber-50/10' : ''}`}
                           onClick={() => handleToggleSectionVisibility('works')}
                           data-testid="button-hide-works"
                         >
-                          {hiddenSections.includes('works') ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                          {hiddenSections.includes('works') ? (
+                            <>
+                              <EyeOff className="w-5 h-5" />
+                              <span className="text-sm font-semibold">Hidden</span>
+                            </>
+                          ) : (
+                            <>
+                              <Eye className="w-5 h-5" />
+                              <span className="text-sm font-semibold">Hide</span>
+                            </>
+                          )}
                         </Button>
                         {caseStudies.length > 0 && (
                           <Button
@@ -1710,12 +1719,21 @@ export default function Dashboard() {
                       <div className="flex items-center gap-2">
                         <Button
                           variant="outline"
-                          size="icon"
-                          className={`rounded-full h-11 w-11 transition-colors ${hiddenSections.includes('about') ? 'text-amber-500 border-amber-500/50 bg-amber-50/10' : ''}`}
+                          className={`rounded-full h-11 px-6 transition-colors gap-2 ${hiddenSections.includes('about') ? 'text-amber-500 border-amber-500/50 bg-amber-50/10' : ''}`}
                           onClick={() => handleToggleSectionVisibility('about')}
                           data-testid="button-hide-about"
                         >
-                          {hiddenSections.includes('about') ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                          {hiddenSections.includes('about') ? (
+                            <>
+                              <EyeOff className="w-5 h-5" />
+                              <span className="text-sm font-semibold">Hidden</span>
+                            </>
+                          ) : (
+                            <>
+                              <Eye className="w-5 h-5" />
+                              <span className="text-sm font-semibold">Hide</span>
+                            </>
+                          )}
                         </Button>
                         <Button
                           onClick={() => setIsAboutMePanelOpen(true)}
@@ -1995,12 +2013,21 @@ export default function Dashboard() {
             <div className="flex items-center gap-2">
               <Button
                 variant="outline"
-                size="icon"
-                className={`rounded-full h-11 w-11 transition-colors ${hiddenSections.includes('work_experience') ? 'text-amber-500 border-amber-500/50 bg-amber-50/10' : ''}`}
+                className={`rounded-full h-11 px-6 transition-colors gap-2 ${hiddenSections.includes('work_experience') ? 'text-amber-500 border-amber-500/50 bg-amber-50/10' : ''}`}
                 onClick={() => handleToggleSectionVisibility('work_experience')}
                 data-testid="button-hide-work-experience"
               >
-                {hiddenSections.includes('work_experience') ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                {hiddenSections.includes('work_experience') ? (
+                  <>
+                    <EyeOff className="w-5 h-5" />
+                    <span className="text-sm font-semibold">Hidden</span>
+                  </>
+                ) : (
+                  <>
+                    <Eye className="w-5 h-5" />
+                    <span className="text-sm font-semibold">Hide</span>
+                  </>
+                )}
               </Button>
               <Button 
                 variant="outline"
@@ -2083,12 +2110,21 @@ export default function Dashboard() {
                       <div className="flex items-center gap-2">
                         <Button
                           variant="outline"
-                          size="icon"
-                          className={`rounded-full h-11 w-11 transition-colors ${hiddenSections.includes('testimonials') ? 'text-amber-500 border-amber-500/50 bg-amber-50/10' : ''}`}
+                          className={`rounded-full h-11 px-6 transition-colors gap-2 ${hiddenSections.includes('testimonials') ? 'text-amber-500 border-amber-500/50 bg-amber-50/10' : ''}`}
                           onClick={() => handleToggleSectionVisibility('testimonials')}
                           data-testid="button-hide-testimonials"
                         >
-                          {hiddenSections.includes('testimonials') ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                          {hiddenSections.includes('testimonials') ? (
+                            <>
+                              <EyeOff className="w-5 h-5" />
+                              <span className="text-sm font-semibold">Hidden</span>
+                            </>
+                          ) : (
+                            <>
+                              <Eye className="w-5 h-5" />
+                              <span className="text-sm font-semibold">Hide</span>
+                            </>
+                          )}
                         </Button>
                         <Button
                           variant="outline"
@@ -2216,12 +2252,21 @@ export default function Dashboard() {
                       <div className="flex items-center gap-2">
                         <Button
                           variant="outline"
-                          size="icon"
-                          className={`rounded-full h-11 w-11 transition-colors ${hiddenSections.includes('toolbox') ? 'text-amber-500 border-amber-500/50 bg-amber-50/10' : ''}`}
+                          className={`rounded-full h-11 px-6 transition-colors gap-2 ${hiddenSections.includes('toolbox') ? 'text-amber-500 border-amber-500/50 bg-amber-50/10' : ''}`}
                           onClick={() => handleToggleSectionVisibility('toolbox')}
                           data-testid="button-hide-toolbox"
                         >
-                          {hiddenSections.includes('toolbox') ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                          {hiddenSections.includes('toolbox') ? (
+                            <>
+                              <EyeOff className="w-5 h-5" />
+                              <span className="text-sm font-semibold">Hidden</span>
+                            </>
+                          ) : (
+                            <>
+                              <Eye className="w-5 h-5" />
+                              <span className="text-sm font-semibold">Hide</span>
+                            </>
+                          )}
                         </Button>
                         <Button
                           variant="outline"
