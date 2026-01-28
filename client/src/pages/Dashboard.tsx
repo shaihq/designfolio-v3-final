@@ -3233,7 +3233,7 @@ export default function Dashboard() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => setSectionOrder(['works', 'testimonials', 'toolbox'])}
+                        onClick={() => setSectionOrder(['works', 'work_experience', 'about', 'testimonials', 'toolbox'])}
                         className="h-8 px-2 text-xs gap-1.5 text-foreground/40 hover:text-foreground"
                         data-testid="button-reset-blocks"
                       >
@@ -3583,7 +3583,7 @@ export default function Dashboard() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => setSectionOrder(['works', 'testimonials', 'toolbox'])}
+                        onClick={() => setSectionOrder(['works', 'work_experience', 'about', 'testimonials', 'toolbox'])}
                         className="h-8 px-2 text-xs gap-1.5 text-foreground/40 hover:text-foreground"
                         data-testid="button-reset-blocks-mobile"
                       >
