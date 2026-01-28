@@ -1987,14 +1987,25 @@ export default function Dashboard() {
             <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider" data-testid="text-work-experience-title">
               Work Experience
             </h2>
-            <Button 
-              variant="outline"
-              size="icon"
-              className="rounded-full h-11 w-11"
-              data-testid="button-add-work-experience"
-            >
-              <Plus className="w-5 h-5" />
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="icon"
+                className={`rounded-full h-11 w-11 transition-colors ${hiddenSections.includes('work_experience') ? 'text-amber-500 border-amber-500/50 bg-amber-50/10' : ''}`}
+                onClick={() => handleToggleSectionVisibility('work_experience')}
+                data-testid="button-hide-work-experience"
+              >
+                {hiddenSections.includes('work_experience') ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </Button>
+              <Button 
+                variant="outline"
+                size="icon"
+                className="rounded-full h-11 w-11"
+                data-testid="button-add-work-experience"
+              >
+                <Plus className="w-5 h-5" />
+              </Button>
+            </div>
           </div>
           
           <div className="space-y-6">
@@ -2064,14 +2075,25 @@ export default function Dashboard() {
                       <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider" data-testid="text-testimonials-title">
                         Testimonials
                       </h2>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="rounded-full h-11 w-11"
-                        data-testid="button-add-testimonial"
-                      >
-                        <Plus className="w-5 h-5" />
-                      </Button>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className={`rounded-full h-11 w-11 transition-colors ${hiddenSections.includes('testimonials') ? 'text-amber-500 border-amber-500/50 bg-amber-50/10' : ''}`}
+                          onClick={() => handleToggleSectionVisibility('testimonials')}
+                          data-testid="button-hide-testimonials"
+                        >
+                          {hiddenSections.includes('testimonials') ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="rounded-full h-11 w-11"
+                          data-testid="button-add-testimonial"
+                        >
+                          <Plus className="w-5 h-5" />
+                        </Button>
+                      </div>
                     </div>
 
                     <div className="mt-6 -mx-10 px-10 overflow-visible">
@@ -2186,14 +2208,25 @@ export default function Dashboard() {
                       <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider" data-testid="text-toolbox-title">
                         Toolbox
                       </h2>
-                      <Button
-                        variant="outline"
-                        size="icon"
-                        className="rounded-full h-11 w-11"
-                        data-testid="button-add-tool"
-                      >
-                        <Plus className="w-5 h-5" />
-                      </Button>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className={`rounded-full h-11 w-11 transition-colors ${hiddenSections.includes('toolbox') ? 'text-amber-500 border-amber-500/50 bg-amber-50/10' : ''}`}
+                          onClick={() => handleToggleSectionVisibility('toolbox')}
+                          data-testid="button-hide-toolbox"
+                        >
+                          {hiddenSections.includes('toolbox') ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="rounded-full h-11 w-11"
+                          data-testid="button-add-tool"
+                        >
+                          <Plus className="w-5 h-5" />
+                        </Button>
+                      </div>
                     </div>
 
                     <div className="relative mt-2 overflow-x-hidden overflow-y-visible -mx-6 px-6">
