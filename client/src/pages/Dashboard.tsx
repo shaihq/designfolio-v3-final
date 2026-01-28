@@ -939,6 +939,8 @@ export default function Dashboard() {
       works: 'My works',
       testimonials: 'Testimonials',
       toolbox: 'Toolbox',
+      work_experience: 'Work Experience',
+      about: 'About Me',
     };
 
     return (
