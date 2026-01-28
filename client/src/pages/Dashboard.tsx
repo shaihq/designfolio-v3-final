@@ -1524,22 +1524,16 @@ export default function Dashboard() {
                       <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider" data-testid="text-section-title">
                         My works
                       </h2>
-                      <div className="flex items-center gap-3">
-                        <motion.svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          className="text-foreground/30"
-                          animate={{ rotate: 360 }}
-                          transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            ease: "linear"
-                          }}
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className={`rounded-full h-11 w-11 transition-colors ${hiddenSections.includes('works') ? 'text-amber-500 border-amber-500/50 bg-amber-50/10' : ''}`}
+                          onClick={() => handleToggleSectionVisibility('works')}
+                          data-testid="button-hide-works"
                         >
-                          <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" />
-                        </motion.svg>
+                          {hiddenSections.includes('works') ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                        </Button>
                         {caseStudies.length > 0 && (
                           <Button
                             onClick={() => setIsTemplateDialogOpen(true)}
@@ -1713,14 +1707,25 @@ export default function Dashboard() {
                       <h2 className="text-sm font-medium text-foreground/50 uppercase tracking-wider" data-testid="text-about-title">
                         About Me
                       </h2>
-                      <Button
-                        onClick={() => setIsAboutMePanelOpen(true)}
-                        className="bg-white border border-border text-foreground rounded-full px-4 py-2 flex items-center gap-2 hover-elevate transition-all h-10"
-                        data-testid="button-edit-about"
-                      >
-                        <Pencil className="w-4 h-4" />
-                        <span className="text-sm font-medium">Edit</span>
-                      </Button>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className={`rounded-full h-11 w-11 transition-colors ${hiddenSections.includes('about') ? 'text-amber-500 border-amber-500/50 bg-amber-50/10' : ''}`}
+                          onClick={() => handleToggleSectionVisibility('about')}
+                          data-testid="button-hide-about"
+                        >
+                          {hiddenSections.includes('about') ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                        </Button>
+                        <Button
+                          onClick={() => setIsAboutMePanelOpen(true)}
+                          className="bg-white border border-border text-foreground rounded-full px-4 py-2 flex items-center gap-2 hover-elevate transition-all h-11"
+                          data-testid="button-edit-about"
+                        >
+                          <Pencil className="w-4 h-4" />
+                          <span className="text-sm font-medium">Edit</span>
+                        </Button>
+                      </div>
                     </div>
                     <div className="space-y-4 text-foreground/80 leading-relaxed mb-8">
                       <p data-testid="text-about-description-1">
