@@ -229,6 +229,20 @@ export default function Dashboard() {
     
     return order;
   });
+  const [hiddenSections, setHiddenSections] = useState<string[]>(() => {
+    const saved = localStorage.getItem('dashboard-hidden-sections');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const handleToggleSectionVisibility = (sectionId: string) => {
+    setHiddenSections(prev => {
+      const newHidden = prev.includes(sectionId)
+        ? prev.filter(id => id !== sectionId)
+        : [...prev, sectionId];
+      localStorage.setItem('dashboard-hidden-sections', JSON.stringify(newHidden));
+      return newHidden;
+    });
+  };
   const [workExperiences, setWorkExperiences] = useState([
     {
       id: 1,
@@ -929,6 +943,8 @@ export default function Dashboard() {
       isDragging,
     } = useSortable({ id });
 
+    const isHidden = hiddenSections.includes(id);
+
     const style: React.CSSProperties = {
       transform: CSS.Transform.toString(transform),
       transition,
@@ -947,15 +963,32 @@ export default function Dashboard() {
       <div
         ref={setNodeRef}
         style={style}
-        className={`flex items-center gap-3 p-3 rounded-xl border border-border bg-card/50 transition-all ${
+        className={`flex items-center justify-between p-3 rounded-xl border border-border bg-card/50 transition-all ${
           isDragging ? 'opacity-50 shadow-lg scale-[1.02]' : 'hover:bg-accent/50'
-        }`}
+        } ${isHidden ? 'bg-muted/30 border-dashed opacity-75' : ''}`}
         data-testid={`item-block-${id}`}
       >
-        <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing p-1 rounded-md hover:bg-accent text-foreground/40">
-          <GripVertical className="w-4 h-4" />
+        <div className="flex items-center gap-3">
+          <div {...attributes} {...listeners} className="cursor-grab active:cursor-grabbing p-1 rounded-md hover:bg-accent text-foreground/40">
+            <GripVertical className="w-4 h-4" />
+          </div>
+          <span className={`text-sm font-medium ${isHidden ? 'text-foreground/40' : ''}`}>
+            {labels[id]}
+            {isHidden && <span className="ml-2 text-[10px] uppercase tracking-wider text-amber-600/70 font-bold">(Hidden)</span>}
+          </span>
         </div>
-        <span className="text-sm font-medium">{labels[id]}</span>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleToggleSectionVisibility(id);
+          }}
+          className={`h-8 w-8 transition-colors ${isHidden ? 'text-amber-500 hover:text-amber-600 hover:bg-amber-50/50' : 'text-foreground/40 hover:text-foreground hover:bg-accent'}`}
+          data-testid={`button-toggle-visibility-${id}`}
+        >
+          {isHidden ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+        </Button>
       </div>
     );
   }
