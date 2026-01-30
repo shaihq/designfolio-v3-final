@@ -65,7 +65,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Home,
-  Building
+  Building,
+  Check
 } from "lucide-react";
 import { SiBehance } from "react-icons/si";
 import { Link } from "wouter";
