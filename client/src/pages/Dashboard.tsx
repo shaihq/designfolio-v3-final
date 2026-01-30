@@ -91,6 +91,7 @@ import { StardustButton } from '@/components/StardustButton';
 import { TiptapEditor } from '@/components/TiptapEditor';
 import Dock from "@/components/ui/dock";
 import MacOSDock from "@/components/ui/mac-os-dock";
+import MacOSMenuBar from "@/components/ui/mac-os-menu-bar";
 
 import { CourseCard } from "@/components/CourseCard";
 
