@@ -3122,7 +3122,7 @@ export default function Dashboard() {
                             </div>
                             {selectedLayout === layout.id && (
                               <div className="h-5 w-5 rounded-full bg-primary flex items-center justify-center">
-                                <Sparkles className="h-3 w-3 text-white" />
+                                <Check className="h-3 w-3 text-white" />
                               </div>
                             )}
                           </div>
