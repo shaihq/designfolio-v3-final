@@ -1189,7 +1189,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className={`min-h-screen bg-background font-sans selection:bg-primary/30 ${selectedFontClass}`}>
+    <div className={`min-h-screen bg-background font-sans selection:bg-primary/30`}>
       {selectedLayout === 'macos' && <MacOSMenuBar appName="Designfolio" />}
       <div className="min-h-screen flex overflow-x-hidden relative" style={{ backgroundColor: '#F6F2EF' }}>
       {/* Previous wallpaper layer (stays visible during transition) */}
@@ -4191,6 +4191,7 @@ export default function Dashboard() {
           )}
         </div>
       </div>
+    </div>
     </div>
   );
 }
