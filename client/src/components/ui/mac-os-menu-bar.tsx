@@ -147,7 +147,7 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({
                 onClose();
               }}
             >
-              <span>{item.label}</span>
+              <span>{item.label ?? ''}</span>
               {item.shortcut && (
                 <span className="text-[11px] text-white/40 ml-4">
                   {item.shortcut}
