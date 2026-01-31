@@ -198,11 +198,11 @@ export function RulerCarousel({
                 className={`text-sm font-semibold whitespace-nowrap cursor-pointer flex items-center justify-center ${
                   isActive
                     ? "text-[#FF553E]"
-                    : "text-muted-foreground/50 hover:text-muted-foreground/70"
+                    : "text-[#0A0A0A]/60 hover:text-[#0A0A0A]/80"
                 }`}
                 animate={{
-                  scale: isActive ? 1 : 0.85,
-                  opacity: isActive ? 1 : 0.6,
+                  scale: isActive ? 1 : 0.9,
+                  opacity: isActive ? 1 : 0.85,
                 }}
                 transition={
                   isResetting
@@ -238,11 +238,11 @@ export function RulerCarousel({
         </button>
 
         <div className="flex items-center gap-1">
-          <span className="text-xs font-medium text-muted-foreground">
+          <span className="text-xs font-medium text-[#0A0A0A]/70">
             {currentPage}
           </span>
-          <span className="text-xs text-muted-foreground/50">/</span>
-          <span className="text-xs font-medium text-muted-foreground">
+          <span className="text-xs text-[#0A0A0A]/40">/</span>
+          <span className="text-xs font-medium text-[#0A0A0A]/70">
             {totalPages}
           </span>
         </div>
