@@ -134,16 +134,21 @@ export default function AiWorkspace() {
 
       {/* Main Content */}
       <main className="flex-1 p-8 overflow-y-auto pb-32">
-        <div className="max-w-4xl mx-auto space-y-6">
-          <div className="flex flex-col gap-1 px-4">
-            <h1 className="text-3xl font-serif text-foreground/90">{currentTool.title}</h1>
-            <p className="text-muted-foreground text-sm">
-              {currentTool.description}
-            </p>
-          </div>
-
+        <div className="max-w-4xl mx-auto">
           <Card className="border border-border/40 rounded-[2.5rem] bg-white/40 backdrop-blur-md shadow-2xl shadow-black/5 overflow-hidden p-3">
             <div className="bg-white/60 backdrop-blur-xl rounded-[2rem] border border-white/40 shadow-sm p-8 min-h-[400px]">
+              <div className="flex items-center gap-4 mb-8">
+                <div className="p-3 bg-primary/10 rounded-2xl">
+                  <currentTool.icon className="w-6 h-6 text-primary" />
+                </div>
+                <div className="flex flex-col gap-0.5">
+                  <h1 className="text-2xl font-serif text-foreground/90 leading-tight">{currentTool.title}</h1>
+                  <p className="text-muted-foreground text-sm">
+                    {currentTool.description}
+                  </p>
+                </div>
+              </div>
+              
               <div className="max-w-xl mx-auto">
                 {renderToolForm()}
               </div>
