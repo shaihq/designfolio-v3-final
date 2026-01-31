@@ -4,7 +4,7 @@ import { ChevronLeft } from "lucide-react";
 
 export default function AiWorkspace() {
   return (
-    <div className="min-h-screen bg-background p-8">
+    <div className="min-h-screen p-8" style={{ background: "linear-gradient(180deg, #D9BDE3 0%, #F5E7DC 100%)" }}>
       <div className="max-w-4xl mx-auto">
         <Link href="/">
           <Button variant="ghost" className="mb-8 gap-2">
