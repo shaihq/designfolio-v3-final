@@ -2373,13 +2373,13 @@ export default function Dashboard() {
                               <Tooltip delayDuration={0}>
                                 <TooltipTrigger asChild>
                                   <div
-                                    className="bg-white border border-border/30 rounded-2xl p-3 md:p-4 hover-elevate mx-2 shrink-0 flex items-center justify-center w-16 h-16 md:w-20 md:h-20 cursor-default overflow-hidden opacity-100 visible"
+                                    className="bg-white border border-border/30 rounded-2xl p-3 md:p-4 hover-elevate mx-2 shrink-0 flex items-center justify-center w-16 h-16 md:w-20 md:h-20 cursor-default overflow-hidden"
                                     data-testid={`card-tool-${tool.id}-${idx}`}
                                   >
                                     <img 
                                       src={tool.logo} 
                                       alt={tool.name} 
-                                      className="w-8 h-8 md:w-10 md:h-10 object-contain opacity-100 visible block" 
+                                      className="w-8 h-8 md:w-10 md:h-10 object-contain block" 
                                       onError={(e) => {
                                         const target = e.target as HTMLImageElement;
                                         target.src = `https://api.dicebear.com/7.x/initials/svg?seed=${tool.name}`;
