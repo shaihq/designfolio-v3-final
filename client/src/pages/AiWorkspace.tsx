@@ -133,23 +133,23 @@ export default function AiWorkspace() {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 p-8 overflow-y-auto pb-32">
-        <div className="max-w-4xl mx-auto">
-          <Card className="border border-border/40 rounded-[2.5rem] bg-white/40 backdrop-blur-md shadow-2xl shadow-black/5 overflow-hidden p-3">
-            <div className="flex items-center gap-4 px-8 py-6">
-              <div className="p-3 bg-primary/10 rounded-2xl">
-                <currentTool.icon className="w-6 h-6 text-primary" />
+      <main className="flex-1 p-6 overflow-y-auto pb-32 flex justify-center">
+        <div className="w-full max-w-2xl">
+          <Card className="border border-border/40 rounded-[2rem] bg-white/40 backdrop-blur-md shadow-2xl shadow-black/5 overflow-hidden p-2">
+            <div className="flex items-center gap-3 px-6 py-4">
+              <div className="p-2 bg-primary/10 rounded-xl">
+                <currentTool.icon className="w-5 h-5 text-primary" />
               </div>
-              <div className="flex flex-col gap-0.5">
-                <h1 className="text-2xl font-serif text-foreground/90 leading-tight">{currentTool.title}</h1>
-                <p className="text-muted-foreground text-sm">
+              <div className="flex flex-col">
+                <h1 className="text-xl font-serif text-foreground/90 leading-tight">{currentTool.title}</h1>
+                <p className="text-muted-foreground text-xs">
                   {currentTool.description}
                 </p>
               </div>
             </div>
             
-            <div className="bg-white/60 backdrop-blur-xl rounded-[2rem] border border-white/40 shadow-sm p-8 min-h-[400px]">
-              <div className="max-w-xl mx-auto">
+            <div className="bg-white/60 backdrop-blur-xl rounded-[1.75rem] border border-white/40 shadow-sm p-6 min-h-[300px]">
+              <div className="max-w-md mx-auto">
                 {renderToolForm()}
               </div>
             </div>
