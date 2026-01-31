@@ -2093,7 +2093,7 @@ export default function Dashboard() {
             </div>
           </div>
           
-          <div className="space-y-6">
+          <div className="space-y-4">
             {workExperiences.map((exp, idx) => (
               <div 
                 key={exp.id} 
@@ -2111,11 +2111,11 @@ export default function Dashboard() {
                   </div>
                   
                   <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-2">
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-1">
                       <h3 className="font-semibold text-base text-foreground" data-testid={`text-experience-role-${exp.id}`}>
                         {exp.role}
                       </h3>
-                      <span className="text-foreground/30">at</span>
+                      <span className="text-foreground/30 text-sm">at</span>
                       <div className="flex items-center gap-1.5">
                         <Building className="w-4 h-4 text-foreground/40" />
                         <span className="font-semibold text-base text-foreground" data-testid={`text-experience-company-${exp.id}`}>
@@ -2123,10 +2123,10 @@ export default function Dashboard() {
                         </span>
                       </div>
                     </div>
-                    <ul className="text-sm text-foreground/60 leading-relaxed max-w-xl space-y-1" data-testid={`text-experience-description-${exp.id}`}>
+                    <ul className="text-sm text-foreground/60 leading-snug max-w-xl space-y-0.5" data-testid={`text-experience-description-${exp.id}`}>
                       {exp.bullets?.map((bullet, bulletIdx) => (
                         <li key={bulletIdx} className="flex items-start gap-2">
-                          <span className="text-foreground/30 mt-1.5">•</span>
+                          <span className="text-foreground/30 mt-1">•</span>
                           <span>{bullet}</span>
                         </li>
                       ))}
@@ -2135,7 +2135,7 @@ export default function Dashboard() {
                 </div>
                 
                 {idx < workExperiences.length - 1 && (
-                  <div className="mt-6 border-b border-border/10" />
+                  <div className="mt-4 border-b border-border/10" />
                 )}
               </div>
             ))}
