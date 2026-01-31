@@ -152,22 +152,22 @@ export default function AiWorkspace() {
 
       {/* Main Content */}
       <main className="flex-1 p-6 overflow-y-auto pb-32 flex justify-center">
-        <div className="w-full max-w-2xl">
+        <div className="w-fit max-w-2xl">
           <Card className="border border-border/40 rounded-[2rem] bg-[#E5E1D5] shadow-none overflow-hidden p-2">
             <div className="flex items-center gap-3 px-6 py-4">
               <div className="p-2 bg-primary/10 rounded-xl">
                 <currentTool.icon className="w-5 h-5 text-primary" />
               </div>
               <div className="flex flex-col">
-                <h1 className="text-xl font-serif text-foreground/90 leading-tight">{currentTool.title}</h1>
-                <p className="text-muted-foreground text-xs">
+                <h1 className="text-xl font-serif text-foreground/90 leading-tight whitespace-nowrap">{currentTool.title}</h1>
+                <p className="text-muted-foreground text-xs whitespace-nowrap">
                   {currentTool.description}
                 </p>
               </div>
             </div>
             
             <div className="bg-white/60 backdrop-blur-xl rounded-[1.75rem] border border-white/40 shadow-sm p-6 min-h-[300px]">
-              <div className="max-w-md mx-auto">
+              <div className="w-full">
                 {renderToolForm()}
               </div>
             </div>
