@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
-import { ChevronLeft, FileText, Users, Landmark, Mail } from "lucide-react";
+import { Home, FileText, Users, Landmark, Mail } from "lucide-react";
 import { MenuBar } from "@/components/ui/bottom-menu";
 
 const sidebarTools = [
@@ -35,9 +35,9 @@ export default function AiWorkspace() {
       {/* Top Header with Home Link */}
       <header className="p-4 flex items-center">
         <Link href="/">
-          <Button variant="ghost" className="gap-2 hover:bg-white/40 rounded-xl">
-            <ChevronLeft className="h-4 w-4" />
-            Back to Home
+          <Button variant="default" size="sm" className="gap-2 rounded-xl shadow-sm">
+            <Home className="h-4 w-4" />
+            Back Home
           </Button>
         </Link>
       </header>
