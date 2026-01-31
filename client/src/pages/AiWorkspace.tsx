@@ -49,7 +49,7 @@ export default function AiWorkspace() {
       </main>
 
       {/* Ruler Carousel Navigation */}
-      <div className="fixed bottom-0 inset-x-0 bg-[#F1EDE2]/95 backdrop-blur-sm pb-3 pt-1 z-50">
+      <div className="fixed bottom-0 inset-x-0 bg-[#F1EDE2]/95 backdrop-blur-sm py-3 z-50">
         <RulerCarousel 
           originalItems={navItems}
           onItemSelect={(index) => {

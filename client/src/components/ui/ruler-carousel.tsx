@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Rewind, FastForward } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export interface CarouselItem {
   id: number;
@@ -28,47 +28,42 @@ const createInfiniteItems = (originalItems: CarouselItem[]): InfiniteCarouselIte
   return items;
 };
 
-const RulerLines = ({
-  top = true,
-  totalLines = 60,
-}: {
-  top?: boolean;
-  totalLines?: number;
-}) => {
+const RulerLines = ({ totalLines = 41 }: { totalLines?: number }) => {
   const lines = [];
-  const lineSpacing = 100 / (totalLines - 1);
 
   for (let i = 0; i < totalLines; i++) {
     const isFifth = i % 5 === 0;
     const isCenter = i === Math.floor(totalLines / 2);
 
-    let height = "h-1.5";
-    let color = "bg-gray-400/60";
+    let height = 6;
+    let color = "bg-[#FF553E]/30";
 
     if (isCenter) {
-      height = "h-4";
+      height = 16;
       color = "bg-[#FF553E]";
     } else if (isFifth) {
-      height = "h-2.5";
-      color = "bg-[#FF553E]/70";
+      height = 10;
+      color = "bg-[#FF553E]/60";
     }
-
-    const positionClass = top ? "" : "bottom-0";
 
     lines.push(
       <div
         key={i}
-        className={`absolute w-0.5 ${height} ${color} ${positionClass}`}
-        style={{ left: `${i * lineSpacing}%` }}
+        className={`w-[1px] ${color} flex-shrink-0`}
+        style={{ height: `${height}px` }}
       />
     );
   }
 
-  return <div className="relative w-full h-4 px-4">{lines}</div>;
+  return (
+    <div className="flex items-center justify-between w-full px-8">
+      {lines}
+    </div>
+  );
 };
 
-const ITEM_WIDTH = 180;
-const ITEM_GAP = 40;
+const ITEM_WIDTH = 160;
+const ITEM_GAP = 32;
 
 export function RulerCarousel({
   originalItems,
@@ -173,88 +168,80 @@ export function RulerCarousel({
   const totalPages = itemsPerSet;
 
   return (
-    <div className="w-full flex flex-col items-center justify-center">
-      <div className="w-full h-[80px] flex flex-col justify-center relative">
-        <div className="flex items-center justify-center">
-          <RulerLines top />
-        </div>
-        <div className="flex items-center justify-center w-full h-full relative overflow-hidden">
-          <motion.div
-            className="flex items-center"
-            style={{ gap: `${ITEM_GAP}px` }}
-            animate={{
-              x: `calc(50% - ${ITEM_WIDTH / 2}px + ${targetX}px)`,
-            }}
-            transition={
-              isResetting
-                ? { duration: 0 }
-                : {
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 30,
-                    mass: 0.8,
-                  }
-            }
-          >
-            {infiniteItems.map((item, index) => {
-              const isActive = index === activeIndex;
-
-              return (
-                <motion.button
-                  key={item.id}
-                  onClick={() => handleItemClick(index)}
-                  className={`text-sm md:text-base font-semibold whitespace-nowrap cursor-pointer flex items-center justify-center ${
-                    isActive
-                      ? "text-[#FF553E]"
-                      : "text-muted-foreground/60 hover:text-muted-foreground"
-                  }`}
-                  animate={{
-                    scale: isActive ? 1 : 0.85,
-                    opacity: isActive ? 1 : 0.5,
-                  }}
-                  transition={
-                    isResetting
-                      ? { duration: 0 }
-                      : {
-                          type: "spring",
-                          stiffness: 400,
-                          damping: 25,
-                        }
-                  }
-                  style={{
-                    width: `${ITEM_WIDTH}px`,
-                    flexShrink: 0,
-                  }}
-                >
-                  {item.title}
-                </motion.button>
-              );
-            })}
-          </motion.div>
-        </div>
-
-        <div className="flex items-center justify-center">
-          <RulerLines top={false} />
-        </div>
-      </div>
+    <div className="w-full flex flex-col items-center">
+      <RulerLines />
       
-      <div className="flex items-center justify-center gap-3 mt-1">
+      <div className="w-full h-10 relative overflow-hidden my-1">
+        <motion.div
+          className="absolute flex items-center h-full"
+          style={{ gap: `${ITEM_GAP}px`, left: '50%' }}
+          animate={{
+            x: `calc(-${ITEM_WIDTH / 2}px + ${targetX}px)`,
+          }}
+          transition={
+            isResetting
+              ? { duration: 0 }
+              : {
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 30,
+                }
+          }
+        >
+          {infiniteItems.map((item, index) => {
+            const isActive = index === activeIndex;
+
+            return (
+              <motion.button
+                key={item.id}
+                onClick={() => handleItemClick(index)}
+                className={`text-sm font-semibold whitespace-nowrap cursor-pointer flex items-center justify-center ${
+                  isActive
+                    ? "text-[#FF553E]"
+                    : "text-muted-foreground/50 hover:text-muted-foreground/70"
+                }`}
+                animate={{
+                  scale: isActive ? 1 : 0.85,
+                  opacity: isActive ? 1 : 0.6,
+                }}
+                transition={
+                  isResetting
+                    ? { duration: 0 }
+                    : {
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 25,
+                      }
+                }
+                style={{
+                  width: `${ITEM_WIDTH}px`,
+                  flexShrink: 0,
+                }}
+              >
+                {item.title}
+              </motion.button>
+            );
+          })}
+        </motion.div>
+      </div>
+
+      <RulerLines />
+      
+      <div className="flex items-center justify-center gap-4 mt-2">
         <button
           onClick={handlePrevious}
           disabled={isResetting}
-          className="flex items-center justify-center cursor-pointer"
+          className="flex items-center justify-center cursor-pointer p-1"
           aria-label="Previous item"
         >
-          <Rewind className="w-4 h-4 text-[#FF553E]/80" />
+          <ChevronLeft className="w-4 h-4 text-[#FF553E]" />
         </button>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1">
           <span className="text-xs font-medium text-muted-foreground">
             {currentPage}
           </span>
-          <span className="text-xs text-muted-foreground/60">
-            /
-          </span>
+          <span className="text-xs text-muted-foreground/50">/</span>
           <span className="text-xs font-medium text-muted-foreground">
             {totalPages}
           </span>
@@ -263,10 +250,10 @@ export function RulerCarousel({
         <button
           onClick={handleNext}
           disabled={isResetting}
-          className="flex items-center justify-center cursor-pointer"
+          className="flex items-center justify-center cursor-pointer p-1"
           aria-label="Next item"
         >
-          <FastForward className="w-4 h-4 text-[#FF553E]/80" />
+          <ChevronRight className="w-4 h-4 text-[#FF553E]" />
         </button>
       </div>
     </div>
