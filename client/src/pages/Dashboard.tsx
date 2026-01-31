@@ -2382,7 +2382,7 @@ export default function Dashboard() {
                                 <TooltipContent
                                   side="top"
                                   sideOffset={5}
-                                  className="bg-foreground text-background border-none px-3 py-1.5 text-xs font-semibold rounded-full shadow-lg z-[100]"
+                                  className="bg-foreground text-background border-none px-3 py-1.5 text-xs font-semibold rounded-full shadow-lg z-[110]"
                                 >
                                   <p>{tool.name}</p>
                                 </TooltipContent>
