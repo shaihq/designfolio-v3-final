@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button-1";
 import { Link, useLocation } from "wouter";
 import { Home, FileText, Users, Landmark, Mail } from "lucide-react";
 import { BottomNavBar } from "@/components/ui/bottom-nav-bar";
@@ -19,8 +19,12 @@ export default function AiWorkspace() {
       {/* Top Header with Home Link */}
       <header className="p-4 flex items-center">
         <Link href="/">
-          <Button variant="ghost" size="sm" className="gap-2 rounded-full px-4 bg-white/50 hover:bg-white/80 border border-black/5 shadow-sm text-sm font-medium transition-all">
-            <Home className="h-4 w-4" />
+          <Button 
+            variant="outline" 
+            size="custom" 
+            className="bg-white/80 backdrop-blur-md border border-border hover:bg-white/90 transition-all text-[#0A0A0A]/80 hover:text-[#0A0A0A]"
+          >
+            <Home className="h-4.5 w-4.5" />
             Back Home
           </Button>
         </Link>
