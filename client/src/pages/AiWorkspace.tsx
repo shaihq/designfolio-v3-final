@@ -156,7 +156,11 @@ export default function AiWorkspace() {
           <Card className="border border-border/40 rounded-[2rem] bg-[#E5E1D5] shadow-none overflow-hidden p-2">
             <div className="flex items-center gap-3 px-6 py-4">
               <div className="p-2 bg-primary/10 rounded-xl">
-                <currentTool.icon className="w-5 h-5 text-primary" />
+                {currentTool.id === 2 ? (
+                  <img src="/icons/mockinterview.svg" alt="" className="w-5 h-5 text-primary" />
+                ) : (
+                  <currentTool.icon className="w-5 h-5 text-primary" />
+                )}
               </div>
               <div className="flex flex-col">
                 <h1 className="text-xl font-serif text-foreground/90 leading-tight whitespace-nowrap">{currentTool.title}</h1>
