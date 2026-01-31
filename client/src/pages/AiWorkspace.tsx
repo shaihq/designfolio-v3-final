@@ -26,7 +26,7 @@ export default function AiWorkspace() {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   return (
-    <div className="flex min-h-screen bg-white">
+    <div className="flex min-h-screen" style={{ background: "#F1EDE2" }}>
       {/* Side Navbar - Floating Style */}
       <div className="p-4 flex">
         <aside 
@@ -72,7 +72,7 @@ export default function AiWorkspace() {
       </div>
 
       {/* Main Content */}
-      <main className="flex-1 p-8 overflow-y-auto bg-slate-50/50">
+      <main className="flex-1 p-8 overflow-y-auto">
         <div className="max-w-4xl mx-auto">
           <div className="space-y-6">
             <h1 className="text-4xl font-bold text-foreground font-serif">AI-workspace</h1>
