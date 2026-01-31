@@ -134,22 +134,20 @@ export default function AiWorkspace() {
 
       {/* Main Content */}
       <main className="flex-1 p-8 overflow-y-auto pb-32">
-        <div className="max-w-4xl mx-auto">
-          <Card className="border-2 border-border/60 rounded-3xl bg-white/40 backdrop-blur-sm shadow-sm overflow-hidden">
-            <CardHeader className="flex flex-row items-center gap-4 space-y-0 pb-2">
-              <div className="p-2 bg-primary/10 rounded-xl">
-                <currentTool.icon className="w-6 h-6 text-primary" />
-              </div>
-              <CardTitle className="text-2xl font-serif">{currentTool.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground mb-8">
-                {currentTool.description}
-              </p>
-              <div className="max-w-xl mx-auto p-6 bg-white/30 rounded-2xl border border-white/40 shadow-inner">
+        <div className="max-w-4xl mx-auto space-y-6">
+          <div className="flex flex-col gap-1 px-4">
+            <h1 className="text-3xl font-serif text-foreground/90">{currentTool.title}</h1>
+            <p className="text-muted-foreground text-sm">
+              {currentTool.description}
+            </p>
+          </div>
+
+          <Card className="border border-border/40 rounded-[2.5rem] bg-white/40 backdrop-blur-md shadow-2xl shadow-black/5 overflow-hidden p-3">
+            <div className="bg-white/60 backdrop-blur-xl rounded-[2rem] border border-white/40 shadow-sm p-8 min-h-[400px]">
+              <div className="max-w-xl mx-auto">
                 {renderToolForm()}
               </div>
-            </CardContent>
+            </div>
           </Card>
         </div>
       </main>
