@@ -15,6 +15,7 @@ import RefundPolicy from "@/pages/RefundPolicy";
 import Pricing from "@/pages/Pricing";
 import Contact from "@/pages/Contact";
 import Resume from "@/pages/Resume";
+import AiWorkspace from "@/pages/AiWorkspace";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -22,6 +23,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/resume" component={Resume} />
+      <Route path="/ai-workspace" component={AiWorkspace} />
       <Route path="/signup" component={Signup} />
       <Route path="/login" component={Login} />
       <Route path="/reset-password" component={ResetPassword} />

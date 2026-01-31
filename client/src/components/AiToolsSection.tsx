@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileText, Users, Landmark, Mail, ArrowUpRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "wouter";
 
 const aiTools = [
   {
@@ -77,14 +78,16 @@ export default function AiToolsSection() {
                 {tool.description}
               </p>
 
-              <Button 
-                variant="outline" 
-                className="w-full justify-center gap-2 rounded-full h-11 px-6 text-sm font-semibold border-border/60 hover:bg-accent/5 no-default-hover-elevate no-default-active-elevate transition-colors"
-                data-testid={`button-${tool.testId}`}
-              >
-                <ArrowUpRight className="h-4 w-4" />
-                {tool.buttonText}
-              </Button>
+              <Link href="/ai-workspace" className="w-full">
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-center gap-2 rounded-full h-11 px-6 text-sm font-semibold border-border/60 hover:bg-accent/5 no-default-hover-elevate no-default-active-elevate transition-colors"
+                  data-testid={`button-${tool.testId}`}
+                >
+                  <ArrowUpRight className="h-4 w-4" />
+                  {tool.buttonText}
+                </Button>
+              </Link>
             </Card>
           </motion.div>
         ))}
