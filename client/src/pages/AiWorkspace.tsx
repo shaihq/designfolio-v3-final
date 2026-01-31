@@ -20,11 +20,11 @@ export default function AiWorkspace() {
       <header className="p-4 flex items-center">
         <Link href="/">
           <Button 
-            variant="outline" 
+            variant="dashed" 
             size="custom" 
             className="bg-white/80 backdrop-blur-md border border-border hover:bg-white/90 transition-all text-[#0A0A0A]/80 hover:text-[#0A0A0A]"
           >
-            <Home className="h-4.5 w-4.5" />
+            <Home className="h-4 w-4 opacity-60" />
             Back Home
           </Button>
         </Link>

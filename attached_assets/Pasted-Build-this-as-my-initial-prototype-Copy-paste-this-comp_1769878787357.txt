@@ -1,7 +1,12 @@
+Build this as my initial prototype
+
+Copy-paste this component to /components/ui folder:
+```tsx
+button-1.tsx
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { ChevronDown, LucideIcon } from 'lucide-react';
-import { Slot as SlotPrimitive } from '@radix-ui/react-slot';
+import { Slot as SlotPrimitive } from 'radix-ui';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
@@ -40,7 +45,6 @@ const buttonVariants = cva(
         md: 'h-8.5 rounded-md px-3 gap-1.5 text-[0.8125rem] leading-(--text-sm--line-height) [&_svg:not([class*=size-])]:size-4',
         sm: 'h-7 rounded-md px-2.5 gap-1.25 text-xs [&_svg:not([class*=size-])]:size-3.5',
         icon: 'size-8.5 rounded-md [&_svg:not([class*=size-])]:size-4 shrink-0',
-        custom: 'h-10 rounded-full px-6 gap-2 text-xs font-medium shadow-xl',
       },
       autoHeight: {
         true: '',
@@ -358,57 +362,90 @@ const buttonVariants = cva(
   },
 );
 
-interface ButtonProps
-  extends React.ComponentProps<'button'>,
-    VariantProps<typeof buttonVariants> {
-  selected?: boolean;
-  asChild?: boolean;
-  placeholder?: boolean;
+function Button({
+  className,
+  selected,
+  variant,
+  shape,
+  appearance,
+  mode,
+  size,
+  autoHeight,
+  underlined,
+  underline,
+  asChild = false,
+  placeholder = false,
+  ...props
+}: React.ComponentProps<'button'> &
+  VariantProps<typeof buttonVariants> & {
+    selected?: boolean;
+    asChild?: boolean;
+  }) {
+  const Comp = asChild ? SlotPrimitive.Slot : 'button';
+  return (
+    <Comp
+      data-slot="button"
+      className={cn(
+        buttonVariants({
+          variant,
+          size,
+          shape,
+          appearance,
+          mode,
+          autoHeight,
+          placeholder,
+          underlined,
+          underline,
+          className,
+        }),
+        asChild && props.disabled && 'pointer-events-none opacity-50',
+      )}
+      {...(selected && { 'data-state': 'open' })}
+      {...props}
+    />
+  );
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      className,
-      selected,
-      variant,
-      shape,
-      appearance,
-      mode,
-      size,
-      autoHeight,
-      underlined,
-      underline,
-      asChild = false,
-      placeholder = false,
-      ...props
-    },
-    ref,
-  ) => {
-    const Comp = asChild ? SlotPrimitive : 'button';
-    return (
-      <Comp
-        ref={ref}
-        data-slot="button"
-        className={cn(
-          buttonVariants({
-            variant,
-            size,
-            shape,
-            appearance,
-            mode,
-            autoHeight,
-            placeholder,
-            underlined,
-            underline,
-            className,
-          }),
-        )}
-        {...props}
-      />
-    );
-  },
-);
-Button.displayName = 'Button';
+interface ButtonArrowProps extends React.SVGProps<SVGSVGElement> {
+  icon?: LucideIcon; // Allows passing any Lucide icon
+}
 
-export { Button, buttonVariants };
+function ButtonArrow({ icon: Icon = ChevronDown, className, ...props }: ButtonArrowProps) {
+  return <Icon data-slot="button-arrow" className={cn('ms-auto -me-1', className)} {...props} />;
+}
+
+export { Button, ButtonArrow, buttonVariants };
+
+
+demo.tsx
+import { Button } from '@/components/ui/button-1';
+
+export default function ButtonDemo() {
+  return <Button variant="dashed">Button</Button>;
+}
+
+```
+
+Install these NPM dependencies:
+```bash
+radix-ui, lucide-react, class-variance-authority
+```
+
+Extend existing Tailwind 4 index.css with this code (or if project uses Tailwind 3, extend tailwind.config.js or globals.css):
+```css
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme inline {
+  --color-destructive-foreground: var(--destructive-foreground);
+}
+
+:root {
+  --destructive-foreground: oklch(1 0 0);
+}
+
+.dark {
+  --destructive-foreground: oklch(1 0 0);
+}
+
+```
