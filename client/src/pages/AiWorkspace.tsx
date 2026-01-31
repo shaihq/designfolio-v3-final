@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { ChevronLeft, FileText, Users, Landmark, Mail } from "lucide-react";
+import { ChevronLeft, FileText, Users, Landmark, Mail, Menu, ChevronRight } from "lucide-react";
 
 const sidebarTools = [
   {
@@ -22,29 +23,47 @@ const sidebarTools = [
 ];
 
 export default function AiWorkspace() {
+  const [isCollapsed, setIsCollapsed] = useState(true);
+
   return (
     <div className="flex min-h-screen" style={{ background: "#F1EDE2" }}>
       {/* Side Navbar */}
-      <aside className="w-64 border-r border-border/40 bg-white/30 backdrop-blur-md p-6 flex flex-col gap-8">
+      <aside 
+        className={`${
+          isCollapsed ? "w-20" : "w-64"
+        } border-r border-border/40 bg-white/30 backdrop-blur-md p-4 flex flex-col gap-8 transition-all duration-300 relative group`}
+      >
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute -right-3 top-10 h-6 w-6 rounded-full border bg-background shadow-sm z-10 opacity-0 group-hover:opacity-100 transition-opacity"
+          onClick={() => setIsCollapsed(!isCollapsed)}
+        >
+          {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+        </Button>
+
         <Link href="/">
-          <Button variant="ghost" className="w-full justify-start gap-2 px-2 hover:bg-white/40">
+          <Button variant="ghost" className={`w-full ${isCollapsed ? "justify-center px-0" : "justify-start px-2"} gap-2 hover:bg-white/40`}>
             <ChevronLeft className="h-4 w-4" />
-            Back to Home
+            {!isCollapsed && <span>Back to Home</span>}
           </Button>
         </Link>
 
         <nav className="flex flex-col gap-2">
-          <p className="px-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-            AI Tools
-          </p>
+          {!isCollapsed && (
+            <p className="px-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">
+              AI Tools
+            </p>
+          )}
           {sidebarTools.map((tool) => (
             <Button
               key={tool.title}
               variant="ghost"
-              className="w-full justify-start gap-3 px-3 py-6 rounded-xl hover:bg-white/50 text-foreground/80 hover:text-foreground transition-all"
+              className={`w-full ${isCollapsed ? "justify-center px-0" : "justify-start px-3"} gap-3 py-6 rounded-xl hover:bg-white/50 text-foreground/80 hover:text-foreground transition-all`}
+              title={isCollapsed ? tool.title : ""}
             >
               <tool.icon className="h-5 w-5 opacity-70" />
-              <span className="font-medium">{tool.title}</span>
+              {!isCollapsed && <span className="font-medium">{tool.title}</span>}
             </Button>
           ))}
         </nav>
