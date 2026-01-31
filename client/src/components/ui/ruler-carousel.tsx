@@ -30,7 +30,7 @@ const createInfiniteItems = (originalItems: CarouselItem[]): InfiniteCarouselIte
 
 const RulerLines = ({
   top = true,
-  totalLines = 100,
+  totalLines = 60,
 }: {
   top?: boolean;
   totalLines?: number;
@@ -42,15 +42,15 @@ const RulerLines = ({
     const isFifth = i % 5 === 0;
     const isCenter = i === Math.floor(totalLines / 2);
 
-    let height = "h-3";
-    let color = "bg-gray-500 dark:bg-gray-400";
+    let height = "h-1.5";
+    let color = "bg-gray-400/60";
 
     if (isCenter) {
-      height = "h-8";
-      color = "bg-primary dark:bg-white";
-    } else if (isFifth) {
       height = "h-4";
-      color = "bg-primary dark:bg-white";
+      color = "bg-[#FF553E]";
+    } else if (isFifth) {
+      height = "h-2.5";
+      color = "bg-[#FF553E]/70";
     }
 
     const positionClass = top ? "" : "bottom-0";
@@ -64,8 +64,11 @@ const RulerLines = ({
     );
   }
 
-  return <div className="relative w-full h-8 px-4">{lines}</div>;
+  return <div className="relative w-full h-4 px-4">{lines}</div>;
 };
+
+const ITEM_WIDTH = 180;
+const ITEM_GAP = 40;
 
 export function RulerCarousel({
   originalItems,
@@ -164,32 +167,32 @@ export function RulerCarousel({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isResetting, activeIndex]);
 
-  const centerPosition = 0;
-  const targetX = -200 + (centerPosition - (activeIndex % itemsPerSet)) * 300;
+  const targetX = -(activeIndex * (ITEM_WIDTH + ITEM_GAP));
 
   const currentPage = (activeIndex % itemsPerSet) + 1;
   const totalPages = itemsPerSet;
 
   return (
     <div className="w-full flex flex-col items-center justify-center">
-      <div className="w-full h-[160px] flex flex-col justify-center relative">
+      <div className="w-full h-[80px] flex flex-col justify-center relative">
         <div className="flex items-center justify-center">
           <RulerLines top />
         </div>
         <div className="flex items-center justify-center w-full h-full relative overflow-hidden">
           <motion.div
-            className="flex items-center gap-[60px]"
+            className="flex items-center"
+            style={{ gap: `${ITEM_GAP}px` }}
             animate={{
-              x: isResetting ? targetX : targetX,
+              x: `calc(50% - ${ITEM_WIDTH / 2}px + ${targetX}px)`,
             }}
             transition={
               isResetting
                 ? { duration: 0 }
                 : {
                     type: "spring",
-                    stiffness: 260,
-                    damping: 20,
-                    mass: 1,
+                    stiffness: 300,
+                    damping: 30,
+                    mass: 0.8,
                   }
             }
           >
@@ -200,14 +203,14 @@ export function RulerCarousel({
                 <motion.button
                   key={item.id}
                   onClick={() => handleItemClick(index)}
-                  className={`text-xl md:text-2xl font-bold whitespace-nowrap cursor-pointer flex items-center justify-center ${
+                  className={`text-sm md:text-base font-semibold whitespace-nowrap cursor-pointer flex items-center justify-center ${
                     isActive
-                      ? "text-primary dark:text-white"
-                      : "text-muted-foreground dark:text-gray-500 hover:text-foreground dark:hover:text-gray-400"
+                      ? "text-[#FF553E]"
+                      : "text-muted-foreground/60 hover:text-muted-foreground"
                   }`}
                   animate={{
-                    scale: isActive ? 1 : 0.75,
-                    opacity: isActive ? 1 : 0.4,
+                    scale: isActive ? 1 : 0.85,
+                    opacity: isActive ? 1 : 0.5,
                   }}
                   transition={
                     isResetting
@@ -219,7 +222,8 @@ export function RulerCarousel({
                         }
                   }
                   style={{
-                    width: "240px",
+                    width: `${ITEM_WIDTH}px`,
+                    flexShrink: 0,
                   }}
                 >
                   {item.title}
@@ -234,24 +238,24 @@ export function RulerCarousel({
         </div>
       </div>
       
-      <div className="flex items-center justify-center gap-4 mt-4">
+      <div className="flex items-center justify-center gap-3 mt-1">
         <button
           onClick={handlePrevious}
           disabled={isResetting}
           className="flex items-center justify-center cursor-pointer"
           aria-label="Previous item"
         >
-          <Rewind className="w-5 h-5 text-primary/80" />
+          <Rewind className="w-4 h-4 text-[#FF553E]/80" />
         </button>
 
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-muted-foreground dark:text-gray-400">
+        <div className="flex items-center gap-1.5">
+          <span className="text-xs font-medium text-muted-foreground">
             {currentPage}
           </span>
-          <span className="text-sm text-muted-foreground dark:text-gray-500">
+          <span className="text-xs text-muted-foreground/60">
             /
           </span>
-          <span className="text-sm font-medium text-muted-foreground dark:text-gray-400">
+          <span className="text-xs font-medium text-muted-foreground">
             {totalPages}
           </span>
         </div>
@@ -262,7 +266,7 @@ export function RulerCarousel({
           className="flex items-center justify-center cursor-pointer"
           aria-label="Next item"
         >
-          <FastForward className="w-5 h-5 text-primary/80" />
+          <FastForward className="w-4 h-4 text-[#FF553E]/80" />
         </button>
       </div>
     </div>
