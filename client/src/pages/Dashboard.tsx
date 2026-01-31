@@ -252,7 +252,11 @@ export default function Dashboard() {
       role: "Senior Product Designer",
       company: "Stark Industries",
       period: "2022 - Present",
-      description: "Leading the design system for iron-man suits and industrial interfaces.",
+      bullets: [
+        "Leading the design system for iron-man suits and industrial interfaces",
+        "Collaborating with engineering teams to prototype advanced HUD displays",
+        "Managing a team of 5 designers across multiple product lines"
+      ],
       logo: "https://api.dicebear.com/7.x/initials/svg?seed=SI"
     },
     {
@@ -260,7 +264,11 @@ export default function Dashboard() {
       role: "Product Designer",
       company: "Wayne Enterprises",
       period: "2020 - 2022",
-      description: "Designed multi-functional gadgets and vehicle UI for tactical deployment.",
+      bullets: [
+        "Designed multi-functional gadgets and vehicle UI for tactical deployment",
+        "Created responsive interfaces for security monitoring systems",
+        "Improved user task completion rates by 40% through iterative testing"
+      ],
       logo: "https://api.dicebear.com/7.x/initials/svg?seed=WE"
     },
     {
@@ -268,7 +276,11 @@ export default function Dashboard() {
       role: "UX Designer",
       company: "Oscorp Industries",
       period: "2018 - 2020",
-      description: "Created user-centered designs for biotech research platforms and lab management systems.",
+      bullets: [
+        "Created user-centered designs for biotech research platforms",
+        "Conducted usability studies with 50+ researchers and scientists",
+        "Developed design guidelines for lab management software"
+      ],
       logo: "https://api.dicebear.com/7.x/initials/svg?seed=OI"
     },
     {
@@ -276,7 +288,11 @@ export default function Dashboard() {
       role: "UI Designer",
       company: "Daily Bugle",
       period: "2016 - 2018",
-      description: "Redesigned the digital news platform focusing on readability and engagement metrics.",
+      bullets: [
+        "Redesigned the digital news platform focusing on readability",
+        "Increased mobile engagement by 35% with responsive layouts",
+        "Built component library used across all digital properties"
+      ],
       logo: "https://api.dicebear.com/7.x/initials/svg?seed=DB"
     },
     {
@@ -284,7 +300,11 @@ export default function Dashboard() {
       role: "Junior Designer",
       company: "Pym Technologies",
       period: "2014 - 2016",
-      description: "Assisted in designing interfaces for quantum realm navigation and particle research tools.",
+      bullets: [
+        "Assisted in designing interfaces for quantum realm navigation",
+        "Created wireframes and prototypes for particle research tools",
+        "Supported senior designers with user research and testing"
+      ],
       logo: "https://api.dicebear.com/7.x/initials/svg?seed=PT"
     }
   ]);
@@ -2103,9 +2123,14 @@ export default function Dashboard() {
                         </span>
                       </div>
                     </div>
-                    <p className="text-sm text-foreground/60 leading-relaxed max-w-xl" data-testid={`text-experience-description-${exp.id}`}>
-                      {exp.description}
-                    </p>
+                    <ul className="text-sm text-foreground/60 leading-relaxed max-w-xl space-y-1" data-testid={`text-experience-description-${exp.id}`}>
+                      {exp.bullets?.map((bullet, bulletIdx) => (
+                        <li key={bulletIdx} className="flex items-start gap-2">
+                          <span className="text-foreground/30 mt-1.5">•</span>
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
                 
