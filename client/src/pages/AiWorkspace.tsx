@@ -22,7 +22,7 @@ export default function AiWorkspace() {
           <Button 
             variant="dashed" 
             size="custom" 
-            className="bg-white/80 backdrop-blur-md border border-border hover:bg-white/90 transition-all text-[#0A0A0A]/80 hover:text-[#0A0A0A]"
+            className="bg-transparent border-border hover:bg-white/40 transition-all text-[#0A0A0A]/80 hover:text-[#0A0A0A] shadow-none"
           >
             <Home className="h-4 w-4 opacity-60" />
             Back Home
