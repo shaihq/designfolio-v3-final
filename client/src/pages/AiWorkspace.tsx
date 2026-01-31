@@ -1,14 +1,13 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button-1";
 import { Link, useLocation } from "wouter";
-import { Home, FileText, Users, Landmark, Mail } from "lucide-react";
-import { BottomNavBar } from "@/components/ui/bottom-nav-bar";
+import { Home } from "lucide-react";
+import { RulerCarousel, type CarouselItem } from "@/components/ui/ruler-carousel";
 
-const navItems = [
-  { label: "Resume Fixer", icon: FileText },
-  { label: "Mock Interview", icon: Users },
-  { label: "Salary Negotiation", icon: Landmark },
-  { label: "Email Generator", icon: Mail },
+const navItems: CarouselItem[] = [
+  { id: 1, title: "Resume Fixer" },
+  { id: 2, title: "Mock Interview" },
+  { id: 3, title: "Salary Negotiation" },
+  { id: 4, title: "Email Generator" },
 ];
 
 export default function AiWorkspace() {
@@ -42,21 +41,22 @@ export default function AiWorkspace() {
             
             <div className="p-12 border-2 border-dashed border-border/60 rounded-3xl flex flex-col items-center justify-center text-center bg-white/20">
               <p className="text-muted-foreground">
-                Select a tool from the bottom navigation to begin. More features coming soon.
+                Select a tool from the navigation below to begin. More features coming soon.
               </p>
             </div>
           </div>
         </div>
       </main>
 
-      {/* Floating Bottom Navigation Bar */}
-      <BottomNavBar 
-        className="fixed bottom-8 inset-x-0 mx-auto z-50 w-fit" 
-        items={navItems}
-        onItemClick={(index) => {
-          console.log("Selected tool:", navItems[index].label);
-        }}
-      />
+      {/* Ruler Carousel Navigation */}
+      <div className="fixed bottom-0 inset-x-0 bg-[#F1EDE2]/90 backdrop-blur-sm pb-6 pt-2 z-50">
+        <RulerCarousel 
+          originalItems={navItems}
+          onItemSelect={(index) => {
+            console.log("Selected tool:", navItems[index].title);
+          }}
+        />
+      </div>
     </div>
   );
 }
