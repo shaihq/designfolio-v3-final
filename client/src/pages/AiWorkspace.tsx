@@ -36,7 +36,7 @@ export default function AiWorkspace() {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>AI Workspace</BreadcrumbPage>
+              <BreadcrumbPage>Career Workspace</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
@@ -46,7 +46,7 @@ export default function AiWorkspace() {
       <main className="flex-1 p-8 overflow-y-auto pb-32">
         <div className="max-w-4xl mx-auto">
           <div className="space-y-6">
-            <h1 className="text-4xl font-bold text-foreground font-serif">AI-workspace</h1>
+            <h1 className="text-4xl font-bold text-foreground font-serif">Career Workspace</h1>
             <p className="text-lg text-muted-foreground">
               Welcome to your AI-powered career assistant workspace. 
               Choose a tool from the menu below to get started with your professional journey.
