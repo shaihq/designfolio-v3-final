@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Home } from "lucide-react";
+import { Home, FileText, Users, DollarSign, Mail } from "lucide-react";
 import { RulerCarousel, type CarouselItem } from "@/components/ui/ruler-carousel";
 import {
   Breadcrumb,
@@ -9,16 +9,21 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState } from "react";
 
 const navItems: CarouselItem[] = [
-  { id: 1, title: "Resume Fixer" },
-  { id: 2, title: "Mock Interview" },
-  { id: 3, title: "Salary Negotiation" },
-  { id: 4, title: "Email Generator" },
+  { id: 1, title: "Resume Fixer", icon: FileText, description: "Optimize your resume for ATS and impact." },
+  { id: 2, title: "Mock Interview", icon: Users, description: "Practice with AI-driven interview questions." },
+  { id: 3, title: "Salary Negotiation", icon: DollarSign, description: "Get data-backed negotiation strategies." },
+  { id: 4, title: "Email Generator", icon: Mail, description: "Draft professional outreach and follow-ups." },
 ];
 
 export default function AiWorkspace() {
   const [, setLocation] = useLocation();
+  const [selectedTool, setSelectedTool] = useState(0);
+
+  const currentTool = navItems[selectedTool];
 
   return (
     <div className="flex flex-col min-h-screen" style={{ background: "#F1EDE2" }}>
@@ -49,14 +54,27 @@ export default function AiWorkspace() {
             <h1 className="text-4xl font-bold text-foreground font-serif">Career Workspace</h1>
             <p className="text-lg text-muted-foreground">
               Welcome to your AI-powered career assistant workspace. 
-              Choose a tool from the menu below to get started with your professional journey.
+              Select a tool to get started.
             </p>
             
-            <div className="p-12 border-2 border-dashed border-border/60 rounded-3xl flex flex-col items-center justify-center text-center bg-white/20">
-              <p className="text-muted-foreground">
-                Select a tool from the navigation below to begin. More features coming soon.
-              </p>
-            </div>
+            <Card className="border-2 border-border/60 rounded-3xl bg-white/40 backdrop-blur-sm shadow-sm">
+              <CardHeader className="flex flex-row items-center gap-4 space-y-0">
+                <div className="p-2 bg-primary/10 rounded-xl">
+                  {currentTool.icon && <currentTool.icon className="w-6 h-6 text-primary" />}
+                </div>
+                <CardTitle className="text-2xl font-serif">{currentTool.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground mb-6">
+                  {currentTool.description}
+                </p>
+                <div className="p-8 border-2 border-dashed border-border/40 rounded-2xl flex items-center justify-center bg-white/20">
+                  <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+                    {currentTool.title} Form coming soon
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </main>
@@ -66,7 +84,7 @@ export default function AiWorkspace() {
         <RulerCarousel 
           originalItems={navItems}
           onItemSelect={(index) => {
-            console.log("Selected tool:", navItems[index].title);
+            setSelectedTool(index);
           }}
         />
       </div>
