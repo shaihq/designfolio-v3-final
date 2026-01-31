@@ -35,7 +35,7 @@ export default function AiWorkspace() {
       {/* Top Header with Home Link */}
       <header className="p-4 flex items-center">
         <Link href="/">
-          <Button variant="default" size="sm" className="gap-2 rounded-xl shadow-sm">
+          <Button variant="ghost" size="sm" className="gap-2 rounded-full px-4 bg-white/50 hover:bg-white/80 border border-black/5 shadow-sm text-sm font-medium transition-all">
             <Home className="h-4 w-4" />
             Back Home
           </Button>
