@@ -1,7 +1,14 @@
-import { Button } from "@/components/ui/button-1";
 import { Link, useLocation } from "wouter";
 import { Home } from "lucide-react";
 import { RulerCarousel, type CarouselItem } from "@/components/ui/ruler-carousel";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 const navItems: CarouselItem[] = [
   { id: 1, title: "Resume Fixer" },
@@ -15,18 +22,24 @@ export default function AiWorkspace() {
 
   return (
     <div className="flex flex-col min-h-screen" style={{ background: "#F1EDE2" }}>
-      {/* Top Header with Home Link */}
+      {/* Breadcrumb Navigation */}
       <header className="p-4 flex items-center">
-        <Link href="/">
-          <Button 
-            variant="dashed" 
-            size="custom" 
-            className="bg-transparent border-border hover:bg-white/40 transition-all text-[#0A0A0A]/80 hover:text-[#0A0A0A] shadow-none"
-          >
-            <Home className="h-4 w-4 opacity-60" />
-            Back Home
-          </Button>
-        </Link>
+        <Breadcrumb>
+          <BreadcrumbList className="rounded-lg border border-border bg-background px-3 py-2 shadow-sm shadow-black/5">
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link href="/">
+                  <Home size={16} strokeWidth={2} aria-hidden="true" />
+                  <span className="sr-only">Home</span>
+                </Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>AI Workspace</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
       </header>
 
       {/* Main Content */}
