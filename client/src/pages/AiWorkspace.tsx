@@ -135,30 +135,22 @@ export default function AiWorkspace() {
       {/* Main Content */}
       <main className="flex-1 p-8 overflow-y-auto pb-32">
         <div className="max-w-4xl mx-auto">
-          <div className="space-y-6">
-            <h1 className="text-4xl font-bold text-foreground font-serif">Career Workspace</h1>
-            <p className="text-lg text-muted-foreground">
-              Welcome to your AI-powered career assistant workspace. 
-              Select a tool to get started.
-            </p>
-            
-            <Card className="border-2 border-border/60 rounded-3xl bg-white/40 backdrop-blur-sm shadow-sm overflow-hidden">
-              <CardHeader className="flex flex-row items-center gap-4 space-y-0 pb-2">
-                <div className="p-2 bg-primary/10 rounded-xl">
-                  <currentTool.icon className="w-6 h-6 text-primary" />
-                </div>
-                <CardTitle className="text-2xl font-serif">{currentTool.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground mb-8">
-                  {currentTool.description}
-                </p>
-                <div className="max-w-xl mx-auto p-6 bg-white/30 rounded-2xl border border-white/40 shadow-inner">
-                  {renderToolForm()}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          <Card className="border-2 border-border/60 rounded-3xl bg-white/40 backdrop-blur-sm shadow-sm overflow-hidden">
+            <CardHeader className="flex flex-row items-center gap-4 space-y-0 pb-2">
+              <div className="p-2 bg-primary/10 rounded-xl">
+                <currentTool.icon className="w-6 h-6 text-primary" />
+              </div>
+              <CardTitle className="text-2xl font-serif">{currentTool.title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground mb-8">
+                {currentTool.description}
+              </p>
+              <div className="max-w-xl mx-auto p-6 bg-white/30 rounded-2xl border border-white/40 shadow-inner">
+                {renderToolForm()}
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </main>
 
