@@ -262,6 +262,30 @@ export default function Dashboard() {
       period: "2020 - 2022",
       description: "Designed multi-functional gadgets and vehicle UI for tactical deployment.",
       logo: "https://api.dicebear.com/7.x/initials/svg?seed=WE"
+    },
+    {
+      id: 3,
+      role: "UX Designer",
+      company: "Oscorp Industries",
+      period: "2018 - 2020",
+      description: "Created user-centered designs for biotech research platforms and lab management systems.",
+      logo: "https://api.dicebear.com/7.x/initials/svg?seed=OI"
+    },
+    {
+      id: 4,
+      role: "UI Designer",
+      company: "Daily Bugle",
+      period: "2016 - 2018",
+      description: "Redesigned the digital news platform focusing on readability and engagement metrics.",
+      logo: "https://api.dicebear.com/7.x/initials/svg?seed=DB"
+    },
+    {
+      id: 5,
+      role: "Junior Designer",
+      company: "Pym Technologies",
+      period: "2014 - 2016",
+      description: "Assisted in designing interfaces for quantum realm navigation and particle research tools.",
+      logo: "https://api.dicebear.com/7.x/initials/svg?seed=PT"
     }
   ]);
   const [selectedLayout, setSelectedLayout] = useState<string>(() => {
