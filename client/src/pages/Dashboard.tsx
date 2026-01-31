@@ -2096,55 +2096,62 @@ export default function Dashboard() {
           </div>
           
           <div className="space-y-4">
-            {workExperiences.slice(0, showAllExperience ? undefined : 3).map((exp, idx, array) => (
-              <div 
-                key={exp.id} 
-                className="group"
-                data-testid={`card-work-experience-${exp.id}`}
-              >
-                <div className="grid grid-cols-1 md:grid-cols-[130px_1fr] gap-1 md:gap-6">
-                  <div className="shrink-0">
-                    <span 
-                      className="text-xs font-medium text-foreground/40 uppercase tracking-wider"
-                      data-testid={`text-experience-period-${exp.id}`}
-                    >
-                      {exp.period}
-                    </span>
+            <AnimatePresence initial={false}>
+              {workExperiences.slice(0, showAllExperience ? undefined : 3).map((exp, idx, array) => (
+                <motion.div 
+                  key={exp.id} 
+                  layout
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="group overflow-hidden"
+                  data-testid={`card-work-experience-${exp.id}`}
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-[130px_1fr] gap-1 md:gap-6 pb-4">
+                    <div className="shrink-0">
+                      <span 
+                        className="text-xs font-medium text-foreground/40 uppercase tracking-wider"
+                        data-testid={`text-experience-period-${exp.id}`}
+                      >
+                        {exp.period}
+                      </span>
+                    </div>
+                    
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-1">
+                        <h3 className="font-semibold text-base text-foreground" data-testid={`text-experience-role-${exp.id}`}>
+                          {exp.role}
+                        </h3>
+                        <span className="text-foreground/30 text-sm">at</span>
+                        <div className="flex items-center gap-1.5">
+                          <Building className="w-4 h-4 text-foreground/40" />
+                          <span className="font-semibold text-base text-foreground" data-testid={`text-experience-company-${exp.id}`}>
+                            {exp.company}
+                          </span>
+                        </div>
+                      </div>
+                      <ul className="text-sm text-foreground/60 leading-snug max-w-xl space-y-0.5" data-testid={`text-experience-description-${exp.id}`}>
+                        {exp.bullets?.map((bullet, bulletIdx) => (
+                          <li key={bulletIdx} className="flex items-start gap-2">
+                            <span className="text-foreground/30 mt-1">•</span>
+                            <span>{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                   
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 mb-1">
-                      <h3 className="font-semibold text-base text-foreground" data-testid={`text-experience-role-${exp.id}`}>
-                        {exp.role}
-                      </h3>
-                      <span className="text-foreground/30 text-sm">at</span>
-                      <div className="flex items-center gap-1.5">
-                        <Building className="w-4 h-4 text-foreground/40" />
-                        <span className="font-semibold text-base text-foreground" data-testid={`text-experience-company-${exp.id}`}>
-                          {exp.company}
-                        </span>
-                      </div>
-                    </div>
-                    <ul className="text-sm text-foreground/60 leading-snug max-w-xl space-y-0.5" data-testid={`text-experience-description-${exp.id}`}>
-                      {exp.bullets?.map((bullet, bulletIdx) => (
-                        <li key={bulletIdx} className="flex items-start gap-2">
-                          <span className="text-foreground/30 mt-1">•</span>
-                          <span>{bullet}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-                
-                {idx < array.length - 1 && (
-                  <div className="mt-4 border-b border-border/10" />
-                )}
-              </div>
-            ))}
+                  {idx < array.length - 1 && (
+                    <div className="border-b border-border/10 mb-4" />
+                  )}
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
 
           {!showAllExperience && workExperiences.length > 3 && (
-            <div className="mt-8 flex justify-center">
+            <div className="mt-4 flex justify-center">
               <Button
                 variant="ghost"
                 size="sm"
