@@ -64,6 +64,7 @@ import {
   ThumbsUp,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   Home,
   Building,
   Check
@@ -779,6 +780,7 @@ export default function Dashboard() {
   const [editingTestimonial, setEditingTestimonial] = useState<typeof testimonials[0] | null>(null);
   const [isEditTestimonialOpen, setIsEditTestimonialOpen] = useState(false);
   const [selectedTestimonialId, setSelectedTestimonialId] = useState<number | null>(null);
+  const [showAllExperience, setShowAllExperience] = useState(false);
   const [showUnsavedWarning, setShowUnsavedWarning] = useState(false);
   const [pendingAction, setPendingAction] = useState<'close' | 'cancel' | 'switch' | null>(null);
   const [pendingTestimonialId, setPendingTestimonialId] = useState<number | null>(null);
@@ -2094,7 +2096,7 @@ export default function Dashboard() {
           </div>
           
           <div className="space-y-4">
-            {workExperiences.map((exp, idx) => (
+            {workExperiences.slice(0, showAllExperience ? undefined : 3).map((exp, idx, array) => (
               <div 
                 key={exp.id} 
                 className="group"
@@ -2134,12 +2136,26 @@ export default function Dashboard() {
                   </div>
                 </div>
                 
-                {idx < workExperiences.length - 1 && (
+                {idx < array.length - 1 && (
                   <div className="mt-4 border-b border-border/10" />
                 )}
               </div>
             ))}
           </div>
+
+          {!showAllExperience && workExperiences.length > 3 && (
+            <div className="mt-8 flex justify-center">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-foreground/40 hover:text-foreground text-xs font-medium uppercase tracking-widest gap-2 group transition-all"
+                onClick={() => setShowAllExperience(true)}
+              >
+                View More Experience
+                <ChevronDown className="w-3 h-3 transition-transform group-hover:translate-y-0.5" />
+              </Button>
+            </div>
+          )}
         </Card>
       </motion.div>
     );
