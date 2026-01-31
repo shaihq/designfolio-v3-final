@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
 import { Home, FileText, Users, Landmark, Mail } from "lucide-react";
-import { MenuBar } from "@/components/ui/bottom-menu";
+import { Dock, DockIcon, DockItem, DockLabel } from "@/components/ui/dock";
 
 const sidebarTools = [
   {
@@ -62,14 +62,23 @@ export default function AiWorkspace() {
       </main>
 
       {/* Floating Bottom Dock */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
-        <MenuBar 
-          items={sidebarTools} 
-          onItemClick={(index) => {
-            // Handle tool selection here
-            console.log("Selected tool:", sidebarTools[index].title);
-          }}
-        />
+      <div className='fixed bottom-4 left-1/2 max-w-full -translate-x-1/2 z-50'>
+        <Dock className='items-end pb-3'>
+          {sidebarTools.map((item, idx) => (
+            <DockItem
+              key={idx}
+              className='aspect-square rounded-full bg-white/80 backdrop-blur-sm border border-black/5 shadow-sm'
+              onClick={() => {
+                console.log("Selected tool:", item.title);
+              }}
+            >
+              <DockLabel>{item.title}</DockLabel>
+              <DockIcon>
+                <item.icon className='h-full w-full text-neutral-600 dark:text-neutral-300' />
+              </DockIcon>
+            </DockItem>
+          ))}
+        </Dock>
       </div>
     </div>
   );

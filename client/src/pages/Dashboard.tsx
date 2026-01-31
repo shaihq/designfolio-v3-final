@@ -90,7 +90,7 @@ import {
 import { CSS } from '@dnd-kit/utilities';
 import { StardustButton } from '@/components/StardustButton';
 import { TiptapEditor } from '@/components/TiptapEditor';
-import Dock from "@/components/ui/dock";
+import { Dock, DockIcon, DockItem, DockLabel } from "@/components/ui/dock";
 import MacOSDock from "@/components/ui/mac-os-dock";
 import MacOSMenuBar from "@/components/ui/mac-os-menu-bar";
 

@@ -1,3 +1,8 @@
+Build this as my initial prototype
+
+Copy-paste this component to /components/ui folder:
+```tsx
+dock.tsx
 'use client';
 
 import {
@@ -27,23 +32,16 @@ const DEFAULT_DISTANCE = 150;
 const DEFAULT_PANEL_HEIGHT = 64;
 
 type DockProps = {
-  children?: React.ReactNode;
+  children: React.ReactNode;
   className?: string;
   distance?: number;
   panelHeight?: number;
   magnification?: number;
   spring?: SpringOptions;
-  items?: {
-    icon: React.ComponentType<{ className?: string }>;
-    label: string;
-    onClick?: () => void;
-    active?: boolean;
-  }[];
 };
 type DockItemProps = {
   className?: string;
   children: React.ReactNode;
-  onClick?: () => void;
 };
 type DockLabelProps = {
   className?: string;
@@ -86,7 +84,6 @@ function Dock({
   magnification = DEFAULT_MAGNIFICATION,
   distance = DEFAULT_DISTANCE,
   panelHeight = DEFAULT_PANEL_HEIGHT,
-  items,
 }: DockProps) {
   const mouseX = useMotionValue(Infinity);
   const isHovered = useMotionValue(0);
@@ -97,45 +94,6 @@ function Dock({
 
   const heightRow = useTransform(isHovered, [0, 1], [panelHeight, maxHeight]);
   const height = useSpring(heightRow, spring);
-
-  if (items) {
-    return (
-      <div className={cn("flex items-center justify-center w-full", className)}>
-        <motion.div
-          animate={{ y: [0, -2, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className={cn(
-            "flex items-end gap-2 px-3 py-2 rounded-3xl",
-            "border border-border bg-white/90 backdrop-blur-2xl shadow-sm shadow-black/5"
-          )}
-        >
-          {items.map((item, i) => (
-            <div key={item.label} className="relative flex flex-col items-center">
-              <motion.div
-                whileHover={{ scale: 1.2, rotate: -5 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              >
-                <button
-                  className={cn(
-                    "rounded-2xl relative w-12 h-12 flex items-center justify-center transition-colors duration-200",
-                    item.active ? "bg-[#FF553E]/10" : "hover:bg-[#FF553E]/5"
-                  )}
-                  onClick={item.onClick}
-                >
-                  <item.icon
-                    className={cn(
-                      "h-6 w-6 transition-colors",
-                      item.active ? "text-[#FF553E]" : "text-[#0A0A0A]/60"
-                    )}
-                  />
-                </button>
-              </motion.div>
-            </div>
-          ))}
-        </motion.div>
-      </div>
-    );
-  }
 
   return (
     <motion.div
@@ -170,7 +128,7 @@ function Dock({
   );
 }
 
-function DockItem({ children, className, onClick }: DockItemProps) {
+function DockItem({ children, className }: DockItemProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   const { distance, magnification, mouseX, spring } = useDock();
@@ -198,9 +156,8 @@ function DockItem({ children, className, onClick }: DockItemProps) {
       onHoverEnd={() => isHovered.set(0)}
       onFocus={() => isHovered.set(1)}
       onBlur={() => isHovered.set(0)}
-      onClick={onClick}
       className={cn(
-        'relative inline-flex items-center justify-center cursor-pointer',
+        'relative inline-flex items-center justify-center',
         className
       )}
       tabIndex={0}
@@ -266,3 +223,94 @@ function DockIcon({ children, className, ...rest }: DockIconProps) {
 }
 
 export { Dock, DockIcon, DockItem, DockLabel };
+
+
+demo.tsx
+import {
+  Activity,
+  Component,
+  HomeIcon,
+  Mail,
+  Package,
+  ScrollText,
+  SunMoon,
+} from 'lucide-react';
+
+import { Dock, DockIcon, DockItem, DockLabel } from '@/components/ui/dock';
+
+const data = [
+  {
+    title: 'Home',
+    icon: (
+      <HomeIcon className='h-full w-full text-neutral-600 dark:text-neutral-300' />
+    ),
+    href: '#',
+  },
+  {
+    title: 'Products',
+    icon: (
+      <Package className='h-full w-full text-neutral-600 dark:text-neutral-300' />
+    ),
+    href: '#',
+  },
+  {
+    title: 'Components',
+    icon: (
+      <Component className='h-full w-full text-neutral-600 dark:text-neutral-300' />
+    ),
+    href: '#',
+  },
+  {
+    title: 'Activity',
+    icon: (
+      <Activity className='h-full w-full text-neutral-600 dark:text-neutral-300' />
+    ),
+    href: '#',
+  },
+  {
+    title: 'Change Log',
+    icon: (
+      <ScrollText className='h-full w-full text-neutral-600 dark:text-neutral-300' />
+    ),
+    href: '#',
+  },
+  {
+    title: 'Email',
+    icon: (
+      <Mail className='h-full w-full text-neutral-600 dark:text-neutral-300' />
+    ),
+    href: '#',
+  },
+  {
+    title: 'Theme',
+    icon: (
+      <SunMoon className='h-full w-full text-neutral-600 dark:text-neutral-300' />
+    ),
+    href: '#',
+  },
+];
+
+export function AppleStyleDock() {
+  return (
+    <div className='absolute bottom-2 left-1/2 max-w-full -translate-x-1/2'>
+      <Dock className='items-end pb-3'>
+        {data.map((item, idx) => (
+          <DockItem
+            key={idx}
+            className='aspect-square rounded-full bg-gray-200 dark:bg-neutral-800'
+          >
+            <DockLabel>{item.title}</DockLabel>
+            <DockIcon>{item.icon}</DockIcon>
+          </DockItem>
+        ))}
+      </Dock>
+    </div>
+  );
+}
+
+```
+
+Install these NPM dependencies:
+```bash
+framer-motion
+```
