@@ -41,32 +41,40 @@ export default function AiWorkspace() {
         return (
           <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
             <div className="space-y-2">
-              <Label htmlFor="resume">Upload Resume</Label>
-              <div className="flex items-center gap-2">
-                <Input id="resume" type="file" className="cursor-pointer" />
-                <Button size="icon" variant="outline"><Upload className="w-4 h-4" /></Button>
+              <Label htmlFor="resume" className="text-sm font-medium text-foreground ml-1">Upload Resume</Label>
+              <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                <div className="flex items-center gap-2 px-4">
+                  <Input id="resume" type="file" className="border-0 bg-transparent h-11 px-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground cursor-pointer" />
+                  <Button size="icon" variant="ghost" className="h-8 w-8 rounded-full hover:bg-muted/50 transition-colors"><Upload className="w-4 h-4" /></Button>
+                </div>
               </div>
-              <p className="text-xs text-muted-foreground">PDF or DOCX supported (Max 5MB)</p>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-bold ml-1">PDF or DOCX supported (Max 5MB)</p>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="job-desc">Target Job Description (Optional)</Label>
-              <Textarea id="job-desc" placeholder="Paste the job description here for better matching..." className="min-h-[100px]" />
+              <Label htmlFor="job-desc" className="text-sm font-medium text-foreground ml-1">Target Job Description (Optional)</Label>
+              <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden">
+                <Textarea id="job-desc" placeholder="Paste the job description here..." className="border-0 bg-transparent min-h-[100px] px-4 py-3 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60 resize-none" />
+              </div>
             </div>
-            <Button className="w-full">Analyze Resume</Button>
+            <Button className="w-full bg-foreground text-background hover:bg-foreground/90 focus-visible:outline-none border-0 rounded-full h-11 px-6 text-base font-semibold transition-colors">Analyze Resume</Button>
           </div>
         );
       case 2: // Mock Interview
         return (
           <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
             <div className="space-y-2">
-              <Label htmlFor="role">Target Role</Label>
-              <Input id="role" placeholder="e.g. Senior Product Designer" />
+              <Label htmlFor="role" className="text-sm font-medium text-foreground ml-1">Target Role</Label>
+              <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                <Input id="role" placeholder="e.g. Senior Product Designer" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+              </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="focus">Interview Focus</Label>
-              <Input id="focus" placeholder="e.g. Behavioral, Technical, Case Study" />
+              <Label htmlFor="focus" className="text-sm font-medium text-foreground ml-1">Interview Focus</Label>
+              <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                <Input id="focus" placeholder="Behavioral, Technical, Case Study" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+              </div>
             </div>
-            <Button className="w-full">Start Practice Session</Button>
+            <Button className="w-full bg-foreground text-background hover:bg-foreground/90 focus-visible:outline-none border-0 rounded-full h-11 px-6 text-base font-semibold transition-colors">Start Practice Session</Button>
           </div>
         );
       case 3: // Salary Negotiation
@@ -74,33 +82,43 @@ export default function AiWorkspace() {
           <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="current-offer">Current Offer ($)</Label>
-                <Input id="current-offer" type="number" placeholder="120000" />
+                <Label htmlFor="current-offer" className="text-sm font-medium text-foreground ml-1">Current Offer ($)</Label>
+                <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                  <Input id="current-offer" type="number" placeholder="120000" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+                </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="location">Location</Label>
-                <Input id="location" placeholder="e.g. New York, NY" />
+                <Label htmlFor="location" className="text-sm font-medium text-foreground ml-1">Location</Label>
+                <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                  <Input id="location" placeholder="e.g. New York, NY" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+                </div>
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="notes">Additional Perks/Context</Label>
-              <Textarea id="notes" placeholder="Mention equity, bonuses, or other benefits..." />
+              <Label htmlFor="notes" className="text-sm font-medium text-foreground ml-1">Additional Perks/Context</Label>
+              <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden">
+                <Textarea id="notes" placeholder="Mention equity, bonuses, or other benefits..." className="border-0 bg-transparent min-h-[100px] px-4 py-3 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60 resize-none" />
+              </div>
             </div>
-            <Button className="w-full">Generate Strategy</Button>
+            <Button className="w-full bg-foreground text-background hover:bg-foreground/90 focus-visible:outline-none border-0 rounded-full h-11 px-6 text-base font-semibold transition-colors">Generate Strategy</Button>
           </div>
         );
       case 4: // Email Generator
         return (
           <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
             <div className="space-y-2">
-              <Label htmlFor="recipient">To</Label>
-              <Input id="recipient" placeholder="Hiring Manager / Recruiter Name" />
+              <Label htmlFor="recipient" className="text-sm font-medium text-foreground ml-1">To</Label>
+              <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                <Input id="recipient" placeholder="Hiring Manager Name" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+              </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="purpose">Email Purpose</Label>
-              <Input id="purpose" placeholder="e.g. Networking, Follow-up after interview" />
+              <Label htmlFor="purpose" className="text-sm font-medium text-foreground ml-1">Email Purpose</Label>
+              <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                <Input id="purpose" placeholder="e.g. Networking, Follow-up" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+              </div>
             </div>
-            <Button className="w-full gap-2">
+            <Button className="w-full bg-foreground text-background hover:bg-foreground/90 focus-visible:outline-none border-0 rounded-full h-11 px-6 text-base font-semibold transition-colors gap-2">
               Generate Draft <Send className="w-4 h-4" />
             </Button>
           </div>
