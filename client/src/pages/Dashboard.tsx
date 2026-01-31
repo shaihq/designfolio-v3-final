@@ -2369,33 +2369,35 @@ export default function Dashboard() {
                       <div className="flex group">
                         <div className="flex animate-scroll group-hover:[animation-play-state:paused] py-4">
                           {[...tools, ...tools].map((tool, idx) => (
-                            <TooltipProvider key={`${tool.id}-${idx}`}>
-                              <Tooltip delayDuration={0}>
-                                <TooltipTrigger asChild>
-                                  <div
-                                    className="bg-white border border-border/30 rounded-2xl p-3 md:p-4 hover-elevate mx-2 shrink-0 flex items-center justify-center w-16 h-16 md:w-20 md:h-20 cursor-default overflow-hidden"
-                                    data-testid={`card-tool-${tool.id}-${idx}`}
+                            <div key={`${tool.id}-${idx}`} className="shrink-0">
+                              <TooltipProvider>
+                                <Tooltip delayDuration={0}>
+                                  <TooltipTrigger asChild>
+                                    <div
+                                      className="bg-white border border-border/30 rounded-2xl p-3 md:p-4 hover-elevate mx-2 flex items-center justify-center w-16 h-16 md:w-20 md:h-20 cursor-default overflow-hidden"
+                                      data-testid={`card-tool-${tool.id}-${idx}`}
+                                    >
+                                      <img 
+                                        src={tool.logo} 
+                                        alt={tool.name} 
+                                        className="w-8 h-8 md:w-10 md:h-10 object-contain block" 
+                                        onError={(e) => {
+                                          const target = e.target as HTMLImageElement;
+                                          target.src = `https://api.dicebear.com/7.x/initials/svg?seed=${tool.name}`;
+                                        }}
+                                      />
+                                    </div>
+                                  </TooltipTrigger>
+                                  <TooltipContent
+                                    side="top"
+                                    sideOffset={5}
+                                    className="bg-foreground text-background border-none px-3 py-1.5 text-xs font-semibold rounded-full shadow-lg z-[110]"
                                   >
-                                    <img 
-                                      src={tool.logo} 
-                                      alt={tool.name} 
-                                      className="w-8 h-8 md:w-10 md:h-10 object-contain block" 
-                                      onError={(e) => {
-                                        const target = e.target as HTMLImageElement;
-                                        target.src = `https://api.dicebear.com/7.x/initials/svg?seed=${tool.name}`;
-                                      }}
-                                    />
-                                  </div>
-                                </TooltipTrigger>
-                                <TooltipContent
-                                  side="top"
-                                  sideOffset={5}
-                                  className="bg-foreground text-background border-none px-3 py-1.5 text-xs font-semibold rounded-full shadow-lg z-[110]"
-                                >
-                                  <p>{tool.name}</p>
-                                </TooltipContent>
-                              </Tooltip>
-                            </TooltipProvider>
+                                    <p>{tool.name}</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                              </TooltipProvider>
+                            </div>
                           ))}
                         </div>
                       </div>
