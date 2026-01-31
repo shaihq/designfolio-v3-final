@@ -135,7 +135,7 @@ export default function AiWorkspace() {
       {/* Main Content */}
       <main className="flex-1 p-6 overflow-y-auto pb-32 flex justify-center">
         <div className="w-full max-w-2xl">
-          <Card className="border border-border/40 rounded-[2rem] bg-white/40 backdrop-blur-md shadow-2xl shadow-black/5 overflow-hidden p-2">
+          <Card className="border border-border/40 rounded-[2rem] bg-[#E5E1D5] shadow-none overflow-hidden p-2">
             <div className="flex items-center gap-3 px-6 py-4">
               <div className="p-2 bg-primary/10 rounded-xl">
                 <currentTool.icon className="w-5 h-5 text-primary" />
