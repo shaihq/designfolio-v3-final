@@ -2,29 +2,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "wouter";
 import { Home, FileText, Users, Landmark, Mail } from "lucide-react";
-import { Dock, DockIcon, DockItem, DockLabel } from "@/components/ui/dock";
+import { BottomNavBar } from "@/components/ui/bottom-nav-bar";
 
-const sidebarTools = [
-  {
-    title: "Resume Fixer",
-    icon: (props: any) => <FileText {...props} />,
-    label: "Resume Fixer"
-  },
-  {
-    title: "Mock Interview",
-    icon: (props: any) => <Users {...props} />,
-    label: "Mock Interview"
-  },
-  {
-    title: "Salary Negotiation",
-    icon: (props: any) => <Landmark {...props} />,
-    label: "Salary Negotiation"
-  },
-  {
-    title: "Email Generator",
-    icon: (props: any) => <Mail {...props} />,
-    label: "Email Generator"
-  }
+const navItems = [
+  { label: "Resume Fixer", icon: FileText },
+  { label: "Mock Interview", icon: Users },
+  { label: "Salary Negotiation", icon: Landmark },
+  { label: "Email Generator", icon: Mail },
 ];
 
 export default function AiWorkspace() {
@@ -54,32 +38,21 @@ export default function AiWorkspace() {
             
             <div className="p-12 border-2 border-dashed border-border/60 rounded-3xl flex flex-col items-center justify-center text-center bg-white/20">
               <p className="text-muted-foreground">
-                Select a tool from the dock below to begin. More features coming soon.
+                Select a tool from the bottom navigation to begin. More features coming soon.
               </p>
             </div>
           </div>
         </div>
       </main>
 
-      {/* Floating Bottom Dock */}
-      <div className='fixed bottom-4 left-1/2 max-w-full -translate-x-1/2 z-50'>
-        <Dock className='items-end pb-3'>
-          {sidebarTools.map((item, idx) => (
-            <DockItem
-              key={idx}
-              className='aspect-square rounded-full bg-white/80 backdrop-blur-sm border border-black/5 shadow-sm'
-              onClick={() => {
-                console.log("Selected tool:", item.title);
-              }}
-            >
-              <DockLabel>{item.title}</DockLabel>
-              <DockIcon>
-                <item.icon className='h-full w-full text-neutral-600 dark:text-neutral-300' />
-              </DockIcon>
-            </DockItem>
-          ))}
-        </Dock>
-      </div>
+      {/* Floating Bottom Navigation Bar */}
+      <BottomNavBar 
+        className="fixed bottom-8 inset-x-0 mx-auto z-50 w-fit" 
+        items={navItems}
+        onItemClick={(index) => {
+          console.log("Selected tool:", navItems[index].label);
+        }}
+      />
     </div>
   );
 }
