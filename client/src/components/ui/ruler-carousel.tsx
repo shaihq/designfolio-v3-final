@@ -36,14 +36,14 @@ const RulerLines = ({ totalLines = 41 }: { totalLines?: number }) => {
     const isCenter = i === Math.floor(totalLines / 2);
 
     let height = 6;
-    let color = "bg-[#FF553E]/30";
+    let color = "bg-[#0A0A0A]/30";
 
     if (isCenter) {
       height = 16;
       color = "bg-[#FF553E]";
     } else if (isFifth) {
       height = 10;
-      color = "bg-[#FF553E]/60";
+      color = "bg-[#0A0A0A]/60";
     }
 
     lines.push(
@@ -234,7 +234,7 @@ export function RulerCarousel({
           className="flex items-center justify-center cursor-pointer p-1"
           aria-label="Previous item"
         >
-          <ChevronLeft className="w-4 h-4 text-[#FF553E]" />
+          <ChevronLeft className="w-4 h-4 text-[#0A0A0A]/70" />
         </button>
 
         <div className="flex items-center gap-1">
@@ -253,7 +253,7 @@ export function RulerCarousel({
           className="flex items-center justify-center cursor-pointer p-1"
           aria-label="Next item"
         >
-          <ChevronRight className="w-4 h-4 text-[#FF553E]" />
+          <ChevronRight className="w-4 h-4 text-[#0A0A0A]/70" />
         </button>
       </div>
     </div>
