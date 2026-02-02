@@ -43,41 +43,42 @@ export default function AiWorkspace() {
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="resume" className="text-sm font-medium text-foreground ml-1">Upload Resume</Label>
+              <input 
+                type="file" 
+                id="resume"
+                accept=".pdf,.docx" 
+                className="hidden" 
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    // Handle file upload logic here
+                    console.log("Selected file:", file.name);
+                  }
+                }}
+              />
               <div 
-                className="w-full rounded-[1.25rem] p-[1px] relative z-10 bg-gradient-to-b from-border/60 via-border/30 to-border/60 shadow-sm group transition-all duration-300"
+                onClick={() => document.getElementById('resume')?.click()}
+                className="p-8 rounded-[2rem] border-2 border-border/40 bg-white hover-elevate transition-all duration-300 group cursor-pointer"
               >
-                <div className="bg-white dark:bg-[#1a1a1a] rounded-[1.125rem] overflow-hidden">
-                  <div className="p-6 flex flex-col items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                      <Upload className="w-6 h-6 text-primary" />
-                    </div>
-                    
-                    <div className="space-y-1 text-center">
-                      <p className="text-sm font-semibold text-foreground">
-                        Click to upload or drag and drop
-                      </p>
-                      <p className="text-muted-foreground text-[10px] uppercase tracking-wider font-bold">
-                        PDF or DOCX supported (Max 5MB)
-                      </p>
-                    </div>
-
-                    <div className="w-full max-w-xs mx-auto pt-1">
-                      <Input 
-                        type="file" 
-                        className="hidden" 
-                        id="resume"
-                        accept=".pdf,.docx"
-                      />
-                      <Button 
-                        asChild
-                        className="w-full rounded-full h-10 text-sm font-semibold bg-[#FF553E] hover:bg-[#E64935] text-white border-none transition-transform active:scale-[0.98]"
-                      >
-                        <label htmlFor="resume" className="cursor-pointer flex items-center justify-center">
-                          Select Resume
-                        </label>
-                      </Button>
-                    </div>
+                <div className="flex flex-col items-center gap-4 text-center">
+                  <div className="w-14 h-14 rounded-2xl bg-muted/30 flex items-center justify-center transition-colors group-hover:bg-primary/10">
+                    <Upload className="w-7 h-7 text-foreground/30 group-hover:text-primary transition-colors" />
                   </div>
+                  <div>
+                    <h4 className="text-base font-semibold text-foreground">
+                      Update Resume
+                    </h4>
+                    <p className="text-sm text-foreground/40 mt-1 font-medium">
+                      PDF or DOCX supported • Max 5MB
+                    </p>
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    size="lg" 
+                    className="w-full rounded-full h-12 border-2 border-border/50 bg-white hover:bg-muted/50 font-semibold transition-all"
+                  >
+                    Choose File
+                  </Button>
                 </div>
               </div>
             </div>
