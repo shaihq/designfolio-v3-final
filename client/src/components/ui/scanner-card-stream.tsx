@@ -30,7 +30,7 @@ const ScannerCardStream = ({
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [scanProgress, setScanProgress] = useState(0);
   
-  const asciiCode = useMemo(() => generateCode(80, 50), []);
+  const asciiCode = useMemo(() => generateCode(40, 40), []);
 
   useEffect(() => {
     if (file) {
@@ -162,12 +162,14 @@ const ScannerCardStream = ({
     <div className="relative w-full h-[440px] flex items-center justify-center overflow-hidden bg-black rounded-3xl border border-white/5 shadow-2xl">
       <canvas ref={particleCanvasRef} className="absolute inset-0 pointer-events-none opacity-20" />
       
-      <div className="relative w-full h-full bg-zinc-950 overflow-hidden">
-        {/* The Digital Code Layer - Increased opacity for visibility */}
+      <div className="relative w-full h-full bg-zinc-950 overflow-hidden flex items-center justify-center">
+        {/* The Digital Code Layer - Centered and fit to width */}
         <div 
-          className="absolute inset-0 p-8 font-mono text-[10px] leading-[1.4] text-white/30 overflow-hidden whitespace-pre pointer-events-none"
+          className="absolute inset-0 p-8 font-mono text-[10px] leading-[1.4] text-white/30 overflow-hidden whitespace-pre pointer-events-none flex items-center justify-center text-center break-all"
         >
-          {asciiCode}
+          <div className="max-w-full">
+            {asciiCode}
+          </div>
         </div>
 
         {/* The PDF Preview Layer */}
@@ -186,13 +188,13 @@ const ScannerCardStream = ({
           ) : (
             <div className="w-full h-full bg-white flex items-center justify-center p-12">
               <div className="space-y-6 w-full max-w-sm">
-                <div className="h-6 w-2/3 bg-slate-100 rounded" />
+                <div className="h-6 w-2/3 bg-slate-100 rounded mx-auto" />
                 <div className="h-3 w-full bg-slate-50 rounded" />
                 <div className="h-3 w-full bg-slate-50 rounded" />
                 <div className="pt-12 space-y-3">
-                  <div className="h-4 w-1/2 bg-slate-100 rounded" />
+                  <div className="h-4 w-1/2 bg-slate-100 rounded mx-auto" />
                   <div className="h-3 w-full bg-slate-50 rounded" />
-                  <div className="h-3 w-5/6 bg-slate-50 rounded" />
+                  <div className="h-3 w-5/6 bg-slate-50 rounded mx-auto" />
                 </div>
               </div>
             </div>
