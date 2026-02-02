@@ -38,18 +38,48 @@ export default function AiWorkspace() {
 
   const renderToolForm = () => {
     switch (currentTool.id) {
-      case 1: // Resume Fixer
+    case 1: // Resume Fixer
         return (
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="resume" className="text-sm font-medium text-foreground ml-1">Upload Resume</Label>
-              <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
-                <div className="flex items-center gap-2 px-4">
-                  <Input id="resume" type="file" className="border-0 bg-transparent h-11 px-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground cursor-pointer" />
-                  <Button size="icon" variant="ghost" className="h-8 w-8 rounded-full hover:bg-muted/50 transition-colors"><Upload className="w-4 h-4" /></Button>
+              <div 
+                className="w-full rounded-[1.25rem] p-[1px] relative z-10 bg-gradient-to-b from-border/60 via-border/30 to-border/60 shadow-sm group transition-all duration-300"
+              >
+                <div className="bg-white dark:bg-[#1a1a1a] rounded-[1.125rem] overflow-hidden">
+                  <div className="p-6 flex flex-col items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                      <Upload className="w-6 h-6 text-primary" />
+                    </div>
+                    
+                    <div className="space-y-1 text-center">
+                      <p className="text-sm font-semibold text-foreground">
+                        Click to upload or drag and drop
+                      </p>
+                      <p className="text-muted-foreground text-[10px] uppercase tracking-wider font-bold">
+                        PDF or DOCX supported (Max 5MB)
+                      </p>
+                    </div>
+
+                    <div className="w-full max-w-xs mx-auto pt-1">
+                      <Input 
+                        type="file" 
+                        className="hidden" 
+                        id="resume"
+                        accept=".pdf,.docx"
+                      />
+                      <Button 
+                        asChild
+                        className="w-full rounded-full h-10 text-sm font-semibold bg-[#FF553E] hover:bg-[#E64935] text-white border-none transition-transform active:scale-[0.98]"
+                      >
+                        <label htmlFor="resume" className="cursor-pointer flex items-center justify-center">
+                          Select Resume
+                        </label>
+                      </Button>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-bold ml-1">PDF or DOCX supported (Max 5MB)</p>
             </div>
             <div className="space-y-2">
               <Label htmlFor="job-desc" className="text-sm font-medium text-foreground ml-1">Target Job Description (Optional)</Label>
