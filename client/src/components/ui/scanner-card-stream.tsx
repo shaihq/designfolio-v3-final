@@ -30,7 +30,7 @@ const ScannerCardStream = ({
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [scanProgress, setScanProgress] = useState(0);
   
-  const asciiCode = useMemo(() => generateCode(60, 40), []);
+  const asciiCode = useMemo(() => generateCode(80, 50), []);
 
   useEffect(() => {
     if (file) {
@@ -47,12 +47,11 @@ const ScannerCardStream = ({
     const scannerCanvas = scannerCanvasRef.current;
     if (!particleCanvas || !scannerCanvas) return;
 
-    // Three.js Particle Background
     const scene = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(-window.innerWidth / 2, window.innerWidth / 2, 150, -150, 1, 1000);
+    const camera = new THREE.OrthographicCamera(-window.innerWidth / 2, window.innerWidth / 2, 250, -250, 1, 1000);
     camera.position.z = 100;
     const renderer = new THREE.WebGLRenderer({ canvas: particleCanvas, alpha: true, antialias: true });
-    renderer.setSize(window.innerWidth, 300);
+    renderer.setSize(window.innerWidth, 500);
     renderer.setClearColor(0x000000, 0);
 
     const particleCount = 200;
@@ -62,7 +61,7 @@ const ScannerCardStream = ({
 
     for (let i = 0; i < particleCount; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 800;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 300;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 500;
       positions[i * 3 + 2] = 0;
       alphas[i] = Math.random() * 0.5;
     }
@@ -95,10 +94,9 @@ const ScannerCardStream = ({
     const points = new THREE.Points(geometry, material);
     scene.add(points);
 
-    // Scanner Canvas 2D
     const ctx = scannerCanvas.getContext('2d')!;
-    scannerCanvas.width = 600;
-    scannerCanvas.height = 400;
+    scannerCanvas.width = 400;
+    scannerCanvas.height = 500;
 
     let scanY = 0;
     let particles: any[] = [];
@@ -113,7 +111,6 @@ const ScannerCardStream = ({
       if (isScanning) {
         ctx.clearRect(0, 0, scannerCanvas.width, scannerCanvas.height);
         
-        // Horizontal scan line (Top to Bottom) - back to vertical movement as requested
         scanY = (scanY + 2.5) % scannerCanvas.height;
         setScanProgress(scanY / scannerCanvas.height);
         
@@ -126,7 +123,6 @@ const ScannerCardStream = ({
         ctx.lineTo(scannerCanvas.width, scanY);
         ctx.stroke();
 
-        // Disintegration particles on the line (Orange/Red)
         for (let i = 0; i < 6; i++) {
           particles.push({
             x: Math.random() * scannerCanvas.width,
@@ -163,20 +159,20 @@ const ScannerCardStream = ({
   }, [isScanning]);
 
   return (
-    <div className="relative w-full h-[450px] flex items-center justify-center overflow-hidden bg-black/5 rounded-2xl border border-border/40 shadow-inner">
-      <canvas ref={particleCanvasRef} className="absolute inset-0 pointer-events-none opacity-40" />
+    <div className="relative w-full h-[500px] flex items-center justify-center overflow-hidden bg-black rounded-2xl border border-white/5 shadow-2xl">
+      <canvas ref={particleCanvasRef} className="absolute inset-0 pointer-events-none opacity-20" />
       
-      <div className="relative z-10 w-[300px] h-[400px] bg-white shadow-2xl rounded-lg overflow-hidden border border-white/20">
-        {/* The Digital Code Layer (Background revealed by scan) */}
+      <div className="relative w-full h-full bg-zinc-950 overflow-hidden">
+        {/* The Digital Code Layer (revealed by scan) */}
         <div 
-          className="absolute inset-0 p-6 font-mono text-[9px] leading-[1.3] text-[#FF553E]/40 overflow-hidden whitespace-pre pointer-events-none"
+          className="absolute inset-0 p-8 font-mono text-[9px] leading-[1.3] text-[#FF553E]/40 overflow-hidden whitespace-pre pointer-events-none"
         >
           {asciiCode}
         </div>
 
-        {/* The PDF/Image Preview Layer - Top Down reveal */}
+        {/* The PDF Preview Layer */}
         <div 
-          className="absolute inset-0 bg-white transition-all duration-100"
+          className="absolute inset-0 bg-white"
           style={{ 
             clipPath: isScanning ? `inset(${ scanProgress * 100 }% 0 0 0)` : 'none',
           }}
@@ -188,15 +184,15 @@ const ScannerCardStream = ({
               title="Resume Preview"
             />
           ) : (
-            <div className="w-full h-full bg-white flex items-center justify-center p-10">
-              <div className="space-y-5 w-full">
-                <div className="h-5 w-3/4 bg-slate-100 rounded" />
-                <div className="h-2 w-full bg-slate-50 rounded" />
-                <div className="h-2 w-full bg-slate-50 rounded" />
-                <div className="pt-10 space-y-2">
+            <div className="w-full h-full bg-white flex items-center justify-center p-12">
+              <div className="space-y-6 w-full max-w-sm">
+                <div className="h-6 w-2/3 bg-slate-100 rounded" />
+                <div className="h-3 w-full bg-slate-50 rounded" />
+                <div className="h-3 w-full bg-slate-50 rounded" />
+                <div className="pt-12 space-y-3">
                   <div className="h-4 w-1/2 bg-slate-100 rounded" />
-                  <div className="h-2 w-full bg-slate-50 rounded" />
-                  <div className="h-2 w-5/6 bg-slate-50 rounded" />
+                  <div className="h-3 w-full bg-slate-50 rounded" />
+                  <div className="h-3 w-5/6 bg-slate-50 rounded" />
                 </div>
               </div>
             </div>
@@ -204,10 +200,7 @@ const ScannerCardStream = ({
         </div>
 
         {/* Scanner Line and Particles Canvas */}
-        <canvas ref={scannerCanvasRef} className="absolute inset-0 pointer-events-none z-30" />
-        
-        {/* Inner depth shadow */}
-        <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_30px_rgba(0,0,0,0.1)] z-40" />
+        <canvas ref={scannerCanvasRef} className="absolute inset-0 pointer-events-none z-30" style={{ width: '100%', height: '100%' }} />
       </div>
     </div>
   );
