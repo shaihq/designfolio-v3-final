@@ -36,11 +36,22 @@ export default function AiWorkspace() {
 
   const [uploadedResume, setUploadedResume] = useState<File | null>(null);
 
-  const currentTool = navItems[selectedTool];
+  const [jobDescription, setJobDescription] = useState("");
 
   const handleResumeUpload = (file: File) => {
     setUploadedResume(file);
     console.log("Uploaded file:", file.name);
+  };
+
+  const handlePaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      if (text) {
+        setJobDescription(text);
+      }
+    } catch (err) {
+      console.error("Failed to read clipboard:", err);
+    }
   };
 
   const renderToolForm = () => {
@@ -117,9 +128,27 @@ export default function AiWorkspace() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="job-desc" className="text-sm font-medium text-foreground ml-1">Target Job Description (Optional)</Label>
-              <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden">
-                <Textarea id="job-desc" placeholder="Paste the job description here..." className="border-0 bg-transparent min-h-[100px] px-4 py-3 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60 resize-none" />
+              <div className="flex items-center justify-between ml-1">
+                <Label htmlFor="job-desc" className="text-sm font-medium text-foreground">Job description</Label>
+                {!jobDescription && (
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    onClick={handlePaste}
+                    className="h-7 px-2 text-[11px] font-semibold text-[#FF553E] hover:bg-[#FF553E]/5 rounded-md gap-1"
+                  >
+                    Paste
+                  </Button>
+                )}
+              </div>
+              <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-[#FF553E]/20 focus-within:border-[#FF553E]/30 focus-within:shadow-[0_0_0_4px_hsl(var(--primary)/0.12)] transition-all duration-300 ease-out overflow-hidden">
+                <Textarea 
+                  id="job-desc" 
+                  value={jobDescription}
+                  onChange={(e) => setJobDescription(e.target.value)}
+                  placeholder="Paste the job description here..." 
+                  className="border-0 bg-transparent min-h-[100px] px-4 py-3 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60 resize-none" 
+                />
               </div>
             </div>
             <Button className="w-full bg-foreground text-background hover:bg-foreground/90 focus-visible:outline-none border-0 rounded-full h-11 px-6 text-base font-semibold transition-colors">Analyze Resume</Button>
