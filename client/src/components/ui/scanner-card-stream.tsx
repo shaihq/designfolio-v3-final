@@ -17,21 +17,29 @@ const generateCode = (width: number, height: number): string => {
 };
 
 type ScannerCardStreamProps = {
-  cardImages?: string[];
+  file?: File | null;
   isScanning?: boolean;
 };
 
 const ScannerCardStream = ({
-  cardImages = [
-    "https://cdn.prod.website-files.com/68789c86c8bc802d61932544/689f20b55e654d1341fb06f8_4.1.png"
-  ],
+  file = null,
   isScanning = false,
 }: ScannerCardStreamProps) => {
   const particleCanvasRef = useRef<HTMLCanvasElement>(null);
   const scannerCanvasRef = useRef<HTMLCanvasElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   
-  const asciiCode = useMemo(() => generateCode(60, 20), []);
+  const asciiCode = useMemo(() => generateCode(60, 40), []);
+
+  useEffect(() => {
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+      return () => URL.revokeObjectURL(url);
+    } else {
+      setPreviewUrl(null);
+    }
+  }, [file]);
 
   useEffect(() => {
     const particleCanvas = particleCanvasRef.current;
@@ -94,8 +102,9 @@ const ScannerCardStream = ({
     let scanY = 0;
     let particles: any[] = [];
 
+    let animationFrameId: number;
     const animate = () => {
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
       
       material.uniforms.time.value += 0.05;
       renderer.render(scene, camera);
@@ -104,34 +113,39 @@ const ScannerCardStream = ({
         ctx.clearRect(0, 0, scannerCanvas.width, scannerCanvas.height);
         
         // Horizontal scan line
-        scanY = (scanY + 2) % scannerCanvas.height;
-        ctx.strokeStyle = "rgba(255, 85, 62, 0.8)";
-        ctx.lineWidth = 2;
-        ctx.shadowBlur = 15;
+        scanY = (scanY + 2.5) % scannerCanvas.height;
+        ctx.strokeStyle = "rgba(255, 85, 62, 0.9)";
+        ctx.lineWidth = 3;
+        ctx.shadowBlur = 20;
         ctx.shadowColor = "rgba(255, 85, 62, 1)";
         ctx.beginPath();
         ctx.moveTo(0, scanY);
         ctx.lineTo(scannerCanvas.width, scanY);
         ctx.stroke();
 
-        // Disintegration particles
-        if (Math.random() > 0.5) {
+        // Disintegration particles on the line
+        for (let i = 0; i < 5; i++) {
           particles.push({
             x: Math.random() * scannerCanvas.width,
             y: scanY,
-            vx: (Math.random() - 0.5) * 2,
-            vy: (Math.random() - 1) * 2,
-            life: 1.0
+            vx: (Math.random() - 0.5) * 4,
+            vy: (Math.random() - 1.2) * 3,
+            life: 1.0,
+            size: Math.random() * 3 + 1
           });
         }
 
         particles.forEach((p, i) => {
           p.x += p.vx;
           p.y += p.vy;
-          p.life -= 0.01;
-          if (p.life <= 0) particles.splice(i, 1);
+          p.life -= 0.015;
+          if (p.life <= 0) {
+            particles.splice(i, 1);
+            return;
+          }
+          ctx.shadowBlur = 0;
           ctx.fillStyle = `rgba(255, 85, 62, ${p.life})`;
-          ctx.fillRect(p.x, p.y, 2, 2);
+          ctx.fillRect(p.x, p.y, p.size, p.size);
         });
       }
     };
@@ -139,37 +153,55 @@ const ScannerCardStream = ({
     animate();
 
     return () => {
+      cancelAnimationFrame(animationFrameId);
       renderer.dispose();
       scene.clear();
     };
   }, [isScanning]);
 
   return (
-    <div className="relative w-full h-[400px] flex items-center justify-center overflow-hidden bg-black/5 rounded-2xl">
+    <div className="relative w-full h-[450px] flex items-center justify-center overflow-hidden bg-black/5 rounded-2xl border border-border/40">
       <canvas ref={particleCanvasRef} className="absolute inset-0 pointer-events-none" />
       
-      <div className="relative z-10 w-[280px] h-[360px] bg-white shadow-2xl rounded-lg overflow-hidden border border-white/20">
-        {/* The Card View */}
-        <div className="absolute inset-0 transition-opacity duration-500">
-          <img 
-            src={cardImages[0]} 
-            className="w-full h-full object-cover opacity-80" 
-            alt="Resume Preview"
-          />
+      <div className="relative z-10 w-[300px] h-[400px] bg-white shadow-2xl rounded-lg overflow-hidden border border-white/20">
+        {/* The PDF/Image Preview */}
+        <div className="absolute inset-0">
+          {previewUrl ? (
+            <iframe 
+              src={`${previewUrl}#toolbar=0&navpanes=0&scrollbar=0`}
+              className="w-full h-full border-0 pointer-events-none"
+              title="Resume Preview"
+            />
+          ) : (
+            <div className="w-full h-full bg-slate-50 flex items-center justify-center p-8">
+              <div className="space-y-4 w-full">
+                <div className="h-4 w-3/4 bg-slate-200 rounded" />
+                <div className="h-2 w-full bg-slate-100 rounded" />
+                <div className="h-2 w-full bg-slate-100 rounded" />
+                <div className="pt-8 space-y-2">
+                  <div className="h-3 w-1/2 bg-slate-200 rounded" />
+                  <div className="h-2 w-full bg-slate-100 rounded" />
+                  <div className="h-2 w-5/6 bg-slate-100 rounded" />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
-        {/* The ASCII / Disintegration Layer */}
+        {/* The Disintegration Overlay (Digital Code) */}
         <div 
-          className="absolute inset-0 bg-black/90 p-4 font-mono text-[8px] leading-[1.2] text-[#FF553E] overflow-hidden whitespace-pre pointer-events-none"
+          className="absolute inset-0 bg-black/80 p-4 font-mono text-[8px] leading-[1.2] text-[#FF553E] overflow-hidden whitespace-pre pointer-events-none mix-blend-screen"
           style={{ 
             clipPath: isScanning ? 'none' : 'inset(100% 0 0 0)',
-            transition: 'clip-path 0.5s ease-in-out'
+            transition: 'clip-path 0.5s ease-in-out',
+            opacity: isScanning ? 1 : 0
           }}
         >
           {asciiCode}
         </div>
 
-        <canvas ref={scannerCanvasRef} className="absolute inset-0 pointer-events-none mix-blend-screen" />
+        {/* Scanner Line and Particles Canvas */}
+        <canvas ref={scannerCanvasRef} className="absolute inset-0 pointer-events-none z-20" />
       </div>
     </div>
   );

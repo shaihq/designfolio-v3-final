@@ -100,7 +100,7 @@ export default function AiWorkspace() {
                   exit={{ opacity: 0, scale: 0.95 }}
                   className="flex flex-col items-center justify-center py-4 space-y-6"
                 >
-                  <ScannerCardStream isScanning={true} />
+                  <ScannerCardStream isScanning={true} file={uploadedResume} />
                   
                   <div className="w-full max-w-xs space-y-3 text-center">
                     <div className="flex items-center justify-center gap-2 text-foreground font-medium">
@@ -115,7 +115,7 @@ export default function AiWorkspace() {
                       />
                     </div>
                     <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">
-                      Processing Disintegration
+                      Matching Job Requirements
                     </p>
                   </div>
                 </motion.div>
