@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Home, FileText, Users, DollarSign, Mail, Upload, Send } from "lucide-react";
+import { Home, FileText, Users, DollarSign, Mail, Upload, Send, Sparkles, Loader2 } from "lucide-react";
 import { RulerCarousel, type CarouselItem } from "@/components/ui/ruler-carousel";
 import {
   Breadcrumb,
@@ -10,7 +10,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Card } from "@/components/ui/card";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,12 +35,39 @@ export default function AiWorkspace() {
   const [selectedTool, setSelectedTool] = useState(0);
   const [uploadedResume, setUploadedResume] = useState<File | null>(null);
   const [jobDescription, setJobDescription] = useState("");
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analysisProgress, setAnalysisProgress] = useState(0);
 
   const currentTool = navItems[selectedTool];
 
   const handleResumeUpload = (file: File) => {
     setUploadedResume(file);
     console.log("Uploaded file:", file.name);
+  };
+
+  const handleAnalyze = async () => {
+    if (!uploadedResume || !jobDescription) return;
+    
+    setIsAnalyzing(true);
+    setAnalysisProgress(0);
+    
+    // Simulate AI analysis process
+    const duration = 4000;
+    const interval = 50;
+    const steps = duration / interval;
+    const increment = 100 / steps;
+    
+    let current = 0;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= 100) {
+        clearInterval(timer);
+        setAnalysisProgress(100);
+        setTimeout(() => setIsAnalyzing(false), 500);
+      } else {
+        setAnalysisProgress(current);
+      }
+    }, interval);
   };
 
   const handlePaste = async () => {
@@ -59,91 +86,170 @@ export default function AiWorkspace() {
       case 1: // Resume Fixer
         return (
           <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="resume" className="text-sm font-medium text-foreground ml-1">Upload Resume</Label>
-              <input 
-                type="file" 
-                id="resume"
-                accept=".pdf,.docx" 
-                className="hidden" 
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
-                  if (file) {
-                    handleResumeUpload(file);
-                  }
-                }}
-              />
-              <div 
-                onClick={() => document.getElementById('resume')?.click()}
-                onDragOver={(e) => {
-                  e.preventDefault();
-                  e.currentTarget.classList.add('border-[#FF553E]', 'bg-[#FF553E]/[0.02]');
-                }}
-                onDragLeave={(e) => {
-                  e.preventDefault();
-                  e.currentTarget.classList.remove('border-[#FF553E]', 'bg-[#FF553E]/[0.02]');
-                }}
-                onDrop={(e) => {
-                  e.preventDefault();
-                  e.currentTarget.classList.remove('border-[#FF553E]', 'bg-[#FF553E]/[0.02]');
-                  const file = e.dataTransfer.files?.[0];
-                  if (file && (file.type === "application/pdf" || file.name.endsWith(".docx"))) {
-                    handleResumeUpload(file);
-                  }
-                }}
-                className={`p-6 rounded-2xl border-2 border-dashed transition-all duration-300 group cursor-pointer ${
-                  uploadedResume 
-                    ? 'border-[#FF553E]/20 bg-[#FF553E]/[0.02]' 
-                    : 'border-border/40 bg-white/50 hover:border-[#FF553E]/20 hover:bg-[#FF553E]/[0.01]'
-                }`}
-              >
-                <div className="flex items-center gap-4">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
-                    uploadedResume ? 'bg-[#FF553E]/10' : 'bg-muted/30 group-hover:bg-[#FF553E]/10'
-                  }`}>
-                    {uploadedResume ? (
-                      <FileText className="w-5 h-5 text-[#FF553E]" />
-                    ) : (
-                      <Upload className="w-5 h-5 text-foreground/30 group-hover:text-[#FF553E] transition-colors" />
-                    )}
+            <AnimatePresence mode="wait">
+              {isAnalyzing ? (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.05 }}
+                  className="flex flex-col items-center justify-center py-12 space-y-8"
+                >
+                  <div className="relative w-48 h-64 bg-white rounded-lg shadow-2xl border-2 border-foreground/5 overflow-hidden">
+                    {/* Simulated Resume Content */}
+                    <div className="p-4 space-y-3">
+                      <div className="h-4 w-3/4 bg-muted rounded animate-pulse" />
+                      <div className="h-2 w-full bg-muted/60 rounded animate-pulse" />
+                      <div className="h-2 w-full bg-muted/60 rounded animate-pulse" />
+                      <div className="pt-4 space-y-2">
+                        <div className="h-3 w-1/2 bg-muted rounded animate-pulse" />
+                        <div className="h-2 w-full bg-muted/60 rounded animate-pulse" />
+                        <div className="h-2 w-5/6 bg-muted/60 rounded animate-pulse" />
+                      </div>
+                    </div>
+                    
+                    {/* Analysis Scanner Effect */}
+                    <motion.div 
+                      className="absolute inset-x-0 h-1 bg-[#FF553E] shadow-[0_0_15px_rgba(255,85,62,0.8)] z-10"
+                      animate={{ 
+                        top: ["0%", "100%", "0%"]
+                      }}
+                      transition={{ 
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "linear"
+                      }}
+                    />
+                    
+                    {/* AI Highlight Sparks */}
+                    <motion.div
+                      className="absolute inset-0 pointer-events-none"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: [0, 0.5, 0] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      <Sparkles className="absolute top-1/4 left-1/4 w-4 h-4 text-[#FF553E]/40" />
+                      <Sparkles className="absolute bottom-1/3 right-1/4 w-6 h-6 text-[#FF553E]/30" />
+                    </motion.div>
                   </div>
-                  <div className="flex-1 text-left">
-                    <h4 className="text-sm font-semibold text-foreground">
-                      {uploadedResume ? uploadedResume.name : 'Update Resume'}
-                    </h4>
-                    <p className="text-[11px] text-foreground/40 font-medium">
-                      {uploadedResume 
-                        ? `Size: ${(uploadedResume.size / 1024 / 1024).toFixed(2)} MB`
-                        : 'PDF or DOCX • Max 5MB'}
+                  
+                  <div className="w-full max-w-xs space-y-2 text-center">
+                    <div className="flex items-center justify-center gap-2 text-foreground font-medium">
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>AI is analyzing your resume...</span>
+                    </div>
+                    <div className="h-1.5 w-full bg-foreground/5 rounded-full overflow-hidden">
+                      <motion.div 
+                        className="h-full bg-[#FF553E]"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${analysisProgress}%` }}
+                      />
+                    </div>
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">
+                      Matching against job description
                     </p>
                   </div>
-                </div>
-              </div>
-            </div>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between ml-1">
-                <Label htmlFor="job-desc" className="text-sm font-medium text-foreground">Job description</Label>
-                {!jobDescription && (
-                  <button 
-                    onClick={handlePaste}
-                    className="text-[11px] font-medium text-foreground hover:text-foreground/80 underline underline-offset-4 transition-colors flex items-center gap-1"
+                </motion.div>
+              ) : (
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="space-y-4"
+                >
+                  <div className="space-y-2">
+                    <Label htmlFor="resume" className="text-sm font-medium text-foreground ml-1">Upload Resume</Label>
+                    <input 
+                      type="file" 
+                      id="resume"
+                      accept=".pdf,.docx" 
+                      className="hidden" 
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          handleResumeUpload(file);
+                        }
+                      }}
+                    />
+                    <div 
+                      onClick={() => document.getElementById('resume')?.click()}
+                      onDragOver={(e) => {
+                        e.preventDefault();
+                        e.currentTarget.classList.add('border-[#FF553E]', 'bg-[#FF553E]/[0.02]');
+                      }}
+                      onDragLeave={(e) => {
+                        e.preventDefault();
+                        e.currentTarget.classList.remove('border-[#FF553E]', 'bg-[#FF553E]/[0.02]');
+                      }}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        e.currentTarget.classList.remove('border-[#FF553E]', 'bg-[#FF553E]/[0.02]');
+                        const file = e.dataTransfer.files?.[0];
+                        if (file && (file.type === "application/pdf" || file.name.endsWith(".docx"))) {
+                          handleResumeUpload(file);
+                        }
+                      }}
+                      className={`p-6 rounded-2xl border-2 border-dashed transition-all duration-300 group cursor-pointer ${
+                        uploadedResume 
+                          ? 'border-[#FF553E]/20 bg-[#FF553E]/[0.02]' 
+                          : 'border-border/40 bg-white/50 hover:border-[#FF553E]/20 hover:bg-[#FF553E]/[0.01]'
+                      }`}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
+                          uploadedResume ? 'bg-[#FF553E]/10' : 'bg-muted/30 group-hover:bg-[#FF553E]/10'
+                        }`}>
+                          {uploadedResume ? (
+                            <FileText className="w-5 h-5 text-[#FF553E]" />
+                          ) : (
+                            <Upload className="w-5 h-5 text-foreground/30 group-hover:text-[#FF553E] transition-colors" />
+                          )}
+                        </div>
+                        <div className="flex-1 text-left">
+                          <h4 className="text-sm font-semibold text-foreground">
+                            {uploadedResume ? uploadedResume.name : 'Update Resume'}
+                          </h4>
+                          <p className="text-[11px] text-foreground/40 font-medium">
+                            {uploadedResume 
+                              ? `Size: ${(uploadedResume.size / 1024 / 1024).toFixed(2)} MB`
+                              : 'PDF or DOCX • Max 5MB'}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between ml-1">
+                      <Label htmlFor="job-desc" className="text-sm font-medium text-foreground">Job description</Label>
+                      {!jobDescription && (
+                        <button 
+                          onClick={handlePaste}
+                          className="text-[11px] font-medium text-foreground hover:text-foreground/80 underline underline-offset-4 transition-colors flex items-center gap-1"
+                        >
+                          <Upload className="w-3 h-3" />
+                          Paste
+                        </button>
+                      )}
+                    </div>
+                    <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden">
+                      <Textarea 
+                        id="job-desc" 
+                        value={jobDescription}
+                        onChange={(e) => setJobDescription(e.target.value)}
+                        placeholder="Paste the job description here..." 
+                        className="border-0 bg-transparent min-h-[100px] px-4 py-3 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60 resize-none" 
+                      />
+                    </div>
+                  </div>
+                  <Button 
+                    onClick={handleAnalyze}
+                    disabled={!uploadedResume || !jobDescription}
+                    className="w-full bg-foreground text-background hover:bg-foreground/90 focus-visible:outline-none border-0 rounded-full h-11 px-6 text-base font-semibold transition-colors disabled:opacity-50"
                   >
-                    <Upload className="w-3 h-3" />
-                    Paste
-                  </button>
-                )}
-              </div>
-              <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden">
-                <Textarea 
-                  id="job-desc" 
-                  value={jobDescription}
-                  onChange={(e) => setJobDescription(e.target.value)}
-                  placeholder="Paste the job description here..." 
-                  className="border-0 bg-transparent min-h-[100px] px-4 py-3 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60 resize-none" 
-                />
-              </div>
-            </div>
-            <Button className="w-full bg-foreground text-background hover:bg-foreground/90 focus-visible:outline-none border-0 rounded-full h-11 px-6 text-base font-semibold transition-colors">Analyze Resume</Button>
+                    Analyze Resume
+                  </Button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         );
       case 2: // Mock Interview
