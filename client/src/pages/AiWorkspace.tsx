@@ -1,6 +1,7 @@
 import { Link, useLocation } from "wouter";
-import { Home, FileText, Users, DollarSign, Mail, Upload, Send, Sparkles, Loader2 } from "lucide-react";
+import { Home, FileText, Users, DollarSign, Mail, Upload, Send, Sparkles, Loader2, CheckCircle2 } from "lucide-react";
 import { RulerCarousel, type CarouselItem } from "@/components/ui/ruler-carousel";
+import ScannerCardStream from "@/components/ui/scanner-card-stream";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -36,6 +37,7 @@ export default function AiWorkspace() {
   const [uploadedResume, setUploadedResume] = useState<File | null>(null);
   const [jobDescription, setJobDescription] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analysisComplete, setAnalysisComplete] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState(0);
 
   const currentTool = navItems[selectedTool];
@@ -50,9 +52,10 @@ export default function AiWorkspace() {
     
     setIsAnalyzing(true);
     setAnalysisProgress(0);
+    setAnalysisComplete(false);
     
     // Simulate AI analysis process
-    const duration = 4000;
+    const duration = 5000;
     const interval = 50;
     const steps = duration / interval;
     const increment = 100 / steps;
@@ -63,7 +66,10 @@ export default function AiWorkspace() {
       if (current >= 100) {
         clearInterval(timer);
         setAnalysisProgress(100);
-        setTimeout(() => setIsAnalyzing(false), 500);
+        setTimeout(() => {
+          setIsAnalyzing(false);
+          setAnalysisComplete(true);
+        }, 800);
       } else {
         setAnalysisProgress(current);
       }
@@ -89,53 +95,17 @@ export default function AiWorkspace() {
             <AnimatePresence mode="wait">
               {isAnalyzing ? (
                 <motion.div 
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.05 }}
-                  className="flex flex-col items-center justify-center py-12 space-y-8"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="flex flex-col items-center justify-center py-4 space-y-6"
                 >
-                  <div className="relative w-48 h-64 bg-white rounded-lg shadow-2xl border-2 border-foreground/5 overflow-hidden">
-                    {/* Simulated Resume Content */}
-                    <div className="p-4 space-y-3">
-                      <div className="h-4 w-3/4 bg-muted rounded animate-pulse" />
-                      <div className="h-2 w-full bg-muted/60 rounded animate-pulse" />
-                      <div className="h-2 w-full bg-muted/60 rounded animate-pulse" />
-                      <div className="pt-4 space-y-2">
-                        <div className="h-3 w-1/2 bg-muted rounded animate-pulse" />
-                        <div className="h-2 w-full bg-muted/60 rounded animate-pulse" />
-                        <div className="h-2 w-5/6 bg-muted/60 rounded animate-pulse" />
-                      </div>
-                    </div>
-                    
-                    {/* Analysis Scanner Effect */}
-                    <motion.div 
-                      className="absolute inset-x-0 h-1 bg-[#FF553E] shadow-[0_0_15px_rgba(255,85,62,0.8)] z-10"
-                      animate={{ 
-                        top: ["0%", "100%", "0%"]
-                      }}
-                      transition={{ 
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "linear"
-                      }}
-                    />
-                    
-                    {/* AI Highlight Sparks */}
-                    <motion.div
-                      className="absolute inset-0 pointer-events-none"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: [0, 0.5, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
-                      <Sparkles className="absolute top-1/4 left-1/4 w-4 h-4 text-[#FF553E]/40" />
-                      <Sparkles className="absolute bottom-1/3 right-1/4 w-6 h-6 text-[#FF553E]/30" />
-                    </motion.div>
-                  </div>
+                  <ScannerCardStream isScanning={true} />
                   
-                  <div className="w-full max-w-xs space-y-2 text-center">
+                  <div className="w-full max-w-xs space-y-3 text-center">
                     <div className="flex items-center justify-center gap-2 text-foreground font-medium">
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      <span>AI is analyzing your resume...</span>
+                      <Loader2 className="w-4 h-4 animate-spin text-[#FF553E]" />
+                      <span className="text-sm">AI is thinking...</span>
                     </div>
                     <div className="h-1.5 w-full bg-foreground/5 rounded-full overflow-hidden">
                       <motion.div 
@@ -145,9 +115,38 @@ export default function AiWorkspace() {
                       />
                     </div>
                     <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">
-                      Matching against job description
+                      Processing Disintegration
                     </p>
                   </div>
+                </motion.div>
+              ) : analysisComplete ? (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex flex-col items-center justify-center py-12 space-y-6 text-center"
+                >
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                    <CheckCircle2 className="w-8 h-8 text-green-600" />
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-serif text-foreground font-semibold">Analysis Complete</h3>
+                    <div className="bg-white/40 p-6 rounded-2xl border border-white/60 shadow-inner max-w-md">
+                      <p className="text-foreground font-mono text-sm">
+                        &lt;reuslt goes here&gt;
+                      </p>
+                    </div>
+                  </div>
+                  <Button 
+                    onClick={() => {
+                      setAnalysisComplete(false);
+                      setUploadedResume(null);
+                      setJobDescription("");
+                    }}
+                    variant="outline"
+                    className="rounded-full border-foreground/20"
+                  >
+                    Start New Analysis
+                  </Button>
                 </motion.div>
               ) : (
                 <motion.div 
