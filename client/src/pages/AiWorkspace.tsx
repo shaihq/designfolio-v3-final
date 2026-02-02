@@ -33,10 +33,10 @@ const navItems: WorkspaceTool[] = [
 export default function AiWorkspace() {
   const [, setLocation] = useLocation();
   const [selectedTool, setSelectedTool] = useState(0);
-
   const [uploadedResume, setUploadedResume] = useState<File | null>(null);
-
   const [jobDescription, setJobDescription] = useState("");
+
+  const currentTool = navItems[selectedTool];
 
   const handleResumeUpload = (file: File) => {
     setUploadedResume(file);
