@@ -51,31 +51,46 @@ export default function AiWorkspace() {
                 onChange={(e) => {
                   const file = e.target.files?.[0];
                   if (file) {
-                    // Handle file upload logic here
                     console.log("Selected file:", file.name);
                   }
                 }}
               />
               <div 
                 onClick={() => document.getElementById('resume')?.click()}
-                className="p-8 rounded-[2rem] border-2 border-border/40 bg-white hover-elevate transition-all duration-300 group cursor-pointer"
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  e.currentTarget.classList.add('border-primary', 'bg-primary/[0.02]');
+                }}
+                onDragLeave={(e) => {
+                  e.preventDefault();
+                  e.currentTarget.classList.remove('border-primary', 'bg-primary/[0.02]');
+                }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  e.currentTarget.classList.remove('border-primary', 'bg-primary/[0.02]');
+                  const file = e.dataTransfer.files?.[0];
+                  if (file && (file.type === "application/pdf" || file.name.endsWith(".docx"))) {
+                    console.log("Dropped file:", file.name);
+                  }
+                }}
+                className="p-6 rounded-2xl border-2 border-dashed border-border/40 bg-white/50 hover:border-primary/20 hover:bg-primary/[0.01] transition-all duration-300 group cursor-pointer"
               >
-                <div className="flex flex-col items-center gap-4 text-center">
-                  <div className="w-14 h-14 rounded-2xl bg-muted/30 flex items-center justify-center transition-colors group-hover:bg-primary/10">
-                    <Upload className="w-7 h-7 text-foreground/30 group-hover:text-primary transition-colors" />
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-muted/30 flex items-center justify-center transition-colors group-hover:bg-primary/10">
+                    <Upload className="w-5 h-5 text-foreground/30 group-hover:text-primary transition-colors" />
                   </div>
-                  <div>
-                    <h4 className="text-base font-semibold text-foreground">
+                  <div className="flex-1 text-left">
+                    <h4 className="text-sm font-semibold text-foreground">
                       Update Resume
                     </h4>
-                    <p className="text-sm text-foreground/40 mt-1 font-medium">
-                      PDF or DOCX supported • Max 5MB
+                    <p className="text-[11px] text-foreground/40 font-medium">
+                      PDF or DOCX • Max 5MB
                     </p>
                   </div>
                   <Button 
-                    variant="outline" 
-                    size="lg" 
-                    className="w-full rounded-full h-12 border-2 border-border/50 bg-white hover:bg-muted/50 font-semibold transition-all"
+                    variant="ghost" 
+                    size="sm" 
+                    className="rounded-full h-8 px-3 text-xs font-semibold text-primary hover:bg-primary/5 transition-all"
                   >
                     Choose File
                   </Button>
