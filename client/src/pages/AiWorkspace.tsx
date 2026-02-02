@@ -117,13 +117,6 @@ export default function AiWorkspace() {
                         : 'PDF or DOCX • Max 5MB'}
                     </p>
                   </div>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    className="rounded-full h-8 px-3 text-xs font-semibold text-[#FF553E] hover:bg-[#FF553E]/5 transition-all"
-                  >
-                    {uploadedResume ? 'Change File' : 'Choose File'}
-                  </Button>
                 </div>
               </div>
             </div>
