@@ -30,7 +30,7 @@ const ScannerCardStream = ({
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [scanProgress, setScanProgress] = useState(0);
   
-  const asciiCode = useMemo(() => generateCode(80, 50), []);
+  const asciiCode = useMemo(() => generateCode(80, 60), []);
 
   useEffect(() => {
     if (file) {
@@ -63,7 +63,7 @@ const ScannerCardStream = ({
       positions[i * 3] = (Math.random() - 0.5) * 800;
       positions[i * 3 + 1] = (Math.random() - 0.5) * 500;
       positions[i * 3 + 2] = 0;
-      alphas[i] = Math.random() * 0.5;
+      alphas[i] = Math.random() * 0.3;
     }
 
     geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
@@ -79,7 +79,7 @@ const ScannerCardStream = ({
         void main() {
           vAlpha = alpha;
           vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-          gl_PointSize = 1.5;
+          gl_PointSize = 1.0;
           gl_Position = projectionMatrix * mvPosition;
         }
       `,
@@ -95,8 +95,8 @@ const ScannerCardStream = ({
     scene.add(points);
 
     const ctx = scannerCanvas.getContext('2d')!;
-    scannerCanvas.width = 400;
-    scannerCanvas.height = 500;
+    scannerCanvas.width = 500;
+    scannerCanvas.height = 700;
 
     let scanY = 0;
     let particles: any[] = [];
@@ -111,33 +111,34 @@ const ScannerCardStream = ({
       if (isScanning) {
         ctx.clearRect(0, 0, scannerCanvas.width, scannerCanvas.height);
         
-        scanY = (scanY + 2.5) % scannerCanvas.height;
+        // Much slower scan line movement (reduced from 2.5 to 0.8)
+        scanY = (scanY + 0.8) % scannerCanvas.height;
         setScanProgress(scanY / scannerCanvas.height);
         
         ctx.strokeStyle = "rgba(255, 85, 62, 0.9)";
         ctx.lineWidth = 3;
-        ctx.shadowBlur = 20;
-        ctx.shadowColor = "rgba(255, 85, 62, 1)";
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = "rgba(255, 85, 62, 0.8)";
         ctx.beginPath();
         ctx.moveTo(0, scanY);
         ctx.lineTo(scannerCanvas.width, scanY);
         ctx.stroke();
 
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 4; i++) {
           particles.push({
             x: Math.random() * scannerCanvas.width,
             y: scanY,
-            vx: (Math.random() - 0.5) * 4,
-            vy: (Math.random() - 1.2) * 3,
+            vx: (Math.random() - 0.5) * 3,
+            vy: (Math.random() - 1.2) * 2,
             life: 1.0,
-            size: Math.random() * 3 + 1
+            size: Math.random() * 2 + 0.5
           });
         }
 
         particles.forEach((p, i) => {
           p.x += p.vx;
           p.y += p.vy;
-          p.life -= 0.015;
+          p.life -= 0.008; // Slower particle decay
           if (p.life <= 0) {
             particles.splice(i, 1);
             return;
@@ -159,13 +160,13 @@ const ScannerCardStream = ({
   }, [isScanning]);
 
   return (
-    <div className="relative w-full h-[500px] flex items-center justify-center overflow-hidden bg-black rounded-2xl border border-white/5 shadow-2xl">
+    <div className="relative w-full h-[600px] flex items-center justify-center overflow-hidden bg-black rounded-3xl border border-white/5 shadow-2xl">
       <canvas ref={particleCanvasRef} className="absolute inset-0 pointer-events-none opacity-20" />
       
       <div className="relative w-full h-full bg-zinc-950 overflow-hidden">
-        {/* The Digital Code Layer (revealed by scan) */}
+        {/* The Digital Code Layer - Lighter white as requested */}
         <div 
-          className="absolute inset-0 p-8 font-mono text-[9px] leading-[1.3] text-[#FF553E]/40 overflow-hidden whitespace-pre pointer-events-none"
+          className="absolute inset-0 p-8 font-mono text-[10px] leading-[1.4] text-white/10 overflow-hidden whitespace-pre pointer-events-none"
         >
           {asciiCode}
         </div>
