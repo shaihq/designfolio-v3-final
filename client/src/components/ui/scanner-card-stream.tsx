@@ -30,7 +30,7 @@ const ScannerCardStream = ({
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [scanProgress, setScanProgress] = useState(0);
   
-  const asciiCode = useMemo(() => generateCode(40, 40), []);
+  const asciiCode = useMemo(() => generateCode(40, 25), []);
 
   useEffect(() => {
     if (file) {
@@ -48,20 +48,20 @@ const ScannerCardStream = ({
     if (!particleCanvas || !scannerCanvas) return;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(-window.innerWidth / 2, window.innerWidth / 2, 200, -200, 1, 1000);
+    const camera = new THREE.OrthographicCamera(-window.innerWidth / 2, window.innerWidth / 2, 150, -150, 1, 1000);
     camera.position.z = 100;
     const renderer = new THREE.WebGLRenderer({ canvas: particleCanvas, alpha: true, antialias: true });
-    renderer.setSize(window.innerWidth, 400);
+    renderer.setSize(window.innerWidth, 300);
     renderer.setClearColor(0x000000, 0);
 
-    const particleCount = 200;
+    const particleCount = 150;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const alphas = new Float32Array(particleCount);
 
     for (let i = 0; i < particleCount; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 800;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 400;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 300;
       positions[i * 3 + 2] = 0;
       alphas[i] = Math.random() * 0.3;
     }
@@ -96,7 +96,7 @@ const ScannerCardStream = ({
 
     const ctx = scannerCanvas.getContext('2d')!;
     scannerCanvas.width = 400;
-    scannerCanvas.height = 440;
+    scannerCanvas.height = 300;
 
     let scanY = 0;
     let particles: any[] = [];
@@ -111,7 +111,7 @@ const ScannerCardStream = ({
       if (isScanning) {
         ctx.clearRect(0, 0, scannerCanvas.width, scannerCanvas.height);
         
-        scanY = (scanY + 0.8) % scannerCanvas.height;
+        scanY = (scanY + 0.6) % scannerCanvas.height;
         setScanProgress(scanY / scannerCanvas.height);
         
         ctx.strokeStyle = "rgba(255, 85, 62, 0.9)";
@@ -123,12 +123,12 @@ const ScannerCardStream = ({
         ctx.lineTo(scannerCanvas.width, scanY);
         ctx.stroke();
 
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 3; i++) {
           particles.push({
             x: Math.random() * scannerCanvas.width,
             y: scanY,
-            vx: (Math.random() - 0.5) * 3,
-            vy: (Math.random() - 1.2) * 2,
+            vx: (Math.random() - 0.5) * 2,
+            vy: (Math.random() - 1) * 1.5,
             life: 1.0,
             size: Math.random() * 2 + 0.5
           });
@@ -137,7 +137,7 @@ const ScannerCardStream = ({
         particles.forEach((p, i) => {
           p.x += p.vx;
           p.y += p.vy;
-          p.life -= 0.008;
+          p.life -= 0.01;
           if (p.life <= 0) {
             particles.splice(i, 1);
             return;
@@ -159,13 +159,13 @@ const ScannerCardStream = ({
   }, [isScanning]);
 
   return (
-    <div className="relative w-full h-[440px] flex items-center justify-center overflow-hidden bg-black rounded-3xl border border-white/5 shadow-2xl">
+    <div className="relative w-full h-[300px] flex items-center justify-center overflow-hidden bg-black rounded-3xl border border-white/5 shadow-2xl">
       <canvas ref={particleCanvasRef} className="absolute inset-0 pointer-events-none opacity-20" />
       
       <div className="relative w-full h-full bg-zinc-950 overflow-hidden flex items-center justify-center">
         {/* The Digital Code Layer - Centered and fit to width */}
         <div 
-          className="absolute inset-0 p-8 font-mono text-[10px] leading-[1.4] text-white/30 overflow-hidden whitespace-pre pointer-events-none flex items-center justify-center text-center break-all"
+          className="absolute inset-0 p-4 font-mono text-[9px] leading-[1.2] text-white/30 overflow-hidden whitespace-pre pointer-events-none flex items-center justify-center text-center break-all"
         >
           <div className="max-w-full">
             {asciiCode}
@@ -186,15 +186,15 @@ const ScannerCardStream = ({
               title="Resume Preview"
             />
           ) : (
-            <div className="w-full h-full bg-white flex items-center justify-center p-12">
-              <div className="space-y-6 w-full max-w-sm">
-                <div className="h-6 w-2/3 bg-slate-100 rounded mx-auto" />
-                <div className="h-3 w-full bg-slate-50 rounded" />
-                <div className="h-3 w-full bg-slate-50 rounded" />
-                <div className="pt-12 space-y-3">
-                  <div className="h-4 w-1/2 bg-slate-100 rounded mx-auto" />
-                  <div className="h-3 w-full bg-slate-50 rounded" />
-                  <div className="h-3 w-5/6 bg-slate-50 rounded mx-auto" />
+            <div className="w-full h-full bg-white flex items-center justify-center p-8">
+              <div className="space-y-4 w-full max-w-sm">
+                <div className="h-4 w-2/3 bg-slate-100 rounded mx-auto" />
+                <div className="h-2 w-full bg-slate-50 rounded" />
+                <div className="h-2 w-full bg-slate-50 rounded" />
+                <div className="pt-8 space-y-2">
+                  <div className="h-3 w-1/2 bg-slate-100 rounded mx-auto" />
+                  <div className="h-2 w-full bg-slate-50 rounded" />
+                  <div className="h-2 w-5/6 bg-slate-50 rounded mx-auto" />
                 </div>
               </div>
             </div>
