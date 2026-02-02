@@ -34,11 +34,18 @@ export default function AiWorkspace() {
   const [, setLocation] = useLocation();
   const [selectedTool, setSelectedTool] = useState(0);
 
+  const [uploadedResume, setUploadedResume] = useState<File | null>(null);
+
   const currentTool = navItems[selectedTool];
+
+  const handleResumeUpload = (file: File) => {
+    setUploadedResume(file);
+    console.log("Uploaded file:", file.name);
+  };
 
   const renderToolForm = () => {
     switch (currentTool.id) {
-    case 1: // Resume Fixer
+      case 1: // Resume Fixer
         return (
           <div className="space-y-4">
             <div className="space-y-2">
@@ -51,7 +58,7 @@ export default function AiWorkspace() {
                 onChange={(e) => {
                   const file = e.target.files?.[0];
                   if (file) {
-                    console.log("Selected file:", file.name);
+                    handleResumeUpload(file);
                   }
                 }}
               />
@@ -59,40 +66,52 @@ export default function AiWorkspace() {
                 onClick={() => document.getElementById('resume')?.click()}
                 onDragOver={(e) => {
                   e.preventDefault();
-                  e.currentTarget.classList.add('border-primary', 'bg-primary/[0.02]');
+                  e.currentTarget.classList.add('border-[#FF553E]', 'bg-[#FF553E]/[0.02]');
                 }}
                 onDragLeave={(e) => {
                   e.preventDefault();
-                  e.currentTarget.classList.remove('border-primary', 'bg-primary/[0.02]');
+                  e.currentTarget.classList.remove('border-[#FF553E]', 'bg-[#FF553E]/[0.02]');
                 }}
                 onDrop={(e) => {
                   e.preventDefault();
-                  e.currentTarget.classList.remove('border-primary', 'bg-primary/[0.02]');
+                  e.currentTarget.classList.remove('border-[#FF553E]', 'bg-[#FF553E]/[0.02]');
                   const file = e.dataTransfer.files?.[0];
                   if (file && (file.type === "application/pdf" || file.name.endsWith(".docx"))) {
-                    console.log("Dropped file:", file.name);
+                    handleResumeUpload(file);
                   }
                 }}
-                className="p-6 rounded-2xl border-2 border-dashed border-border/40 bg-white/50 hover:border-primary/20 hover:bg-primary/[0.01] transition-all duration-300 group cursor-pointer"
+                className={`p-6 rounded-2xl border-2 border-dashed transition-all duration-300 group cursor-pointer ${
+                  uploadedResume 
+                    ? 'border-[#FF553E]/20 bg-[#FF553E]/[0.02]' 
+                    : 'border-border/40 bg-white/50 hover:border-[#FF553E]/20 hover:bg-[#FF553E]/[0.01]'
+                }`}
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-muted/30 flex items-center justify-center transition-colors group-hover:bg-primary/10">
-                    <Upload className="w-5 h-5 text-foreground/30 group-hover:text-primary transition-colors" />
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${
+                    uploadedResume ? 'bg-[#FF553E]/10' : 'bg-muted/30 group-hover:bg-[#FF553E]/10'
+                  }`}>
+                    {uploadedResume ? (
+                      <FileText className="w-5 h-5 text-[#FF553E]" />
+                    ) : (
+                      <Upload className="w-5 h-5 text-foreground/30 group-hover:text-[#FF553E] transition-colors" />
+                    )}
                   </div>
                   <div className="flex-1 text-left">
                     <h4 className="text-sm font-semibold text-foreground">
-                      Update Resume
+                      {uploadedResume ? uploadedResume.name : 'Update Resume'}
                     </h4>
                     <p className="text-[11px] text-foreground/40 font-medium">
-                      PDF or DOCX • Max 5MB
+                      {uploadedResume 
+                        ? `Size: ${(uploadedResume.size / 1024 / 1024).toFixed(2)} MB`
+                        : 'PDF or DOCX • Max 5MB'}
                     </p>
                   </div>
                   <Button 
                     variant="ghost" 
                     size="sm" 
-                    className="rounded-full h-8 px-3 text-xs font-semibold text-primary hover:bg-primary/5 transition-all"
+                    className="rounded-full h-8 px-3 text-xs font-semibold text-[#FF553E] hover:bg-[#FF553E]/5 transition-all"
                   >
-                    Choose File
+                    {uploadedResume ? 'Change File' : 'Choose File'}
                   </Button>
                 </div>
               </div>
