@@ -30,7 +30,7 @@ const ScannerCardStream = ({
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [scanProgress, setScanProgress] = useState(0);
   
-  const asciiCode = useMemo(() => generateCode(80, 60), []);
+  const asciiCode = useMemo(() => generateCode(80, 50), []);
 
   useEffect(() => {
     if (file) {
@@ -48,10 +48,10 @@ const ScannerCardStream = ({
     if (!particleCanvas || !scannerCanvas) return;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.OrthographicCamera(-window.innerWidth / 2, window.innerWidth / 2, 250, -250, 1, 1000);
+    const camera = new THREE.OrthographicCamera(-window.innerWidth / 2, window.innerWidth / 2, 200, -200, 1, 1000);
     camera.position.z = 100;
     const renderer = new THREE.WebGLRenderer({ canvas: particleCanvas, alpha: true, antialias: true });
-    renderer.setSize(window.innerWidth, 500);
+    renderer.setSize(window.innerWidth, 400);
     renderer.setClearColor(0x000000, 0);
 
     const particleCount = 200;
@@ -61,7 +61,7 @@ const ScannerCardStream = ({
 
     for (let i = 0; i < particleCount; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 800;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 500;
+      positions[i * 3 + 1] = (Math.random() - 0.5) * 400;
       positions[i * 3 + 2] = 0;
       alphas[i] = Math.random() * 0.3;
     }
@@ -95,8 +95,8 @@ const ScannerCardStream = ({
     scene.add(points);
 
     const ctx = scannerCanvas.getContext('2d')!;
-    scannerCanvas.width = 500;
-    scannerCanvas.height = 700;
+    scannerCanvas.width = 400;
+    scannerCanvas.height = 440;
 
     let scanY = 0;
     let particles: any[] = [];
@@ -111,7 +111,6 @@ const ScannerCardStream = ({
       if (isScanning) {
         ctx.clearRect(0, 0, scannerCanvas.width, scannerCanvas.height);
         
-        // Much slower scan line movement (reduced from 2.5 to 0.8)
         scanY = (scanY + 0.8) % scannerCanvas.height;
         setScanProgress(scanY / scannerCanvas.height);
         
@@ -138,7 +137,7 @@ const ScannerCardStream = ({
         particles.forEach((p, i) => {
           p.x += p.vx;
           p.y += p.vy;
-          p.life -= 0.008; // Slower particle decay
+          p.life -= 0.008;
           if (p.life <= 0) {
             particles.splice(i, 1);
             return;
@@ -160,13 +159,13 @@ const ScannerCardStream = ({
   }, [isScanning]);
 
   return (
-    <div className="relative w-full h-[600px] flex items-center justify-center overflow-hidden bg-black rounded-3xl border border-white/5 shadow-2xl">
+    <div className="relative w-full h-[440px] flex items-center justify-center overflow-hidden bg-black rounded-3xl border border-white/5 shadow-2xl">
       <canvas ref={particleCanvasRef} className="absolute inset-0 pointer-events-none opacity-20" />
       
       <div className="relative w-full h-full bg-zinc-950 overflow-hidden">
-        {/* The Digital Code Layer - Lighter white as requested */}
+        {/* The Digital Code Layer - Increased opacity for visibility */}
         <div 
-          className="absolute inset-0 p-8 font-mono text-[10px] leading-[1.4] text-white/10 overflow-hidden whitespace-pre pointer-events-none"
+          className="absolute inset-0 p-8 font-mono text-[10px] leading-[1.4] text-white/30 overflow-hidden whitespace-pre pointer-events-none"
         >
           {asciiCode}
         </div>
