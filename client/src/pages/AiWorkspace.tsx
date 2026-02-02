@@ -131,17 +131,16 @@ export default function AiWorkspace() {
               <div className="flex items-center justify-between ml-1">
                 <Label htmlFor="job-desc" className="text-sm font-medium text-foreground">Job description</Label>
                 {!jobDescription && (
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
+                  <button 
                     onClick={handlePaste}
-                    className="h-7 px-2 text-[11px] font-semibold text-[#FF553E] hover:bg-[#FF553E]/5 rounded-md gap-1"
+                    className="text-[11px] font-medium text-foreground hover:text-foreground/80 underline underline-offset-4 transition-colors flex items-center gap-1"
                   >
+                    <Upload className="w-3 h-3" />
                     Paste
-                  </Button>
+                  </button>
                 )}
               </div>
-              <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-[#FF553E]/20 focus-within:border-[#FF553E]/30 focus-within:shadow-[0_0_0_4px_hsl(var(--primary)/0.12)] transition-all duration-300 ease-out overflow-hidden">
+              <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden">
                 <Textarea 
                   id="job-desc" 
                   value={jobDescription}
