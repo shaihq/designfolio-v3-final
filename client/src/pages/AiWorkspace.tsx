@@ -2,6 +2,7 @@ import { Link, useLocation } from "wouter";
 import { Home, FileText, Users, DollarSign, Mail, Upload, Send, Sparkles, Loader2, CheckCircle2 } from "lucide-react";
 import { RulerCarousel, type CarouselItem } from "@/components/ui/ruler-carousel";
 import ScannerCardStream from "@/components/ui/scanner-card-stream";
+import ResumeAnalysisReport from "@/components/resume-analysis-report";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -121,32 +122,26 @@ export default function AiWorkspace() {
                 </motion.div>
               ) : analysisComplete ? (
                 <motion.div 
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="flex flex-col items-center justify-center py-12 space-y-6 text-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="w-full space-y-8"
                 >
-                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
-                    <CheckCircle2 className="w-8 h-8 text-green-600" />
+                  <div className="flex justify-center mb-8">
+                    <Button 
+                      onClick={() => {
+                        setAnalysisComplete(false);
+                        setUploadedResume(null);
+                        setJobDescription("");
+                      }}
+                      variant="outline"
+                      className="rounded-full border-foreground/20 bg-white/50 backdrop-blur-sm"
+                    >
+                      <CheckCircle2 className="w-4 h-4 mr-2 text-green-600" />
+                      Start New Analysis
+                    </Button>
                   </div>
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-serif text-foreground font-semibold">Analysis Complete</h3>
-                    <div className="bg-white/40 p-6 rounded-2xl border border-white/60 shadow-inner max-w-md">
-                      <p className="text-foreground font-mono text-sm">
-                        &lt;reuslt goes here&gt;
-                      </p>
-                    </div>
-                  </div>
-                  <Button 
-                    onClick={() => {
-                      setAnalysisComplete(false);
-                      setUploadedResume(null);
-                      setJobDescription("");
-                    }}
-                    variant="outline"
-                    className="rounded-full border-foreground/20"
-                  >
-                    Start New Analysis
-                  </Button>
+                  
+                  <ResumeAnalysisReport />
                 </motion.div>
               ) : (
                 <motion.div 
@@ -344,8 +339,8 @@ export default function AiWorkspace() {
 
       {/* Main Content */}
       <main className="flex-1 p-6 overflow-y-auto pb-32 flex justify-center">
-        <div className="w-fit max-w-2xl">
-          <Card className="border border-border/40 rounded-[2rem] bg-[#E5E1D5] shadow-none overflow-hidden p-2">
+        <div className={`w-full transition-all duration-500 ${analysisComplete ? 'max-w-5xl' : 'max-w-2xl'}`}>
+          <Card className={`border border-border/40 rounded-[2rem] bg-[#E5E1D5] shadow-none overflow-hidden p-2 ${analysisComplete ? 'bg-transparent border-none' : ''}`}>
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={currentTool.id}
