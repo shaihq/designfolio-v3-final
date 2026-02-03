@@ -339,7 +339,7 @@ export default function AiWorkspace() {
 
       {/* Main Content */}
       <main className="flex-1 p-6 overflow-y-auto pb-32 flex justify-center">
-        <div className={`w-full transition-all duration-500 ${analysisComplete ? 'max-w-5xl' : 'max-w-2xl'}`}>
+        <div className="w-full max-w-2xl transition-all duration-500">
           <Card className={`border border-border/40 rounded-[2rem] bg-[#E5E1D5] shadow-none overflow-hidden p-2 ${analysisComplete ? 'bg-transparent border-none' : ''}`}>
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
