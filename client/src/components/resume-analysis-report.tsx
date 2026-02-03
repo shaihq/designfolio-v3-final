@@ -113,13 +113,23 @@ const ResumeAnalysisReport = () => {
                     <td className="py-4 font-medium text-zinc-300">{skill.name}</td>
                     <td className="py-4 pr-8">
                       <div className="flex items-center gap-3">
-                        <Progress value={skill.resumeCoverage} className="h-1.5 bg-zinc-800" indicatorClassName="bg-orange-500" />
+                        <div className="h-1.5 w-full bg-zinc-800 rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-orange-500 transition-all duration-500" 
+                            style={{ width: `${skill.resumeCoverage}%` }}
+                          />
+                        </div>
                         <span className="text-zinc-500 tabular-nums w-8">{skill.resumeCoverage}%</span>
                       </div>
                     </td>
                     <td className="py-4 pr-8">
                       <div className="flex items-center gap-3">
-                        <Progress value={skill.jdCoverage} className="h-1.5 bg-zinc-800" indicatorClassName="bg-blue-500" />
+                        <div className="h-1.5 w-full bg-zinc-800 rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-blue-500 transition-all duration-500" 
+                            style={{ width: `${skill.jdCoverage}%` }}
+                          />
+                        </div>
                         <span className="text-zinc-500 tabular-nums w-8">{skill.jdCoverage}%</span>
                       </div>
                     </td>
