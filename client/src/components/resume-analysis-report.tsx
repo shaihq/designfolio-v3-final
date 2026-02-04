@@ -49,6 +49,7 @@ const ResumeAnalysisReport = () => {
                 size={120} 
                 strokeWidth={12}
                 showPercentage
+                gradient
                 primary="#FF553E"
                 secondary="rgba(255, 85, 62, 0.1)"
                 className={{
