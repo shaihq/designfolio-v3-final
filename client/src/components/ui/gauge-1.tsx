@@ -323,18 +323,8 @@ export function Gauge({
        {gradient && (
           <defs>
             <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor={primaryStroke} stopOpacity="0.8" />
-              <stop offset="50%" stopColor={primaryStroke} stopOpacity="1" />
-              <stop offset="100%" stopColor={primaryStroke} stopOpacity="0.8" />
-            </linearGradient>
-            <filter id="gaugeShadow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur in="SourceAlpha" stdDeviation="1" result="blur" />
-              <feOffset dx="0.5" dy="1" result="offsetBlur" />
-              <feComposite in="SourceGraphic" in2="offsetBlur" operator="over" />
-            </filter>
-            <linearGradient id="innerBevel" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="white" stopOpacity="0.4" />
-              <stop offset="100%" stopColor="black" stopOpacity="0.2" />
+              <stop offset="0%" stopColor={primaryStroke} stopOpacity="0.3" />
+              <stop offset="100%" stopColor={primaryStroke} stopOpacity="1" />
             </linearGradient>
           </defs>
         )}
@@ -383,26 +373,9 @@ export function Gauge({
             transform: primaryTransform(),
             stroke: gradient ? "url(#primaryGradient)" : primaryStroke,
             opacity: primaryOpacity(),
-            filter: gradient ? "url(#gaugeShadow)" : "none",
           }}
           className={cn("", typeof className === "object" && className?.primaryClassName)}
         />
-
-        {gradient && (
-          <circle
-            cx={circleSize / 2}
-            cy={circleSize / 2}
-            r={radius}
-            style={{
-              ...circleStyles,
-              strokeDasharray: primaryStrokeDasharray(),
-              transform: primaryTransform(),
-              stroke: "url(#innerBevel)",
-              opacity: primaryOpacity() * 0.5,
-              pointerEvents: "none",
-            }}
-          />
-        )}
         {thresholds?.map((threshold, index) => {
           const thresholdPercent = ((threshold.value - min) / (max - min)) * 100
           const angle =
