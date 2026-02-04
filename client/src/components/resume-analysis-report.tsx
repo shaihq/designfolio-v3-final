@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, AlertCircle, TrendingUp, BookOpen, UserCircle2, Cpu, ChevronRight } from "lucide-react";
+import { Gauge } from "@/components/ui/gauge-1";
 
 interface SkillItem {
   name: string;
@@ -43,15 +44,17 @@ const ResumeAnalysisReport = () => {
               </p>
             </div>
             <div className="relative flex items-center justify-center shrink-0">
-              <svg className="w-28 h-28 transform -rotate-90">
-                <circle cx="56" cy="56" r="48" stroke="currentColor" strokeWidth="8" fill="transparent" className="text-slate-100" />
-                <circle cx="56" cy="56" r="48" stroke="currentColor" strokeWidth="8" fill="transparent" 
-                  strokeDasharray={301.6} strokeDashoffset={301.6 * (1 - 0.65)}
-                  className="text-[#FF553E] transition-all duration-1000 ease-out" 
-                  strokeLinecap="round"
-                />
-              </svg>
-              <span className="absolute text-3xl font-bold text-foreground font-serif">65%</span>
+              <Gauge 
+                value={65} 
+                size={120} 
+                strokeWidth={12}
+                showPercentage
+                primary="#FF553E"
+                secondary="rgba(255, 85, 62, 0.1)"
+                className={{
+                  textClassName: "text-2xl font-bold font-serif text-foreground"
+                }}
+              />
             </div>
           </div>
         </CardContent>
