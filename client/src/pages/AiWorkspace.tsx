@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Home, FileText, Users, DollarSign, Mail, Upload, Send, Sparkles, Loader2, CheckCircle2 } from "lucide-react";
+import { Home, FileText, Users, DollarSign, Mail, Upload, Send, Sparkles, Loader2, RefreshCcw } from "lucide-react";
 import { RulerCarousel, type CarouselItem } from "@/components/ui/ruler-carousel";
 import ScannerCardStream from "@/components/ui/scanner-card-stream";
 import ResumeAnalysisReport from "@/components/resume-analysis-report";
@@ -136,7 +136,7 @@ export default function AiWorkspace() {
                       variant="outline"
                       className="rounded-full border-foreground/20 bg-white/50 backdrop-blur-sm"
                     >
-                      <CheckCircle2 className="w-4 h-4 mr-2 text-green-600" />
+                      <RefreshCcw className="w-4 h-4 mr-2 text-foreground/60" />
                       Start New Analysis
                     </Button>
                   </div>
