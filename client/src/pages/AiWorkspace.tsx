@@ -303,8 +303,20 @@ export default function AiWorkspace() {
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email-type" className="text-sm font-medium text-foreground ml-1">Email Type*</Label>
-              <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
-                <Input id="email-type" placeholder="Interview Follow-up" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+              <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden">
+                <select 
+                  id="email-type" 
+                  className="w-full bg-transparent h-11 px-4 focus:outline-none text-base text-foreground appearance-none cursor-pointer"
+                  defaultValue="Interview Follow-up"
+                >
+                  <option value="Interview Follow-up">Interview Follow-up</option>
+                  <option value="Thank You">Thank You</option>
+                  <option value="Technical Interview Follow-up">Technical Interview Follow-up</option>
+                  <option value="Second Round Interview Follow-up">Second Round Interview Follow-up</option>
+                  <option value="HR Round Follow-up">HR Round Follow-up</option>
+                  <option value="Offer Acceptance">Offer Acceptance</option>
+                  <option value="Custom">Custom</option>
+                </select>
               </div>
             </div>
             <div className="space-y-2">
