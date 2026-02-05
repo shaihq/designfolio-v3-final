@@ -302,19 +302,43 @@ export default function AiWorkspace() {
         return (
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="recipient" className="text-sm font-medium text-foreground ml-1">To</Label>
+              <Label htmlFor="email-type" className="text-sm font-medium text-foreground ml-1">Email Type*</Label>
               <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
-                <Input id="recipient" placeholder="Hiring Manager Name" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+                <Input id="email-type" placeholder="Interview Follow-up" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="purpose" className="text-sm font-medium text-foreground ml-1">Email Purpose</Label>
+              <Label htmlFor="company-name" className="text-sm font-medium text-foreground ml-1">Company Name*</Label>
               <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
-                <Input id="purpose" placeholder="e.g. Networking, Follow-up" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+                <Input id="company-name" placeholder="Enter company name" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="position" className="text-sm font-medium text-foreground ml-1">Position*</Label>
+              <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                <Input id="position" placeholder="Enter position title" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="interviewer-name" className="text-sm font-medium text-foreground ml-1">Interviewer Name*</Label>
+              <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                <Input id="interviewer-name" placeholder="Enter interviewer's name" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="your-name" className="text-sm font-medium text-foreground ml-1">Your Name*</Label>
+              <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                <Input id="your-name" placeholder="Enter your name" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="context" className="text-sm font-medium text-foreground ml-1">Additional Context</Label>
+              <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden">
+                <Textarea id="context" placeholder="Add any additional context or specific points you'd like to include" className="border-0 bg-transparent min-h-[100px] px-4 py-3 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60 resize-none" />
               </div>
             </div>
             <Button className="w-full bg-foreground text-background hover:bg-foreground/90 focus-visible:outline-none border-0 rounded-full h-11 px-6 text-base font-semibold transition-colors gap-2">
-              Generate Draft <Send className="w-4 h-4" />
+              Generate Email <Send className="w-4 h-4" />
             </Button>
           </div>
         );
