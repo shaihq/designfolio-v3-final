@@ -126,7 +126,7 @@ export default function AiWorkspace() {
                   animate={{ opacity: 1, y: 0 }}
                   className="w-full space-y-8"
                 >
-                  <div className="flex justify-center mb-8">
+                  <div className="flex items-center justify-between mb-8">
                     <Button 
                       onClick={() => {
                         setAnalysisComplete(false);
@@ -138,6 +138,14 @@ export default function AiWorkspace() {
                     >
                       <RefreshCcw className="w-4 h-4 mr-2 text-foreground/60" />
                       Start New Analysis
+                    </Button>
+
+                    <Button 
+                      variant="outline"
+                      className="rounded-full border-foreground/20 bg-white/50 backdrop-blur-sm"
+                    >
+                      <FileText className="w-4 h-4 mr-2 text-foreground/60" />
+                      Download Report (PDF)
                     </Button>
                   </div>
                   
