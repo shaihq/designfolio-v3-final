@@ -300,58 +300,62 @@ export default function AiWorkspace() {
         );
       case 4: // Email Generator
         return (
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email-type" className="text-sm font-medium text-foreground ml-1">Email Type*</Label>
-              <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden">
-                <select 
-                  id="email-type" 
-                  className="w-full bg-transparent h-11 px-4 focus:outline-none text-base text-foreground appearance-none cursor-pointer"
-                  defaultValue="Interview Follow-up"
-                >
-                  <option value="Interview Follow-up">Interview Follow-up</option>
-                  <option value="Thank You">Thank You</option>
-                  <option value="Technical Interview Follow-up">Technical Interview Follow-up</option>
-                  <option value="Second Round Interview Follow-up">Second Round Interview Follow-up</option>
-                  <option value="HR Round Follow-up">HR Round Follow-up</option>
-                  <option value="Offer Acceptance">Offer Acceptance</option>
-                  <option value="Custom">Custom</option>
-                </select>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email-type" className="text-sm font-medium text-foreground ml-1">Email Type*</Label>
+                <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden">
+                  <select 
+                    id="email-type" 
+                    className="w-full bg-transparent h-11 px-4 focus:outline-none text-base text-foreground appearance-none cursor-pointer"
+                    defaultValue="Interview Follow-up"
+                  >
+                    <option value="Interview Follow-up">Interview Follow-up</option>
+                    <option value="Thank You">Thank You</option>
+                    <option value="Technical Interview Follow-up">Technical Interview Follow-up</option>
+                    <option value="Second Round Interview Follow-up">Second Round Interview Follow-up</option>
+                    <option value="HR Round Follow-up">HR Round Follow-up</option>
+                    <option value="Offer Acceptance">Offer Acceptance</option>
+                    <option value="Custom">Custom</option>
+                  </select>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="company-name" className="text-sm font-medium text-foreground ml-1">Company Name*</Label>
+                <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                  <Input id="company-name" placeholder="Enter company name" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="position" className="text-sm font-medium text-foreground ml-1">Position*</Label>
+                <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                  <Input id="position" placeholder="Enter position title" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="interviewer-name" className="text-sm font-medium text-foreground ml-1">Interviewer Name*</Label>
+                <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                  <Input id="interviewer-name" placeholder="Enter interviewer's name" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="your-name" className="text-sm font-medium text-foreground ml-1">Your Name*</Label>
+                <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                  <Input id="your-name" placeholder="Enter your name" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+                </div>
               </div>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="company-name" className="text-sm font-medium text-foreground ml-1">Company Name*</Label>
-              <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
-                <Input id="company-name" placeholder="Enter company name" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+            <div className="flex flex-col h-full">
+              <div className="space-y-2 flex-1 flex flex-col">
+                <Label htmlFor="context" className="text-sm font-medium text-foreground ml-1">Additional Context</Label>
+                <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden flex-1">
+                  <Textarea id="context" placeholder="Add any additional context or specific points you'd like to include" className="border-0 bg-transparent h-full min-h-[200px] px-4 py-3 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60 resize-none" />
+                </div>
               </div>
+              <Button className="w-full mt-6 bg-foreground text-background hover:bg-foreground/90 focus-visible:outline-none border-0 rounded-full h-12 px-6 text-base font-semibold transition-colors gap-2">
+                Generate Email <Send className="w-4 h-4" />
+              </Button>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="position" className="text-sm font-medium text-foreground ml-1">Position*</Label>
-              <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
-                <Input id="position" placeholder="Enter position title" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="interviewer-name" className="text-sm font-medium text-foreground ml-1">Interviewer Name*</Label>
-              <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
-                <Input id="interviewer-name" placeholder="Enter interviewer's name" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="your-name" className="text-sm font-medium text-foreground ml-1">Your Name*</Label>
-              <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
-                <Input id="your-name" placeholder="Enter your name" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="context" className="text-sm font-medium text-foreground ml-1">Additional Context</Label>
-              <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden">
-                <Textarea id="context" placeholder="Add any additional context or specific points you'd like to include" className="border-0 bg-transparent min-h-[100px] px-4 py-3 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60 resize-none" />
-              </div>
-            </div>
-            <Button className="w-full bg-foreground text-background hover:bg-foreground/90 focus-visible:outline-none border-0 rounded-full h-11 px-6 text-base font-semibold transition-colors gap-2">
-              Generate Email <Send className="w-4 h-4" />
-            </Button>
           </div>
         );
       default:
@@ -383,7 +387,7 @@ export default function AiWorkspace() {
 
       {/* Main Content */}
       <main className="flex-1 p-6 overflow-y-auto pb-32 flex justify-center">
-        <div className={`w-full transition-all duration-500 ease-[0.23,1,0.32,1] ${analysisComplete ? 'max-w-4xl' : 'max-w-lg'}`}>
+        <div className={`w-full transition-all duration-500 ease-[0.23,1,0.32,1] ${analysisComplete || currentTool.id === 4 ? 'max-w-6xl' : 'max-w-lg'}`}>
           <Card className="border border-border/40 rounded-[2rem] bg-[#E5E1D5] shadow-none overflow-hidden p-2">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
