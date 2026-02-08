@@ -50,7 +50,7 @@ const RulerLines = ({ totalLines = 41 }: { totalLines?: number }) => {
       <div
         key={i}
         className={`w-[1px] ${color} flex-shrink-0`}
-        style={{ height: `${height}px` }}
+        style={{ height: `${height * 0.75}px` }}
       />
     );
   }
@@ -171,7 +171,7 @@ export function RulerCarousel({
     <div className="w-full flex flex-col items-center">
       <RulerLines />
       
-      <div className="w-full h-10 relative overflow-hidden my-1">
+      <div className="w-full h-8 relative overflow-hidden my-0.5">
         <motion.div
           className="absolute flex items-center h-full"
           style={{ gap: `${ITEM_GAP}px`, left: '50%' }}
@@ -227,7 +227,7 @@ export function RulerCarousel({
 
       <RulerLines />
       
-      <div className="flex items-center justify-center gap-4 mt-2">
+      <div className="flex items-center justify-center gap-4 mt-1">
         <button
           onClick={handlePrevious}
           disabled={isResetting}
