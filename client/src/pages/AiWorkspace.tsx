@@ -40,6 +40,25 @@ export default function AiWorkspace() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisComplete, setAnalysisComplete] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   const currentTool = navItems[selectedTool];
 
@@ -573,14 +592,19 @@ export default function AiWorkspace() {
       </main>
 
       {/* Ruler Carousel Navigation */}
-      <div className="fixed bottom-0 inset-x-0 bg-white/10 backdrop-blur-md py-1.5 z-50 border-t border-white/10">
+      <motion.div 
+        initial={{ y: 0 }}
+        animate={{ y: isVisible ? 0 : "100%" }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className="fixed bottom-0 inset-x-0 bg-white/10 backdrop-blur-md py-1.5 z-50 border-t border-white/10"
+      >
         <RulerCarousel 
           originalItems={navItems}
           onItemSelect={(index) => {
             setSelectedTool(index);
           }}
         />
-      </div>
+      </motion.div>
     </div>
   );
 }
