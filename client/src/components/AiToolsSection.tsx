@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileText, Users, Landmark, Mail, ArrowUpRight, Sparkles } from "lucide-react";
+import { CaseStudyAuditIcon } from "@/components/ui/case-study-audit-icon";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 
@@ -40,6 +41,15 @@ const aiTools = [
     iconColor: "text-amber-600",
     buttonText: "Try now",
     testId: "email-generator"
+  },
+  {
+    title: "Case study audit",
+    description: "Audit your case studies with AI to ensure they are job-ready.",
+    icon: CaseStudyAuditIcon,
+    iconBg: "bg-purple-100",
+    iconColor: "text-purple-600",
+    buttonText: "Audit Case Study",
+    testId: "case-study-audit"
   }
 ];
 
