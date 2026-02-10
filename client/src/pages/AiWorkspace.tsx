@@ -44,6 +44,8 @@ export default function AiWorkspace() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisComplete, setAnalysisComplete] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState(0);
+  const [emailGenerated, setEmailGenerated] = useState(false);
+  const [emailData, setEmailData] = useState({ subject: "", body: "" });
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -109,6 +111,36 @@ export default function AiWorkspace() {
     } catch (err) {
       console.error("Failed to read clipboard:", err);
     }
+  };
+
+  const handleGenerateEmail = () => {
+    setIsAnalyzing(true);
+    setAnalysisProgress(0);
+    setEmailGenerated(false);
+
+    const duration = 2000;
+    const interval = 50;
+    const steps = duration / interval;
+    const increment = 100 / steps;
+
+    let current = 0;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= 100) {
+        clearInterval(timer);
+        setAnalysisProgress(100);
+        setTimeout(() => {
+          setIsAnalyzing(false);
+          setEmailGenerated(true);
+          setEmailData({
+            subject: "Follow-up: Interview for Senior Product Designer at Company X",
+            body: "Hi Interviewer Name,\n\nIt was a pleasure meeting you and learning more about the Senior Product Designer position at Company X. I am very excited about the opportunity and believe my background in UX design and product strategy aligns well with the team's goals.\n\nThank you again for your time and consideration. I look forward to hearing from you.\n\nBest regards,\nYour Name"
+          });
+        }, 500);
+      } else {
+        setAnalysisProgress(current);
+      }
+    }, interval);
   };
 
   const renderToolForm = () => {
@@ -323,63 +355,143 @@ export default function AiWorkspace() {
         );
       case 4: // Email Generator
         return (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email-type" className="text-sm font-medium text-foreground ml-1">Email Type*</Label>
-                <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden">
-                  <select 
-                    id="email-type" 
-                    className="w-full bg-transparent h-11 px-4 focus:outline-none text-base text-foreground appearance-none cursor-pointer"
-                    defaultValue="Interview Follow-up"
+          <AnimatePresence mode="wait">
+            {isAnalyzing ? (
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="flex flex-col items-center justify-center py-12 space-y-6"
+              >
+                <div className="w-full max-w-xs space-y-3 text-center">
+                  <div className="flex items-center justify-center gap-2 text-foreground font-medium">
+                    <Loader2 className="w-4 h-4 animate-spin text-primary" />
+                    <span className="text-sm">Drafting your email...</span>
+                  </div>
+                  <div className="h-1.5 w-full bg-foreground/5 rounded-full overflow-hidden">
+                    <motion.div 
+                      className="h-full bg-primary"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${analysisProgress}%` }}
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            ) : emailGenerated ? (
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="w-full space-y-6"
+              >
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-medium text-foreground/60 uppercase tracking-wider">Email Preview</h3>
+                  <div className="flex gap-2">
+                    <Button 
+                      variant="outline"
+                      size="sm"
+                      className="rounded-full bg-white/50"
+                      onClick={() => setEmailGenerated(false)}
+                    >
+                      <RefreshCcw className="w-3 h-3 mr-2" />
+                      Edit Details
+                    </Button>
+                    <Button 
+                      size="sm"
+                      className="rounded-full bg-foreground text-background"
+                      onClick={() => {
+                        navigator.clipboard.writeText(`Subject: ${emailData.subject}\n\n${emailData.body}`);
+                      }}
+                    >
+                      <PenTool className="w-3 h-3 mr-2" />
+                      Copy Email
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-2xl border border-border/50 shadow-sm overflow-hidden font-sans">
+                  {/* Chrome-like Email Mock Header */}
+                  <div className="bg-muted/30 border-b border-border/50 px-6 py-4 space-y-3">
+                    <div className="flex items-center gap-4 text-sm">
+                      <span className="text-muted-foreground w-16">Subject:</span>
+                      <span className="font-medium text-foreground">{emailData.subject}</span>
+                    </div>
+                    <div className="flex items-center gap-4 text-sm border-t border-border/30 pt-3">
+                      <span className="text-muted-foreground w-16">From:</span>
+                      <span className="text-foreground">you@example.com</span>
+                    </div>
+                  </div>
+                  <div className="p-8 min-h-[300px] whitespace-pre-wrap text-foreground leading-relaxed">
+                    {emailData.body}
+                  </div>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="grid grid-cols-1 md:grid-cols-2 gap-8"
+              >
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="email-type" className="text-sm font-medium text-foreground ml-1">Email Type*</Label>
+                    <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden">
+                      <select 
+                        id="email-type" 
+                        className="w-full bg-transparent h-11 px-4 focus:outline-none text-base text-foreground appearance-none cursor-pointer"
+                        defaultValue="Interview Follow-up"
+                      >
+                        <option value="Interview Follow-up">Interview Follow-up</option>
+                        <option value="Thank You">Thank You</option>
+                        <option value="Technical Interview Follow-up">Technical Interview Follow-up</option>
+                        <option value="Second Round Interview Follow-up">Second Round Interview Follow-up</option>
+                        <option value="HR Round Follow-up">HR Round Follow-up</option>
+                        <option value="Offer Acceptance">Offer Acceptance</option>
+                        <option value="Custom">Custom</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="company-name" className="text-sm font-medium text-foreground ml-1">Company Name*</Label>
+                    <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                      <Input id="company-name" placeholder="Enter company name" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="position" className="text-sm font-medium text-foreground ml-1">Position*</Label>
+                    <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                      <Input id="position" placeholder="Enter position title" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="interviewer-name" className="text-sm font-medium text-foreground ml-1">Interviewer Name*</Label>
+                    <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                      <Input id="interviewer-name" placeholder="Enter interviewer's name" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="your-name" className="text-sm font-medium text-foreground ml-1">Your Name*</Label>
+                    <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                      <Input id="your-name" placeholder="Enter your name" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col h-full">
+                  <div className="space-y-2 flex-1 flex flex-col">
+                    <Label htmlFor="context" className="text-sm font-medium text-foreground ml-1">Additional Context</Label>
+                    <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden flex-1">
+                      <Textarea id="context" placeholder="Add any additional context or specific points you'd like to include" className="border-0 bg-transparent h-full min-h-[200px] px-4 py-3 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60 resize-none" />
+                    </div>
+                  </div>
+                  <Button 
+                    onClick={handleGenerateEmail}
+                    className="w-full mt-6 bg-foreground text-background hover:bg-foreground/90 focus-visible:outline-none border-0 rounded-full h-12 px-6 text-base font-semibold transition-colors gap-2"
                   >
-                    <option value="Interview Follow-up">Interview Follow-up</option>
-                    <option value="Thank You">Thank You</option>
-                    <option value="Technical Interview Follow-up">Technical Interview Follow-up</option>
-                    <option value="Second Round Interview Follow-up">Second Round Interview Follow-up</option>
-                    <option value="HR Round Follow-up">HR Round Follow-up</option>
-                    <option value="Offer Acceptance">Offer Acceptance</option>
-                    <option value="Custom">Custom</option>
-                  </select>
+                    Generate Email <Send className="w-4 h-4" />
+                  </Button>
                 </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="company-name" className="text-sm font-medium text-foreground ml-1">Company Name*</Label>
-                <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
-                  <Input id="company-name" placeholder="Enter company name" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="position" className="text-sm font-medium text-foreground ml-1">Position*</Label>
-                <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
-                  <Input id="position" placeholder="Enter position title" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="interviewer-name" className="text-sm font-medium text-foreground ml-1">Interviewer Name*</Label>
-                <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
-                  <Input id="interviewer-name" placeholder="Enter interviewer's name" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="your-name" className="text-sm font-medium text-foreground ml-1">Your Name*</Label>
-                <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
-                  <Input id="your-name" placeholder="Enter your name" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col h-full">
-              <div className="space-y-2 flex-1 flex flex-col">
-                <Label htmlFor="context" className="text-sm font-medium text-foreground ml-1">Additional Context</Label>
-                <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden flex-1">
-                  <Textarea id="context" placeholder="Add any additional context or specific points you'd like to include" className="border-0 bg-transparent h-full min-h-[200px] px-4 py-3 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60 resize-none" />
-                </div>
-              </div>
-              <Button className="w-full mt-6 bg-foreground text-background hover:bg-foreground/90 focus-visible:outline-none border-0 rounded-full h-12 px-6 text-base font-semibold transition-colors gap-2">
-                Generate Email <Send className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         );
       case 5: // Case Study Audit
       case 6: // AI Case Study
