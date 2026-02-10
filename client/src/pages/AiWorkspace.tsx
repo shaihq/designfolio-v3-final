@@ -58,6 +58,9 @@ export default function AiWorkspace() {
   const [selectedTool, setSelectedTool] = useState(0);
   const [uploadedResume, setUploadedResume] = useState<File | null>(null);
   const [jobDescription, setJobDescription] = useState("");
+  const [role, setRole] = useState("");
+  const [experienceLevel, setExperienceLevel] = useState("");
+  const [interviewRound, setInterviewRound] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isGeneratingEmail, setIsGeneratingEmail] = useState(false);
   const [analysisComplete, setAnalysisComplete] = useState(false);
@@ -333,18 +336,63 @@ export default function AiWorkspace() {
         return (
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="role" className="text-sm font-medium text-foreground ml-1">Target Role</Label>
-              <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
-                <Input id="role" placeholder="e.g. Senior Product Designer" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+              <Label htmlFor="role" className="text-sm font-medium text-foreground ml-1">Role you're applying for*</Label>
+              <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                <Input 
+                  id="role" 
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  placeholder="e.g. SPD" 
+                  className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" 
+                />
               </div>
             </div>
+            
             <div className="space-y-2">
-              <Label htmlFor="focus" className="text-sm font-medium text-foreground ml-1">Interview Focus</Label>
-              <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
-                <Input id="focus" placeholder="Behavioral, Technical, Case Study" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+              <Label htmlFor="experience" className="text-sm font-medium text-foreground ml-1">Experience Level*</Label>
+              <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                <Input 
+                  id="experience" 
+                  value={experienceLevel}
+                  onChange={(e) => setExperienceLevel(e.target.value)}
+                  placeholder="Entry Level 0-2 years" 
+                  className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" 
+                />
               </div>
             </div>
-            <Button className="w-full bg-foreground text-background hover:bg-foreground/90 focus-visible:outline-none border-0 rounded-full h-11 px-6 text-base font-semibold transition-colors">Start Practice Session</Button>
+
+            <div className="space-y-2">
+              <Label htmlFor="round" className="text-sm font-medium text-foreground ml-1">Interview Round*</Label>
+              <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                <Input 
+                  id="round" 
+                  value={interviewRound}
+                  onChange={(e) => setInterviewRound(e.target.value)}
+                  placeholder="e.g. Design Challenge, Portfolio Review" 
+                  className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" 
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="mock-job-desc" className="text-sm font-medium text-foreground ml-1">Paste Job Description*</Label>
+              <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden">
+                <Textarea 
+                  id="mock-job-desc" 
+                  value={jobDescription}
+                  onChange={(e) => setJobDescription(e.target.value)}
+                  placeholder="Copy and paste the JD from Linkedin, WellFound or any job platform" 
+                  className="border-0 bg-transparent min-h-[120px] px-4 py-3 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60 resize-none" 
+                />
+              </div>
+            </div>
+
+            <Button 
+              disabled={!role || !experienceLevel || !interviewRound || !jobDescription}
+              className="w-full bg-[#1A1F2C] text-white hover:bg-[#1A1F2C]/90 focus-visible:outline-none border-0 rounded-2xl h-12 px-6 text-base font-semibold transition-colors mt-2"
+            >
+              Start Mock Interview
+            </Button>
           </div>
         );
       case 3: // Salary Negotiation
