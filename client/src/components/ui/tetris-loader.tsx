@@ -292,9 +292,9 @@ export default function TetrisLoading({
   }
 
   return (
-    <div>
-      <div className="mb-6">
-        <div className={`border-2 border-gray-800 dark:border-gray-200 bg-white dark:bg-black ${config.padding} transition-colors`}>
+    <div className="flex flex-col items-center">
+      <div className="mb-4">
+        <div className={`inline-block border-2 border-gray-800 dark:border-gray-200 bg-white dark:bg-black ${config.padding} transition-colors`}>
           {renderGrid()}
         </div>
       </div>
