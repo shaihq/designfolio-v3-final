@@ -3,6 +3,7 @@ import { Home, FileText, Users, DollarSign, Mail, Upload, Send, Sparkles, Loader
 import { RulerCarousel, type CarouselItem } from "@/components/ui/ruler-carousel";
 import ScannerCardStream from "@/components/ui/scanner-card-stream";
 import ResumeAnalysisReport from "@/components/resume-analysis-report";
+import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -404,12 +405,10 @@ export default function AiWorkspace() {
         </Breadcrumb>
 
         <Link href="/signup">
-          <Button 
-            className="rounded-2xl bg-[#FF553E] text-white hover:bg-[#FF553E]/90 border-0 shadow-lg shadow-[#FF553E]/20 px-6 py-2 h-auto group transition-all duration-300 hover:scale-105 active:scale-95"
-          >
-            <Sparkles className="w-4 h-4 mr-2 animate-pulse" />
-            <span className="font-bold tracking-tight">Build your portfolio site</span>
-          </Button>
+          <InteractiveHoverButton 
+            text="Build your portfolio site"
+            className="w-auto px-6 py-2 h-auto"
+          />
         </Link>
       </header>
 
