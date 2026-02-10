@@ -1,5 +1,21 @@
 import { Link, useLocation } from "wouter";
-import { Home, FileText, Users, DollarSign, Mail, Upload, Send, Sparkles, Loader2, RefreshCcw, Search, PenTool, Lock } from "lucide-react";
+import { SegmentedControl } from "@/components/ui/segmented-control";
+import { 
+  Home, 
+  FileText, 
+  Users, 
+  DollarSign, 
+  Mail, 
+  Upload, 
+  Send, 
+  Sparkles, 
+  Loader2, 
+  RefreshCcw, 
+  Search, 
+  PenTool, 
+  Lock,
+  Landmark 
+} from "lucide-react";
 import { RulerCarousel, type CarouselItem } from "@/components/ui/ruler-carousel";
 import ScannerCardStream from "@/components/ui/scanner-card-stream";
 import ResumeAnalysisReport from "@/components/resume-analysis-report";
@@ -31,7 +47,7 @@ interface WorkspaceTool extends CarouselItem {
 const navItems: WorkspaceTool[] = [
   { id: 1, title: "Resume Fixer", icon: FileText, description: "Optimize your resume for ATS and impact." },
   { id: 2, title: "Mock Interview", icon: Users, description: "Practice with AI-driven interview questions." },
-  { id: 3, title: "Salary Negotiation", icon: DollarSign, description: "Get data-backed negotiation strategies." },
+  { id: 3, title: "Salary Negotiation", icon: Landmark, description: "Get data-backed negotiation strategies." },
   { id: 4, title: "Email Generator", icon: Mail, description: "Draft professional outreach and follow-ups." },
   { id: 5, title: "Case Study Audit", icon: Search, description: "Get critical feedback on your design case studies." },
   { id: 6, title: "Write Case Study using AI", icon: PenTool, description: "Write compelling case studies with AI assistance." },
@@ -144,6 +160,8 @@ export default function AiWorkspace() {
       }
     }, interval);
   };
+
+  const [salaryTab, setSalaryTab] = useState("Enter Details Manually");
 
   const renderToolForm = () => {
     switch (currentTool.id) {
@@ -331,28 +349,75 @@ export default function AiWorkspace() {
         );
       case 3: // Salary Negotiation
         return (
-          <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="current-offer" className="text-sm font-medium text-foreground ml-1">Current Offer ($)</Label>
-                <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
-                  <Input id="current-offer" type="number" placeholder="120000" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="location" className="text-sm font-medium text-foreground ml-1">Location</Label>
-                <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
-                  <Input id="location" placeholder="e.g. New York, NY" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
-                </div>
-              </div>
+          <div className="space-y-6">
+            <div className="flex justify-center">
+              <SegmentedControl 
+                options={["Enter Details Manually", "Upload Offer Letter"]}
+                value={salaryTab}
+                onChange={setSalaryTab}
+                className="w-full"
+              />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="notes" className="text-sm font-medium text-foreground ml-1">Additional Perks/Context</Label>
-              <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden">
-                <Textarea id="notes" placeholder="Mention equity, bonuses, or other benefits..." className="border-0 bg-transparent min-h-[100px] px-4 py-3 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60 resize-none" />
+
+            {salaryTab === "Enter Details Manually" ? (
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="current-salary" className="text-sm font-medium text-foreground ml-1">Current Salary*</Label>
+                    <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                      <Input id="current-salary" placeholder="e.g. $75,000" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="offered-salary" className="text-sm font-medium text-foreground ml-1">Offered Salary*</Label>
+                    <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                      <Input id="offered-salary" placeholder="e.g. $75,000" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="position-title" className="text-sm font-medium text-foreground ml-1">Position Title</Label>
+                    <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                      <Input id="position-title" placeholder="e.g. Senior Product Designer" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="company" className="text-sm font-medium text-foreground ml-1">Company</Label>
+                    <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                      <Input id="company" placeholder="e.g. Tesla" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/60" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="country" className="text-sm font-medium text-foreground ml-1">Country</Label>
+                  <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out">
+                    <Input id="country" defaultValue="United States" className="border-0 bg-transparent h-11 px-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground" />
+                  </div>
+                </div>
+
+                <Button className="w-full bg-[#1A1F2C] text-white hover:bg-[#1A1F2C]/90 focus-visible:outline-none border-0 rounded-full h-12 px-6 text-base font-semibold transition-colors mt-2">Analyze Offer</Button>
               </div>
-            </div>
-            <Button className="w-full bg-foreground text-background hover:bg-foreground/90 focus-visible:outline-none border-0 rounded-full h-11 px-6 text-base font-semibold transition-colors">Generate Strategy</Button>
+            ) : (
+              <div className="space-y-4">
+                <div 
+                  className="p-8 rounded-2xl border-2 border-dashed border-border/40 bg-white/50 flex flex-col items-center justify-center gap-3 cursor-pointer hover:border-[#FF553E]/20 hover:bg-[#FF553E]/[0.01] transition-all"
+                  onClick={() => document.getElementById('offer-letter-upload')?.click()}
+                >
+                  <input type="file" id="offer-letter-upload" className="hidden" />
+                  <div className="w-12 h-12 rounded-xl bg-muted/30 flex items-center justify-center">
+                    <Upload className="w-6 h-6 text-foreground/30" />
+                  </div>
+                  <div className="text-center">
+                    <h4 className="text-sm font-semibold text-foreground">Upload Offer Letter</h4>
+                    <p className="text-[11px] text-foreground/40 font-medium">PDF or DOCX • Max 5MB</p>
+                  </div>
+                </div>
+                <Button className="w-full bg-[#1A1F2C] text-white hover:bg-[#1A1F2C]/90 focus-visible:outline-none border-0 rounded-full h-12 px-6 text-base font-semibold transition-colors">Analyze Offer</Button>
+              </div>
+            )}
           </div>
         );
       case 4: // Email Generator
