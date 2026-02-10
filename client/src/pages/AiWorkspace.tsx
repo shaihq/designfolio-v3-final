@@ -43,6 +43,7 @@ export default function AiWorkspace() {
   const [uploadedResume, setUploadedResume] = useState<File | null>(null);
   const [jobDescription, setJobDescription] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isGeneratingEmail, setIsGeneratingEmail] = useState(false);
   const [analysisComplete, setAnalysisComplete] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState(0);
   const [emailGenerated, setEmailGenerated] = useState(false);
@@ -115,7 +116,7 @@ export default function AiWorkspace() {
   };
 
   const handleGenerateEmail = () => {
-    setIsAnalyzing(true);
+    setIsGeneratingEmail(true);
     setAnalysisProgress(0);
     setEmailGenerated(false);
 
@@ -131,7 +132,7 @@ export default function AiWorkspace() {
         clearInterval(timer);
         setAnalysisProgress(100);
         setTimeout(() => {
-          setIsAnalyzing(false);
+          setIsGeneratingEmail(false);
           setEmailGenerated(true);
           setEmailData({
             subject: "Follow-up: Interview for Senior Product Designer at Company X",
@@ -357,7 +358,7 @@ export default function AiWorkspace() {
       case 4: // Email Generator
         return (
           <AnimatePresence mode="wait">
-            {isAnalyzing ? (
+            {isGeneratingEmail ? (
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
