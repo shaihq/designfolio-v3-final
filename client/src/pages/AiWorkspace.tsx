@@ -62,6 +62,10 @@ export default function AiWorkspace() {
   const [experienceLevel, setExperienceLevel] = useState("");
   const [interviewRound, setInterviewRound] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isMocking, setIsMocking] = useState(false);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState<string[]>([]);
+  const [currentAnswer, setCurrentAnswer] = useState("");
   const [isGeneratingEmail, setIsGeneratingEmail] = useState(false);
   const [analysisComplete, setAnalysisComplete] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState(0);
@@ -134,6 +138,51 @@ export default function AiWorkspace() {
     }
   };
 
+  const handleStartMock = () => {
+    setIsMocking(true);
+    setCurrentQuestionIndex(0);
+    setAnswers([]);
+    setCurrentAnswer("");
+  };
+
+  const mockQuestions = [
+    {
+      question: "Imagine a core application you are responsible for is suddenly experiencing intermittent performance degradation, but there have been no recent code deployments. Describe your initial diagnostic steps and the tools or methodologies you'd employ to pinpoint the root cause, considering both infrastructure and application layers.",
+      tip: "Tool Selection → Implementation → Best Practices → Optimization → Results"
+    },
+    {
+      question: "How do you handle conflict within a design team when two senior designers have diametrically opposed views on a critical UX decision?",
+      tip: "Empathy → Evidence-based → Consensus → Action"
+    },
+    {
+      question: "Walk me through your process for performing a deep-dive audit on a complex user flow that is seeing high drop-off rates.",
+      tip: "Data Analysis → User Research → Heuristic Evaluation → Hypothesis"
+    },
+    {
+      question: "Describe a time you had to make a significant trade-off between user experience and technical feasibility. How did you arrive at the decision?",
+      tip: "Constraint → Rationale → Collaboration → Outcome"
+    },
+    {
+      question: "How do you stay updated with the latest trends and technologies in your field, and how have you applied a recent learning to your work?",
+      tip: "Source → Learning → Application → Impact"
+    }
+  ];
+
+  const handleNextQuestion = () => {
+    const updatedAnswers = [...answers];
+    updatedAnswers[currentQuestionIndex] = currentAnswer;
+    setAnswers(updatedAnswers);
+    
+    if (currentQuestionIndex < mockQuestions.length - 1) {
+      setCurrentQuestionIndex(prev => prev + 1);
+      setCurrentAnswer("");
+    } else {
+      // End of interview - for now just reset or show complete
+      setIsMocking(false);
+      setAnalysisComplete(true); // Reuse analysis complete state for summary or similar
+    }
+  };
+
   const handleGenerateEmail = () => {
     setIsGeneratingEmail(true);
     setAnalysisProgress(0);
@@ -167,6 +216,73 @@ export default function AiWorkspace() {
   const [salaryTab, setSalaryTab] = useState("Enter Details Manually");
 
   const renderToolForm = () => {
+    if (isMocking) {
+      const currentQ = mockQuestions[currentQuestionIndex];
+      return (
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="space-y-6"
+        >
+          <div className="flex items-center justify-between">
+            <h3 className="text-xl font-semibold text-foreground">
+              Q. {currentQuestionIndex + 1} of {mockQuestions.length}
+            </h3>
+            <Button 
+              onClick={handleNextQuestion}
+              disabled={!currentAnswer.trim()}
+              className="bg-[#1A1F2C] text-white hover:bg-[#1A1F2C]/90 rounded-full px-8 h-11 font-medium transition-all"
+            >
+              {currentQuestionIndex === mockQuestions.length - 1 ? 'Finish Interview' : 'Next Question'}
+            </Button>
+          </div>
+
+          {/* Progress Indicator */}
+          <div className="flex gap-2 w-full">
+            {mockQuestions.map((_, i) => (
+              <div 
+                key={i} 
+                className={`h-1.5 flex-1 rounded-full transition-all duration-500 ${
+                  i === currentQuestionIndex 
+                    ? 'bg-[#FF553E]' 
+                    : i < currentQuestionIndex 
+                      ? 'bg-[#FF553E]/40' 
+                      : 'bg-muted/30'
+                }`} 
+              />
+            ))}
+          </div>
+
+          <div className="space-y-6 pt-4">
+            <p className="text-lg font-medium text-foreground leading-relaxed">
+              {currentQ.question}
+            </p>
+
+            <div className="relative group">
+              <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden">
+                <Textarea 
+                  value={currentAnswer}
+                  onChange={(e) => setCurrentAnswer(e.target.value.slice(0, 500))}
+                  placeholder="Type your answer here..." 
+                  className="border-0 bg-transparent min-h-[240px] px-6 py-5 focus-visible:ring-0 focus-visible:ring-offset-0 text-lg text-foreground placeholder:text-muted-foreground/40 resize-none" 
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between pt-2">
+              <div className="text-sm font-medium text-foreground/60">
+                Characters remaining: {500 - currentAnswer.length}
+              </div>
+              <div className="flex items-center gap-2 text-sm text-foreground/60">
+                <Sparkles className="w-4 h-4 text-yellow-500" />
+                <span className="font-medium italic">Tip: {currentQ.tip}</span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      );
+    }
+
     switch (currentTool.id) {
       case 1: // Resume Fixer
         return (
@@ -388,6 +504,7 @@ export default function AiWorkspace() {
             </div>
 
             <Button 
+              onClick={handleStartMock}
               disabled={!role || !experienceLevel || !interviewRound || !jobDescription}
               className="w-full bg-[#1A1F2C] text-white hover:bg-[#1A1F2C]/90 focus-visible:outline-none border-0 rounded-2xl h-12 px-6 text-base font-semibold transition-colors mt-2"
             >
