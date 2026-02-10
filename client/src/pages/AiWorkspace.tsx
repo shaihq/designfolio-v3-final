@@ -3,6 +3,7 @@ import { Home, FileText, Users, DollarSign, Mail, Upload, Send, Sparkles, Loader
 import { RulerCarousel, type CarouselItem } from "@/components/ui/ruler-carousel";
 import ScannerCardStream from "@/components/ui/scanner-card-stream";
 import ResumeAnalysisReport from "@/components/resume-analysis-report";
+import { CaseStudyAuditIcon } from "@/components/ui/case-study-audit-icon";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
 import {
   Breadcrumb,
@@ -453,7 +454,9 @@ export default function AiWorkspace() {
               >
                 <div className="flex items-center gap-3 px-6 py-4">
                   <div className="flex items-center justify-center pr-1">
-                    {currentTool.id === 1 ? (
+                    {currentTool.id === 5 ? (
+                      <CaseStudyAuditIcon className="w-8 h-8 text-purple-600" />
+                    ) : currentTool.id === 1 ? (
                       <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-foreground">
                         <g clipPath="url(#clip0_1128_6494)">
                         <path d="M30.472 3.045H28.952V1.525H27.432V-0.00500488H6.09197V12.195H1.52197V13.715H9.14197V12.195H7.62197V1.525H24.382V7.615H30.472V22.855H28.952V25.905H30.472V30.475H32.002V4.575H30.472V3.045Z" fill="currentColor"/>
