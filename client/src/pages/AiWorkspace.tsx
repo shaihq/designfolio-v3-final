@@ -5,6 +5,7 @@ import ScannerCardStream from "@/components/ui/scanner-card-stream";
 import ResumeAnalysisReport from "@/components/resume-analysis-report";
 import { CaseStudyAuditIcon } from "@/components/ui/case-study-audit-icon";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
+import TetrisLoading from "@/components/ui/tetris-loader";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -118,7 +119,7 @@ export default function AiWorkspace() {
     setAnalysisProgress(0);
     setEmailGenerated(false);
 
-    const duration = 2000;
+    const duration = 5000;
     const interval = 50;
     const steps = duration / interval;
     const increment = 100 / steps;
@@ -361,20 +362,10 @@ export default function AiWorkspace() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="flex flex-col items-center justify-center py-12 space-y-6"
+                className="flex flex-col items-center justify-center py-4 space-y-6"
               >
-                <div className="w-full max-w-xs space-y-3 text-center">
-                  <div className="flex items-center justify-center gap-2 text-foreground font-medium">
-                    <Loader2 className="w-4 h-4 animate-spin text-primary" />
-                    <span className="text-sm">Drafting your email...</span>
-                  </div>
-                  <div className="h-1.5 w-full bg-foreground/5 rounded-full overflow-hidden">
-                    <motion.div 
-                      className="h-full bg-primary"
-                      initial={{ width: 0 }}
-                      animate={{ width: `${analysisProgress}%` }}
-                    />
-                  </div>
+                <div className="flex flex-col items-center">
+                  <TetrisLoading size="sm" speed="fast" loadingText="Drafting your email..." />
                 </div>
               </motion.div>
             ) : emailGenerated ? (
