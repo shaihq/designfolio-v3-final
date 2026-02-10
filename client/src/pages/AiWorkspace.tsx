@@ -1,6 +1,7 @@
 import { Link, useLocation } from "wouter";
 import { Home, FileText, Users, DollarSign, Mail, Upload, Send, Sparkles, Loader2, RefreshCcw } from "lucide-react";
 import { RulerCarousel, type CarouselItem } from "@/components/ui/ruler-carousel";
+import { ShinyButton } from "@/components/ui/shiny-button";
 import ScannerCardStream from "@/components/ui/scanner-card-stream";
 import ResumeAnalysisReport from "@/components/resume-analysis-report";
 import {
@@ -404,13 +405,12 @@ export default function AiWorkspace() {
         </Breadcrumb>
 
         <Link href="/signup">
-          <Button 
-            variant="outline" 
-            className="rounded-full bg-white/50 backdrop-blur-sm border-white/40 hover:bg-[#FF553E] hover:text-white hover:border-[#FF553E] transition-all duration-300 shadow-sm group"
-          >
-            <Sparkles className="w-4 h-4 mr-2 text-[#FF553E] group-hover:text-white transition-colors" />
-            <span className="font-semibold">Build your portfolio site</span>
-          </Button>
+          <ShinyButton className="rounded-full bg-white/20 border border-white/10 py-1.5 shadow-none hover:shadow-lg transition-all">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-[#FF553E]" />
+              <span className="font-bold tracking-tight lowercase first-letter:uppercase text-foreground">Build your portfolio site</span>
+            </div>
+          </ShinyButton>
         </Link>
       </header>
 
