@@ -533,7 +533,7 @@ export default function AiWorkspace() {
 
         <Link href="/signup">
           <InteractiveHoverButton 
-            text="Portfolio Builder"
+            text="Try Portfolio Builder"
             className="w-auto px-6 py-2 h-auto"
           />
         </Link>
