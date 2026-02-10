@@ -384,18 +384,18 @@ export default function AiWorkspace() {
       case 6: // AI Case Study
         return (
           <div className="flex flex-col items-center justify-center py-12 text-center space-y-6">
-            <div className="w-16 h-16 bg-foreground/5 rounded-2xl flex items-center justify-center">
-              <Lock className="w-8 h-8 text-foreground/20" />
+            <div className="w-16 h-16 bg-[#FF553E]/10 rounded-2xl flex items-center justify-center">
+              <Lock className="w-8 h-8 text-[#FF553E]" />
             </div>
             <div className="space-y-2">
-              <h3 className="text-xl font-serif text-foreground">Premium Feature</h3>
+              <h3 className="text-xl font-serif text-foreground">Ready to level up?</h3>
               <p className="text-muted-foreground text-sm max-w-[280px]">
-                Log in to your account to unlock these advanced career tools.
+                Login to unlock these powerful tools and supercharge your career.
               </p>
             </div>
             <Link href="/auth">
               <Button className="bg-foreground text-background hover:bg-foreground/90 rounded-full px-8">
-                Login to Try
+                Login to unlock
               </Button>
             </Link>
           </div>
