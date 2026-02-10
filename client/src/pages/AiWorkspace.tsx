@@ -385,7 +385,7 @@ export default function AiWorkspace() {
   return (
     <div className="flex flex-col min-h-screen" style={{ background: "#F1EDE2" }}>
       {/* Breadcrumb Navigation */}
-      <header className="p-4 flex items-center">
+      <header className="p-4 flex items-center justify-between">
         <Breadcrumb>
           <BreadcrumbList className="rounded-lg border border-border bg-background px-3 py-2 shadow-sm shadow-black/5">
             <BreadcrumbItem>
@@ -402,6 +402,16 @@ export default function AiWorkspace() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+
+        <Link href="/signup">
+          <Button 
+            variant="outline" 
+            className="rounded-full bg-white/50 backdrop-blur-sm border-white/40 hover:bg-[#FF553E] hover:text-white hover:border-[#FF553E] transition-all duration-300 shadow-sm group"
+          >
+            <Sparkles className="w-4 h-4 mr-2 text-[#FF553E] group-hover:text-white transition-colors" />
+            <span className="font-semibold">Build your portfolio site</span>
+          </Button>
+        </Link>
       </header>
 
       {/* Main Content */}
