@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Home, FileText, Users, DollarSign, Mail, Upload, Send, Sparkles, Loader2, RefreshCcw } from "lucide-react";
+import { Home, FileText, Users, DollarSign, Mail, Upload, Send, Sparkles, Loader2, RefreshCcw, Search, PenTool, Lock } from "lucide-react";
 import { RulerCarousel, type CarouselItem } from "@/components/ui/ruler-carousel";
 import ScannerCardStream from "@/components/ui/scanner-card-stream";
 import ResumeAnalysisReport from "@/components/resume-analysis-report";
@@ -31,6 +31,8 @@ const navItems: WorkspaceTool[] = [
   { id: 2, title: "Mock Interview", icon: Users, description: "Practice with AI-driven interview questions." },
   { id: 3, title: "Salary Negotiation", icon: DollarSign, description: "Get data-backed negotiation strategies." },
   { id: 4, title: "Email Generator", icon: Mail, description: "Draft professional outreach and follow-ups." },
+  { id: 5, title: "Case Study Audit", icon: Search, description: "Get critical feedback on your design case studies." },
+  { id: 6, title: "AI Case Study", icon: PenTool, description: "Write compelling case studies with AI assistance." },
 ];
 
 export default function AiWorkspace() {
@@ -376,6 +378,26 @@ export default function AiWorkspace() {
                 Generate Email <Send className="w-4 h-4" />
               </Button>
             </div>
+          </div>
+        );
+      case 5: // Case Study Audit
+      case 6: // AI Case Study
+        return (
+          <div className="flex flex-col items-center justify-center py-12 text-center space-y-6">
+            <div className="w-16 h-16 bg-foreground/5 rounded-2xl flex items-center justify-center">
+              <Lock className="w-8 h-8 text-foreground/20" />
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-xl font-serif text-foreground">Premium Feature</h3>
+              <p className="text-muted-foreground text-sm max-w-[280px]">
+                Log in to your account to unlock these advanced career tools.
+              </p>
+            </div>
+            <Link href="/auth">
+              <Button className="bg-foreground text-background hover:bg-foreground/90 rounded-full px-8">
+                Login to Try
+              </Button>
+            </Link>
           </div>
         );
       default:
