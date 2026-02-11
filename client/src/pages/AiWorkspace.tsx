@@ -21,7 +21,7 @@ import ScannerCardStream from "@/components/ui/scanner-card-stream";
 import ResumeAnalysisReport from "@/components/resume-analysis-report";
 import { CaseStudyAuditIcon } from "@/components/ui/case-study-audit-icon";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
-import TetrisLoading from "@/components/ui/tetris-loader";
+import { ResponseStream } from "@/components/ui/response-stream";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -264,9 +264,12 @@ export default function AiWorkspace() {
           </div>
 
           <div className="space-y-6 pt-4">
-            <p className="text-base font-medium text-foreground leading-relaxed">
-              {currentQ.question}
-            </p>
+            <ResponseStream 
+              textStream={currentQ.question}
+              mode="fade"
+              speed={40}
+              className="text-base font-medium text-foreground leading-relaxed"
+            />
 
             <div className="relative group">
               <div className="bg-white dark:bg-white border-2 border-border rounded-2xl hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out overflow-hidden">
