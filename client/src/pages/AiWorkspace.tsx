@@ -21,6 +21,7 @@ import ScannerCardStream from "@/components/ui/scanner-card-stream";
 import ResumeAnalysisReport from "@/components/resume-analysis-report";
 import { CaseStudyAuditIcon } from "@/components/ui/case-study-audit-icon";
 import { InteractiveHoverButton } from "@/components/ui/interactive-hover-button";
+import TetrisLoading from "@/components/ui/tetris-loader";
 import { ResponseStream } from "@/components/ui/response-stream";
 import {
   Breadcrumb,
