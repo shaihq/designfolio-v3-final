@@ -145,6 +145,16 @@ export default function AiWorkspace() {
     setCurrentAnswer("");
   };
 
+  const [showTetris, setShowTetris] = useState(false);
+
+  const onStartMockClick = () => {
+    setShowTetris(true);
+    setTimeout(() => {
+      setShowTetris(false);
+      handleStartMock();
+    }, 2000);
+  };
+
   const mockQuestions = [
     {
       question: "Imagine a core application you are responsible for is suddenly experiencing intermittent performance degradation, but there have been no recent code deployments. Describe your initial diagnostic steps and the tools or methodologies you'd employ to pinpoint the root cause, considering both infrastructure and application layers.",
@@ -254,7 +264,7 @@ export default function AiWorkspace() {
           </div>
 
           <div className="space-y-6 pt-4">
-            <p className="text-lg font-medium text-foreground leading-relaxed">
+            <p className="text-base font-medium text-foreground leading-relaxed">
               {currentQ.question}
             </p>
 
@@ -264,7 +274,7 @@ export default function AiWorkspace() {
                   value={currentAnswer}
                   onChange={(e) => setCurrentAnswer(e.target.value.slice(0, 500))}
                   placeholder="Type your answer here..." 
-                  className="border-0 bg-transparent min-h-[240px] px-6 py-5 focus-visible:ring-0 focus-visible:ring-offset-0 text-lg text-foreground placeholder:text-muted-foreground/40 resize-none" 
+                  className="border-0 bg-transparent min-h-[240px] px-6 py-5 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-muted-foreground/40 resize-none" 
                 />
               </div>
             </div>
@@ -504,12 +514,20 @@ export default function AiWorkspace() {
             </div>
 
             <Button 
-              onClick={handleStartMock}
+              onClick={onStartMockClick}
               disabled={!role || !experienceLevel || !interviewRound || !jobDescription}
               className="w-full bg-[#1A1F2C] text-white hover:bg-[#1A1F2C]/90 focus-visible:outline-none border-0 rounded-2xl h-12 px-6 text-base font-semibold transition-colors mt-2"
             >
               Start Mock Interview
             </Button>
+            {showTetris && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm">
+                <div className="bg-white p-8 rounded-3xl shadow-xl flex flex-col items-center gap-4">
+                  <TetrisLoading />
+                  <p className="text-sm font-medium text-foreground animate-pulse">Initializing your interview session...</p>
+                </div>
+              </div>
+            )}
           </div>
         );
       case 3: // Salary Negotiation
