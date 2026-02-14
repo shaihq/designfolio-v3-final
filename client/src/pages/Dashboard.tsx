@@ -73,7 +73,10 @@ import {
   Building,
   Check,
   ArrowUp,
-  ExternalLink
+  ExternalLink,
+  MapPin,
+  Calendar,
+  Banknote
 } from "lucide-react";
 import { SiBehance } from "react-icons/si";
 import { Link } from "wouter";
@@ -1717,32 +1720,36 @@ export default function Dashboard() {
                                             ) : null}
                                           </div>
                                         </div>
-                                        <div className="flex items-center gap-2 text-[13px] text-[#1A1A1A]/40 mt-1 font-medium">
+                                        <div className="flex items-center flex-wrap gap-x-4 gap-y-2 text-[13px] text-[#1A1A1A]/40 mt-1 font-medium">
                                           <span>{job.company}</span>
-                                          <span className="w-1 h-1 rounded-full bg-black/10" />
-                                          <span>{job.location || "Remote"}</span>
+                                          <div className="flex items-center gap-1.5">
+                                            <MapPin className="w-3.5 h-3.5 opacity-50" />
+                                            <span>{job.location || "Remote"}</span>
+                                          </div>
                                           {job.date_posted && (
-                                            <>
-                                              <span className="w-1 h-1 rounded-full bg-black/10" />
+                                            <div className="flex items-center gap-1.5">
+                                              <Calendar className="w-3.5 h-3.5 opacity-50" />
                                               <span>{new Date(job.date_posted).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>
-                                            </>
+                                            </div>
                                           )}
-                                          <span className="w-1 h-1 rounded-full bg-black/10" />
-                                          <span className="text-primary/80">
-                                            {job.salary_source ? (
-                                              <>
-                                                {job.min_amount && job.max_amount ? (
-                                                  `${job.currency || '$'}${job.min_amount.toLocaleString()} - ${job.max_amount.toLocaleString()}${job.interval ? `/${job.interval}` : ''}`
-                                                ) : job.min_amount ? (
-                                                  `From ${job.currency || '$'}${job.min_amount.toLocaleString()}${job.interval ? `/${job.interval}` : ''}`
-                                                ) : (
-                                                  'Salary mentioned'
-                                                )}
-                                              </>
-                                            ) : (
-                                              'Salary not mentioned'
-                                            )}
-                                          </span>
+                                          <div className="flex items-center gap-1.5">
+                                            <Banknote className="w-3.5 h-3.5 opacity-50" />
+                                            <span>
+                                              {job.salary_source ? (
+                                                <>
+                                                  {job.min_amount && job.max_amount ? (
+                                                    `${job.currency || '$'}${job.min_amount.toLocaleString()} - ${job.max_amount.toLocaleString()}${job.interval ? `/${job.interval}` : ''}`
+                                                  ) : job.min_amount ? (
+                                                    `From ${job.currency || '$'}${job.min_amount.toLocaleString()}${job.interval ? `/${job.interval}` : ''}`
+                                                  ) : (
+                                                    'Salary mentioned'
+                                                  )}
+                                                </>
+                                              ) : (
+                                                'Salary not mentioned'
+                                              )}
+                                            </span>
+                                          </div>
                                         </div>
                                       </div>
 
