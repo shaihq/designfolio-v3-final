@@ -4195,105 +4195,107 @@ export default function Dashboard() {
       </div>
       
       {/* Floating Dock */}
-      <div className="fixed bottom-1 sm:bottom-4 left-0 right-0 z-[100] flex justify-center pointer-events-none">
-        <div className="pointer-events-auto">
-          {selectedLayout === 'macos' ? (
-            <MacOSDock 
-              apps={[
-                { 
-                  id: "home", 
-                  name: "Home", 
-                  icon: "https://cdn.jim-nielsen.com/macos/1024/finder-2021-09-10.png?rf=1024" 
-                },
-                { 
-                  id: "works", 
-                  name: "Works", 
-                  icon: "https://cdn.jim-nielsen.com/macos/1024/photos-2021-05-28.png?rf=1024" 
-                },
-                { 
-                  id: "feedback", 
-                  name: "Testimonials", 
-                  icon: "https://cdn.jim-nielsen.com/macos/1024/mail-2021-05-25.png?rf=1024" 
-                },
-                { 
-                  id: "resume", 
-                  name: "Resume", 
-                  icon: "https://cdn.jim-nielsen.com/macos/1024/notes-2021-05-25.png?rf=1024" 
-                },
-                { 
-                  id: "contact", 
-                  name: "Contact", 
-                  icon: "https://cdn.jim-nielsen.com/macos/1024/safari-2021-06-02.png?rf=1024" 
-                },
-              ]}
-              openApps={[activeTab, isResumeDialogOpen ? 'resume' : ''].filter(Boolean)}
-              onAppClick={(appId) => {
-                if (appId === "resume") {
-                  setIsResumeDialogOpen(true);
-                  return;
-                }
-                setActiveTab(appId);
-                if (appId === "home") {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                } else if (appId === "works") {
-                  document.getElementById('section-works')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                } else if (appId === "feedback") {
-                  document.getElementById('section-testimonials')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                } else if (appId === "contact") {
-                  document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-            />
-          ) : (
-            <Dock 
-              items={[
-                { 
-                  icon: Home, 
-                  label: "Home", 
-                  active: activeTab === "home",
-                  onClick: () => {
-                    setActiveTab("home");
+      {activeTab !== "AI Job Search" && (
+        <div className="fixed bottom-1 sm:bottom-4 left-0 right-0 z-[100] flex justify-center pointer-events-none">
+          <div className="pointer-events-auto">
+            {selectedLayout === 'macos' ? (
+              <MacOSDock 
+                apps={[
+                  { 
+                    id: "home", 
+                    name: "Home", 
+                    icon: "https://cdn.jim-nielsen.com/macos/1024/finder-2021-09-10.png?rf=1024" 
+                  },
+                  { 
+                    id: "works", 
+                    name: "Works", 
+                    icon: "https://cdn.jim-nielsen.com/macos/1024/photos-2021-05-28.png?rf=1024" 
+                  },
+                  { 
+                    id: "feedback", 
+                    name: "Testimonials", 
+                    icon: "https://cdn.jim-nielsen.com/macos/1024/mail-2021-05-25.png?rf=1024" 
+                  },
+                  { 
+                    id: "resume", 
+                    name: "Resume", 
+                    icon: "https://cdn.jim-nielsen.com/macos/1024/notes-2021-05-25.png?rf=1024" 
+                  },
+                  { 
+                    id: "contact", 
+                    name: "Contact", 
+                    icon: "https://cdn.jim-nielsen.com/macos/1024/safari-2021-06-02.png?rf=1024" 
+                  },
+                ]}
+                openApps={[activeTab, isResumeDialogOpen ? 'resume' : ''].filter(Boolean)}
+                onAppClick={(appId) => {
+                  if (appId === "resume") {
+                    setIsResumeDialogOpen(true);
+                    return;
+                  }
+                  setActiveTab(appId);
+                  if (appId === "home") {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
-                  } 
-                },
-                { 
-                  icon: Layers, 
-                  label: "Works", 
-                  active: activeTab === "works",
-                  onClick: () => {
-                    setActiveTab("works");
+                  } else if (appId === "works") {
                     document.getElementById('section-works')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                  } 
-                },
-                { 
-                  icon: MessageSquare, 
-                  label: "Testimonials", 
-                  active: activeTab === "feedback",
-                  onClick: () => {
-                    setActiveTab("feedback");
+                  } else if (appId === "feedback") {
                     document.getElementById('section-testimonials')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                  } 
-                },
-                { 
-                  icon: FileText, 
-                  label: "Resume", 
-                  active: isResumeDialogOpen,
-                  onClick: () => setIsResumeDialogOpen(true) 
-                },
-                { 
-                  icon: Mail, 
-                  label: "Contact", 
-                  active: activeTab === "contact",
-                  onClick: () => {
-                    setActiveTab("contact");
+                  } else if (appId === "contact") {
                     document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' });
-                  } 
-                },
-              ]} 
-            />
-          )}
+                  }
+                }}
+              />
+            ) : (
+              <Dock 
+                items={[
+                  { 
+                    icon: Home, 
+                    label: "Home", 
+                    active: activeTab === "home",
+                    onClick: () => {
+                      setActiveTab("home");
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } 
+                  },
+                  { 
+                    icon: Layers, 
+                    label: "Works", 
+                    active: activeTab === "works",
+                    onClick: () => {
+                      setActiveTab("works");
+                      document.getElementById('section-works')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } 
+                  },
+                  { 
+                    icon: MessageSquare, 
+                    label: "Testimonials", 
+                    active: activeTab === "feedback",
+                    onClick: () => {
+                      setActiveTab("feedback");
+                      document.getElementById('section-testimonials')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } 
+                  },
+                  { 
+                    icon: FileText, 
+                    label: "Resume", 
+                    active: isResumeDialogOpen,
+                    onClick: () => setIsResumeDialogOpen(true) 
+                  },
+                  { 
+                    icon: Mail, 
+                    label: "Contact", 
+                    active: activeTab === "contact",
+                    onClick: () => {
+                      setActiveTab("contact");
+                      document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' });
+                    } 
+                  },
+                ]}
+              />
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
     </div>
   );
