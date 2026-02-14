@@ -1465,7 +1465,7 @@ export default function Dashboard() {
                 className="text-center"
               >
                 <h1 className="text-2xl font-semibold mb-6 text-[#1A1A1A]">
-                  Find your next Product Design role
+                  Hey Shai, what kind of job are you looking for?
                 </h1>
                 
                 <div className="flex flex-wrap justify-center gap-2 mb-6">
@@ -1492,7 +1492,7 @@ export default function Dashboard() {
                   className="transition-all"
                 >
                   <PromptInputTextarea 
-                    placeholder="e.g. Senior Product Designer with expertise in Design Systems..." 
+                    placeholder="e.g. Senior product design roles at fast-growing startups, focused on B2B SaaS" 
                     className="focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none"
                   />
                   <PromptInputActions>
@@ -1508,14 +1508,14 @@ export default function Dashboard() {
                 </PromptInput>
 
                 <div className="flex flex-wrap justify-center gap-2 mt-6">
-                  <PromptSuggestion onClick={() => setInputValue("Senior Product Designer with 5+ yrs experience")}>
-                    Senior Product Designer with 5+ yrs experience
+                  <PromptSuggestion onClick={() => setInputValue("Product Designer roles at Series B startups, remote-friendly")}>
+                    Product Designer roles at Series B startups, remote-friendly
                   </PromptSuggestion>
-                  <PromptSuggestion onClick={() => setInputValue("Remote UI/UX Designer roles")}>
-                    Remote UI/UX Designer roles
+                  <PromptSuggestion onClick={() => setInputValue("Senior UX Designer jobs in fintech companies")}>
+                    Senior UX Designer jobs in fintech companies
                   </PromptSuggestion>
-                  <PromptSuggestion onClick={() => setInputValue("Product Designer in San Francisco")}>
-                    Product Designer in San Francisco
+                  <PromptSuggestion onClick={() => setInputValue("Frontend Engineer roles using React and Next.js")}>
+                    Frontend Engineer roles using React and Next.js
                   </PromptSuggestion>
                 </div>
               </motion.div>
