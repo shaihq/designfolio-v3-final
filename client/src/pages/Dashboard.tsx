@@ -1719,6 +1719,28 @@ export default function Dashboard() {
                                     <span>{job.company}</span>
                                     <span className="w-1 h-1 rounded-full bg-black/10" />
                                     <span>{job.location || "Remote"}</span>
+                                    {job.date_posted && (
+                                      <>
+                                        <span className="w-1 h-1 rounded-full bg-black/10" />
+                                        <span>{new Date(job.date_posted).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>
+                                      </>
+                                    )}
+                                  </div>
+                                  {job.description && (
+                                    <p className="text-[13px] text-[#1A1A1A]/60 mt-2 line-clamp-2 leading-relaxed">
+                                      {job.description.replace(/<[^>]*>?/gm, '').split('\n').filter((line: string) => line.trim()).slice(0, 2).join(' ')}
+                                    </p>
+                                  )}
+                                  <div className="mt-2 text-[12px] font-medium text-primary/80">
+                                    {job.min_salary ? (
+                                      <span>
+                                        {job.salary_currency || '$'}{job.min_salary.toLocaleString()} 
+                                        {job.max_salary ? ` - ${job.salary_currency || '$'}${job.max_salary.toLocaleString()}` : ''}
+                                        {job.salary_interval ? ` / ${job.salary_interval}` : ''}
+                                      </span>
+                                    ) : (
+                                      <span className="text-[#1A1A1A]/30 italic">Salary not disclosed</span>
+                                    )}
                                   </div>
                                 </div>
 
