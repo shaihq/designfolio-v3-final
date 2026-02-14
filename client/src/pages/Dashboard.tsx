@@ -1539,9 +1539,9 @@ export default function Dashboard() {
           </Card>
         </div>
 
-        <main className={`pb-6 ${activeTab === "AI Job Search" ? "flex items-center justify-center min-h-[calc(100vh-250px)] mt-[-20px]" : ""}`}>
+        <main className={`pb-6 pt-12 ${activeTab === "AI Job Search" ? "min-h-[calc(100vh-100px)]" : ""}`}>
           {activeTab === "AI Job Search" ? (
-            <div className="px-4 sm:px-0 max-w-2xl mx-auto w-full">
+            <div className="px-4 sm:px-6 max-w-5xl mx-auto w-full">
               <AnimatePresence mode="wait">
                 {!showSearchResults ? (
                   <motion.div
@@ -1550,7 +1550,7 @@ export default function Dashboard() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -15 }}
                     transition={{ duration: 0.4 }}
-                    className="w-full"
+                    className="w-full mt-[-20px] flex flex-col items-center justify-center min-h-[calc(100vh-250px)]"
                   >
                     <div className="flex justify-center mb-2">
                       <Suspense fallback={<div className="w-24 h-24" />}>
@@ -1561,7 +1561,7 @@ export default function Dashboard() {
                         />
                       </Suspense>
                     </div>
-                    <div className="text-center">
+                    <div className="text-center w-full max-w-2xl">
                       <h1 className="text-2xl font-semibold mb-6 text-[#1A1A1A]">
                         Hey Shai, what kind of job are you looking for?
                       </h1>
@@ -1656,31 +1656,48 @@ export default function Dashboard() {
                     transition={{ duration: 0.4 }}
                     className="w-full"
                   >
-                    <div className="flex items-center gap-4 mb-8">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => setShowSearchResults(false)}
-                        className="rounded-full bg-white shadow-sm border border-black/[0.05]"
-                      >
-                        <ChevronLeft className="w-5 h-5" />
-                      </Button>
-                      <div>
-                        <h2 className="text-2xl font-bold text-[#1A1A1A]">Recommended Jobs</h2>
-                        <p className="text-sm text-[#1A1A1A]/50">Found {jobs.length} roles matching your search</p>
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-12">
+                      <div className="flex items-center gap-4 w-full sm:w-auto">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => setShowSearchResults(false)}
+                          className="rounded-full bg-white shadow-sm border border-black/[0.05] shrink-0"
+                        >
+                          <ChevronLeft className="w-5 h-5" />
+                        </Button>
+                        <div className="min-w-0">
+                          <h2 className="text-xl font-bold text-[#1A1A1A] truncate">Recommended Jobs</h2>
+                          <p className="text-xs text-[#1A1A1A]/50">Found {jobs.length} roles matching your search</p>
+                        </div>
+                      </div>
+                      
+                      <div className="w-full sm:max-w-md">
+                        <div className="relative group">
+                          <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                            <Search className="w-4 h-4 text-black/30 group-focus-within:text-black transition-colors" />
+                          </div>
+                          <Input 
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)}
+                            onKeyDown={(e) => e.key === 'Enter' && handleSearch(inputValue)}
+                            placeholder="Refine your search..."
+                            className="w-full h-11 pl-11 pr-4 bg-white border-black/[0.05] rounded-full text-sm focus:ring-1 focus:ring-black/5 transition-all shadow-sm"
+                          />
+                        </div>
                       </div>
                     </div>
 
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col">
                       {jobs.map((job, idx) => (
-                        <Card key={idx} className="p-4 bg-white border-b border-black/[0.05] rounded-none shadow-none hover:bg-black/[0.01] transition-colors group cursor-pointer text-left">
-                          <div className="flex items-start gap-4">
-                            <div className="w-10 h-10 bg-[#F8F7F5] rounded-lg flex items-center justify-center font-bold text-[#1A1A1A] shrink-0">
+                        <Card key={idx} className="p-6 bg-white border-b border-black/[0.05] rounded-none shadow-none hover:bg-black/[0.01] transition-colors group cursor-pointer text-left w-full first:border-t">
+                          <div className="flex items-start gap-6">
+                            <div className="w-12 h-12 bg-[#F8F7F5] rounded-xl flex items-center justify-center font-bold text-[#1A1A1A] shrink-0 text-lg border border-black/[0.03]">
                               {String(job.company || "J")[0]}
                             </div>
                             <div className="flex-1 min-w-0">
-                              <div className="flex items-center justify-between mb-1">
-                                <h3 className="text-base font-semibold text-[#1A1A1A] group-hover:text-primary transition-colors truncate">
+                              <div className="flex items-center justify-between gap-4 mb-2">
+                                <h3 className="text-lg font-bold text-[#1A1A1A] group-hover:text-primary transition-colors truncate">
                                   {job.title}
                                   {job.job_url && (
                                     <a 
@@ -1690,39 +1707,55 @@ export default function Dashboard() {
                                       className="ml-2 inline-flex items-center"
                                       onClick={(e) => e.stopPropagation()}
                                     >
-                                      <ExternalLink className="w-3.5 h-3.5 text-black/30 hover:text-black transition-colors" />
+                                      <ExternalLink className="w-4 h-4 text-black/20 hover:text-black transition-colors" />
                                     </a>
                                   )}
                                 </h3>
-                                <Button 
-                                  variant="outline" 
-                                  size="sm" 
-                                  className="rounded-lg h-8 px-3 text-xs font-semibold border-black/[0.1] hover:bg-black hover:text-white transition-all ml-4"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    if (job.job_url) window.open(job.job_url, '_blank');
-                                  }}
-                                >
-                                  Shortlist
-                                </Button>
+                                <div className="flex items-center gap-2">
+                                  <Button 
+                                    variant="ghost"
+                                    size="icon"
+                                    className="rounded-full h-9 w-9 border border-black/[0.05] bg-white opacity-0 group-hover:opacity-100 transition-all"
+                                  >
+                                    <Eye className="w-4 h-4" />
+                                  </Button>
+                                  <Button 
+                                    variant="outline" 
+                                    size="sm" 
+                                    className="rounded-lg h-9 px-4 text-xs font-bold border-black/[0.1] hover:bg-black hover:text-white transition-all whitespace-nowrap"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      if (job.job_url) window.open(job.job_url, '_blank');
+                                    }}
+                                  >
+                                    Shortlist
+                                  </Button>
+                                </div>
                               </div>
-                              <p className="text-sm text-[#1A1A1A]/60 font-medium mb-3">
-                                {job.company} • {job.location || "Remote"}
-                              </p>
+                              
+                              <div className="flex items-center gap-2 text-sm text-[#1A1A1A]/60 font-medium mb-4">
+                                <span>{job.company}</span>
+                                <span className="w-1 h-1 rounded-full bg-black/20" />
+                                <span>{job.location || "Remote"}</span>
+                              </div>
+
                               <div className="flex flex-wrap gap-2">
                                 {job.job_type && (
-                                  <span className="px-2 py-0.5 bg-green-50 rounded-md text-[10px] font-bold text-green-700 uppercase tracking-wider border border-green-100/50">
+                                  <span className="px-3 py-1 bg-green-50 rounded-full text-[10px] font-bold text-green-700 uppercase tracking-wider border border-green-100/50">
                                     {job.job_type}
                                   </span>
                                 )}
                                 {job.site && (
-                                  <span className="px-2 py-0.5 bg-blue-50 rounded-md text-[10px] font-bold text-blue-700 uppercase tracking-wider border border-blue-100/50">
+                                  <span className="px-3 py-1 bg-blue-50 rounded-full text-[10px] font-bold text-blue-700 uppercase tracking-wider border border-blue-100/50">
                                     {job.site}
                                   </span>
                                 )}
-                                <span className="px-2 py-0.5 bg-black/[0.03] rounded-md text-[10px] font-bold text-black/50 uppercase tracking-wider border border-black/[0.05]">
-                                  Python
-                                </span>
+                                <div className="flex items-center gap-1.5 px-3 py-1 bg-black/[0.03] rounded-full border border-black/[0.05]">
+                                  <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                                  <span className="text-[10px] font-bold text-black/60 uppercase tracking-wider">
+                                    Python
+                                  </span>
+                                </div>
                               </div>
                             </div>
                           </div>
