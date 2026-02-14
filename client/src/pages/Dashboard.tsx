@@ -1476,7 +1476,29 @@ export default function Dashboard() {
                   ))}
                 </div>
 
-                <div className="flex flex-wrap justify-center gap-2 mb-8">
+                <PromptInput
+                  value={inputValue}
+                  onValueChange={setInputValue}
+                  onSubmit={() => console.log("Searching:", inputValue)}
+                  className="focus-within:ring-2 focus-within:ring-[#1A1A1A] focus-within:ring-offset-2 transition-all"
+                >
+                  <PromptInputTextarea 
+                    placeholder="e.g. Senior Designer with 5+ yrs experience..." 
+                    className="focus:ring-0 focus-visible:ring-0"
+                  />
+                  <PromptInputActions>
+                    <Button 
+                      size="icon" 
+                      className="w-10 h-10 rounded-full bg-[#1A1A1A] text-white hover:bg-[#1A1A1A]/90 transition-all group/btn"
+                      onClick={() => console.log("Searching:", inputValue)}
+                      disabled={!inputValue.trim()}
+                    >
+                      <ArrowUp className="w-5 h-5 group-hover/btn:translate-y-[-1px] transition-transform" />
+                    </Button>
+                  </PromptInputActions>
+                </PromptInput>
+
+                <div className="flex flex-wrap justify-center gap-2 mt-6">
                   <PromptSuggestion onClick={() => setInputValue("Senior Designer with 5+ yrs experience")}>
                     Senior Designer with 5+ yrs experience
                   </PromptSuggestion>
@@ -1487,28 +1509,6 @@ export default function Dashboard() {
                     Frontend Engineer in New York
                   </PromptSuggestion>
                 </div>
-
-                <PromptInput
-                  value={inputValue}
-                  onValueChange={setInputValue}
-                  onSubmit={() => console.log("Searching:", inputValue)}
-                >
-                  <PromptInputTextarea placeholder="e.g. Senior Designer with 5+ yrs experience..." />
-                  <PromptInputActions>
-                    <div className="flex items-center gap-2 text-[10px] text-foreground/30 font-medium uppercase tracking-wider">
-                      <Sparkles className="w-3 h-3" />
-                      AI Powered Search
-                    </div>
-                  <Button 
-                    size="icon" 
-                    className="w-10 h-10 rounded-full bg-[#1A1A1A] text-white hover:bg-[#1A1A1A]/90 transition-all group/btn"
-                    onClick={() => console.log("Searching:", inputValue)}
-                    disabled={!inputValue.trim()}
-                  >
-                    <ArrowUp className="w-5 h-5 group-hover/btn:translate-y-[-1px] transition-transform" />
-                  </Button>
-                  </PromptInputActions>
-                </PromptInput>
               </motion.div>
             </div>
           ) : (
