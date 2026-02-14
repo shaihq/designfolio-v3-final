@@ -22,7 +22,47 @@ const resetPasswordSchema = z.object({
   newPassword: z.string().min(6),
 });
 
+import { spawn } from "child_process";
+
 export async function registerRoutes(app: Express): Promise<Server> {
+  app.get("/api/jobs/search", async (req, res) => {
+    const query = req.query.q as string;
+    if (!query) {
+      return res.status(400).json({ message: "Query parameter 'q' is required" });
+    }
+
+    try {
+      const pythonProcess = spawn("python3", ["server/job_scraper.py", query]);
+      let dataString = "";
+      let errorString = "";
+
+      pythonProcess.stdout.on("data", (data) => {
+        dataString += data.toString();
+      });
+
+      pythonProcess.stderr.on("data", (data) => {
+        errorString += data.toString();
+      });
+
+      pythonProcess.on("close", (code) => {
+        if (code !== 0) {
+          console.error(`Python script error: ${errorString}`);
+          return res.status(500).json({ message: "Failed to scrape jobs" });
+        }
+        try {
+          const jobs = JSON.parse(dataString);
+          res.json(jobs);
+        } catch (parseError) {
+          console.error("Failed to parse scraper output:", dataString);
+          res.status(500).json({ message: "Invalid response from scraper" });
+        }
+      });
+    } catch (error) {
+      console.error("Scraper execution error:", error);
+      res.status(500).json({ message: "Failed to initiate scraper" });
+    }
+  });
+
   app.post("/api/convert-resume", upload.single("resume"), async (req: MulterRequest, res) => {
     try {
       if (!req.file) {

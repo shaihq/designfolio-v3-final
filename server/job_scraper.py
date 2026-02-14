@@ -1,7 +1,8 @@
-import csv
+import json
+import sys
 from jobspy import scrape_jobs
 
-def search_jobs(query, location="Remote", distance=25, job_type="fulltime", results_wanted=20):
+def search_jobs(query, location="Remote", distance=25, job_type="fulltime", results_wanted=10):
     """
     Integrates JobSpy to scrape jobs from LinkedIn, Indeed, Glassdoor, and ZipRecruiter.
     """
@@ -16,14 +17,26 @@ def search_jobs(query, location="Remote", distance=25, job_type="fulltime", resu
             hours_old=72,
         )
         
-        print(f"Found {len(jobs)} jobs for '{query}'")
-        return jobs
+        # Convert pandas DataFrame to list of dictionaries
+        jobs_list = jobs.to_dict(orient='records')
+        
+        # Clean up NaN values for JSON serialization
+        for job in jobs_list:
+            for key, value in job.items():
+                if isinstance(value, float) and (value != value): # check for NaN
+                    job[key] = None
+                elif hasattr(value, 'isoformat') and callable(getattr(value, 'isoformat')): # handle timestamps
+                    job[key] = value.isoformat()
+
+        return jobs_list
     except Exception as e:
-        print(f"Error scraping jobs: {e}")
-        return None
+        print(f"Error scraping jobs: {e}", file=sys.stderr)
+        return []
 
 if __name__ == "__main__":
-    # Test run
-    results = search_jobs("Product Designer")
-    if results is not None:
-        print(results.head())
+    if len(sys.argv) > 1:
+        query = sys.argv[1]
+        results = search_jobs(query)
+        print(json.dumps(results))
+    else:
+        print(json.dumps([]))

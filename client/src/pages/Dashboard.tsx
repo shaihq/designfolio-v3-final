@@ -783,6 +783,25 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("home");
   const [inputValue, setInputValue] = useState("");
   const [isInputFocused, setIsInputFocused] = useState(false);
+  const [jobs, setJobs] = useState<any[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+
+  const handleSearch = async (query: string) => {
+    if (!query.trim()) return;
+    setIsSearching(true);
+    try {
+      const response = await fetch(`/api/jobs/search?q=${encodeURIComponent(query)}`);
+      if (response.ok) {
+        const data = await response.json();
+        setJobs(data);
+      }
+    } catch (error) {
+      console.error("Error searching jobs:", error);
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -1503,7 +1522,7 @@ export default function Dashboard() {
                   <PromptInput
                     value={inputValue}
                     onValueChange={setInputValue}
-                    onSubmit={() => console.log("Searching:", inputValue)}
+                    onSubmit={() => handleSearch(inputValue)}
                     className="transition-all relative z-20"
                   >
                     <PromptInputTextarea 
@@ -1515,10 +1534,14 @@ export default function Dashboard() {
                       <Button 
                         size="icon" 
                         className="w-10 h-10 rounded-full bg-[#1A1A1A] text-white hover:bg-[#1A1A1A]/90 transition-all group/btn"
-                        onClick={() => console.log("Searching:", inputValue)}
-                        disabled={!inputValue.trim()}
+                        onClick={() => handleSearch(inputValue)}
+                        disabled={!inputValue.trim() || isSearching}
                       >
-                        <ArrowUp className="w-5 h-5 group-hover/btn:translate-y-[-1px] transition-transform" />
+                        {isSearching ? (
+                          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        ) : (
+                          <ArrowUp className="w-5 h-5 group-hover/btn:translate-y-[-1px] transition-transform" />
+                        )}
                       </Button>
                     </PromptInputActions>
                   </PromptInput>
@@ -1530,7 +1553,7 @@ export default function Dashboard() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 right-0 mt-2 bg-white border border-black/[0.05] rounded-2xl shadow-xl overflow-hidden z-10 p-2"
+                        className="absolute top-full left-0 right-0 mt-2 bg-white border border-black/[0.05] rounded-2xl shadow-xl overflow-hidden z-30 p-2"
                       >
                         {[
                           "Product Designer roles at Series B startups, remote-friendly",
@@ -1545,6 +1568,7 @@ export default function Dashboard() {
                             onClick={() => {
                               setInputValue(suggestion);
                               setIsInputFocused(false);
+                              handleSearch(suggestion);
                             }}
                           >
                             {suggestion}
@@ -1554,6 +1578,59 @@ export default function Dashboard() {
                     )}
                   </AnimatePresence>
                 </div>
+
+                {jobs.length > 0 && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-16 text-left"
+                  >
+                    <h2 className="text-2xl font-bold mb-6 px-2">Recommended Jobs</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {jobs.map((job, idx) => (
+                        <Card key={idx} className="p-6 bg-white border-0 rounded-2xl shadow-sm hover:shadow-md transition-shadow group cursor-pointer text-left">
+                          <div className="flex items-start justify-between mb-4">
+                            <div className="w-12 h-12 bg-[#F8F7F5] rounded-xl flex items-center justify-center font-bold text-[#1A1A1A]">
+                              {String(job.company || "J")[0]}
+                            </div>
+                            <Button variant="ghost" size="icon" className="rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                              <ExternalLink className="w-4 h-4" />
+                            </Button>
+                          </div>
+                          <h3 className="text-lg font-bold mb-1 group-hover:text-black transition-colors">{job.title}</h3>
+                          <p className="text-[#1A1A1A]/60 font-medium mb-4">{job.company}</p>
+                          <div className="flex flex-wrap gap-2">
+                            {job.location && (
+                              <span className="px-3 py-1 bg-[#F8F7F5] rounded-full text-xs font-semibold text-[#1A1A1A]/70 uppercase tracking-wider">
+                                {job.location}
+                              </span>
+                            )}
+                            {job.job_type && (
+                              <span className="px-3 py-1 bg-green-50 rounded-full text-xs font-semibold text-green-700 uppercase tracking-wider">
+                                {job.job_type}
+                              </span>
+                            )}
+                            {job.site && (
+                              <span className="px-3 py-1 bg-blue-50 rounded-full text-xs font-semibold text-blue-700 uppercase tracking-wider">
+                                {job.site}
+                              </span>
+                            )}
+                          </div>
+                          {job.job_url && (
+                            <a 
+                              href={job.job_url} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="mt-6 block w-full py-3 bg-[#1A1A1A] text-white text-center rounded-xl font-bold hover:bg-[#1A1A1A]/90 transition-all opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0"
+                            >
+                              Apply Now
+                            </a>
+                          )}
+                        </Card>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
               </motion.div>
             </div>
           ) : (
