@@ -30,6 +30,7 @@ import {
   CarouselPrevious, 
   CarouselNext 
 } from "@/components/ui/carousel";
+import { PromptSuggestion } from "@/components/ui/prompt-suggestion"
 import { 
   Sparkles, 
   Share2, 
@@ -1470,6 +1471,18 @@ export default function Dashboard() {
                       {item.label}
                     </Button>
                   ))}
+                </div>
+
+                <div className="flex flex-wrap justify-center gap-2 mb-8">
+                  <PromptSuggestion onClick={() => {}}>
+                    Senior Designer with 5+ yrs experience
+                  </PromptSuggestion>
+                  <PromptSuggestion onClick={() => {}}>
+                    Remote Product Manager roles
+                  </PromptSuggestion>
+                  <PromptSuggestion onClick={() => {}}>
+                    Frontend Engineer in New York
+                  </PromptSuggestion>
                 </div>
 
                 <div className="relative group">
