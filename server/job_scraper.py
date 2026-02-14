@@ -16,6 +16,7 @@ def search_jobs(query, location="Remote", distance=25, job_type="fulltime", resu
             results_wanted=results_wanted,
             hours_old=72,
             description_format="markdown",
+            linkedin_fetch_description=True, # Fetch descriptions for LinkedIn
         )
         
         # Convert pandas DataFrame to list of dictionaries
