@@ -789,6 +789,7 @@ export default function Dashboard() {
   const [inputValue, setInputValue] = useState("");
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [jobs, setJobs] = useState<any[]>([]);
+  const [showSearchResults, setShowSearchResults] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleSearch = async (query: string) => {
@@ -799,6 +800,7 @@ export default function Dashboard() {
       if (response.ok) {
         const data = await response.json();
         setJobs(data);
+        setShowSearchResults(true);
       }
     } catch (error) {
       console.error("Error searching jobs:", error);
@@ -1540,112 +1542,135 @@ export default function Dashboard() {
         <main className={`pb-6 ${activeTab === "AI Job Search" ? "flex items-center justify-center min-h-[calc(100vh-250px)] mt-[-20px]" : ""}`}>
           {activeTab === "AI Job Search" ? (
             <div className="px-4 sm:px-0 max-w-2xl mx-auto w-full">
-              <div className="flex justify-center mb-2">
-                <Suspense fallback={<div className="w-24 h-24" />}>
-                  <Lottie 
-                    animationData={aiLogoLottie} 
-                    style={{ width: 120, height: 120 }}
-                    loop={true}
-                  />
-                </Suspense>
-              </div>
-              <motion.div 
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                className="text-center"
-              >
-                <h1 className="text-2xl font-semibold mb-6 text-[#1A1A1A]">
-                  Hey Shai, what kind of job are you looking for?
-                </h1>
-
-                <div className="flex items-center justify-center gap-3 mb-8">
-                  <Button 
-                    variant="outline" 
-                    className="rounded-full bg-white border-black/[0.05] hover:bg-black/[0.02] text-sm font-medium px-5 h-10 flex items-center gap-2 shadow-sm"
-                  >
-                    <div className="w-4 h-4 rounded-full border border-primary/30 flex items-center justify-center">
-                      <div className="w-1.5 h-1.5 rounded-full bg-primary" />
-                    </div>
-                    Find Similar
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="rounded-full bg-white border-black/[0.05] hover:bg-black/[0.02] text-sm font-medium px-5 h-10 flex items-center gap-2 shadow-sm"
-                  >
-                    <FileText className="w-4 h-4 text-orange-500" />
-                    Resume
-                  </Button>
-                </div>
-
-                <div className="relative" ref={dropdownRef}>
-                  <PromptInput
-                    value={inputValue}
-                    onValueChange={setInputValue}
-                    onSubmit={() => handleSearch(inputValue)}
-                    className="transition-all relative z-20"
-                  >
-                    <PromptInputTextarea 
-                      placeholder="e.g. Senior product design roles at fast-growing startups" 
-                      className="focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none pr-14"
-                      onFocus={() => setIsInputFocused(true)}
-                    />
-                    <PromptInputActions className="absolute right-2 top-1/2 -translate-y-1/2">
-                      <Button 
-                        size="icon" 
-                        className="w-10 h-10 rounded-full bg-[#1A1A1A] text-white hover:bg-[#1A1A1A]/90 transition-all group/btn"
-                        onClick={() => handleSearch(inputValue)}
-                        disabled={!inputValue.trim() || isSearching}
-                      >
-                        {isSearching ? (
-                          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        ) : (
-                          <ArrowUp className="w-5 h-5 group-hover/btn:translate-y-[-1px] transition-transform" />
-                        )}
-                      </Button>
-                    </PromptInputActions>
-                  </PromptInput>
-
-                  <AnimatePresence>
-                    {isInputFocused && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute top-full left-0 right-0 mt-2 bg-white border border-black/[0.05] rounded-2xl shadow-xl overflow-hidden z-30 p-2"
-                      >
-                        {[
-                          "Product Designer roles at Series B startups, remote-friendly",
-                          "Senior UX Designer jobs in fintech companies",
-                          "Frontend Engineer roles using React and Next.js",
-                          "AI product design roles at early-stage startups",
-                          "Design roles with strong collaboration with PMs & engineers"
-                        ].map((suggestion, idx) => (
-                          <button
-                            key={idx}
-                            className="w-full text-left px-4 py-3 text-sm text-[#1A1A1A] hover:bg-black/[0.03] rounded-xl transition-colors truncate"
-                            onClick={() => {
-                              setInputValue(suggestion);
-                              setIsInputFocused(false);
-                              handleSearch(suggestion);
-                            }}
-                          >
-                            {suggestion}
-                          </button>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-
-                {jobs.length > 0 && (
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
+              <AnimatePresence mode="wait">
+                {!showSearchResults ? (
+                  <motion.div
+                    key="search-screen"
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mt-16 text-left"
+                    exit={{ opacity: 0, y: -15 }}
+                    transition={{ duration: 0.4 }}
+                    className="w-full"
                   >
-                    <h2 className="text-2xl font-bold mb-6 px-2">Recommended Jobs</h2>
+                    <div className="flex justify-center mb-2">
+                      <Suspense fallback={<div className="w-24 h-24" />}>
+                        <Lottie 
+                          animationData={aiLogoLottie} 
+                          style={{ width: 120, height: 120 }}
+                          loop={true}
+                        />
+                      </Suspense>
+                    </div>
+                    <div className="text-center">
+                      <h1 className="text-2xl font-semibold mb-6 text-[#1A1A1A]">
+                        Hey Shai, what kind of job are you looking for?
+                      </h1>
+
+                      <div className="flex items-center justify-center gap-3 mb-8">
+                        <Button 
+                          variant="outline" 
+                          className="rounded-full bg-white border-black/[0.05] hover:bg-black/[0.02] text-sm font-medium px-5 h-10 flex items-center gap-2 shadow-sm"
+                        >
+                          <div className="w-4 h-4 rounded-full border border-primary/30 flex items-center justify-center">
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                          </div>
+                          Find Similar
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          className="rounded-full bg-white border-black/[0.05] hover:bg-black/[0.02] text-sm font-medium px-5 h-10 flex items-center gap-2 shadow-sm"
+                        >
+                          <FileText className="w-4 h-4 text-orange-500" />
+                          Resume
+                        </Button>
+                      </div>
+
+                      <div className="relative" ref={dropdownRef}>
+                        <PromptInput
+                          value={inputValue}
+                          onValueChange={setInputValue}
+                          onSubmit={() => handleSearch(inputValue)}
+                          className="transition-all relative z-20"
+                        >
+                          <PromptInputTextarea 
+                            placeholder="e.g. Senior product design roles at fast-growing startups" 
+                            className="focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none pr-14"
+                            onFocus={() => setIsInputFocused(true)}
+                          />
+                          <PromptInputActions className="absolute right-2 top-1/2 -translate-y-1/2">
+                            <Button 
+                              size="icon" 
+                              className="w-10 h-10 rounded-full bg-[#1A1A1A] text-white hover:bg-[#1A1A1A]/90 transition-all group/btn"
+                              onClick={() => handleSearch(inputValue)}
+                              disabled={!inputValue.trim() || isSearching}
+                            >
+                              {isSearching ? (
+                                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                              ) : (
+                                <ArrowUp className="w-5 h-5 group-hover/btn:translate-y-[-1px] transition-transform" />
+                              )}
+                            </Button>
+                          </PromptInputActions>
+                        </PromptInput>
+
+                        <AnimatePresence>
+                          {isInputFocused && (
+                            <motion.div
+                              initial={{ opacity: 0, y: -10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -10 }}
+                              transition={{ duration: 0.2 }}
+                              className="absolute top-full left-0 right-0 mt-2 bg-white border border-black/[0.05] rounded-2xl shadow-xl overflow-hidden z-30 p-2"
+                            >
+                              {[
+                                "Product Designer roles at Series B startups, remote-friendly",
+                                "Senior UX Designer jobs in fintech companies",
+                                "Frontend Engineer roles using React and Next.js",
+                                "AI product design roles at early-stage startups",
+                                "Design roles with strong collaboration with PMs & engineers"
+                              ].map((suggestion, idx) => (
+                                <button
+                                  key={idx}
+                                  className="w-full text-left px-4 py-3 text-sm text-[#1A1A1A] hover:bg-black/[0.03] rounded-xl transition-colors truncate"
+                                  onClick={() => {
+                                    setInputValue(suggestion);
+                                    setIsInputFocused(false);
+                                    handleSearch(suggestion);
+                                  }}
+                                >
+                                  {suggestion}
+                                </button>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="results-screen"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.4 }}
+                    className="w-full"
+                  >
+                    <div className="flex items-center gap-4 mb-8">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => setShowSearchResults(false)}
+                        className="rounded-full bg-white shadow-sm border border-black/[0.05]"
+                      >
+                        <ChevronLeft className="w-5 h-5" />
+                      </Button>
+                      <div>
+                        <h2 className="text-2xl font-bold text-[#1A1A1A]">Recommended Jobs</h2>
+                        <p className="text-sm text-[#1A1A1A]/50">Found {jobs.length} roles matching your search</p>
+                      </div>
+                    </div>
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {jobs.map((job, idx) => (
                         <Card key={idx} className="p-6 bg-white border-0 rounded-2xl shadow-sm hover:shadow-md transition-shadow group cursor-pointer text-left">
@@ -1691,7 +1716,7 @@ export default function Dashboard() {
                     </div>
                   </motion.div>
                 )}
-              </motion.div>
+              </AnimatePresence>
             </div>
           ) : (
             <>
