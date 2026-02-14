@@ -72,7 +72,8 @@ import {
   Home,
   Building,
   Check,
-  ArrowUp
+  ArrowUp,
+  ExternalLink
 } from "lucide-react";
 import { SiBehance } from "react-icons/si";
 import { Link } from "wouter";
