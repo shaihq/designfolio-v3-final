@@ -1656,7 +1656,7 @@ export default function Dashboard() {
                     className="w-full pt-12"
                   >
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-12">
-                      <div className="flex items-center gap-5 w-full sm:w-auto">
+                      <div className="flex items-center gap-5 w-full sm:w-auto flex-1">
                         <Button
                           variant="ghost"
                           size="icon"
@@ -1665,10 +1665,7 @@ export default function Dashboard() {
                         >
                           <ChevronLeft className="w-5 h-5 text-[#1A1A1A]" />
                         </Button>
-                      </div>
-                      
-                      <div className="flex items-center gap-4 w-full sm:w-auto">
-                        <div className="relative group w-full sm:w-64">
+                        <div className="relative group w-full max-w-xl">
                           <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
                             <Search className="w-4 h-4 text-black/20 group-focus-within:text-black/40 transition-colors" />
                           </div>
@@ -1677,10 +1674,10 @@ export default function Dashboard() {
                             onChange={(e) => setInputValue(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleSearch(inputValue)}
                             placeholder="Search roles..."
-                            className="w-full h-11 pl-10 pr-4 bg-[#F8F7F5] border-transparent rounded-2xl text-sm focus:bg-white focus:ring-0 transition-all placeholder:text-black/30"
+                            className="w-full h-12 pl-11 pr-4 bg-white border border-black/10 rounded-2xl text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-black/30 shadow-sm"
                           />
                         </div>
-                        <p className="text-sm text-[#1A1A1A]/40 whitespace-nowrap">Found {jobs.length} matching roles</p>
+                        <p className="text-sm text-[#1A1A1A]/40 whitespace-nowrap ml-auto">Found {jobs.length} matching roles</p>
                       </div>
                     </div>
 
