@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense, lazy } from "react";
+const Lottie = lazy(() => import("lottie-react"));
 import { toast } from "@/hooks/use-toast";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -1447,6 +1448,15 @@ export default function Dashboard() {
         <main className={`pb-6 ${activeTab === "AI Job Search" ? "flex items-center justify-center min-h-[calc(100vh-200px)]" : ""}`}>
           {activeTab === "AI Job Search" ? (
             <div className="px-4 sm:px-0 max-w-2xl mx-auto w-full">
+              <div className="flex justify-center mb-6">
+                <Suspense fallback={<div className="w-24 h-24" />}>
+                  <Lottie 
+                    animationData={require("../../public/ai-logo-lottie.json")} 
+                    style={{ width: 120, height: 120 }}
+                    loop={true}
+                  />
+                </Suspense>
+              </div>
               <motion.div 
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
