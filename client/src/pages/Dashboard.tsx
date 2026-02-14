@@ -1537,7 +1537,6 @@ export default function Dashboard() {
                           "Senior UX Designer jobs in fintech companies",
                           "Frontend Engineer roles using React and Next.js",
                           "AI product design roles at early-stage startups",
-                          "Product designer jobs similar to my current role",
                           "Design roles with strong collaboration with PMs & engineers"
                         ].map((suggestion, idx) => (
                           <button
