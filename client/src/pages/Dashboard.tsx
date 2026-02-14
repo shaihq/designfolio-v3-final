@@ -1692,9 +1692,9 @@ export default function Dashboard() {
                         >
                           <div className="flex items-center gap-5">
                             <div className="flex-1 min-w-0">
-                              <div className="flex items-center justify-between gap-4">
+                              <div className="flex items-center justify-between gap-4 w-full">
                                 <div>
-                                  <div className="flex items-center justify-between gap-4">
+                                  <div className="flex items-center justify-between gap-4 w-full">
                                     <div className="flex-1 min-w-0">
                                       <div className="flex items-center gap-2">
                                         <h3 className="text-base font-semibold text-[#1A1A1A] group-hover:text-primary transition-colors truncate">
@@ -1742,7 +1742,7 @@ export default function Dashboard() {
                                     </div>
                                   </div>
                                   {job.description && (
-                                    <p className="text-[13px] text-[#1A1A1A]/60 mt-2 line-clamp-2 leading-relaxed">
+                                    <p className="text-[13px] text-[#1A1A1A]/60 mt-2 line-clamp-2 leading-relaxed w-full">
                                       {job.description.replace(/<[^>]*>?/gm, '').split('\n').filter((line: string) => line.trim()).slice(0, 2).join(' ')}
                                     </p>
                                   )}
