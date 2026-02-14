@@ -1454,15 +1454,13 @@ export default function Dashboard() {
                 className="text-center"
               >
                 <h1 className="text-2xl font-semibold mb-6 text-[#1A1A1A]">
-                  What job are you looking for, {user.name.replace('!', '')}?
+                  Find your next Product Design role
                 </h1>
                 
                 <div className="flex flex-wrap justify-center gap-2 mb-6">
                   {[
                     { icon: Search, label: "Similar", color: "text-purple-500" },
-                    { icon: FileText, label: "JD", color: "text-red-500" },
-                    { icon: Sparkles, label: "Boolean", color: "text-green-500" },
-                    { icon: Pencil, label: "Manual", color: "text-gray-500" }
+                    { icon: FileText, label: "Resume", color: "text-red-500" },
                   ].map((item, idx) => (
                     <Button
                       key={idx}
@@ -1483,7 +1481,7 @@ export default function Dashboard() {
                   className="transition-all"
                 >
                   <PromptInputTextarea 
-                    placeholder="e.g. Senior Designer with 5+ yrs experience..." 
+                    placeholder="e.g. Senior Product Designer with expertise in Design Systems..." 
                     className="focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none"
                   />
                   <PromptInputActions>
@@ -1499,14 +1497,14 @@ export default function Dashboard() {
                 </PromptInput>
 
                 <div className="flex flex-wrap justify-center gap-2 mt-6">
-                  <PromptSuggestion onClick={() => setInputValue("Senior Designer with 5+ yrs experience")}>
-                    Senior Designer with 5+ yrs experience
+                  <PromptSuggestion onClick={() => setInputValue("Senior Product Designer with 5+ yrs experience")}>
+                    Senior Product Designer with 5+ yrs experience
                   </PromptSuggestion>
-                  <PromptSuggestion onClick={() => setInputValue("Remote Product Manager roles")}>
-                    Remote Product Manager roles
+                  <PromptSuggestion onClick={() => setInputValue("Remote UI/UX Designer roles")}>
+                    Remote UI/UX Designer roles
                   </PromptSuggestion>
-                  <PromptSuggestion onClick={() => setInputValue("Frontend Engineer in New York")}>
-                    Frontend Engineer in New York
+                  <PromptSuggestion onClick={() => setInputValue("Product Designer in San Francisco")}>
+                    Product Designer in San Francisco
                   </PromptSuggestion>
                 </div>
               </motion.div>
