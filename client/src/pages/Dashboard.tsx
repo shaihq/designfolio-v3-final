@@ -1550,7 +1550,7 @@ export default function Dashboard() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -15 }}
                     transition={{ duration: 0.4 }}
-                    className="w-full flex flex-col items-center justify-center min-h-[calc(100vh-250px)]"
+                    className="w-full flex flex-col items-center justify-start pt-12 min-h-[calc(100vh-250px)]"
                   >
                     <div className="flex justify-center mb-2">
                       <Suspense fallback={<div className="w-24 h-24" />}>
