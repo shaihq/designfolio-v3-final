@@ -471,6 +471,9 @@ export default function Dashboard() {
         setScrollOffset(window.scrollY);
         
         // Scroll spy logic
+        // Only run scroll spy if we are in Portfolio Builder mode
+        if (activeTab === "AI Job Search") return;
+
         const sections = [
           { id: 'home', element: document.body },
           { id: 'works', element: document.getElementById('section-works') },
@@ -510,7 +513,7 @@ export default function Dashboard() {
         cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [backgroundMotion]);
+  }, [backgroundMotion, activeTab]);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
