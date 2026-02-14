@@ -789,23 +789,6 @@ export default function Dashboard() {
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [jobs, setJobs] = useState<any[]>([]);
   const [isSearching, setIsSearching] = useState(false);
-
-  const handleSearch = async (query: string) => {
-    if (!query.trim()) return;
-    setIsSearching(true);
-    try {
-      const response = await fetch(`/api/jobs/search?q=${encodeURIComponent(query)}`);
-      if (response.ok) {
-        const data = await response.json();
-        setJobs(data);
-      }
-    } catch (error) {
-      console.error("Error searching jobs:", error);
-    } finally {
-      setIsSearching(false);
-    }
-  };
-
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -817,6 +800,61 @@ export default function Dashboard() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+      rafRef.current = requestAnimationFrame(() => {
+        setScrollOffset(window.scrollY);
+        
+        // Scroll spy logic
+        // Only run scroll spy if we are in Portfolio Builder mode
+        if (activeTab === "AI Job Search") return;
+
+        const sections = [
+          { id: 'home', element: document.body },
+          { id: 'works', element: document.getElementById('section-works') },
+          { id: 'feedback', element: document.getElementById('section-testimonials') },
+          { id: 'contact', element: document.getElementById('footer') }
+        ];
+
+        const currentScroll = window.scrollY + window.innerHeight / 2;
+        const isBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100;
+        const isTop = window.scrollY < 100;
+
+        if (isTop) {
+          setActiveTab('home');
+        } else if (isBottom) {
+          setActiveTab('contact');
+        } else {
+          for (let i = sections.length - 1; i >= 0; i--) {
+            const section = sections[i];
+            if (section.element) {
+              const top = section.id === 'home' ? 0 : section.element.offsetTop;
+              if (currentScroll >= top) {
+                setActiveTab(section.id);
+                break;
+              }
+            }
+          }
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
+      }
+    };
+  }, [backgroundMotion, activeTab]);
+
+  const handleSearch = async (query: string) => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState<number | null>(null);
   const [editingTestimonial, setEditingTestimonial] = useState<typeof testimonials[0] | null>(null);
