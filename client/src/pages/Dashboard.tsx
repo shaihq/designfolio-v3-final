@@ -327,6 +327,7 @@ export default function Dashboard() {
   const [scrollOffset, setScrollOffset] = useState(0);
   const rafRef = useRef<number | null>(null);
   const pinBoardRef = useRef<HTMLDivElement>(null);
+  const [activeTab, setActiveTab] = useState("home");
   const [user, setUser] = useState({
     name: "Shai!",
     role: "A 0→1 Product Designer with 6 years of experience. I design and develop digital products, create prototypes, and design interfaces.",
@@ -784,12 +785,27 @@ export default function Dashboard() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [visibleTestimonials, setVisibleTestimonials] = useState<Set<number>>(new Set());
   const [isTemplateDialogOpen, setIsTemplateDialogOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("home");
+  const [isSearching, setIsSearching] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [jobs, setJobs] = useState<any[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const handleSearch = async (query: string) => {
+    if (!query.trim()) return;
+    setIsSearching(true);
+    try {
+      const response = await fetch(`/api/jobs/search?q=${encodeURIComponent(query)}`);
+      if (response.ok) {
+        const data = await response.json();
+        setJobs(data);
+      }
+    } catch (error) {
+      console.error("Error searching jobs:", error);
+    } finally {
+      setIsSearching(false);
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -853,8 +869,6 @@ export default function Dashboard() {
       }
     };
   }, [backgroundMotion, activeTab]);
-
-  const handleSearch = async (query: string) => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState<number | null>(null);
   const [editingTestimonial, setEditingTestimonial] = useState<typeof testimonials[0] | null>(null);
