@@ -1303,13 +1303,14 @@ export default function Dashboard() {
           >
             <div className="flex items-center justify-between">
               {/* Text tab switch: Portfolio Builder vs AI Job Search */}
-              <div className="rounded-[8px] bg-gray-100 p-[2px] dark:bg-zinc-800">
+              <div className="rounded-full bg-[#F6F2EF] p-1 border border-black/[0.03]">
                 <AnimatedBackground
                   defaultValue="Portfolio Builder"
-                  className="rounded-lg bg-white dark:bg-zinc-700"
+                  className="rounded-full bg-white shadow-sm"
                   transition={{
-                    ease: "easeInOut",
-                    duration: 0.2,
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 30,
                   }}
                 >
                   {["Portfolio Builder", "AI Job Search"].map((label, index) => {
@@ -1318,7 +1319,7 @@ export default function Dashboard() {
                         key={index}
                         data-id={label}
                         type="button"
-                        className="inline-flex px-4 py-1 items-center justify-center text-center text-zinc-800 transition-transform active:scale-[0.98] dark:text-zinc-50 text-sm font-medium"
+                        className="inline-flex px-5 py-1.5 items-center justify-center text-center text-foreground transition-all active:scale-[0.96] text-sm font-semibold tracking-tight"
                       >
                         {label}
                       </button>
