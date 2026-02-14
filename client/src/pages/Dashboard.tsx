@@ -1477,7 +1477,7 @@ export default function Dashboard() {
                 className="text-center"
               >
                 <h1 className="text-2xl font-semibold mb-8 text-[#1A1A1A]">
-                  What kind of job are you looking for?
+                  Hey Shai, what kind of job are you looking for?
                 </h1>
 
                 <div className="relative" ref={dropdownRef}>
@@ -1514,11 +1514,12 @@ export default function Dashboard() {
                         className="absolute top-full left-0 right-0 mt-2 bg-white border border-black/[0.05] rounded-2xl shadow-xl overflow-hidden z-10 p-2"
                       >
                         {[
-                          "Software Engineers in SF working at Series B companies, skilled in Python and Node.js",
-                          "Marketing Manager in Europe, German-speaking, working at a large enterprise",
-                          "Senior Scientist in Australia, 8+ years experience",
-                          "Consultant in London with 2+ years experience at top consulting firms",
-                          "Sales Manager in Dallas with experience in ERP"
+                          "Product Designer roles at Series B startups, remote-friendly",
+                          "Senior UX Designer jobs in fintech companies",
+                          "Frontend Engineer roles using React and Next.js",
+                          "AI product design roles at early-stage startups",
+                          "Product designer jobs similar to my current role",
+                          "Design roles with strong collaboration with PMs & engineers"
                         ].map((suggestion, idx) => (
                           <button
                             key={idx}
