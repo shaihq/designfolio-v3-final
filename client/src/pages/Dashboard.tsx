@@ -1440,9 +1440,9 @@ export default function Dashboard() {
           </Card>
         </div>
 
-        <main className="pb-6">
+        <main className={`pb-6 ${activeTab === "AI Job Search" ? "flex items-center justify-center min-h-[calc(100vh-200px)]" : ""}`}>
           {activeTab === "AI Job Search" ? (
-            <div className="mt-4 px-4 sm:px-0 max-w-2xl mx-auto w-full">
+            <div className="px-4 sm:px-0 max-w-2xl mx-auto w-full">
               <motion.div 
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
