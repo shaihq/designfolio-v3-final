@@ -1339,33 +1339,37 @@ export default function Dashboard() {
                 : '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' 
             }}
           >
-            <div className="flex items-center justify-between">
-              {/* Text tab switch: Portfolio Builder vs AI Job Search */}
-              <div className="rounded-full bg-[#F6F2EF] p-1 border border-black/[0.03]">
-                <AnimatedBackground
-                  defaultValue="Portfolio Builder"
-                  onValueChange={(id) => id && setActiveTab(id)}
-                  className="rounded-full bg-white shadow-sm"
-                  transition={{
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 30,
-                  }}
-                >
-                  {["Portfolio Builder", "AI Job Search"].map((label, index) => {
-                    return (
-                      <button
-                        key={index}
-                        data-id={label}
-                        type="button"
-                        className="inline-flex px-5 py-1.5 items-center justify-center text-center text-foreground transition-all active:scale-[0.96] text-sm font-semibold tracking-tight h-8"
-                      >
-                        {label}
-                      </button>
-                    );
-                  })}
-                </AnimatedBackground>
-              </div>
+          <div className="flex items-center justify-between">
+            {/* Text tab switch: Portfolio Builder vs AI Job Search */}
+            <div className="rounded-full bg-[#F6F2EF] p-1 border border-black/[0.03]">
+              <AnimatedBackground
+                defaultValue={activeTab === "AI Job Search" ? "AI Job Search" : "Portfolio Builder"}
+                onValueChange={(id) => {
+                  if (id === "Portfolio Builder" || id === "AI Job Search") {
+                    setActiveTab(id);
+                  }
+                }}
+                className="rounded-full bg-white shadow-sm"
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 30,
+                }}
+              >
+                {["Portfolio Builder", "AI Job Search"].map((label, index) => {
+                  return (
+                    <button
+                      key={index}
+                      data-id={label}
+                      type="button"
+                      className="inline-flex px-5 py-1.5 items-center justify-center text-center text-foreground transition-all active:scale-[0.96] text-sm font-semibold tracking-tight h-8"
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </AnimatedBackground>
+            </div>
 
               {/* Nav Actions - Desktop */}
               <div className="hidden md:flex items-center gap-2">
