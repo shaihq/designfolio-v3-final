@@ -1706,16 +1706,13 @@ export default function Dashboard() {
                                         className="p-1 hover:bg-black/5 rounded-md transition-colors text-black/40 hover:text-primary"
                                         onClick={(e) => e.stopPropagation()}
                                       >
-                                        <ExternalLink className="w-3.5 h-3.5" />
-                                      </a>
-                                      <a 
-                                        href={`https://www.linkedin.com/jobs/view/${job.id}`} 
-                                        target="_blank" 
-                                        rel="noopener noreferrer"
-                                        className="p-1 hover:bg-black/5 rounded-md transition-colors text-[#0A66C2]"
-                                        onClick={(e) => e.stopPropagation()}
-                                      >
-                                        <Linkedin className="w-3.5 h-3.5" />
+                                        {job.url?.includes('linkedin.com') ? (
+                                          <Linkedin className="w-3.5 h-3.5 text-[#0A66C2]" />
+                                        ) : job.url?.includes('indeed.com') ? (
+                                          <div className="w-3.5 h-3.5 flex items-center justify-center font-bold text-[#2164f3] text-[10px] leading-none">i</div>
+                                        ) : (
+                                          <ExternalLink className="w-3.5 h-3.5" />
+                                        )}
                                       </a>
                                     </div>
                                   </div>
