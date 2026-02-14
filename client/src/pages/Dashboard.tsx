@@ -1695,9 +1695,9 @@ export default function Dashboard() {
                               <div className="flex items-center justify-between gap-4">
                                 <div>
                                   <div className="flex items-center gap-2">
-                                    {job.url?.includes('linkedin.com') ? (
+                                    {(job.url?.includes('linkedin.com') || job.job_url?.includes('linkedin.com')) ? (
                                       <Linkedin className="w-4 h-4 text-[#0A66C2] shrink-0" />
-                                    ) : job.url?.includes('indeed.com') ? (
+                                    ) : (job.url?.includes('indeed.com') || job.job_url?.includes('indeed.com')) ? (
                                       <div className="w-4 h-4 flex items-center justify-center font-bold text-white bg-[#2164f3] text-[10px] leading-none rounded-sm shrink-0">i</div>
                                     ) : null}
                                     <h3 className="text-base font-semibold text-[#1A1A1A] group-hover:text-primary transition-colors truncate">
@@ -1705,7 +1705,7 @@ export default function Dashboard() {
                                     </h3>
                                     <div className="flex items-center gap-1.5 shrink-0">
                                       <a 
-                                        href={job.url} 
+                                        href={job.url || job.job_url} 
                                         target="_blank" 
                                         rel="noopener noreferrer"
                                         className="p-1 hover:bg-black/5 rounded-md transition-colors text-black/40 hover:text-primary"
