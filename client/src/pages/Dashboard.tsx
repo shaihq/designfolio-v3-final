@@ -1649,111 +1649,88 @@ export default function Dashboard() {
                 ) : (
                   <motion.div
                     key="results-screen"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.4 }}
                     className="w-full pt-12"
                   >
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-12">
-                      <div className="flex items-center gap-4 w-full sm:w-auto">
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-12">
+                      <div className="flex items-center gap-5 w-full sm:w-auto">
                         <Button
                           variant="ghost"
                           size="icon"
                           onClick={() => setShowSearchResults(false)}
-                          className="rounded-full bg-white shadow-sm border border-black/[0.05] shrink-0"
+                          className="rounded-full bg-[#F5F3F1] hover:bg-[#EAE8E5] transition-colors shrink-0 h-10 w-10"
                         >
-                          <ChevronLeft className="w-5 h-5" />
+                          <ChevronLeft className="w-5 h-5 text-[#1A1A1A]" />
                         </Button>
                         <div className="min-w-0">
-                          <h2 className="text-xl font-bold text-[#1A1A1A] truncate">Recommended Jobs</h2>
-                          <p className="text-xs text-[#1A1A1A]/50">Found {jobs.length} roles matching your search</p>
+                          <h2 className="text-2xl font-semibold text-[#1A1A1A] tracking-tight">Recommended Jobs</h2>
+                          <p className="text-sm text-[#1A1A1A]/40 mt-0.5">Found {jobs.length} matching roles</p>
                         </div>
                       </div>
                       
-                      <div className="w-full sm:max-w-md">
+                      <div className="w-full sm:max-w-xs">
                         <div className="relative group">
                           <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                            <Search className="w-4 h-4 text-black/30 group-focus-within:text-black transition-colors" />
+                            <Search className="w-4 h-4 text-black/20 group-focus-within:text-black/40 transition-colors" />
                           </div>
                           <Input 
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleSearch(inputValue)}
-                            placeholder="Refine your search..."
-                            className="w-full h-11 pl-11 pr-4 bg-white border-black/[0.05] rounded-full text-sm focus:ring-1 focus:ring-black/5 transition-all shadow-sm"
+                            placeholder="Search roles..."
+                            className="w-full h-11 pl-10 pr-4 bg-[#F8F7F5] border-transparent rounded-2xl text-sm focus:bg-white focus:ring-0 transition-all placeholder:text-black/30"
                           />
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex flex-col">
+                    <div className="flex flex-col space-y-3">
                       {jobs.map((job, idx) => (
-                        <Card key={idx} className="p-6 bg-white border-b border-black/[0.05] rounded-none shadow-none hover:bg-black/[0.01] transition-colors group cursor-pointer text-left w-full first:border-t">
-                          <div className="flex items-start gap-6">
-                            <div className="w-12 h-12 bg-[#F8F7F5] rounded-xl flex items-center justify-center font-bold text-[#1A1A1A] shrink-0 text-lg border border-black/[0.03]">
+                        <Card 
+                          key={idx} 
+                          onClick={() => job.job_url && window.open(job.job_url, '_blank')}
+                          className="p-5 bg-white border border-black/[0.03] rounded-2xl shadow-sm hover:shadow-md hover:border-black/[0.08] transition-all group cursor-pointer text-left w-full"
+                        >
+                          <div className="flex items-center gap-5">
+                            <div className="w-12 h-12 bg-[#F8F7F5] rounded-xl flex items-center justify-center font-semibold text-[#1A1A1A]/40 shrink-0 text-lg border border-black/[0.02]">
                               {String(job.company || "J")[0]}
                             </div>
+                            
                             <div className="flex-1 min-w-0">
-                              <div className="flex items-center justify-between gap-4 mb-2">
-                                <h3 className="text-lg font-bold text-[#1A1A1A] group-hover:text-primary transition-colors truncate">
-                                  {job.title}
-                                  {job.job_url && (
-                                    <a 
-                                      href={job.job_url} 
-                                      target="_blank" 
-                                      rel="noopener noreferrer"
-                                      className="ml-2 inline-flex items-center"
-                                      onClick={(e) => e.stopPropagation()}
-                                    >
-                                      <ExternalLink className="w-4 h-4 text-black/20 hover:text-black transition-colors" />
-                                    </a>
-                                  )}
-                                </h3>
-                                <div className="flex items-center gap-2">
-                                  <Button 
-                                    variant="ghost"
-                                    size="icon"
-                                    className="rounded-full h-9 w-9 border border-black/[0.05] bg-white opacity-0 group-hover:opacity-100 transition-all"
-                                  >
-                                    <Eye className="w-4 h-4" />
-                                  </Button>
-                                  <Button 
-                                    variant="outline" 
-                                    size="sm" 
-                                    className="rounded-lg h-9 px-4 text-xs font-bold border-black/[0.1] hover:bg-black hover:text-white transition-all whitespace-nowrap"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      if (job.job_url) window.open(job.job_url, '_blank');
-                                    }}
-                                  >
-                                    Shortlist
-                                  </Button>
+                              <div className="flex items-center justify-between gap-4">
+                                <div>
+                                  <h3 className="text-base font-semibold text-[#1A1A1A] group-hover:text-primary transition-colors truncate">
+                                    {job.title}
+                                  </h3>
+                                  <div className="flex items-center gap-2 text-[13px] text-[#1A1A1A]/40 mt-1 font-medium">
+                                    <span>{job.company}</span>
+                                    <span className="w-1 h-1 rounded-full bg-black/10" />
+                                    <span>{job.location || "Remote"}</span>
+                                  </div>
                                 </div>
-                              </div>
-                              
-                              <div className="flex items-center gap-2 text-sm text-[#1A1A1A]/60 font-medium mb-4">
-                                <span>{job.company}</span>
-                                <span className="w-1 h-1 rounded-full bg-black/20" />
-                                <span>{job.location || "Remote"}</span>
-                              </div>
 
-                              <div className="flex flex-wrap gap-2">
-                                {job.job_type && (
-                                  <span className="px-3 py-1 bg-green-50 rounded-full text-[10px] font-bold text-green-700 uppercase tracking-wider border border-green-100/50">
-                                    {job.job_type}
-                                  </span>
-                                )}
-                                {job.site && (
-                                  <span className="px-3 py-1 bg-blue-50 rounded-full text-[10px] font-bold text-blue-700 uppercase tracking-wider border border-blue-100/50">
-                                    {job.site}
-                                  </span>
-                                )}
-                                <div className="flex items-center gap-1.5 px-3 py-1 bg-black/[0.03] rounded-full border border-black/[0.05]">
-                                  <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                                  <span className="text-[10px] font-bold text-black/60 uppercase tracking-wider">
-                                    Python
-                                  </span>
+                                <div className="flex items-center gap-3">
+                                  <div className="hidden sm:flex flex-wrap gap-2 mr-2">
+                                    {job.job_type && (
+                                      <span className="px-2.5 py-0.5 bg-[#F8F7F5] rounded-lg text-[10px] font-bold text-[#1A1A1A]/40 uppercase tracking-wider border border-black/[0.03]">
+                                        {job.job_type}
+                                      </span>
+                                    )}
+                                    <span className="px-2.5 py-0.5 bg-green-50/50 rounded-lg text-[10px] font-bold text-green-600/70 uppercase tracking-wider border border-green-100/30">
+                                      Python
+                                    </span>
+                                  </div>
+                                  <Button 
+                                    variant="ghost" 
+                                    size="sm" 
+                                    className="rounded-xl h-9 px-4 text-xs font-semibold bg-[#F8F7F5] hover:bg-[#1A1A1A] hover:text-white transition-all whitespace-nowrap opacity-0 group-hover:opacity-100 hidden sm:flex"
+                                  >
+                                    Apply
+                                  </Button>
+                                  <ChevronRight className="w-4 h-4 text-black/10 group-hover:text-black/30 transition-colors" />
                                 </div>
                               </div>
                             </div>
