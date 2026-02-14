@@ -1694,9 +1694,31 @@ export default function Dashboard() {
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center justify-between gap-4">
                                 <div>
-                                  <h3 className="text-base font-semibold text-[#1A1A1A] group-hover:text-primary transition-colors truncate">
-                                    {job.title}
-                                  </h3>
+                                  <div className="flex items-center gap-2">
+                                    <h3 className="text-base font-semibold text-[#1A1A1A] group-hover:text-primary transition-colors truncate">
+                                      {job.title}
+                                    </h3>
+                                    <div className="flex items-center gap-1.5 shrink-0">
+                                      <a 
+                                        href={job.url} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="p-1 hover:bg-black/5 rounded-md transition-colors text-black/40 hover:text-primary"
+                                        onClick={(e) => e.stopPropagation()}
+                                      >
+                                        <ExternalLink className="w-3.5 h-3.5" />
+                                      </a>
+                                      <a 
+                                        href={`https://www.linkedin.com/jobs/view/${job.id}`} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="p-1 hover:bg-black/5 rounded-md transition-colors text-[#0A66C2]"
+                                        onClick={(e) => e.stopPropagation()}
+                                      >
+                                        <Linkedin className="w-3.5 h-3.5" />
+                                      </a>
+                                    </div>
+                                  </div>
                                   <div className="flex items-center gap-2 text-[13px] text-[#1A1A1A]/40 mt-1 font-medium">
                                     <span>{job.company}</span>
                                     <span className="w-1 h-1 rounded-full bg-black/10" />
@@ -1715,14 +1737,6 @@ export default function Dashboard() {
                                       Python
                                     </span>
                                   </div>
-                                  <Button 
-                                    variant="ghost" 
-                                    size="sm" 
-                                    className="rounded-xl h-9 px-4 text-xs font-semibold bg-[#F8F7F5] hover:bg-[#1A1A1A] hover:text-white transition-all whitespace-nowrap opacity-0 group-hover:opacity-100 hidden sm:flex"
-                                  >
-                                    Apply
-                                  </Button>
-                                  <ChevronRight className="w-4 h-4 text-black/10 group-hover:text-black/30 transition-colors" />
                                 </div>
                               </div>
                             </div>
