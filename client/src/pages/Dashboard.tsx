@@ -1539,7 +1539,7 @@ export default function Dashboard() {
           </Card>
         </div>
 
-        <main className={`pb-6 pt-12 ${activeTab === "AI Job Search" ? "min-h-[calc(100vh-100px)]" : ""}`}>
+        <main className={`pb-6 ${activeTab === "AI Job Search" ? "min-h-[calc(100vh-100px)]" : ""}`}>
           {activeTab === "AI Job Search" ? (
             <div className="px-4 sm:px-6 max-w-5xl mx-auto w-full">
               <AnimatePresence mode="wait">
@@ -1550,7 +1550,7 @@ export default function Dashboard() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -15 }}
                     transition={{ duration: 0.4 }}
-                    className="w-full mt-[-20px] flex flex-col items-center justify-center min-h-[calc(100vh-250px)]"
+                    className="w-full flex flex-col items-center justify-center min-h-[calc(100vh-250px)]"
                   >
                     <div className="flex justify-center mb-2">
                       <Suspense fallback={<div className="w-24 h-24" />}>
@@ -1654,7 +1654,7 @@ export default function Dashboard() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.4 }}
-                    className="w-full"
+                    className="w-full pt-12"
                   >
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-12">
                       <div className="flex items-center gap-4 w-full sm:w-auto">
