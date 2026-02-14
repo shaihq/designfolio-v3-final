@@ -2,7 +2,7 @@ import OpenAI from "openai";
 
 const openai = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1",
-  apiKey: "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",
+  apiKey: process.env.OPENROUTER_API_KEY || "",
   defaultHeaders: {
     "HTTP-Referer": "https://replit.com",
     "X-Title": "Designfolio",

@@ -8,4 +8,3 @@ vite.config.ts.*
 build
 .cache
 .env
-.replit
