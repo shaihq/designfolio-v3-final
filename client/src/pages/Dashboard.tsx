@@ -1442,11 +1442,58 @@ export default function Dashboard() {
 
         <main className="pb-6">
           {activeTab === "AI Job Search" ? (
-            <div className="mt-4 px-4 sm:px-0">
-              <Card className="bg-white border-0 rounded-2xl p-12 text-center" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
-                <h2 className="text-2xl font-bold mb-2">AI Job Search</h2>
-                <p className="text-foreground/50">Coming soon</p>
-              </Card>
+            <div className="mt-8 px-4 sm:px-0 max-w-3xl mx-auto w-full">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="text-center mb-12"
+              >
+                <h1 className="text-3xl md:text-4xl font-semibold mb-8 text-[#1A1A1A]">
+                  Hey {user.name.replace('!', '')}, what job are you looking for?
+                </h1>
+                
+                <div className="flex flex-wrap justify-center gap-3 mb-8">
+                  {[
+                    { icon: Search, label: "Find Similar", color: "text-purple-500" },
+                    { icon: FileText, label: "Job Description", color: "text-red-500" },
+                    { icon: Sparkles, label: "Boolean", color: "text-green-500" },
+                    { icon: Pencil, label: "Select Manually", color: "text-gray-500" }
+                  ].map((item, idx) => (
+                    <Button
+                      key={idx}
+                      variant="outline"
+                      className="rounded-2xl h-12 px-6 bg-white border-black/[0.05] hover:bg-black/[0.02] shadow-sm transition-all flex items-center gap-2 text-sm font-medium"
+                    >
+                      <item.icon className={`w-4 h-4 ${item.color}`} />
+                      {item.label}
+                    </Button>
+                  ))}
+                </div>
+
+                <div className="relative group">
+                  <div 
+                    className="w-full min-h-[160px] bg-white rounded-[32px] p-8 text-left transition-all duration-300 border border-black/[0.03]"
+                    style={{ 
+                      boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 10px 40px rgba(0,0,0,0.02)' 
+                    }}
+                  >
+                    <textarea 
+                      className="w-full h-full bg-transparent border-0 focus:ring-0 p-0 text-xl md:text-2xl text-foreground/40 placeholder:text-foreground/20 resize-none overflow-hidden min-h-[100px]"
+                      placeholder="Software Engineers with 5+ yrs of experience at fintech companies in the Bay Area"
+                    />
+                    
+                    <div className="absolute bottom-6 right-6">
+                      <Button 
+                        size="icon" 
+                        className="w-12 h-12 rounded-full bg-white border border-black/[0.05] shadow-sm hover:bg-black/[0.02] transition-all group/btn"
+                      >
+                        <ChevronRight className="w-6 h-6 text-purple-600 group-hover/btn:translate-x-0.5 transition-transform" />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           ) : (
             <>
