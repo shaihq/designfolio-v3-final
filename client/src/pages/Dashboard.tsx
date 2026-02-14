@@ -1671,46 +1671,61 @@ export default function Dashboard() {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="flex flex-col gap-4">
                       {jobs.map((job, idx) => (
-                        <Card key={idx} className="p-6 bg-white border-0 rounded-2xl shadow-sm hover:shadow-md transition-shadow group cursor-pointer text-left">
-                          <div className="flex items-start justify-between mb-4">
-                            <div className="w-12 h-12 bg-[#F8F7F5] rounded-xl flex items-center justify-center font-bold text-[#1A1A1A]">
+                        <Card key={idx} className="p-4 bg-white border-b border-black/[0.05] rounded-none shadow-none hover:bg-black/[0.01] transition-colors group cursor-pointer text-left">
+                          <div className="flex items-start gap-4">
+                            <div className="w-10 h-10 bg-[#F8F7F5] rounded-lg flex items-center justify-center font-bold text-[#1A1A1A] shrink-0">
                               {String(job.company || "J")[0]}
                             </div>
-                            <Button variant="ghost" size="icon" className="rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                              <ExternalLink className="w-4 h-4" />
-                            </Button>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-center justify-between mb-1">
+                                <h3 className="text-base font-semibold text-[#1A1A1A] group-hover:text-primary transition-colors truncate">
+                                  {job.title}
+                                  {job.job_url && (
+                                    <a 
+                                      href={job.job_url} 
+                                      target="_blank" 
+                                      rel="noopener noreferrer"
+                                      className="ml-2 inline-flex items-center"
+                                      onClick={(e) => e.stopPropagation()}
+                                    >
+                                      <ExternalLink className="w-3.5 h-3.5 text-black/30 hover:text-black transition-colors" />
+                                    </a>
+                                  )}
+                                </h3>
+                                <Button 
+                                  variant="outline" 
+                                  size="sm" 
+                                  className="rounded-lg h-8 px-3 text-xs font-semibold border-black/[0.1] hover:bg-black hover:text-white transition-all ml-4"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    if (job.job_url) window.open(job.job_url, '_blank');
+                                  }}
+                                >
+                                  Shortlist
+                                </Button>
+                              </div>
+                              <p className="text-sm text-[#1A1A1A]/60 font-medium mb-3">
+                                {job.company} • {job.location || "Remote"}
+                              </p>
+                              <div className="flex flex-wrap gap-2">
+                                {job.job_type && (
+                                  <span className="px-2 py-0.5 bg-green-50 rounded-md text-[10px] font-bold text-green-700 uppercase tracking-wider border border-green-100/50">
+                                    {job.job_type}
+                                  </span>
+                                )}
+                                {job.site && (
+                                  <span className="px-2 py-0.5 bg-blue-50 rounded-md text-[10px] font-bold text-blue-700 uppercase tracking-wider border border-blue-100/50">
+                                    {job.site}
+                                  </span>
+                                )}
+                                <span className="px-2 py-0.5 bg-black/[0.03] rounded-md text-[10px] font-bold text-black/50 uppercase tracking-wider border border-black/[0.05]">
+                                  Python
+                                </span>
+                              </div>
+                            </div>
                           </div>
-                          <h3 className="text-lg font-bold mb-1 group-hover:text-black transition-colors">{job.title}</h3>
-                          <p className="text-[#1A1A1A]/60 font-medium mb-4">{job.company}</p>
-                          <div className="flex flex-wrap gap-2">
-                            {job.location && (
-                              <span className="px-3 py-1 bg-[#F8F7F5] rounded-full text-xs font-semibold text-[#1A1A1A]/70 uppercase tracking-wider">
-                                {job.location}
-                              </span>
-                            )}
-                            {job.job_type && (
-                              <span className="px-3 py-1 bg-green-50 rounded-full text-xs font-semibold text-green-700 uppercase tracking-wider">
-                                {job.job_type}
-                              </span>
-                            )}
-                            {job.site && (
-                              <span className="px-3 py-1 bg-blue-50 rounded-full text-xs font-semibold text-blue-700 uppercase tracking-wider">
-                                {job.site}
-                              </span>
-                            )}
-                          </div>
-                          {job.job_url && (
-                            <a 
-                              href={job.job_url} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="mt-6 block w-full py-3 bg-[#1A1A1A] text-white text-center rounded-xl font-bold hover:bg-[#1A1A1A]/90 transition-all opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0"
-                            >
-                              Apply Now
-                            </a>
-                          )}
                         </Card>
                       ))}
                     </div>
