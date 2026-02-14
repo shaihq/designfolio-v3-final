@@ -1,0 +1,268 @@
+Build this as my initial prototype
+
+Copy-paste this component to /components/ui folder:
+```tsx
+prompt-suggestion.tsx
+"use client"
+
+import { Button, buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+import { VariantProps } from "class-variance-authority"
+
+export type PromptSuggestionProps = {
+  children: React.ReactNode
+  variant?: VariantProps<typeof buttonVariants>["variant"]
+  size?: VariantProps<typeof buttonVariants>["size"]
+  className?: string
+  highlight?: string
+} & React.ButtonHTMLAttributes<HTMLButtonElement>
+
+function PromptSuggestion({
+  children,
+  variant,
+  size,
+  className,
+  highlight,
+  ...props
+}: PromptSuggestionProps) {
+  const isHighlightMode = highlight !== undefined && highlight.trim() !== ""
+  const content = typeof children === "string" ? children : ""
+
+  if (!isHighlightMode) {
+    return (
+      <Button
+        variant={variant || "outline"}
+        size={size || "lg"}
+        className={cn("rounded-full", className)}
+        {...props}
+      >
+        {children}
+      </Button>
+    )
+  }
+
+  if (!content) {
+    return (
+      <Button
+        variant={variant || "ghost"}
+        size={size || "sm"}
+        className={cn(
+          "w-full cursor-pointer justify-start rounded-xl py-2",
+          "hover:bg-accent",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </Button>
+    )
+  }
+
+  const trimmedHighlight = highlight.trim()
+  const contentLower = content.toLowerCase()
+  const highlightLower = trimmedHighlight.toLowerCase()
+  const shouldHighlight = contentLower.includes(highlightLower)
+
+  return (
+    <Button
+      variant={variant || "ghost"}
+      size={size || "sm"}
+      className={cn(
+        "w-full cursor-pointer justify-start gap-0 rounded-xl py-2",
+        "hover:bg-accent",
+        className
+      )}
+      {...props}
+    >
+      {shouldHighlight ? (
+        (() => {
+          const index = contentLower.indexOf(highlightLower)
+          if (index === -1)
+            return (
+              <span className="text-muted-foreground whitespace-pre-wrap">
+                {content}
+              </span>
+            )
+
+          const actualHighlightedText = content.substring(
+            index,
+            index + highlightLower.length
+          )
+
+          const before = content.substring(0, index)
+          const after = content.substring(index + actualHighlightedText.length)
+
+          return (
+            <>
+              {before && (
+                <span className="text-muted-foreground whitespace-pre-wrap">
+                  {before}
+                </span>
+              )}
+              <span className="text-primary font-medium whitespace-pre-wrap">
+                {actualHighlightedText}
+              </span>
+              {after && (
+                <span className="text-muted-foreground whitespace-pre-wrap">
+                  {after}
+                </span>
+              )}
+            </>
+          )
+        })()
+      ) : (
+        <span className="text-muted-foreground whitespace-pre-wrap">
+          {content}
+        </span>
+      )}
+    </Button>
+  )
+}
+
+export { PromptSuggestion }
+
+
+demo.tsx
+"use client"
+
+import {
+  PromptInput,
+  PromptInputActions,
+  PromptInputTextarea,
+} from "@/components/ui/prompt-input"
+import { PromptSuggestion } from "@/components/ui/prompt-suggestion"
+import { Button } from "@/components/ui/button"
+import { ArrowUpIcon } from "lucide-react"
+import { useState } from "react"
+
+/**
+ * Example showing PromptSuggestion with PromptInput
+ */
+export function PromptSuggestionBasic() {
+  const [inputValue, setInputValue] = useState("")
+
+  const handleSend = () => {
+    if (inputValue.trim()) {
+      console.log("Sending:", inputValue)
+      setInputValue("")
+    }
+  }
+
+  return (
+    <div className="flex w-full flex-col space-y-4">
+      <div className="flex flex-wrap gap-2">
+        <PromptSuggestion onClick={() => setInputValue("Tell me a joke")}>
+          Tell me a joke
+        </PromptSuggestion>
+
+        <PromptSuggestion onClick={() => setInputValue("How does this work?")}>
+          How does this work?
+        </PromptSuggestion>
+
+        <PromptSuggestion
+          onClick={() => setInputValue("Generate an image of a cat")}
+        >
+          Generate an image of a cat
+        </PromptSuggestion>
+
+        <PromptSuggestion onClick={() => setInputValue("Write a poem")}>
+          Write a poem
+        </PromptSuggestion>
+        <PromptSuggestion
+          onClick={() => setInputValue("Code a React component")}
+        >
+          Code a React component
+        </PromptSuggestion>
+      </div>
+
+      <PromptInput
+        className="border-input bg-background border shadow-xs"
+        value={inputValue}
+        onValueChange={setInputValue}
+        onSubmit={handleSend}
+      >
+        <PromptInputTextarea placeholder="Type a message or click a suggestion..." />
+        <PromptInputActions className="justify-end">
+          <Button
+            size="sm"
+            className="size-9 cursor-pointer rounded-full"
+            onClick={handleSend}
+            disabled={!inputValue.trim()}
+            aria-label="Send"
+          >
+            <ArrowUpIcon className="h-4 min-h-4  min-w-4 w-4" />
+          </Button>
+        </PromptInputActions>
+      </PromptInput>
+    </div>
+  )
+}
+
+```
+
+Copy-paste these files for dependencies:
+```tsx
+shadcn/button
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
+const buttonVariants = cva(
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        destructive:
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        outline:
+          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+        secondary:
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
+        link: "text-primary underline-offset-4 hover:underline",
+      },
+      size: {
+        default: "h-10 px-4 py-2",
+        sm: "h-9 rounded-md px-3",
+        lg: "h-11 rounded-md px-8",
+        icon: "h-10 w-10",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  },
+)
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean
+}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button"
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    )
+  },
+)
+Button.displayName = "Button"
+
+export { Button, buttonVariants }
+
+```
+
+Install these NPM dependencies:
+```bash
+class-variance-authority, @radix-ui/react-slot
+```
