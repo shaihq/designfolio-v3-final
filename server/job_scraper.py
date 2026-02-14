@@ -15,6 +15,7 @@ def search_jobs(query, location="Remote", distance=25, job_type="fulltime", resu
             job_type=job_type,
             results_wanted=results_wanted,
             hours_old=72,
+            description_format="markdown",
         )
         
         # Convert pandas DataFrame to list of dictionaries
