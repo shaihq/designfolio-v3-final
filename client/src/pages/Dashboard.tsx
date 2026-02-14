@@ -1666,16 +1666,18 @@ export default function Dashboard() {
                           <ChevronLeft className="w-5 h-5 text-[#1A1A1A]" />
                         </Button>
                         <div className="relative group w-full max-w-xl">
-                          <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                            <Search className="w-4 h-4 text-black/20 group-focus-within:text-black/40 transition-colors" />
+                          <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none z-10">
+                            <Search className="w-5 h-5 text-black/20 group-focus-within:text-black/40 transition-colors" />
                           </div>
-                          <Input 
-                            value={inputValue}
-                            onChange={(e) => setInputValue(e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' && handleSearch(inputValue)}
-                            placeholder="Search roles..."
-                            className="w-full h-12 pl-11 pr-4 bg-[#F8F7F5] border-0 rounded-xl text-sm focus:ring-2 focus:ring-black/5 transition-all placeholder:text-black/30"
-                          />
+                          <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out relative overflow-hidden">
+                            <Input 
+                              value={inputValue}
+                              onChange={(e) => setInputValue(e.target.value)}
+                              onKeyDown={(e) => e.key === 'Enter' && handleSearch(inputValue)}
+                              placeholder="Search roles..."
+                              className="border-0 bg-transparent h-12 pl-12 pr-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-base placeholder:text-muted-foreground/60 w-full"
+                            />
+                          </div>
                         </div>
                         <p className="text-sm text-[#1A1A1A]/40 whitespace-nowrap ml-auto">Found {jobs.length} matching roles</p>
                       </div>
