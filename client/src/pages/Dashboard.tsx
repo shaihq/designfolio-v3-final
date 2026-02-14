@@ -1458,7 +1458,7 @@ export default function Dashboard() {
           </Card>
         </div>
 
-        <main className={`pb-6 ${activeTab === "AI Job Search" ? "flex items-center justify-center min-h-[calc(100vh-200px)]" : ""}`}>
+        <main className={`pb-6 ${activeTab === "AI Job Search" ? "flex items-center justify-center min-h-[calc(100vh-250px)] mt-[-20px]" : ""}`}>
           {activeTab === "AI Job Search" ? (
             <div className="px-4 sm:px-0 max-w-2xl mx-auto w-full">
               <div className="flex justify-center mb-2">
@@ -1476,9 +1476,28 @@ export default function Dashboard() {
                 transition={{ duration: 0.4 }}
                 className="text-center"
               >
-                <h1 className="text-2xl font-semibold mb-8 text-[#1A1A1A]">
+                <h1 className="text-2xl font-semibold mb-6 text-[#1A1A1A]">
                   Hey Shai, what kind of job are you looking for?
                 </h1>
+
+                <div className="flex items-center justify-center gap-3 mb-8">
+                  <Button 
+                    variant="outline" 
+                    className="rounded-full bg-white border-black/[0.05] hover:bg-black/[0.02] text-sm font-medium px-5 h-10 flex items-center gap-2 shadow-sm"
+                  >
+                    <div className="w-4 h-4 rounded-full border border-primary/30 flex items-center justify-center">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    </div>
+                    Find Similar
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="rounded-full bg-white border-black/[0.05] hover:bg-black/[0.02] text-sm font-medium px-5 h-10 flex items-center gap-2 shadow-sm"
+                  >
+                    <FileText className="w-4 h-4 text-orange-500" />
+                    Resume
+                  </Button>
+                </div>
 
                 <div className="relative" ref={dropdownRef}>
                   <PromptInput
