@@ -1294,7 +1294,7 @@ export default function Dashboard() {
             }}
           >
           <Card 
-            className="bg-white border-0 rounded-full px-8 py-2 mb-6 transition-shadow duration-300" 
+            className="bg-white border-0 rounded-full p-2 mb-6 transition-shadow duration-300" 
             style={{ 
               boxShadow: isScrolled 
                 ? '0 0 0 1px rgba(0,0,0,0.06), 0 4px 20px rgba(0,0,0,0.08)' 
@@ -1319,7 +1319,7 @@ export default function Dashboard() {
                         key={index}
                         data-id={label}
                         type="button"
-                        className="inline-flex px-5 py-1.5 items-center justify-center text-center text-foreground transition-all active:scale-[0.96] text-sm font-semibold tracking-tight"
+                        className="inline-flex px-5 py-2 items-center justify-center text-center text-foreground transition-all active:scale-[0.96] text-sm font-semibold tracking-tight"
                       >
                         {label}
                       </button>
@@ -1329,11 +1329,11 @@ export default function Dashboard() {
               </div>
 
               {/* Nav Actions - Desktop */}
-              <div className="hidden md:flex items-center gap-3">
+              <div className="hidden md:flex items-center gap-2">
                 <Button 
                   variant="outline" 
                   size="icon"
-                  className="rounded-full h-11 w-11"
+                  className="rounded-full h-10 w-10"
                   data-testid="button-insights"
                 >
                   <Sparkles className="w-5 h-5" />
@@ -1341,7 +1341,7 @@ export default function Dashboard() {
                 <Button 
                   variant="outline" 
                   size="icon"
-                  className="rounded-full h-11 w-11"
+                  className="rounded-full h-10 w-10"
                   data-testid="button-notifications"
                 >
                   <Bell className="w-5 h-5" />
@@ -1349,21 +1349,21 @@ export default function Dashboard() {
                 <Button 
                   variant="outline" 
                   size="icon"
-                  className="rounded-full h-11 w-11"
+                  className="rounded-full h-10 w-10"
                   onClick={() => setIsThemePanelOpen(!isThemePanelOpen)}
                   data-testid="button-theme"
                 >
                   <Paintbrush className="w-5 h-5" />
                 </Button>
                 <Button 
-                  className="bg-foreground text-background hover:bg-foreground/90 focus-visible:outline-none border-0 rounded-full h-11 px-6 text-base font-semibold no-default-hover-elevate no-default-active-elevate transition-colors"
+                  className="bg-foreground text-background hover:bg-foreground/90 focus-visible:outline-none border-0 rounded-full h-10 px-5 text-sm font-semibold no-default-hover-elevate no-default-active-elevate transition-colors"
                   data-testid="button-publish-site"
                 >
                   Publish Site
                 </Button>
-                <Avatar className="w-11 h-11" data-testid="avatar-user">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="text-base" style={{ backgroundColor: '#FF553E', color: '#FFFFFF' }}>
+                <Avatar className="w-10 h-10 rounded-full" data-testid="avatar-user">
+                  <AvatarImage src={user.avatar} alt={user.name} className="rounded-full" />
+                  <AvatarFallback className="text-base rounded-full" style={{ backgroundColor: '#FF553E', color: '#FFFFFF' }}>
                     {user.name.charAt(0).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
@@ -1385,9 +1385,9 @@ export default function Dashboard() {
                   <SheetContent className="w-80">
                     <div className="flex flex-col gap-4 mt-8">
                       <div className="flex items-center gap-3 mb-4">
-                        <Avatar className="w-11 h-11" data-testid="avatar-user-mobile">
-                          <AvatarImage src={user.avatar} alt={user.name} />
-                          <AvatarFallback className="text-base" style={{ backgroundColor: '#FF553E', color: '#FFFFFF' }}>
+                        <Avatar className="w-10 h-10 rounded-full" data-testid="avatar-user-mobile">
+                          <AvatarImage src={user.avatar} alt={user.name} className="rounded-full" />
+                          <AvatarFallback className="text-base rounded-full" style={{ backgroundColor: '#FF553E', color: '#FFFFFF' }}>
                             {user.name.charAt(0).toUpperCase()}
                           </AvatarFallback>
                         </Avatar>
