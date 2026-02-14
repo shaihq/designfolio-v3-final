@@ -1306,6 +1306,7 @@ export default function Dashboard() {
               <div className="rounded-full bg-[#F6F2EF] p-1 border border-black/[0.03]">
                 <AnimatedBackground
                   defaultValue="Portfolio Builder"
+                  onValueChange={(id) => id && setActiveTab(id)}
                   className="rounded-full bg-white shadow-sm"
                   transition={{
                     type: "spring",
@@ -1440,7 +1441,16 @@ export default function Dashboard() {
         </div>
 
         <main className="pb-6">
-          {/* Profile Card */}
+          {activeTab === "AI Job Search" ? (
+            <div className="mt-4 px-4 sm:px-0">
+              <Card className="bg-white border-0 rounded-2xl p-12 text-center" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
+                <h2 className="text-2xl font-bold mb-2">AI Job Search</h2>
+                <p className="text-foreground/50">Coming soon</p>
+              </Card>
+            </div>
+          ) : (
+            <>
+              {/* Profile Card */}
           <div className="z-10 mb-3">
             <Card className="bg-white border-0 rounded-2xl relative" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
               {/* Edit Button - Top Right */}
@@ -2590,9 +2600,11 @@ export default function Dashboard() {
       </div>
     </div>
   </motion.footer>
-</main>
-</div>
-</div>
+            </>
+          )}
+        </main>
+      </div>
+    </div>
 
       {/* Resume PDF Dialog */}
       <Dialog open={isResumeDialogOpen} onOpenChange={setIsResumeDialogOpen}>
