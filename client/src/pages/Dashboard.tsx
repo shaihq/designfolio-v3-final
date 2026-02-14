@@ -1731,17 +1731,6 @@ export default function Dashboard() {
                                       {job.description.replace(/<[^>]*>?/gm, '').split('\n').filter((line: string) => line.trim()).slice(0, 2).join(' ')}
                                     </p>
                                   )}
-                                  <div className="mt-2 text-[12px] font-medium text-primary/80">
-                                    {job.min_salary ? (
-                                      <span>
-                                        {job.salary_currency || '$'}{job.min_salary.toLocaleString()} 
-                                        {job.max_salary ? ` - ${job.salary_currency || '$'}${job.max_salary.toLocaleString()}` : ''}
-                                        {job.salary_interval ? ` / ${job.salary_interval}` : ''}
-                                      </span>
-                                    ) : (
-                                      <span className="text-[#1A1A1A]/30 italic">Salary not disclosed</span>
-                                    )}
-                                  </div>
                                 </div>
 
                                 <div className="flex items-center gap-3">
@@ -1751,9 +1740,6 @@ export default function Dashboard() {
                                         {job.job_type}
                                       </span>
                                     )}
-                                    <span className="px-2.5 py-0.5 bg-green-50/50 rounded-lg text-[10px] font-bold text-green-600/70 uppercase tracking-wider border border-green-100/30">
-                                      Python
-                                    </span>
                                   </div>
                                 </div>
                               </div>
