@@ -1695,10 +1695,6 @@ export default function Dashboard() {
                           className="p-5 bg-white border border-black/[0.03] rounded-2xl shadow-sm hover:shadow-md hover:border-black/[0.08] transition-all group cursor-pointer text-left w-full"
                         >
                           <div className="flex items-center gap-5">
-                            <div className="w-12 h-12 bg-[#F8F7F5] rounded-xl flex items-center justify-center font-semibold text-[#1A1A1A]/40 shrink-0 text-lg border border-black/[0.02]">
-                              {String(job.company || "J")[0]}
-                            </div>
-                            
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center justify-between gap-4">
                                 <div>
