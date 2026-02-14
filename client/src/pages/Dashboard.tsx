@@ -1665,14 +1665,10 @@ export default function Dashboard() {
                         >
                           <ChevronLeft className="w-5 h-5 text-[#1A1A1A]" />
                         </Button>
-                        <div className="min-w-0">
-                          <h2 className="text-2xl font-semibold text-[#1A1A1A] tracking-tight">Recommended Jobs</h2>
-                          <p className="text-sm text-[#1A1A1A]/40 mt-0.5">Found {jobs.length} matching roles</p>
-                        </div>
                       </div>
                       
-                      <div className="w-full sm:max-w-xs">
-                        <div className="relative group">
+                      <div className="flex items-center gap-4 w-full sm:w-auto">
+                        <div className="relative group w-full sm:w-64">
                           <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
                             <Search className="w-4 h-4 text-black/20 group-focus-within:text-black/40 transition-colors" />
                           </div>
@@ -1684,6 +1680,7 @@ export default function Dashboard() {
                             className="w-full h-11 pl-10 pr-4 bg-[#F8F7F5] border-transparent rounded-2xl text-sm focus:bg-white focus:ring-0 transition-all placeholder:text-black/30"
                           />
                         </div>
+                        <p className="text-sm text-[#1A1A1A]/40 whitespace-nowrap">Found {jobs.length} matching roles</p>
                       </div>
                     </div>
 
