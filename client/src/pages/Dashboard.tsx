@@ -1319,7 +1319,7 @@ export default function Dashboard() {
                         key={index}
                         data-id={label}
                         type="button"
-                        className="inline-flex px-5 py-2 items-center justify-center text-center text-foreground transition-all active:scale-[0.96] text-sm font-semibold tracking-tight"
+                        className="inline-flex px-5 py-1.5 items-center justify-center text-center text-foreground transition-all active:scale-[0.96] text-sm font-semibold tracking-tight h-8"
                       >
                         {label}
                       </button>
