@@ -1674,7 +1674,7 @@ export default function Dashboard() {
                             onChange={(e) => setInputValue(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleSearch(inputValue)}
                             placeholder="Search roles..."
-                            className="w-full h-12 pl-11 pr-4 bg-white border border-black/10 rounded-2xl text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-black/30 shadow-sm"
+                            className="w-full h-12 pl-11 pr-4 bg-[#F8F7F5] border-0 rounded-xl text-sm focus:ring-2 focus:ring-black/5 transition-all placeholder:text-black/30"
                           />
                         </div>
                         <p className="text-sm text-[#1A1A1A]/40 whitespace-nowrap ml-auto">Found {jobs.length} matching roles</p>
