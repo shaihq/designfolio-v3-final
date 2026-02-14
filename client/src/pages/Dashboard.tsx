@@ -470,9 +470,6 @@ export default function Dashboard() {
       rafRef.current = requestAnimationFrame(() => {
         setScrollOffset(window.scrollY);
         
-        // Only run scroll spy logic if we're not in the AI Job Search tab
-        if (activeTab === "AI Job Search") return;
-
         // Scroll spy logic
         const sections = [
           { id: 'home', element: document.body },
