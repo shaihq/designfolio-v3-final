@@ -16,13 +16,13 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-[9999] transition-all duration-700 pt-1 px-4 pointer-events-none">
+    <div className="fixed top-0 left-0 right-0 z-[9999] transition-all duration-700 pt-3 px-4 pointer-events-none">
       <nav 
         className="w-full mx-auto transition-all duration-700 ease-in-out border border-border backdrop-blur-md rounded-full shadow-sm max-w-[640px] bg-white/80 dark:bg-[#1a1a1a]/80 pointer-events-auto"
         style={{ background: 'linear-gradient(180deg, #fff6 10%, #fffc)' }}
       >
         <div className="transition-all duration-700 ease-in-out px-4 sm:px-6">
-          <div className="flex items-center justify-between h-11 sm:h-12">
+          <div className="flex items-center justify-between h-14 sm:h-16">
             <Link href="/" data-testid="logo-icon">
               <svg width="166" height="33" viewBox="0 0 166 33" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 sm:h-7 w-auto cursor-pointer">
                 <path d="M15.4028 0.779664C15.6377 -0.259891 17.1189 -0.259886 17.3537 0.779669L18.9775 7.96851C19.1297 8.64225 19.9029 8.9625 20.4869 8.59371L26.7184 4.65866C27.6195 4.08962 28.6669 5.137 28.0979 6.03812L24.1628 12.2696C23.794 12.8537 24.1143 13.6268 24.788 13.779L31.9769 15.4028C33.0164 15.6377 33.0164 17.1189 31.9769 17.3537L24.788 18.9775C24.1143 19.1297 23.794 19.9029 24.1628 20.4869L28.0979 26.7184C28.6669 27.6195 27.6195 28.6669 26.7184 28.0979L20.4869 24.1628C19.9029 23.794 19.1297 24.1143 18.9775 24.788L17.3537 31.9769C17.1189 33.0164 15.6377 33.0164 15.4028 31.9769L13.779 24.788C13.6268 24.1143 12.8537 23.794 12.2696 24.1628L6.03812 28.0979C5.137 28.6669 4.08963 27.6195 4.65866 26.7184L8.59371 20.4869C8.9625 19.9029 8.64225 19.1297 7.96851 18.9775L0.779664 17.3537C-0.259891 17.1189 -0.259886 15.6377 0.779669 15.4028L7.96851 13.779C8.64225 13.6268 8.9625 12.8537 8.59371 12.2696L4.65866 6.03812C4.08962 5.137 5.137 4.08963 6.03812 4.65866L12.2696 8.59371C12.8537 8.9625 13.6268 8.64225 13.779 7.96851L15.4028 0.779664Z" fill="#FF553E"/>

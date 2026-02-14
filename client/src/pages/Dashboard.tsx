@@ -1294,7 +1294,7 @@ export default function Dashboard() {
             }}
           >
           <Card 
-            className="bg-white border-0 rounded-2xl px-8 py-4 mb-6 transition-shadow duration-300" 
+            className="bg-white border-0 rounded-full px-8 py-2 mb-6 transition-shadow duration-300" 
             style={{ 
               boxShadow: isScrolled 
                 ? '0 0 0 1px rgba(0,0,0,0.06), 0 4px 20px rgba(0,0,0,0.08)' 
