@@ -1695,11 +1695,6 @@ export default function Dashboard() {
                               <div className="flex items-center justify-between gap-4">
                                 <div>
                                   <div className="flex items-center gap-2">
-                                    {(job.url?.includes('linkedin.com') || job.job_url?.includes('linkedin.com')) ? (
-                                      <Linkedin className="w-4 h-4 text-[#0A66C2] shrink-0" />
-                                    ) : (job.url?.includes('indeed.com') || job.job_url?.includes('indeed.com')) ? (
-                                      <div className="w-4 h-4 flex items-center justify-center font-bold text-white bg-[#2164f3] text-[10px] leading-none rounded-sm shrink-0">i</div>
-                                    ) : null}
                                     <h3 className="text-base font-semibold text-[#1A1A1A] group-hover:text-primary transition-colors truncate">
                                       {job.title}
                                     </h3>
@@ -1713,6 +1708,11 @@ export default function Dashboard() {
                                       >
                                         <ExternalLink className="w-3.5 h-3.5" />
                                       </a>
+                                      {(job.url?.includes('linkedin.com') || job.job_url?.includes('linkedin.com')) ? (
+                                        <Linkedin className="w-4 h-4 text-[#0A66C2] shrink-0" />
+                                      ) : (job.url?.includes('indeed.com') || job.job_url?.includes('indeed.com')) ? (
+                                        <div className="w-4 h-4 flex items-center justify-center font-bold text-white bg-[#2164f3] text-[10px] leading-none rounded-sm shrink-0">i</div>
+                                      ) : null}
                                     </div>
                                   </div>
                                   <div className="flex items-center gap-2 text-[13px] text-[#1A1A1A]/40 mt-1 font-medium">
