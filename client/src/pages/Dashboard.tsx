@@ -328,27 +328,6 @@ export default function Dashboard() {
   const rafRef = useRef<number | null>(null);
   const pinBoardRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState("home");
-
-  const [isEditTestimonialOpen, setIsEditTestimonialOpen] = useState(false);
-  const [selectedTestimonialId, setSelectedTestimonialId] = useState<number | null>(null);
-  const [showUnsavedWarning, setShowUnsavedWarning] = useState(false);
-  const [pendingAction, setPendingAction] = useState<'close' | 'cancel' | 'switch' | null>(null);
-  const [pendingTestimonialId, setPendingTestimonialId] = useState<number | null>(null);
-  const [editingTestimonial, setEditingTestimonial] = useState<any>(null);
-  const [isNavVisible, setIsNavVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isFooterPanelOpen, setIsFooterPanelOpen] = useState(false);
-  const [aboutMeText, setAboutMeText] = useState("I am a passionate product designer...");
-  const [showAllExperience, setShowAllExperience] = useState(false);
-  const [caseStudies, setCaseStudies] = useState<any[]>([]);
-  const [showSearchResults, setShowSearchResults] = useState(false);
-  const [isTemplateDialogOpen, setIsTemplateDialogOpen] = useState(false);
-  const [uploadedResume, setUploadedResume] = useState<any>(null);
-  const [pegboardImages, setPegboardImages] = useState<any[]>([]);
-  const [pegboardStickers, setPegboardStickers] = useState<any[]>([]);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
   const [user, setUser] = useState({
     name: "Shai!",
     role: "A 0→1 Product Designer with 6 years of experience. I design and develop digital products, create prototypes, and design interfaces.",
@@ -537,29 +516,7 @@ export default function Dashboard() {
     };
   }, [backgroundMotion, activeTab]);
 
-  const handleToggleVisibility = (id: number) => {
-    setCaseStudies(prev => prev.map(p => p.id === id ? { ...p, isHidden: !p.isHidden } : p));
-  };
-
-  const handleDeleteClick = (id: number) => {
-    setCaseStudies(prev => prev.filter(p => p.id !== id));
-  };
-
-  const handleDeleteConfirm = () => {
-    // Logic for confirming deletion if needed
-  };
-
-  const handleResumeUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) setUploadedResume(file);
-  };
-
-  const hasUnsavedChanges = () => {
-    return false; // Placeholder logic
-  };
-
-  const originalTestimonial = null; // Placeholder
-
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
