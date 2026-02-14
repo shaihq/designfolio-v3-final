@@ -782,6 +782,18 @@ export default function Dashboard() {
   const [isTemplateDialogOpen, setIsTemplateDialogOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
   const [inputValue, setInputValue] = useState("");
+  const [isInputFocused, setIsInputFocused] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsInputFocused(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState<number | null>(null);
   const [editingTestimonial, setEditingTestimonial] = useState<typeof testimonials[0] | null>(null);
@@ -1464,97 +1476,64 @@ export default function Dashboard() {
                 transition={{ duration: 0.4 }}
                 className="text-center"
               >
-                <h1 className="text-2xl font-semibold mb-6 text-[#1A1A1A]">
-                  Hey Shai, what kind of job are you looking for?
+                <h1 className="text-2xl font-semibold mb-8 text-[#1A1A1A]">
+                  What kind of job are you looking for?
                 </h1>
-                
-                <div className="flex flex-wrap justify-center gap-2 mb-6">
-                  {[
-                    { icon: Search, label: "Similar", color: "text-purple-500" },
-                    { icon: FileText, label: "Resume", color: "text-red-500" },
-                  ].map((item, idx) => (
-                    <Button
-                      key={idx}
-                      variant="outline"
-                      size="sm"
-                      className="rounded-xl h-9 px-4 bg-white border-black/[0.05] hover:bg-black/[0.02] shadow-sm transition-all flex items-center gap-2 text-xs font-medium"
-                    >
-                      <item.icon className={`w-3.5 h-3.5 ${item.color}`} />
-                      {item.label}
-                    </Button>
-                  ))}
-                </div>
 
-                <PromptInput
-                  value={inputValue}
-                  onValueChange={setInputValue}
-                  onSubmit={() => console.log("Searching:", inputValue)}
-                  className="transition-all relative"
-                >
-                  <PromptInputTextarea 
-                    placeholder="e.g. Senior product design roles at fast-growing startups, focused on B2B SaaS" 
-                    className="focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none pr-14"
-                  />
-                  <PromptInputActions className="absolute right-2 top-1/2 -translate-y-1/2">
-                    <Button 
-                      size="icon" 
-                      className="w-10 h-10 rounded-full bg-[#1A1A1A] text-white hover:bg-[#1A1A1A]/90 transition-all group/btn"
-                      onClick={() => console.log("Searching:", inputValue)}
-                      disabled={!inputValue.trim()}
-                    >
-                      <ArrowUp className="w-5 h-5 group-hover/btn:translate-y-[-1px] transition-transform" />
-                    </Button>
-                  </PromptInputActions>
-                </PromptInput>
+                <div className="relative" ref={dropdownRef}>
+                  <PromptInput
+                    value={inputValue}
+                    onValueChange={setInputValue}
+                    onSubmit={() => console.log("Searching:", inputValue)}
+                    className="transition-all relative z-20"
+                  >
+                    <PromptInputTextarea 
+                      placeholder="e.g. Senior product design roles at fast-growing startups" 
+                      className="focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none pr-14"
+                      onFocus={() => setIsInputFocused(true)}
+                    />
+                    <PromptInputActions className="absolute right-2 top-1/2 -translate-y-1/2">
+                      <Button 
+                        size="icon" 
+                        className="w-10 h-10 rounded-full bg-[#1A1A1A] text-white hover:bg-[#1A1A1A]/90 transition-all group/btn"
+                        onClick={() => console.log("Searching:", inputValue)}
+                        disabled={!inputValue.trim()}
+                      >
+                        <ArrowUp className="w-5 h-5 group-hover/btn:translate-y-[-1px] transition-transform" />
+                      </Button>
+                    </PromptInputActions>
+                  </PromptInput>
 
-                <div className="relative mt-6 group">
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="shrink-0 h-8 w-8 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                      onClick={() => {
-                        const container = document.getElementById('prompt-suggestions-container');
-                        if (container) container.scrollBy({ left: -200, behavior: 'smooth' });
-                      }}
-                    >
-                      <ChevronLeft className="w-4 h-4" />
-                    </Button>
-                    
-                    <div 
-                      id="prompt-suggestions-container"
-                      className="flex overflow-x-auto gap-2 no-scrollbar scroll-smooth flex-1 pb-2"
-                      style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
-                    >
-                      {[
-                        "Product Designer roles at Series B startups, remote-friendly",
-                        "Senior UX Designer jobs in fintech companies",
-                        "Frontend Engineer roles using React and Next.js",
-                        "Mobile App Developer jobs in health tech",
-                        "Full Stack Engineer roles at early stage startups"
-                      ].map((suggestion, idx) => (
-                        <PromptSuggestion 
-                          key={idx} 
-                          className="whitespace-nowrap shrink-0"
-                          onClick={() => setInputValue(suggestion)}
-                        >
-                          {suggestion}
-                        </PromptSuggestion>
-                      ))}
-                    </div>
-
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="shrink-0 h-8 w-8 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                      onClick={() => {
-                        const container = document.getElementById('prompt-suggestions-container');
-                        if (container) container.scrollBy({ left: 200, behavior: 'smooth' });
-                      }}
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                    </Button>
-                  </div>
+                  <AnimatePresence>
+                    {isInputFocused && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute top-full left-0 right-0 mt-2 bg-white border border-black/[0.05] rounded-2xl shadow-xl overflow-hidden z-10 p-2"
+                      >
+                        {[
+                          "Software Engineers in SF working at Series B companies, skilled in Python and Node.js",
+                          "Marketing Manager in Europe, German-speaking, working at a large enterprise",
+                          "Senior Scientist in Australia, 8+ years experience",
+                          "Consultant in London with 2+ years experience at top consulting firms",
+                          "Sales Manager in Dallas with experience in ERP"
+                        ].map((suggestion, idx) => (
+                          <button
+                            key={idx}
+                            className="w-full text-left px-4 py-3 text-sm text-[#1A1A1A] hover:bg-black/[0.03] rounded-xl transition-colors truncate"
+                            onClick={() => {
+                              setInputValue(suggestion);
+                              setIsInputFocused(false);
+                            }}
+                          >
+                            {suggestion}
+                          </button>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               </motion.div>
             </div>
