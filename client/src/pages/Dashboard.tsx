@@ -1522,7 +1522,7 @@ export default function Dashboard() {
                     </Tooltip>
                   </TooltipProvider>
                   
-                  <div className="flex-1">
+                          <div className="flex-1">
                     <motion.h1 
                       initial={{ opacity: 0, filter: "blur(10px)", y: 10 }}
                       animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
