@@ -1442,30 +1442,31 @@ export default function Dashboard() {
 
         <main className="pb-6">
           {activeTab === "AI Job Search" ? (
-            <div className="mt-8 px-4 sm:px-0 max-w-3xl mx-auto w-full">
+            <div className="mt-4 px-4 sm:px-0 max-w-2xl mx-auto w-full">
               <motion.div 
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="text-center mb-12"
+                transition={{ duration: 0.4 }}
+                className="text-center"
               >
-                <h1 className="text-3xl md:text-4xl font-semibold mb-8 text-[#1A1A1A]">
-                  Hey {user.name.replace('!', '')}, what job are you looking for?
+                <h1 className="text-2xl font-semibold mb-6 text-[#1A1A1A]">
+                  What job are you looking for, {user.name.replace('!', '')}?
                 </h1>
                 
-                <div className="flex flex-wrap justify-center gap-3 mb-8">
+                <div className="flex flex-wrap justify-center gap-2 mb-6">
                   {[
-                    { icon: Search, label: "Find Similar", color: "text-purple-500" },
-                    { icon: FileText, label: "Job Description", color: "text-red-500" },
+                    { icon: Search, label: "Similar", color: "text-purple-500" },
+                    { icon: FileText, label: "JD", color: "text-red-500" },
                     { icon: Sparkles, label: "Boolean", color: "text-green-500" },
-                    { icon: Pencil, label: "Select Manually", color: "text-gray-500" }
+                    { icon: Pencil, label: "Manual", color: "text-gray-500" }
                   ].map((item, idx) => (
                     <Button
                       key={idx}
                       variant="outline"
-                      className="rounded-2xl h-12 px-6 bg-white border-black/[0.05] hover:bg-black/[0.02] shadow-sm transition-all flex items-center gap-2 text-sm font-medium"
+                      size="sm"
+                      className="rounded-xl h-9 px-4 bg-white border-black/[0.05] hover:bg-black/[0.02] shadow-sm transition-all flex items-center gap-2 text-xs font-medium"
                     >
-                      <item.icon className={`w-4 h-4 ${item.color}`} />
+                      <item.icon className={`w-3.5 h-3.5 ${item.color}`} />
                       {item.label}
                     </Button>
                   ))}
@@ -1473,22 +1474,27 @@ export default function Dashboard() {
 
                 <div className="relative group">
                   <div 
-                    className="w-full min-h-[160px] bg-white rounded-[32px] p-8 text-left transition-all duration-300 border border-black/[0.03]"
+                    className="w-full bg-white rounded-2xl p-6 text-left transition-all duration-300 border border-black/[0.03]"
                     style={{ 
-                      boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 10px 40px rgba(0,0,0,0.02)' 
+                      boxShadow: '0 0 0 1px rgba(0,0,0,0.02), 0 8px 30px rgba(0,0,0,0.02)' 
                     }}
                   >
                     <textarea 
-                      className="w-full h-full bg-transparent border-0 focus:ring-0 p-0 text-xl md:text-2xl text-foreground/40 placeholder:text-foreground/20 resize-none overflow-hidden min-h-[100px]"
-                      placeholder="Software Engineers with 5+ yrs of experience at fintech companies in the Bay Area"
+                      className="w-full bg-transparent border-0 focus:ring-0 p-0 text-lg text-foreground/50 placeholder:text-foreground/20 resize-none overflow-hidden min-h-[80px]"
+                      placeholder="e.g. Senior Designer with 5+ yrs experience..."
+                      rows={3}
                     />
                     
-                    <div className="absolute bottom-6 right-6">
+                    <div className="flex items-center justify-between mt-4">
+                      <div className="flex items-center gap-2 text-[10px] text-foreground/30 font-medium uppercase tracking-wider">
+                        <Sparkles className="w-3 h-3" />
+                        AI Powered Search
+                      </div>
                       <Button 
                         size="icon" 
-                        className="w-12 h-12 rounded-full bg-white border border-black/[0.05] shadow-sm hover:bg-black/[0.02] transition-all group/btn"
+                        className="w-10 h-10 rounded-full bg-[#1A1A1A] text-white hover:bg-[#1A1A1A]/90 transition-all group/btn"
                       >
-                        <ChevronRight className="w-6 h-6 text-purple-600 group-hover/btn:translate-x-0.5 transition-transform" />
+                        <ChevronRight className="w-5 h-5 group-hover/btn:translate-x-0.5 transition-transform" />
                       </Button>
                     </div>
                   </div>
