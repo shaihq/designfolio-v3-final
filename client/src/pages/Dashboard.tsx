@@ -1614,7 +1614,7 @@ export default function Dashboard() {
                         </PromptInput>
 
                         <AnimatePresence>
-                          {isInputFocused && (
+                          {isInputFocused && !inputValue && (
                             <motion.div
                               initial={{ opacity: 0, y: -10 }}
                               animate={{ opacity: 1, y: 0 }}
@@ -1635,7 +1635,6 @@ export default function Dashboard() {
                                   onClick={() => {
                                     setInputValue(suggestion);
                                     setIsInputFocused(false);
-                                    handleSearch(suggestion);
                                   }}
                                 >
                                   {suggestion}
