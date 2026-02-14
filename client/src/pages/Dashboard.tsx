@@ -1653,7 +1653,7 @@ export default function Dashboard() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.4 }}
-                    className="w-full pt-12"
+                    className="w-full pt-6"
                   >
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-12">
                       <div className="flex items-center gap-5 w-full sm:w-auto flex-1">
@@ -1661,7 +1661,7 @@ export default function Dashboard() {
                           variant="ghost"
                           size="icon"
                           onClick={() => setShowSearchResults(false)}
-                          className="rounded-full bg-[#F5F3F1] hover:bg-[#EAE8E5] transition-colors shrink-0 h-10 w-10"
+                          className="rounded-full bg-white border border-border hover:bg-[#F5F3F1] transition-colors shrink-0 h-10 w-10"
                         >
                           <ChevronLeft className="w-5 h-5 text-[#1A1A1A]" />
                         </Button>
