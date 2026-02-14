@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, Suspense, lazy } from "react";
 const Lottie = lazy(() => import("lottie-react"));
+import aiLogoLottie from "../../public/ai-logo-lottie.json";
 import { toast } from "@/hooks/use-toast";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -1451,7 +1452,7 @@ export default function Dashboard() {
               <div className="flex justify-center mb-6">
                 <Suspense fallback={<div className="w-24 h-24" />}>
                   <Lottie 
-                    animationData={require("../../public/ai-logo-lottie.json")} 
+                    animationData={aiLogoLottie} 
                     style={{ width: 120, height: 120 }}
                     loop={true}
                   />
