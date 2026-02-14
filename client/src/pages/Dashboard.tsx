@@ -1449,7 +1449,7 @@ export default function Dashboard() {
         <main className={`pb-6 ${activeTab === "AI Job Search" ? "flex items-center justify-center min-h-[calc(100vh-200px)]" : ""}`}>
           {activeTab === "AI Job Search" ? (
             <div className="px-4 sm:px-0 max-w-2xl mx-auto w-full">
-              <div className="flex justify-center mb-6">
+              <div className="flex justify-center mb-2">
                 <Suspense fallback={<div className="w-24 h-24" />}>
                   <Lottie 
                     animationData={aiLogoLottie} 
@@ -1464,7 +1464,7 @@ export default function Dashboard() {
                 transition={{ duration: 0.4 }}
                 className="text-center"
               >
-                <h1 className="text-2xl font-semibold mb-6 text-[#1A1A1A]">
+                <h1 className="text-3xl font-semibold mb-6 text-[#1A1A1A]">
                   Hey Shai, what kind of job are you looking for?
                 </h1>
                 
