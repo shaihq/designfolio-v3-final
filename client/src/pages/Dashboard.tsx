@@ -1727,6 +1727,22 @@ export default function Dashboard() {
                                               <span>{new Date(job.date_posted).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>
                                             </>
                                           )}
+                                          <span className="w-1 h-1 rounded-full bg-black/10" />
+                                          <span className="text-primary/80">
+                                            {job.salary_source ? (
+                                              <>
+                                                {job.min_amount && job.max_amount ? (
+                                                  `${job.currency || '$'}${job.min_amount.toLocaleString()} - ${job.max_amount.toLocaleString()}${job.interval ? `/${job.interval}` : ''}`
+                                                ) : job.min_amount ? (
+                                                  `From ${job.currency || '$'}${job.min_amount.toLocaleString()}${job.interval ? `/${job.interval}` : ''}`
+                                                ) : (
+                                                  'Salary mentioned'
+                                                )}
+                                              </>
+                                            ) : (
+                                              'Salary not mentioned'
+                                            )}
+                                          </span>
                                         </div>
                                       </div>
 
