@@ -1464,7 +1464,7 @@ export default function Dashboard() {
                 transition={{ duration: 0.4 }}
                 className="text-center"
               >
-                <h1 className="text-3xl font-semibold mb-6 text-[#1A1A1A]">
+                <h1 className="text-2xl font-semibold mb-6 text-[#1A1A1A]">
                   Hey Shai, what kind of job are you looking for?
                 </h1>
                 
@@ -1489,13 +1489,13 @@ export default function Dashboard() {
                   value={inputValue}
                   onValueChange={setInputValue}
                   onSubmit={() => console.log("Searching:", inputValue)}
-                  className="transition-all"
+                  className="transition-all relative"
                 >
                   <PromptInputTextarea 
                     placeholder="e.g. Senior product design roles at fast-growing startups, focused on B2B SaaS" 
-                    className="focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none"
+                    className="focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none pr-14"
                   />
-                  <PromptInputActions>
+                  <PromptInputActions className="absolute right-2 top-1/2 -translate-y-1/2">
                     <Button 
                       size="icon" 
                       className="w-10 h-10 rounded-full bg-[#1A1A1A] text-white hover:bg-[#1A1A1A]/90 transition-all group/btn"
@@ -1507,16 +1507,54 @@ export default function Dashboard() {
                   </PromptInputActions>
                 </PromptInput>
 
-                <div className="flex flex-wrap justify-center gap-2 mt-6">
-                  <PromptSuggestion onClick={() => setInputValue("Product Designer roles at Series B startups, remote-friendly")}>
-                    Product Designer roles at Series B startups, remote-friendly
-                  </PromptSuggestion>
-                  <PromptSuggestion onClick={() => setInputValue("Senior UX Designer jobs in fintech companies")}>
-                    Senior UX Designer jobs in fintech companies
-                  </PromptSuggestion>
-                  <PromptSuggestion onClick={() => setInputValue("Frontend Engineer roles using React and Next.js")}>
-                    Frontend Engineer roles using React and Next.js
-                  </PromptSuggestion>
+                <div className="relative mt-6 group">
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="shrink-0 h-8 w-8 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={() => {
+                        const container = document.getElementById('prompt-suggestions-container');
+                        if (container) container.scrollBy({ left: -200, behavior: 'smooth' });
+                      }}
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </Button>
+                    
+                    <div 
+                      id="prompt-suggestions-container"
+                      className="flex overflow-x-auto gap-2 no-scrollbar scroll-smooth flex-1 pb-2"
+                      style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
+                    >
+                      {[
+                        "Product Designer roles at Series B startups, remote-friendly",
+                        "Senior UX Designer jobs in fintech companies",
+                        "Frontend Engineer roles using React and Next.js",
+                        "Mobile App Developer jobs in health tech",
+                        "Full Stack Engineer roles at early stage startups"
+                      ].map((suggestion, idx) => (
+                        <PromptSuggestion 
+                          key={idx} 
+                          className="whitespace-nowrap shrink-0"
+                          onClick={() => setInputValue(suggestion)}
+                        >
+                          {suggestion}
+                        </PromptSuggestion>
+                      ))}
+                    </div>
+
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="shrink-0 h-8 w-8 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      onClick={() => {
+                        const container = document.getElementById('prompt-suggestions-container');
+                        if (container) container.scrollBy({ left: 200, behavior: 'smooth' });
+                      }}
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </Button>
+                  </div>
                 </div>
               </motion.div>
             </div>
