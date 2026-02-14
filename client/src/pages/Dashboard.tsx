@@ -1480,11 +1480,11 @@ export default function Dashboard() {
                   value={inputValue}
                   onValueChange={setInputValue}
                   onSubmit={() => console.log("Searching:", inputValue)}
-                  className="focus-within:ring-2 focus-within:ring-[#1A1A1A] focus-within:ring-offset-2 transition-all"
+                  className="transition-all"
                 >
                   <PromptInputTextarea 
                     placeholder="e.g. Senior Designer with 5+ yrs experience..." 
-                    className="focus:ring-0 focus-visible:ring-0"
+                    className="focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none"
                   />
                   <PromptInputActions>
                     <Button 
