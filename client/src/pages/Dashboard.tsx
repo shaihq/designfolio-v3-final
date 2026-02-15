@@ -1820,9 +1820,9 @@ export default function Dashboard() {
                                               <ExternalLink className="w-3.5 h-3.5" />
                                             </a>
                                             {(job.url?.includes('linkedin.com') || job.job_url?.includes('linkedin.com')) ? (
-                                              <Linkedin className="w-4 h-4 text-[#0A66C2] shrink-0" />
+                                              <img src="/Linkedin.svg" alt="LinkedIn" className="w-4 h-4 shrink-0" />
                                             ) : (job.url?.includes('indeed.com') || job.job_url?.includes('indeed.com')) ? (
-                                              <div className="w-4 h-4 flex items-center justify-center font-bold text-white bg-[#2164f3] text-[10px] rounded-sm shrink-0">i</div>
+                                              <img src="/Indeed.svg" alt="Indeed" className="w-4 h-4 shrink-0" />
                                             ) : null}
                                           </div>
                                         </div>
