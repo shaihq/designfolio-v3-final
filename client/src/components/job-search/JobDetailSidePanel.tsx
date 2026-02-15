@@ -160,7 +160,7 @@ export const JobDetailSidePanel: React.FC<JobDetailSidePanelProps> = ({ job, isO
       className={`fixed right-0 top-0 h-full bg-white border-l border-border transition-transform duration-300 z-40 ${
         isOpen ? 'translate-x-0' : 'translate-x-full'
       }`}
-      style={{ width: '320px' }}
+      style={{ width: '450px' }}
     >
       {PanelContent}
     </div>
