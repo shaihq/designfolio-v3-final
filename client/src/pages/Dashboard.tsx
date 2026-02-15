@@ -1872,11 +1872,6 @@ export default function Dashboard() {
                                         )}
                                       </div>
                                     </div>
-                                    {job.description && (
-                                      <p className="text-[13px] text-[#1A1A1A]/60 mt-2 line-clamp-2 leading-relaxed w-full">
-                                        {job.description.replace(/<[^>]*>?/gm, '').split('\n').filter((line: string) => line.trim()).slice(0, 2).join(' ')}
-                                      </p>
-                                    )}
                                   </div>
                               </div>
                             </div>
