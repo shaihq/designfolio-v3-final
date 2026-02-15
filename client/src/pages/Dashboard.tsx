@@ -995,9 +995,12 @@ export default function Dashboard() {
 
   const [isUpgradePopupOpen, setIsUpgradePopupOpen] = useState(false);
 
+  const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
+
   const handleToggleVisibility = (projectId: number) => {
     const project = caseStudies.find(p => p.id === projectId);
     if (project && project.isHidden && caseStudies.filter(p => !p.isHidden).length >= 2) {
+      setSelectedProjectId(projectId);
       setIsUpgradePopupOpen(true);
       return;
     }
@@ -1578,33 +1581,63 @@ export default function Dashboard() {
 
       {/* Upgrade Popup */}
       <Dialog open={isUpgradePopupOpen} onOpenChange={setIsUpgradePopupOpen}>
-        <DialogContent className="max-w-md p-0 border-0 overflow-hidden rounded-2xl bg-white shadow-2xl">
-          <div className="bg-gradient-to-br from-[#FF553E] to-[#FF8C7E] p-8 text-white relative">
-            <div className="absolute top-4 right-4 text-white/20">
-              <Crown className="w-24 h-24 rotate-12" />
-            </div>
-            <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-4">
-                <Crown className="w-5 h-5 fill-current" />
-                <span className="text-[10px] font-bold uppercase tracking-widest text-white/90">Premium Feature</span>
-              </div>
-              <h2 className="text-2xl font-bold mb-2">Upgrade to PRO</h2>
-              <p className="text-white/80 text-sm leading-relaxed">
-                You've used your 2 free case studies. Get lifetime access to add unlimited case studies and unlock all premium features.
-              </p>
-            </div>
-          </div>
-          <div className="p-6 bg-white flex flex-col gap-3">
-            <Button className="w-full bg-[#FF553E] hover:bg-[#FF553E]/90 text-white rounded-full py-6 font-bold text-lg shadow-lg shadow-[#FF553E]/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
-              Get Lifetime Access
-            </Button>
-            <Button 
-              variant="ghost" 
+        <DialogContent className="max-w-[400px] p-0 border-0 overflow-hidden rounded-[32px] bg-white shadow-2xl">
+          <div className="bg-gradient-to-b from-[#FFD166] via-[#FFD166]/50 to-white pt-10 pb-6 px-8 text-center relative">
+            <button 
               onClick={() => setIsUpgradePopupOpen(false)}
-              className="w-full text-foreground/40 hover:text-foreground text-xs font-semibold uppercase tracking-widest"
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/80 hover:bg-white text-gray-500 transition-colors"
             >
-              Maybe later
+              <X className="w-4 h-4" />
+            </button>
+            
+            <div className="flex justify-center mb-6">
+              <div className="relative">
+                <span className="text-6xl drop-shadow-sm">👑</span>
+              </div>
+            </div>
+
+            <h2 className="text-2xl font-bold text-[#1A1A1A] mb-2 px-4 leading-tight">
+              {selectedProjectId ? (
+                `Unlocking ${caseStudies.find(p => p.id === selectedProjectId)?.title || 'Project'}?`
+              ) : (
+                "Designfolio Lifetime Access"
+              )}
+            </h2>
+            <p className="text-gray-500 text-[15px] leading-relaxed mb-6">
+              Just one payment. That's it. You get everything, forever.
+            </p>
+
+            <div className="mb-6">
+              <div className="text-4xl font-bold text-[#1A1A1A]">₹4,999</div>
+              <div className="text-gray-400 text-sm mt-1 font-medium">one-time payment</div>
+            </div>
+
+            <Button className="w-full bg-[#FF553E] hover:bg-[#FF553E]/90 text-white rounded-2xl py-7 font-bold text-lg transition-all hover:scale-[1.01] active:scale-[0.98] mb-4">
+              Upgrade Now
             </Button>
+
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FFF8E6] border border-[#FFE8A3] text-[#A67C00] text-[13px] font-medium mb-8">
+              <span className="text-base">⏰</span>
+              Will be ₹7,999 starting next month
+            </div>
+
+            <div className="space-y-4 text-left px-2 mb-4">
+              {[
+                "Use your own custom domain",
+                "Access all templates — now & forever",
+                "Create unlimited projects (not just 2)",
+                "Track views with built-in analytics"
+              ].map((benefit, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <div className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-[#4ADE80] flex items-center justify-center">
+                    <Check className="w-3 h-3 text-white stroke-[3px]" />
+                  </div>
+                  <span className="text-[15px] text-[#4B5563] font-medium leading-tight">
+                    {benefit}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </DialogContent>
       </Dialog>
