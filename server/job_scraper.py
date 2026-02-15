@@ -2,13 +2,15 @@ import json
 import sys
 from jobspy import scrape_jobs
 
-def search_jobs(query, location="Remote", distance=25, job_type="fulltime", results_wanted=10):
+def search_jobs(query, platform="linkedin", location="Remote", distance=25, job_type="fulltime", results_wanted=40):
     """
     Integrates JobSpy to scrape jobs from LinkedIn, Indeed, Glassdoor, and ZipRecruiter.
     """
     try:
+        site_name = [platform] if platform in ["indeed", "linkedin", "zip_recruiter", "glassdoor"] else ["linkedin"]
+        
         jobs = scrape_jobs(
-            site_name=["indeed", "linkedin", "zip_recruiter", "glassdoor"],
+            site_name=site_name,
             search_term=query,
             location=location,
             distance=distance,
@@ -36,7 +38,12 @@ def search_jobs(query, location="Remote", distance=25, job_type="fulltime", resu
         return []
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
+    if len(sys.argv) > 2:
+        query = sys.argv[1]
+        platform = sys.argv[2]
+        results = search_jobs(query, platform=platform)
+        print(json.dumps(results))
+    elif len(sys.argv) > 1:
         query = sys.argv[1]
         results = search_jobs(query)
         print(json.dumps(results))

@@ -32,7 +32,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
 
     try {
-      const pythonProcess = spawn("python3", ["server/job_scraper.py", query]);
+      const platform = (req.query.platform as string) || "linkedin";
+      const pythonProcess = spawn("python3", ["server/job_scraper.py", query, platform]);
       let dataString = "";
       let errorString = "";
 
