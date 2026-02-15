@@ -1690,7 +1690,7 @@ export default function Dashboard() {
                       {jobs.map((job, idx) => (
                         <Card 
                           key={idx} 
-                          onClick={() => job.job_url && window.open(job.job_url, '_blank')}
+                          onClick={() => setSelectedJob(job)}
                           className="p-5 bg-white border border-black/[0.03] rounded-2xl shadow-sm hover:shadow-md hover:border-black/[0.08] transition-all group cursor-pointer text-left w-full"
                         >
                           <div className="flex items-center gap-5">
