@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { useState, useEffect, useRef, Suspense, lazy } from "react";
 const Lottie = lazy(() => import("lottie-react"));
 import aiLogoLottie from "../../public/ai-logo-lottie.json";
@@ -802,7 +803,7 @@ export default function Dashboard() {
     if (!query.trim()) return;
     setIsSearching(true);
     try {
-      const response = await fetch(`/api/jobs/search?q=${encodeURIComponent(query)}`);
+      const response = await fetch(`/api/jobs/search?q=${encodeURIComponent(query)}&platform=${searchPlatform}`);
       if (response.ok) {
         const data = await response.json();
         setJobs(data);
