@@ -1731,9 +1731,9 @@ export default function Dashboard() {
                                   }}
                                 >
                                   {searchPlatform === 'linkedin' ? (
-                                    <img src="/Linkedin.svg" className="w-4 h-4" alt="LinkedIn" />
+                                    <img src="/linkedin-circle.svg" className="w-4 h-4" alt="LinkedIn" />
                                   ) : (
-                                    <img src="/Indeed.svg" className="w-4 h-4" alt="Indeed" />
+                                    <img src="/indeed-circle.svg" className="w-4 h-4" alt="Indeed" />
                                   )}
                                 </motion.div>
                               </div>
