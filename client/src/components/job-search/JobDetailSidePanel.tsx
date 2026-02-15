@@ -42,9 +42,9 @@ export const JobDetailSidePanel: React.FC<JobDetailSidePanelProps> = ({ job, isO
       <div className="flex items-center justify-between p-6 border-b border-border pt-[16px] pb-[16px]">
         <div className="flex items-center gap-2">
           {isLinkedin ? (
-            <Linkedin className="w-5 h-5 text-[#0A66C2]" />
+            <img src="/Linkedin.svg" alt="LinkedIn" className="w-5 h-5 shrink-0" />
           ) : isIndeed ? (
-            <div className="w-5 h-5 flex items-center justify-center font-bold text-white bg-[#2164f3] text-[12px] rounded-sm">i</div>
+            <img src="/Indeed.svg" alt="Indeed" className="w-5 h-5 shrink-0" />
           ) : (
             <Building2 className="w-5 h-5 text-black/40" />
           )}
