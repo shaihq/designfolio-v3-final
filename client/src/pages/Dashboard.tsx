@@ -1582,6 +1582,12 @@ export default function Dashboard() {
       {/* Upgrade Popup */}
       <Dialog open={isUpgradePopupOpen} onOpenChange={setIsUpgradePopupOpen}>
         <DialogContent className="max-w-[400px] p-0 border-0 overflow-hidden rounded-[32px] bg-white shadow-2xl">
+          <DialogHeader className="sr-only">
+            <DialogTitle>Upgrade to PRO</DialogTitle>
+            <DialogDescription>
+              Upgrade to Designfolio PRO to unlock unlimited projects and premium features.
+            </DialogDescription>
+          </DialogHeader>
           <div className="bg-gradient-to-b from-[#FFD166] via-[#FFD166]/50 to-white pt-10 pb-6 px-8 text-center relative">
             <button 
               onClick={() => setIsUpgradePopupOpen(false)}
