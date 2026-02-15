@@ -178,6 +178,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 export default function Dashboard() {
   const { playPick, playPlace } = usePegboardSounds();
   const isMobile = useIsMobile();
+  const [searchPlatform, setSearchPlatform] = useState<'linkedin' | 'indeed'>('linkedin');
   const [isThemePanelOpen, setIsThemePanelOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [isResumeDialogOpen, setIsResumeDialogOpen] = useState(false);
@@ -1706,7 +1707,48 @@ export default function Dashboard() {
                             className="focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none pr-14"
                             onFocus={() => setIsInputFocused(true)}
                           />
-                          <PromptInputActions className="absolute right-2 top-1/2 -translate-y-1/2">
+                          <PromptInputActions className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => setSearchPlatform(prev => prev === 'linkedin' ? 'indeed' : 'linkedin')}
+                              className={cn(
+                                "rounded-full transition-all flex items-center gap-2 px-1.5 py-1 border h-8 group/platform",
+                                searchPlatform === 'linkedin'
+                                  ? "bg-sky-500/15 border-sky-400 text-sky-500"
+                                  : "bg-[#FF9900]/15 border-[#FF9900]/40 text-[#FF9900]"
+                              )}
+                            >
+                              <div className="w-4 h-4 flex items-center justify-center flex-shrink-0">
+                                <motion.div
+                                  animate={{
+                                    rotate: searchPlatform === 'linkedin' ? 0 : 360,
+                                  }}
+                                  transition={{
+                                    type: "spring",
+                                    stiffness: 260,
+                                    damping: 25,
+                                  }}
+                                >
+                                  {searchPlatform === 'linkedin' ? (
+                                    <img src="/Linkedin.svg" className="w-4 h-4" alt="LinkedIn" />
+                                  ) : (
+                                    <img src="/Indeed.svg" className="w-4 h-4" alt="Indeed" />
+                                  )}
+                                </motion.div>
+                              </div>
+                              <AnimatePresence mode="wait">
+                                <motion.span
+                                  key={searchPlatform}
+                                  initial={{ width: 0, opacity: 0 }}
+                                  animate={{ width: "auto", opacity: 1 }}
+                                  exit={{ width: 0, opacity: 0 }}
+                                  transition={{ duration: 0.2 }}
+                                  className="text-[11px] font-bold uppercase tracking-wider overflow-hidden whitespace-nowrap"
+                                >
+                                  {searchPlatform}
+                                </motion.span>
+                              </AnimatePresence>
+                            </button>
                             <Button 
                               size="icon" 
                               className="w-10 h-10 rounded-full bg-[#1A1A1A] text-white hover:bg-[#1A1A1A]/90 transition-all group/btn"
