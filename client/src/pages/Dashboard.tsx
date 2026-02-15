@@ -1827,7 +1827,7 @@ export default function Dashboard() {
                                           </div>
                                         </div>
                                         <div className="flex items-center flex-wrap gap-x-4 gap-y-2 text-[13px] text-[#1A1A1A]/40 mt-1 font-medium">
-                                          <span>{job.company}</span>
+                                          {job.company && <span>{job.company}</span>}
                                           {job.location && (
                                             <div className="flex items-center gap-1.5">
                                               <MapPin className="w-3.5 h-3.5 opacity-50" />
