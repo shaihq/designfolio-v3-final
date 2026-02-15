@@ -892,7 +892,32 @@ export default function Dashboard() {
     category: string;
     image: string;
     isHidden: boolean;
-  }>>([]);
+  }>>([
+    {
+      id: 1,
+      title: "Eco-Friendly Delivery App",
+      description: "Optimizing last-mile delivery with a focus on carbon footprint reduction and route efficiency.",
+      category: "Product Design",
+      image: "/casestudyux1.svg",
+      isHidden: false
+    },
+    {
+      id: 2,
+      title: "Smart Home Hub",
+      description: "A centralized dashboard for managing IoT devices with intuitive automation and energy monitoring.",
+      category: "UX Research",
+      image: "/casestudyux2.svg",
+      isHidden: false
+    },
+    {
+      id: 3,
+      title: "Financial Wellness Tracker",
+      description: "Empowering users to reach their savings goals through automated budgeting and behavioral nudges.",
+      category: "Mobile Design",
+      image: "/casestudy.png",
+      isHidden: false
+    }
+  ]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -1953,20 +1978,46 @@ export default function Dashboard() {
                             </>
                           )}
                         </Button>
-                        {caseStudies.length > 0 && (
-                          <Button
-                            onClick={() => setIsTemplateDialogOpen(true)}
-                            variant="outline"
-                            size="icon"
-                            className="rounded-full h-11 w-11"
-                            data-testid="button-add-case-study-header"
-                          >
-                            <Plus className="w-5 h-5" />
-                          </Button>
-                        )}
+                        <Button
+                          onClick={() => setIsTemplateDialogOpen(true)}
+                          variant="outline"
+                          size="icon"
+                          className="rounded-full h-11 w-11"
+                          data-testid="button-add-case-study-header"
+                        >
+                          <Plus className="w-5 h-5" />
+                        </Button>
                       </div>
                     </div>
-                    
+
+                    {/* Upgrade Pro Card */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mb-8"
+                    >
+                      <Card className="bg-gradient-to-br from-[#FF553E] to-[#FF8C7E] border-0 rounded-2xl p-6 text-white overflow-hidden relative group">
+                        <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                          <Crown className="w-32 h-32 rotate-12" />
+                        </div>
+                        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <Crown className="w-5 h-5 fill-current" />
+                              <span className="text-xs font-bold uppercase tracking-widest">Premium Feature</span>
+                            </div>
+                            <h3 className="text-2xl font-bold">Upgrade to Pro</h3>
+                            <p className="text-white/80 text-sm max-w-md">
+                              Unlock advanced analytics, custom domains, and unlimited case studies to take your portfolio to the next level.
+                            </p>
+                          </div>
+                          <Button className="bg-white text-[#FF553E] hover:bg-white/90 rounded-full px-8 py-4 h-auto font-bold text-lg shadow-xl shadow-black/10 transition-all hover:scale-105 active:scale-95">
+                            Get Pro Access
+                          </Button>
+                        </div>
+                      </Card>
+                    </motion.div>
+                                        
                     {caseStudies.length === 0 ? (
                       <div 
                         className="border border-border/30 rounded-2xl p-10 shadow-none"
