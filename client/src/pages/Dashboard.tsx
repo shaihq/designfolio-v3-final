@@ -4632,6 +4632,11 @@ export default function Dashboard() {
           </div>
         </div>
       )}
+      <JobDetailSidePanel 
+        job={selectedJob} 
+        isOpen={!!selectedJob} 
+        onClose={() => setSelectedJob(null)} 
+      />
     </div>
     </div>
   );
