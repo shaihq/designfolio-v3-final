@@ -806,7 +806,12 @@ export default function Dashboard() {
       const response = await fetch(`/api/jobs/search?q=${encodeURIComponent(query)}&platform=${searchPlatform}`);
       if (response.ok) {
         const data = await response.json();
-        setJobs(data);
+        // Filter results on client side just in case API returns mixed results
+        const filteredData = data.filter((job: any) => {
+          const jobUrl = (job.url || job.job_url || "").toLowerCase();
+          return jobUrl.includes(searchPlatform === 'linkedin' ? 'linkedin.com' : 'indeed.com');
+        });
+        setJobs(filteredData);
         setShowSearchResults(true);
       }
     } catch (error) {
