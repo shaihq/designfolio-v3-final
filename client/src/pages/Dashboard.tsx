@@ -98,6 +98,7 @@ import {
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { StardustButton } from '@/components/StardustButton';
+import { JobDetailSidePanel } from '@/components/job-search/JobDetailSidePanel';
 import { TiptapEditor } from '@/components/TiptapEditor';
 import { Dock, DockIcon, DockItem, DockLabel } from "@/components/ui/dock";
 import MacOSDock from "@/components/ui/mac-os-dock";
@@ -792,6 +793,7 @@ export default function Dashboard() {
   const [inputValue, setInputValue] = useState("");
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [jobs, setJobs] = useState<any[]>([]);
+  const [selectedJob, setSelectedJob] = useState<any | null>(null);
   const [showSearchResults, setShowSearchResults] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
