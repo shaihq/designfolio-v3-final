@@ -915,7 +915,7 @@ export default function Dashboard() {
       description: "Empowering users to reach their savings goals through automated budgeting and behavioral nudges.",
       category: "Mobile Design",
       image: "/casestudy.png",
-      isHidden: false
+      isHidden: true
     }
   ]);
 
@@ -993,7 +993,14 @@ export default function Dashboard() {
     setIsTemplateDialogOpen(false);
   };
 
+  const [isUpgradePopupOpen, setIsUpgradePopupOpen] = useState(false);
+
   const handleToggleVisibility = (projectId: number) => {
+    const project = caseStudies.find(p => p.id === projectId);
+    if (project && project.isHidden && caseStudies.filter(p => !p.isHidden).length >= 2) {
+      setIsUpgradePopupOpen(true);
+      return;
+    }
     setCaseStudies(prev => prev.map(p => 
       p.id === projectId ? { ...p, isHidden: !p.isHidden } : p
     ));
@@ -1569,7 +1576,40 @@ export default function Dashboard() {
           </Card>
         </div>
 
-        <main className={`pb-6 ${activeTab === "AI Job Search" ? "min-h-[calc(100vh-100px)]" : ""}`}>
+      {/* Upgrade Popup */}
+      <Dialog open={isUpgradePopupOpen} onOpenChange={setIsUpgradePopupOpen}>
+        <DialogContent className="max-w-md p-0 border-0 overflow-hidden rounded-2xl bg-white shadow-2xl">
+          <div className="bg-gradient-to-br from-[#FF553E] to-[#FF8C7E] p-8 text-white relative">
+            <div className="absolute top-4 right-4 text-white/20">
+              <Crown className="w-24 h-24 rotate-12" />
+            </div>
+            <div className="relative z-10">
+              <div className="flex items-center gap-2 mb-4">
+                <Crown className="w-5 h-5 fill-current" />
+                <span className="text-[10px] font-bold uppercase tracking-widest text-white/90">Premium Feature</span>
+              </div>
+              <h2 className="text-2xl font-bold mb-2">Upgrade to PRO</h2>
+              <p className="text-white/80 text-sm leading-relaxed">
+                You've used your 2 free case studies. Get lifetime access to add unlimited case studies and unlock all premium features.
+              </p>
+            </div>
+          </div>
+          <div className="p-6 bg-white flex flex-col gap-3">
+            <Button className="w-full bg-[#FF553E] hover:bg-[#FF553E]/90 text-white rounded-full py-6 font-bold text-lg shadow-lg shadow-[#FF553E]/20 transition-all hover:scale-[1.02] active:scale-[0.98]">
+              Get Lifetime Access
+            </Button>
+            <Button 
+              variant="ghost" 
+              onClick={() => setIsUpgradePopupOpen(false)}
+              className="w-full text-foreground/40 hover:text-foreground text-xs font-semibold uppercase tracking-widest"
+            >
+              Maybe later
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <main className={`pb-6 ${activeTab === "AI Job Search" ? "min-h-[calc(100vh-100px)]" : ""}`}>
           {activeTab === "AI Job Search" ? (
             <div className="px-4 sm:px-6 max-w-5xl mx-auto w-full">
               <AnimatePresence mode="wait">
