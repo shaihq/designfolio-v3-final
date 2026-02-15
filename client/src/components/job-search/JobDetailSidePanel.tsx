@@ -4,6 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MapPin, Calendar, Banknote, Linkedin, ExternalLink, Building2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface Job {
   title: string;
@@ -123,10 +125,11 @@ export const JobDetailSidePanel: React.FC<JobDetailSidePanelProps> = ({ job, isO
 
           <div className="border-t border-border/50 pt-6">
             <h4 className="text-sm font-semibold text-[#1A1A1A] mb-3 uppercase tracking-wider">Job Description</h4>
-            <div 
-              className="text-sm text-[#1A1A1A]/80 leading-relaxed space-y-4 prose prose-sm max-w-none"
-              dangerouslySetInnerHTML={{ __html: job.description || 'No description available.' }}
-            />
+            <div className="text-sm text-[#1A1A1A]/80 leading-relaxed space-y-4 prose prose-sm max-w-none">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {job.description || 'No description available.'}
+              </ReactMarkdown>
+            </div>
           </div>
         </div>
       </ScrollArea>
