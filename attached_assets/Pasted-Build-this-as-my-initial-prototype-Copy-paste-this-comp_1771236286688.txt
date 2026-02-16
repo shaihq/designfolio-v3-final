@@ -1,0 +1,472 @@
+Build this as my initial prototype
+
+Copy-paste this component to /components/ui folder:
+```tsx
+ai-actions.tsx
+ 
+
+import Image from "next/image"
+import {
+  CopyIcon,
+  RefreshCcwIcon,
+  ShareIcon,
+  ThumbsDownIcon,
+  ThumbsUpIcon,
+} from "lucide-react"
+
+import { Action, Actions } from "@/components/ui/actions"
+import {
+  Conversation,
+  ConversationContent,
+} from "@/components/ui/conversation"
+import { Message, MessageContent } from "@/components/ui/message"
+
+const messages: {
+  id: string
+  from: "user" | "assistant"
+  content: string
+  avatar: string
+  name: string
+}[] = [
+  {
+    id: "1",
+    from: "user",
+    content: "Hello, how are you?",
+    avatar: "https://github.com/evilrabbit.png",
+    name: "Ali Imam",
+  },
+  {
+    id: "2",
+    from: "assistant",
+    content: "I am fine, thank you!",
+    avatar: "https://github.com/openai.png",
+    name: "OpenAI",
+  },
+]
+const Example = () => {
+  const actions = [
+    {
+      icon: RefreshCcwIcon,
+      label: "Retry",
+    },
+    {
+      icon: ThumbsUpIcon,
+      label: "Like",
+    },
+    {
+      icon: ThumbsDownIcon,
+      label: "Dislike",
+    },
+    {
+      icon: CopyIcon,
+      label: "Copy",
+    },
+    {
+      icon: ShareIcon,
+      label: "Share",
+    },
+  ]
+  return (
+    <div className="flex h-full w-full max-w-lg items-center justify-center">
+      <Conversation className="relative w-full">
+        <ConversationContent>
+          {messages.map((message) => (
+            <Message
+              className={`flex flex-col gap-2 ${message.from === "assistant" ? "items-start" : "items-end"}`}
+              from={message.from}
+              key={message.id}
+            >
+              <Image
+                src={message.avatar}
+                alt={message.name}
+                width={32}
+                height={32}
+                className="h-8 w-8 rounded-full"
+              />
+              <MessageContent>{message.content}</MessageContent>
+              {message.from === "assistant" && (
+                <Actions className="mt-2">
+                  {actions.map((action) => (
+                    <Action key={action.label} label={action.label}>
+                      <action.icon className="size-4" />
+                    </Action>
+                  ))}
+                </Actions>
+              )}
+            </Message>
+          ))}
+        </ConversationContent>
+      </Conversation>
+    </div>
+  )
+}
+
+export { Example }
+
+
+demo.tsx
+import { Example } from "@/components/ui/ai-actions";
+
+export default function DemoOne() {
+  return <Example />;
+}
+
+```
+
+Copy-paste these files for dependencies:
+```tsx
+vercel/actions
+'use client';
+
+import type { ComponentProps } from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { cn } from '@/lib/utils';
+
+export type ActionsProps = ComponentProps<'div'>;
+
+export const Actions = ({ className, children, ...props }: ActionsProps) => (
+  <div className={cn('flex items-center gap-1', className)} {...props}>
+    {children}
+  </div>
+);
+
+export type ActionProps = ComponentProps<typeof Button> & {
+  tooltip?: string;
+  label?: string;
+};
+
+export const Action = ({
+  tooltip,
+  children,
+  label,
+  className,
+  variant = 'ghost',
+  size = 'sm',
+  ...props
+}: ActionProps) => {
+  const button = (
+    <Button
+      className={cn(
+        'size-9 p-1.5 text-muted-foreground hover:text-foreground',
+        className,
+      )}
+      size={size}
+      type="button"
+      variant={variant}
+      {...props}
+    >
+      {children}
+      <span className="sr-only">{label || tooltip}</span>
+    </Button>
+  );
+
+  if (tooltip) {
+    return (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>{button}</TooltipTrigger>
+          <TooltipContent>
+            <p>{tooltip}</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    );
+  }
+
+  return button;
+};
+
+```
+```tsx
+shadcn/button
+import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
+import { cva, type VariantProps } from "class-variance-authority"
+
+import { cn } from "@/lib/utils"
+
+const buttonVariants = cva(
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        destructive:
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        outline:
+          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+        secondary:
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
+        link: "text-primary underline-offset-4 hover:underline",
+      },
+      size: {
+        default: "h-10 px-4 py-2",
+        sm: "h-9 rounded-md px-3",
+        lg: "h-11 rounded-md px-8",
+        icon: "h-10 w-10",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  },
+)
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean
+}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button"
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    )
+  },
+)
+Button.displayName = "Button"
+
+export { Button, buttonVariants }
+
+```
+```tsx
+shadcn/tooltip
+"use client"
+
+import * as React from "react"
+import * as TooltipPrimitive from "@radix-ui/react-tooltip"
+
+import { cn } from "@/lib/utils"
+
+const TooltipProvider = TooltipPrimitive.Provider
+
+const Tooltip = TooltipPrimitive.Root
+
+const TooltipTrigger = TooltipPrimitive.Trigger
+
+const TooltipContent = React.forwardRef<
+  React.ElementRef<typeof TooltipPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
+>(({ className, sideOffset = 4, ...props }, ref) => (
+  <TooltipPrimitive.Content
+    ref={ref}
+    sideOffset={sideOffset}
+    className={cn(
+      "z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      className,
+    )}
+    {...props}
+  />
+))
+TooltipContent.displayName = TooltipPrimitive.Content.displayName
+
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
+
+```
+```tsx
+vercel/message
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '@/components/ui/avatar';
+import type { ComponentProps, HTMLAttributes } from 'react';
+import { cn } from '@/lib/utils';
+import type { UIMessage } from 'ai';
+
+export type MessageProps = HTMLAttributes<HTMLDivElement> & {
+  from: UIMessage['role'];
+};
+
+export const Message = ({ className, from, ...props }: MessageProps) => (
+  <div
+    className={cn(
+      'group flex w-full items-end justify-end gap-2 py-4',
+      from === 'user' ? 'is-user' : 'is-assistant flex-row-reverse justify-end',
+      '[&>div]:max-w-[80%]',
+      className,
+    )}
+    {...props}
+  />
+);
+
+export type MessageContentProps = HTMLAttributes<HTMLDivElement>;
+
+export const MessageContent = ({
+  children,
+  className,
+  ...props
+}: MessageContentProps) => (
+  <div
+    className={cn(
+      'flex flex-col gap-2 rounded-lg text-sm text-foreground px-4 py-3 overflow-hidden',
+      'group-[.is-user]:bg-primary group-[.is-user]:text-primary-foreground',
+      'group-[.is-assistant]:bg-secondary group-[.is-assistant]:text-foreground',
+      className,
+    )}
+    {...props}
+  >
+    <div className="is-user:dark">{children}</div>
+  </div>
+);
+
+export type MessageAvatarProps = ComponentProps<typeof Avatar> & {
+  src: string;
+  name?: string;
+};
+
+export const MessageAvatar = ({
+  src,
+  name,
+  className,
+  ...props
+}: MessageAvatarProps) => (
+  <Avatar
+    className={cn('size-8 ring ring-1 ring-border', className)}
+    {...props}
+  >
+    <AvatarImage alt="" className="mt-0 mb-0" src={src} />
+    <AvatarFallback>{name?.slice(0, 2) || 'ME'}</AvatarFallback>
+  </Avatar>
+);
+
+```
+```tsx
+shadcn/avatar
+"use client"
+
+import * as React from "react"
+import * as AvatarPrimitive from "@radix-ui/react-avatar"
+
+import { cn } from "@/lib/utils"
+
+const Avatar = React.forwardRef<
+  React.ElementRef<typeof AvatarPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>
+>(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Root
+    ref={ref}
+    className={cn(
+      "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
+      className,
+    )}
+    {...props}
+  />
+))
+Avatar.displayName = AvatarPrimitive.Root.displayName
+
+const AvatarImage = React.forwardRef<
+  React.ElementRef<typeof AvatarPrimitive.Image>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>
+>(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Image
+    ref={ref}
+    className={cn("aspect-square h-full w-full", className)}
+    {...props}
+  />
+))
+AvatarImage.displayName = AvatarPrimitive.Image.displayName
+
+const AvatarFallback = React.forwardRef<
+  React.ElementRef<typeof AvatarPrimitive.Fallback>,
+  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
+>(({ className, ...props }, ref) => (
+  <AvatarPrimitive.Fallback
+    ref={ref}
+    className={cn(
+      "flex h-full w-full items-center justify-center rounded-full bg-muted",
+      className,
+    )}
+    {...props}
+  />
+))
+AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName
+
+export { Avatar, AvatarImage, AvatarFallback }
+
+```
+```tsx
+vercel/conversation
+'use client';
+
+import { Button } from '@/components/ui/button';
+import { ArrowDownIcon } from 'lucide-react';
+import type { ComponentProps } from 'react';
+import { useCallback } from 'react';
+import { StickToBottom, useStickToBottomContext } from 'use-stick-to-bottom';
+import { cn } from '@/lib/utils';
+
+export type ConversationProps = ComponentProps<typeof StickToBottom>;
+
+export const Conversation = ({ className, ...props }: ConversationProps) => (
+  <StickToBottom
+    className={cn('relative flex-1 overflow-y-auto', className)}
+    initial="smooth"
+    resize="smooth"
+    role="log"
+    {...props}
+  />
+);
+
+export type ConversationContentProps = ComponentProps<
+  typeof StickToBottom.Content
+>;
+
+export const ConversationContent = ({
+  className,
+  ...props
+}: ConversationContentProps) => (
+  <StickToBottom.Content className={cn('p-4', className)} {...props} />
+);
+
+export type ConversationScrollButtonProps = ComponentProps<typeof Button>;
+
+export const ConversationScrollButton = ({
+  className,
+  ...props
+}: ConversationScrollButtonProps) => {
+  const { isAtBottom, scrollToBottom } = useStickToBottomContext();
+
+  const handleScrollToBottom = useCallback(() => {
+    scrollToBottom();
+  }, [scrollToBottom]);
+
+  return (
+    !isAtBottom && (
+      <Button
+        className={cn(
+          'absolute bottom-4 left-[50%] translate-x-[-50%] rounded-full',
+          className,
+        )}
+        onClick={handleScrollToBottom}
+        size="icon"
+        type="button"
+        variant="outline"
+        {...props}
+      >
+        <ArrowDownIcon className="size-4" />
+      </Button>
+    )
+  );
+};
+
+```
+
+Install these NPM dependencies:
+```bash
+next, lucide-react, @radix-ui/react-slot, class-variance-authority, @radix-ui/react-tooltip, ai, @radix-ui/react-avatar, use-stick-to-bottom
+```
