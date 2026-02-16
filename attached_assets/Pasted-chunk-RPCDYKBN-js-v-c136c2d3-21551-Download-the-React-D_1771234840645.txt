@@ -1,0 +1,28 @@
+chunk-RPCDYKBN.js?v=c136c2d3:21551 Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
+chunk-RPCDYKBN.js?v=c136c2d3:521 Warning: Unknown event handler property `onValueChange`. It will be ignored.
+    at div
+    at PromptInputActions (https://eec81418-dc54-47de-9337-fc42293ce681-00-fa0yn8r1da85.sisko.replit.dev/src/components/ui/prompt-input.tsx:95:3)
+    at div
+    at _c (https://eec81418-dc54-47de-9337-fc42293ce681-00-fa0yn8r1da85.sisko.replit.dev/src/components/ui/prompt-input.tsx:21:11)
+    at div
+    at div
+    at div
+    at MotionComponent (https://eec81418-dc54-47de-9337-fc42293ce681-00-fa0yn8r1da85.sisko.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/framer-motion.js?v=c136c2d3:945:40)
+    at PresenceChild (https://eec81418-dc54-47de-9337-fc42293ce681-00-fa0yn8r1da85.sisko.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/framer-motion.js?v=c136c2d3:121:24)
+    at AnimatePresence (https://eec81418-dc54-47de-9337-fc42293ce681-00-fa0yn8r1da85.sisko.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/framer-motion.js?v=c136c2d3:210:26)
+    at div
+    at main
+    at div
+    at div
+    at div
+    at div
+    at Dashboard (https://eec81418-dc54-47de-9337-fc42293ce681-00-fa0yn8r1da85.sisko.replit.dev/src/pages/Dashboard.tsx:176:20)
+    at Route (https://eec81418-dc54-47de-9337-fc42293ce681-00-fa0yn8r1da85.sisko.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=c136c2d3:191:16)
+    at Switch (https://eec81418-dc54-47de-9337-fc42293ce681-00-fa0yn8r1da85.sisko.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=c136c2d3:247:17)
+    at Router
+    at Provider2 (https://eec81418-dc54-47de-9337-fc42293ce681-00-fa0yn8r1da85.sisko.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=c136c2d3:55:15)
+    at TooltipProvider (https://eec81418-dc54-47de-9337-fc42293ce681-00-fa0yn8r1da85.sisko.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=c136c2d3:2962:5)
+    at QueryClientProvider (https://eec81418-dc54-47de-9337-fc42293ce681-00-fa0yn8r1da85.sisko.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=c136c2d3:2805:3)
+    at App
+printWarning @ chunk-RPCDYKBN.js?v=c136c2d3:521
+api/ai/job-clarification:1  Failed to load resource: the server responded with a status of 500 (Internal Server Error)
