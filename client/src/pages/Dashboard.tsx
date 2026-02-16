@@ -37,7 +37,6 @@ import { PromptInput, PromptInputTextarea, PromptInputActions } from "@/componen
 import { PromptSuggestion } from "@/components/ui/prompt-suggestion"
 import { 
   Sparkles, 
-  Share2, 
   Bell, 
   Plus,
   Link as LinkIcon,
@@ -67,6 +66,9 @@ import {
   Instagram,
   Dribbble,
   ThumbsUp,
+  RefreshCcw,
+  ThumbsDown,
+  Share2,
   ChevronLeft,
   ChevronRight,
   ChevronDown,
@@ -179,7 +181,6 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Conversation, ConversationContent } from "@/components/ui/conversation";
 import { Message, MessageContent, MessageAvatar } from "@/components/ui/message";
 import { Actions, Action } from "@/components/ui/actions";
-import { RefreshCcw, ThumbsUp, ThumbsDown, Copy, Share2 } from "lucide-react";
 
 export default function Dashboard() {
   const { playPick, playPlace } = usePegboardSounds();
