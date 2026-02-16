@@ -1756,7 +1756,7 @@ export default function Dashboard() {
                               )}
                             </div>
                             <div className={cn(
-                              "max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed font-sans shadow-sm",
+                              "max-w-[80%] rounded-2xl px-4 py-3 text-lg leading-relaxed font-sans shadow-sm",
                               msg.role === 'user' 
                                 ? "bg-[#1A1A1A] text-white rounded-tr-none" 
                                 : "bg-white text-[#1A1A1A] rounded-tl-none border border-black/[0.05]"
