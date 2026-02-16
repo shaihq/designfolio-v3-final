@@ -791,6 +791,7 @@ export default function Dashboard() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [visibleTestimonials, setVisibleTestimonials] = useState<Set<number>>(new Set());
   const [isTemplateDialogOpen, setIsTemplateDialogOpen] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [jobs, setJobs] = useState<any[]>([]);
@@ -799,6 +800,7 @@ export default function Dashboard() {
   const [showClarification, setShowClarification] = useState(false);
   const [aiClarification, setAiClarification] = useState<string | null>(null);
   const [clarificationHistory, setClarificationHistory] = useState<any[]>([]);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleSearch = async (query: string, isFromAi = false) => {
     if (!query.trim()) return;
