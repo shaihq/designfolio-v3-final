@@ -1726,49 +1726,70 @@ export default function Dashboard() {
                     <div className="w-full max-w-2xl flex flex-col h-full">
                       {/* Chat History */}
                       <div className="flex-1 overflow-y-auto space-y-4 mb-8 pr-2 scrollbar-hide max-h-[50vh]">
-                        {clarificationHistory.map((msg, idx) => (
-                          <motion.div
-                            key={idx}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className={cn(
-                              "flex w-full gap-3",
-                              msg.role === 'user' ? "flex-row-reverse" : "flex-row"
-                            )}
-                          >
-                            <div className="shrink-0">
-                              {msg.role === 'user' ? (
-                                <div className="w-12 h-12 rounded-full overflow-hidden bg-[#E5E3E1] border border-black/[0.05] shadow-sm">
-                                  <img src="/advanced.png" alt="User" className="w-full h-full object-contain p-2" />
-                                </div>
-                              ) : (
-                                <div className="w-12 h-12 rounded-full overflow-hidden bg-[#F5F3F1] border border-black/[0.05] shadow-sm flex items-center justify-center">
-                                  <Suspense fallback={<div className="w-10 h-10" />}>
-                                    <Lottie 
-                                      animationData={aiLogoLottie} 
-                                      style={{ width: 45, height: 45 }}
-                                      loop={true}
-                                    />
-                                  </Suspense>
-                                </div>
+                        <AnimatePresence mode="popLayout">
+                          {clarificationHistory.map((msg, idx) => (
+                            <motion.div
+                              key={idx}
+                              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                              animate={{ 
+                                opacity: 1, 
+                                scale: 1, 
+                                y: 0,
+                                transition: {
+                                  type: "spring",
+                                  stiffness: 260,
+                                  damping: 20
+                                }
+                              }}
+                              className={cn(
+                                "flex w-full gap-3",
+                                msg.role === 'user' ? "flex-row-reverse" : "flex-row"
                               )}
-                            </div>
-                            <div className={cn(
-                              "max-w-[80%] rounded-2xl px-4 py-3 text-lg leading-relaxed font-sans shadow-sm",
-                              msg.role === 'user' 
-                                ? "bg-[#1A1A1A] text-white rounded-tr-none" 
-                                : "bg-white text-[#1A1A1A] rounded-tl-none border border-black/[0.05]"
-                            )}>
-                              {msg.content}
-                            </div>
-                          </motion.div>
-                        ))}
+                            >
+                              <div className="shrink-0">
+                                {msg.role === 'user' ? (
+                                  <div className="w-12 h-12 rounded-full overflow-hidden bg-[#E5E3E1] border border-black/[0.05] shadow-sm">
+                                    <img src="/advanced.png" alt="User" className="w-full h-full object-contain p-2" />
+                                  </div>
+                                ) : (
+                                  <div className="w-12 h-12 rounded-full overflow-hidden bg-[#F5F3F1] border border-black/[0.05] shadow-sm flex items-center justify-center">
+                                    <Suspense fallback={<div className="w-10 h-10" />}>
+                                      <Lottie 
+                                        animationData={aiLogoLottie} 
+                                        style={{ width: 45, height: 45 }}
+                                        loop={true}
+                                      />
+                                    </Suspense>
+                                  </div>
+                                )}
+                              </div>
+                              <div className={cn(
+                                "max-w-[80%] rounded-2xl px-4 py-3 text-lg leading-relaxed font-sans shadow-sm",
+                                msg.role === 'user' 
+                                  ? "bg-[#1A1A1A] text-white rounded-tr-none" 
+                                  : "bg-white text-[#1A1A1A] rounded-tl-none border border-black/[0.05]"
+                              )}>
+                                {msg.content}
+                              </div>
+                            </motion.div>
+                          ))}
+                        </AnimatePresence>
                         
                         {/* Smart Options */}
                         {clarificationHistory.length > 0 && clarificationHistory[clarificationHistory.length - 1].role === 'assistant' && clarificationHistory[clarificationHistory.length - 1].options && (
                           <motion.div 
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                            animate={{ 
+                              opacity: 1, 
+                              scale: 1, 
+                              y: 0,
+                              transition: {
+                                delay: 0.2,
+                                type: "spring",
+                                stiffness: 260,
+                                damping: 20
+                              }
+                            }}
                             className="flex flex-wrap gap-2 ml-15 pl-15 mt-2"
                           >
                             {clarificationHistory[clarificationHistory.length - 1].options?.map((option) => (
