@@ -39,10 +39,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       pythonProcess.stdout.on("data", (data) => {
         dataString += data.toString();
+        console.log(`Scraper stdout: ${data.toString()}`);
       });
 
       pythonProcess.stderr.on("data", (data) => {
         errorString += data.toString();
+        console.log(`Scraper stderr: ${data.toString()}`);
       });
 
       pythonProcess.on("close", (code) => {
