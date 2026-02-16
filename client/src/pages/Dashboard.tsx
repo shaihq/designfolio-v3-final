@@ -1725,15 +1725,32 @@ export default function Dashboard() {
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             className={cn(
-                              "flex w-full",
-                              msg.role === 'user' ? "justify-end" : "justify-start"
+                              "flex w-full gap-3",
+                              msg.role === 'user' ? "flex-row-reverse" : "flex-row"
                             )}
                           >
+                            <div className="shrink-0 mt-1">
+                              {msg.role === 'user' ? (
+                                <div className="w-8 h-8 rounded-full overflow-hidden bg-[#F5F3F1] border border-black/[0.05]">
+                                  <img src="/advanced.png" alt="User" className="w-full h-full object-contain p-1" />
+                                </div>
+                              ) : (
+                                <div className="w-8 h-8 flex items-center justify-center">
+                                  <Suspense fallback={<div className="w-6 h-6" />}>
+                                    <Lottie 
+                                      animationData={aiLogoLottie} 
+                                      style={{ width: 32, height: 32 }}
+                                      loop={true}
+                                    />
+                                  </Suspense>
+                                </div>
+                              )}
+                            </div>
                             <div className={cn(
-                              "max-w-[85%] rounded-2xl px-4 py-2 text-sm",
+                              "max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed font-sans shadow-sm",
                               msg.role === 'user' 
                                 ? "bg-[#1A1A1A] text-white rounded-tr-none" 
-                                : "bg-[#F5F3F1] text-[#1A1A1A] rounded-tl-none border border-black/[0.03]"
+                                : "bg-white text-[#1A1A1A] rounded-tl-none border border-black/[0.05]"
                             )}>
                               {msg.content}
                             </div>
