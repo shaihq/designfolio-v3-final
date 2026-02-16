@@ -1740,7 +1740,7 @@ export default function Dashboard() {
                           >
                             <div className="shrink-0 mt-1">
                               {msg.role === 'user' ? (
-                                <div className="w-10 h-10 rounded-full overflow-hidden bg-[#F5F3F1] border border-black/[0.05]">
+                                <div className="w-10 h-10 rounded-full overflow-hidden bg-[#2563EB] border border-black/[0.05]">
                                   <img src="/advanced.png" alt="User" className="w-full h-full object-contain p-1.5" />
                                 </div>
                               ) : (
