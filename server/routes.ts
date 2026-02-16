@@ -9,62 +9,56 @@ import { getAiCompletion } from "./ai";
 import { registerChatRoutes } from "./replit_integrations/chat";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const genAI = new GoogleGenerativeAI(process.env.AI_INTEGRATIONS_GEMINI_API_KEY || "no-key-required");
-const requestOptions = process.env.AI_INTEGRATIONS_GEMINI_BASE_URL ? {
-  baseUrl: process.env.AI_INTEGRATIONS_GEMINI_BASE_URL,
-  apiVersion: "",
-} : undefined;
-
-interface MulterRequest extends Request {
-  file?: Express.Multer.File;
-}
-
-const upload = multer({ storage: multer.memoryStorage() });
-
-const forgotPasswordSchema = z.object({
-  email: z.string().email(),
-});
-
-const resetPasswordSchema = z.object({
-  token: z.string(),
-  newPassword: z.string().min(6),
-});
-
-import { spawn } from "child_process";
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || process.env.AI_INTEGRATIONS_GEMINI_API_KEY || "no-key-required");
 
 export async function registerRoutes(app: Express): Promise<Server> {
   registerChatRoutes(app);
 
   app.post("/api/ai/job-clarification", async (req, res) => {
     try {
-      const { prompt, history } = req.body;
-      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+      const { prompt } = req.body;
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-      const systemPrompt = `You are an AI job search assistant. Your goal is to help users refine their job search query so we can find the best matches.
-      If the user's query is vague (e.g., "design jobs"), ask 1-2 clarifying questions about location, experience level, industry, or company size.
-      If the query is clear and specific, respond with "READY" followed by a optimized, concise search string that can be used for JobSpy scraper.
-      
-      Examples:
-      User: "software engineer"
-      Assistant: "That's a broad field! Are you looking for frontend, backend, or full-stack roles? And do you have a preferred location or remote preference?"
-      
-      User: "Senior Product Designer roles at Series B startups, remote in US"
-      Assistant: "READY: Senior Product Designer Series B startup remote US"
-      
-      Current user prompt: "${prompt}"`;
+      const intentPrompt = `
+Convert this job search query into structured intent.
 
-      const result = await model.generateContent({
-        contents: [
-          { role: "user", parts: [{ text: systemPrompt }] },
-          ...(history || []).map((h: any) => ({
-            role: h.role === "assistant" ? "model" : "user",
-            parts: [{ text: h.content }]
-          }))
-        ]
-      }, requestOptions);
+Query: "${prompt}"
 
-      const responseText = result.response.text();
-      res.json({ response: responseText });
+Return ONLY valid JSON:
+{
+  "role_titles": string[],
+  "seniority": string,
+  "location": string,
+  "company_type": string,
+  "confidence": number
+}
+`;
+
+      const result = await model.generateContent(intentPrompt);
+      const rawText = result.response.text();
+      console.log("🧾 raw Gemini:", rawText);
+
+      // SAFETY CLEAN
+      const jsonText = rawText
+        .replace(/```json/g, "")
+        .replace(/```/g, "")
+        .trim();
+
+      const intent = JSON.parse(jsonText);
+      
+      // Convert intent to an optimized search string for JobSpy
+      const searchTerms = [
+        ...(intent.role_titles || []),
+        intent.seniority,
+        intent.location,
+        intent.company_type
+      ].filter(Boolean).join(" ");
+
+      // Send back both the structured intent and a READY response for the frontend
+      res.json({ 
+        response: `READY: ${searchTerms}`,
+        intent 
+      });
     } catch (error) {
       console.error("AI clarification error:", error);
       res.status(500).json({ message: "AI clarification failed" });
