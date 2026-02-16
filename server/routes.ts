@@ -7,9 +7,9 @@ import multer from "multer";
 import pdf from "pdf-extraction";
 import { getAiCompletion } from "./ai";
 import { registerChatRoutes } from "./replit_integrations/chat";
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const genAI = new GoogleGenAI(process.env.AI_INTEGRATIONS_GEMINI_API_KEY || "no-key-required");
+const genAI = new GoogleGenerativeAI(process.env.AI_INTEGRATIONS_GEMINI_API_KEY || "no-key-required");
 const requestOptions = process.env.AI_INTEGRATIONS_GEMINI_BASE_URL ? {
   baseUrl: process.env.AI_INTEGRATIONS_GEMINI_BASE_URL,
   apiVersion: "",

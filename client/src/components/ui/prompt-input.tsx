@@ -75,9 +75,10 @@ PromptInputTextarea.displayName = "PromptInputTextarea"
 const PromptInputActions = ({
   className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn("flex items-center justify-between mt-4", className)} {...props} />
-)
+}: React.HTMLAttributes<HTMLDivElement> & { onValueChange?: any; onSubmit?: any }) => {
+  const { onValueChange, onSubmit, ...rest } = props as any;
+  return <div className={cn("flex items-center justify-between mt-4", className)} {...rest} />;
+}
 PromptInputActions.displayName = "PromptInputActions"
 
 export { PromptInput, PromptInputTextarea, PromptInputActions }
