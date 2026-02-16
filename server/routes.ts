@@ -40,7 +40,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/ai/job-clarification", async (req, res) => {
     try {
       const { prompt, history } = req.body;
-      const model = ai.getGenerativeModel({ model: "gemini-2.5-flash" });
+      const model = (ai as any).getGenerativeModel({ model: "gemini-2.5-flash" });
 
       const systemPrompt = `You are an AI job search assistant. Your goal is to help users refine their job search query so we can find the best matches.
       If the user's query is vague (e.g., "design jobs"), ask 1-2 clarifying questions about location, experience level, industry, or company size.
