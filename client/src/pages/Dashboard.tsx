@@ -1740,15 +1740,15 @@ export default function Dashboard() {
                           >
                             <div className="shrink-0 mt-1">
                               {msg.role === 'user' ? (
-                                <div className="w-8 h-8 rounded-full overflow-hidden bg-[#F5F3F1] border border-black/[0.05]">
-                                  <img src="/advanced.png" alt="User" className="w-full h-full object-contain p-1" />
+                                <div className="w-10 h-10 rounded-full overflow-hidden bg-[#F5F3F1] border border-black/[0.05]">
+                                  <img src="/advanced.png" alt="User" className="w-full h-full object-contain p-1.5" />
                                 </div>
                               ) : (
-                                <div className="w-8 h-8 flex items-center justify-center">
-                                  <Suspense fallback={<div className="w-6 h-6" />}>
+                                <div className="w-10 h-10 flex items-center justify-center">
+                                  <Suspense fallback={<div className="w-8 h-8" />}>
                                     <Lottie 
                                       animationData={aiLogoLottie} 
-                                      style={{ width: 32, height: 32 }}
+                                      style={{ width: 40, height: 40 }}
                                       loop={true}
                                     />
                                   </Suspense>
