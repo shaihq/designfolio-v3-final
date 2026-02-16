@@ -797,6 +797,7 @@ export default function Dashboard() {
   const [jobs, setJobs] = useState<any[]>([]);
   const [selectedJob, setSelectedJob] = useState<any | null>(null);
   const [showSearchResults, setShowSearchResults] = useState(false);
+  const [showCustomInput, setShowCustomInput] = useState(false);
   const [showClarification, setShowClarification] = useState(false);
   const [aiClarification, setAiClarification] = useState<string | null>(null);
   const [clarificationHistory, setClarificationHistory] = useState<{ role: 'user' | 'assistant', content: string, options?: string[] }[]>(() => [
@@ -816,6 +817,7 @@ export default function Dashboard() {
     if (!query.trim()) return;
     setIsSearching(true);
     setInputValue(""); // Clear input after submission
+    setShowCustomInput(false); // Reset custom input state on search
     
     try {
       // Add user message to history immediately
