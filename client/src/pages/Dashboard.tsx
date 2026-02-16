@@ -1738,17 +1738,17 @@ export default function Dashboard() {
                               msg.role === 'user' ? "flex-row-reverse" : "flex-row"
                             )}
                           >
-                            <div className="shrink-0 mt-1">
+                            <div className="shrink-0">
                               {msg.role === 'user' ? (
-                                <div className="w-10 h-10 rounded-full overflow-hidden bg-[#F5F3F1] border border-black/[0.05]">
-                                  <img src="/advanced.png" alt="User" className="w-full h-full object-contain p-1.5" />
+                                <div className="w-12 h-12 rounded-full overflow-hidden bg-[#E5E3E1] border border-black/[0.05] shadow-sm">
+                                  <img src="/advanced.png" alt="User" className="w-full h-full object-contain p-2" />
                                 </div>
                               ) : (
-                                <div className="w-10 h-10 flex items-center justify-center">
-                                  <Suspense fallback={<div className="w-8 h-8" />}>
+                                <div className="w-12 h-12 flex items-center justify-center">
+                                  <Suspense fallback={<div className="w-10 h-10" />}>
                                     <Lottie 
                                       animationData={aiLogoLottie} 
-                                      style={{ width: 50, height: 50 }}
+                                      style={{ width: 60, height: 60 }}
                                       loop={true}
                                     />
                                   </Suspense>
