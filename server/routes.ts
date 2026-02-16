@@ -33,13 +33,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/ai/job-clarification", async (req, res) => {
     try {
-      const { prompt } = req.body;
+      const { prompt, history } = req.body;
       const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
-      const intentPrompt = `
-Convert this job search query into structured intent.
+      const historyContext = history && history.length > 0 
+        ? `\n\nConversation history:\n${history.map((h: any) => `${h.role}: ${h.content}`).join("\n")}`
+        : "";
 
-Query: "${prompt}"
+      const intentPrompt = `
+Convert this job search query into structured intent. Keep in mind the previous conversation history if available.
+
+Query: "${prompt}"${historyContext}
 
 Return ONLY valid JSON:
 {
