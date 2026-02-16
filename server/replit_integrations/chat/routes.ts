@@ -10,16 +10,11 @@ Usage: Include httpOptions with baseUrl and empty apiVersion when using AI Integ
 // This is using Replit's AI Integrations service, which provides Gemini-compatible API access without requiring your own Gemini API key.
 const ai = new GoogleGenAI(process.env.AI_INTEGRATIONS_GEMINI_API_KEY || "no-key-required");
 
-// Use a wrapper or proxy if baseUrl needs to be custom, but usually GoogleGenAI handles it via the constructor if properly typed.
-// However, Replit AI Integrations often just need the key and the SDK handles the rest if the environment is set up.
-// Forcing baseUrl/apiVersion if they exist in env:
-if (process.env.AI_INTEGRATIONS_GEMINI_BASE_URL) {
-  (ai as any)._httpOptions = {
-    ...(ai as any)._httpOptions,
-    baseUrl: process.env.AI_INTEGRATIONS_GEMINI_BASE_URL,
-    apiVersion: "",
-  };
-}
+// Re-configure for Replit AI Integrations baseUrl if provided
+const modelOptions = process.env.AI_INTEGRATIONS_GEMINI_BASE_URL ? {
+  baseUrl: process.env.AI_INTEGRATIONS_GEMINI_BASE_URL,
+  apiVersion: "",
+} : undefined;
 
 export function registerChatRoutes(app: Express): void {
   // Get all conversations
@@ -95,10 +90,11 @@ export function registerChatRoutes(app: Express): void {
       res.setHeader("Connection", "keep-alive");
 
       // Stream response from Gemini
-      const stream = await ai.models.generateContentStream({
+      const stream = await ai.getGenerativeModel({
         model: "gemini-2.5-flash",
+      }, modelOptions).generateContentStream({
         contents: chatMessages,
-        config: { maxOutputTokens: 8192 },
+        generationConfig: { maxOutputTokens: 8192 },
       });
 
       let fullResponse = "";
