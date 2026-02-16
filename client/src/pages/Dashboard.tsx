@@ -799,7 +799,7 @@ export default function Dashboard() {
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [showClarification, setShowClarification] = useState(false);
   const [aiClarification, setAiClarification] = useState<string | null>(null);
-  const [clarificationHistory, setClarificationHistory] = useState<{ role: 'user' | 'assistant', content: string }[]>(() => [
+  const [clarificationHistory, setClarificationHistory] = useState<{ role: 'user' | 'assistant', content: string, options?: string[] }[]>(() => [
     { role: 'assistant', content: "Hey Shai, what kind of job are you looking for?" }
   ]);
 
@@ -832,6 +832,14 @@ export default function Dashboard() {
         
         if (clarificationResponse.ok) {
           const data = await clarificationResponse.json();
+          
+          // Add AI response to history with options if provided
+          setClarificationHistory(prev => [...prev, { 
+            role: 'assistant', 
+            content: data.response.replace('READY:', '').trim(),
+            options: data.options // API should return options if applicable
+          }]);
+
           if (data.response.startsWith('READY:')) {
             const optimizedQuery = data.response.replace('READY:', '').trim();
             const location = data.intent?.location || 'Remote';
@@ -1759,6 +1767,27 @@ export default function Dashboard() {
                             </div>
                           </motion.div>
                         ))}
+                        
+                        {/* Smart Options */}
+                        {clarificationHistory.length > 0 && clarificationHistory[clarificationHistory.length - 1].role === 'assistant' && clarificationHistory[clarificationHistory.length - 1].options && (
+                          <motion.div 
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="flex flex-wrap gap-2 ml-15 pl-15 mt-2"
+                          >
+                            {clarificationHistory[clarificationHistory.length - 1].options?.map((option) => (
+                              <Button
+                                key={option}
+                                variant="outline"
+                                size="sm"
+                                className="rounded-full bg-white border-black/[0.1] hover:bg-black/[0.05] text-[#1A1A1A] text-sm py-4 px-6 h-auto"
+                                onClick={() => handleSearch(option)}
+                              >
+                                {option}
+                              </Button>
+                            ))}
+                          </motion.div>
+                        )}
                         <div ref={chatEndRef} />
                       </div>
 

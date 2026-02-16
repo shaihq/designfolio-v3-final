@@ -60,11 +60,13 @@ Return ONLY valid JSON:
   "company_type": string,
   "confidence": number,
   "is_ready_to_search": boolean,
-  "clarification_question": string
+  "clarification_question": string,
+  "options": string[] | null
 }
 
-If "is_ready_to_search" is true, "clarification_question" should be null.
-If key information like the primary role or location is missing or ambiguous, set "is_ready_to_search" to false and provide a friendly "clarification_question".
+If "is_ready_to_search" is true, "clarification_question" and "options" should be null.
+If key information like the primary role or location is missing or ambiguous, set "is_ready_to_search" to false and provide a friendly "clarification_question" and a list of 3-4 "options" for the user to pick from.
+For example, if asking for seniority, options could be ["Junior", "Mid-Level", "Senior", "Lead"]. If asking for location, ["Remote", "New York", "San Francisco", "London"].
 `;
 
       const result = await model.generateContent(intentPrompt);
@@ -94,12 +96,14 @@ If key information like the primary role or location is missing or ambiguous, se
 
         res.json({ 
           response: `READY: ${searchTerms}`,
-          intent 
+          intent,
+          options: null
         });
       } else {
         res.json({
           response: intent.clarification_question || "Could you tell me more about the role or location you're looking for?",
-          intent
+          intent,
+          options: intent.options
         });
       }
     } catch (error) {
