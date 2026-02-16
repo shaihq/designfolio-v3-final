@@ -9,8 +9,8 @@ import { getAiCompletion } from "./ai";
 import { registerChatRoutes } from "./replit_integrations/chat";
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI(process.env.AI_INTEGRATIONS_GEMINI_API_KEY || "no-key-required");
-const modelOptions = process.env.AI_INTEGRATIONS_GEMINI_BASE_URL ? {
+const genAI = new GoogleGenAI(process.env.AI_INTEGRATIONS_GEMINI_API_KEY || "no-key-required");
+const requestOptions = process.env.AI_INTEGRATIONS_GEMINI_BASE_URL ? {
   baseUrl: process.env.AI_INTEGRATIONS_GEMINI_BASE_URL,
   apiVersion: "",
 } : undefined;
@@ -38,7 +38,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/ai/job-clarification", async (req, res) => {
     try {
       const { prompt, history } = req.body;
-      const model = ai.getGenerativeModel({ model: "gemini-2.5-flash" }, modelOptions);
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }, requestOptions);
 
       const systemPrompt = `You are an AI job search assistant. Your goal is to help users refine their job search query so we can find the best matches.
       If the user's query is vague (e.g., "design jobs"), ask 1-2 clarifying questions about location, experience level, industry, or company size.
