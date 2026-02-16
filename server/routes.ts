@@ -34,7 +34,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/ai/job-clarification", async (req, res) => {
     try {
       const { prompt } = req.body;
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
       const intentPrompt = `
 Convert this job search query into structured intent.
