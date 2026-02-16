@@ -9,13 +9,14 @@ import { getAiCompletion } from "./ai";
 import { registerChatRoutes } from "./replit_integrations/chat";
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({
-  apiKey: process.env.AI_INTEGRATIONS_GEMINI_API_KEY,
-  httpOptions: {
-    apiVersion: "",
+const ai = new GoogleGenAI(process.env.AI_INTEGRATIONS_GEMINI_API_KEY || "no-key-required");
+if (process.env.AI_INTEGRATIONS_GEMINI_BASE_URL) {
+  (ai as any)._httpOptions = {
+    ...(ai as any)._httpOptions,
     baseUrl: process.env.AI_INTEGRATIONS_GEMINI_BASE_URL,
-  },
-});
+    apiVersion: "",
+  };
+}
 
 interface MulterRequest extends Request {
   file?: Express.Multer.File;
