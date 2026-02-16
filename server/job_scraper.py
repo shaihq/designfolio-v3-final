@@ -38,7 +38,13 @@ def search_jobs(query, platform="linkedin", location="Remote", distance=25, job_
         return []
 
 if __name__ == "__main__":
-    if len(sys.argv) > 2:
+    if len(sys.argv) > 3:
+        query = sys.argv[1]
+        platform = sys.argv[2]
+        location = sys.argv[3]
+        results = search_jobs(query, platform=platform, location=location)
+        print(json.dumps(results))
+    elif len(sys.argv) > 2:
         query = sys.argv[1]
         platform = sys.argv[2]
         results = search_jobs(query, platform=platform)

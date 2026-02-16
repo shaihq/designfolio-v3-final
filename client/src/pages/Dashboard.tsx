@@ -831,7 +831,8 @@ export default function Dashboard() {
           const data = await clarificationResponse.json();
           if (data.response.startsWith('READY:')) {
             const optimizedQuery = data.response.replace('READY:', '').trim();
-            const response = await fetch(`/api/jobs/search?q=${encodeURIComponent(optimizedQuery)}&platform=${searchPlatform}`);
+            const location = data.intent?.location || 'Remote';
+            const response = await fetch(`/api/jobs/search?q=${encodeURIComponent(optimizedQuery)}&platform=${searchPlatform}&location=${encodeURIComponent(location)}`);
             if (response.ok) {
               const jobsData = await response.json();
               setJobs(jobsData);

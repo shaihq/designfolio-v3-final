@@ -41,9 +41,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         : "";
 
       const intentPrompt = `
-Convert this job search query into structured intent. Keep in mind the previous conversation history if available.
+Convert this job search query into structured intent for a job scraper (JobSpy). 
+The goal is to extract clear, concise keywords that will yield high-quality job search results.
 
 Query: "${prompt}"${historyContext}
+
+Guidelines for extraction:
+1. role_titles: Extract specific job titles (e.g., ["Senior Product Designer", "UX Designer"]). Avoid generic terms if specific ones are mentioned.
+2. location: If not specified, default to "Remote".
+3. seniority: Extract seniority level (e.g., "Senior", "Lead", "Junior", "Entry-level").
+4. company_type: Extract company characteristics (e.g., "Series B startup", "fintech", "FAANG").
 
 Return ONLY valid JSON:
 {
@@ -57,7 +64,7 @@ Return ONLY valid JSON:
 }
 
 If "is_ready_to_search" is true, "clarification_question" should be null.
-If you need more info (e.g. location, seniority), set "is_ready_to_search" to false and provide a friendly "clarification_question".
+If key information like the primary role or location is missing or ambiguous, set "is_ready_to_search" to false and provide a friendly "clarification_question".
 `;
 
       const result = await model.generateContent(intentPrompt);
@@ -74,12 +81,16 @@ If you need more info (e.g. location, seniority), set "is_ready_to_search" to fa
       
       if (intent.is_ready_to_search) {
         // Convert intent to an optimized search string for JobSpy
+        // JobSpy works best with "Title Location" or "Title CompanyType"
+        const titles = (intent.role_titles || []).join(" ");
         const searchTerms = [
-          ...(intent.role_titles || []),
+          titles,
           intent.seniority,
-          intent.location,
           intent.company_type
         ].filter(Boolean).join(" ");
+
+        console.log("🔍 Optimized Search Terms:", searchTerms);
+        console.log("📍 Location:", intent.location);
 
         res.json({ 
           response: `READY: ${searchTerms}`,
@@ -99,13 +110,16 @@ If you need more info (e.g. location, seniority), set "is_ready_to_search" to fa
 
   app.get("/api/jobs/search", async (req, res) => {
     const query = req.query.q as string;
+    const location = (req.query.location as string) || "Remote";
+    const platform = (req.query.platform as string) || "linkedin";
+
     if (!query) {
       return res.status(400).json({ message: "Query parameter 'q' is required" });
     }
 
     try {
-      const platform = (req.query.platform as string) || "linkedin";
-      const pythonProcess = spawn("python3", ["server/job_scraper.py", query, platform]);
+      console.log(`🚀 Starting scraper with query: "${query}", platform: "${platform}", location: "${location}"`);
+      const pythonProcess = spawn("python3", ["server/job_scraper.py", query, platform, location]);
       let dataString = "";
       let errorString = "";
 
