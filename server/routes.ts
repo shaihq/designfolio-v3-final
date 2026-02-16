@@ -47,16 +47,23 @@ The goal is to extract clear, concise keywords that will yield high-quality job 
 Query: "${prompt}"${historyContext}
 
 Guidelines for extraction:
-1. role_titles: Extract specific job titles (e.g., ["Senior Product Designer", "UX Designer"]). Avoid generic terms if specific ones are mentioned.
-2. location: If not specified, default to "Remote".
-3. seniority: Extract seniority level (e.g., "Senior", "Lead", "Junior", "Entry-level").
-4. company_type: Extract company characteristics (e.g., "Series B startup", "fintech", "FAANG").
+1. role_titles: Extract specific job titles (e.g., ["Senior Product Designer", "UX Designer"]).
+2. location: Extract location or intent. If not specified, flag as missing.
+3. seniority: Extract seniority level (e.g., "Senior", "Junior"). If not specified, flag as missing.
+4. work_type: Extract work type (e.g., "Full-time", "Contract", "Remote"). If not specified, flag as missing.
+
+CRITICAL: "is_ready_to_search" MUST be false if any of these are missing or ambiguous:
+- Specific Job Role/Title
+- Seniority / Experience Level
+- Location Intent (even if it is "Remote")
+- Work Type Preference
 
 Return ONLY valid JSON:
 {
   "role_titles": string[],
   "seniority": string,
   "location": string,
+  "work_type": string,
   "company_type": string,
   "confidence": number,
   "is_ready_to_search": boolean,
@@ -65,8 +72,7 @@ Return ONLY valid JSON:
 }
 
 If "is_ready_to_search" is true, "clarification_question" and "options" should be null.
-If key information like the primary role or location is missing or ambiguous, set "is_ready_to_search" to false and provide a friendly "clarification_question" and a list of 3-4 "options" for the user to pick from.
-For example, if asking for seniority, options could be ["Junior", "Mid-Level", "Senior", "Lead"]. If asking for location, ["Remote", "New York", "San Francisco", "London"].
+If key information is missing, provide a friendly "clarification_question" focused on the missing piece and a list of 3-4 "options".
 `;
 
       const result = await model.generateContent(intentPrompt);
@@ -88,6 +94,7 @@ For example, if asking for seniority, options could be ["Junior", "Mid-Level", "
         const searchTerms = [
           titles,
           intent.seniority,
+          intent.work_type,
           intent.company_type
         ].filter(Boolean).join(" ");
 
