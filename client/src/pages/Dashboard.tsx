@@ -805,13 +805,19 @@ export default function Dashboard() {
   const handleSearch = async (query: string, isFromAi = false) => {
     if (!query.trim()) return;
     setIsSearching(true);
+    setInputValue(""); // Clear input after submission
     
     try {
       if (!isFromAi) {
         const clarificationResponse = await fetch('/api/ai/job-clarification', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt: query, history: clarificationHistory }),
+          body: JSON.stringify({ 
+            prompt: query, 
+            history: clarificationHistory,
+            // Include previous interactions to help the AI understand context better
+            context: clarificationHistory.map(h => h.content).join(" ")
+          }),
         });
         
         if (clarificationResponse.ok) {
@@ -825,6 +831,7 @@ export default function Dashboard() {
               setShowSearchResults(true);
               setShowClarification(false);
               setAiClarification(null);
+              setClarificationHistory([]); // Reset history after successful search
             }
           } else {
             setAiClarification(data.response);
@@ -1725,6 +1732,7 @@ export default function Dashboard() {
                           <PromptInputTextarea 
                             placeholder="Type your answer here..." 
                             className="focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none pr-14"
+                            autoFocus
                           />
                           <PromptInputActions className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
                             <Button 
