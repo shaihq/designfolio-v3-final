@@ -799,16 +799,10 @@ export default function Dashboard() {
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [showClarification, setShowClarification] = useState(false);
   const [aiClarification, setAiClarification] = useState<string | null>(null);
-  const [clarificationHistory, setClarificationHistory] = useState<{ role: 'user' | 'assistant', content: string }[]>([]);
+  const [clarificationHistory, setClarificationHistory] = useState<{ role: 'user' | 'assistant', content: string }[]>(() => [
+    { role: 'assistant', content: "Hey Shai, what kind of job are you looking for?" }
+  ]);
 
-  // Initialize with AI's first question if history is empty
-  useEffect(() => {
-    if (showClarification && clarificationHistory.length === 0) {
-      setClarificationHistory([
-        { role: 'assistant', content: "Hey Shai, what kind of job are you looking for?" }
-      ]);
-    }
-  }, [showClarification]);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const chatEndRef = useRef<HTMLDivElement>(null);
