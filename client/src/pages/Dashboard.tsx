@@ -37,6 +37,7 @@ import { PromptInput, PromptInputTextarea, PromptInputActions } from "@/componen
 import { PromptSuggestion } from "@/components/ui/prompt-suggestion"
 import { 
   Sparkles, 
+  Share2, 
   Bell, 
   Plus,
   Link as LinkIcon,
@@ -66,9 +67,6 @@ import {
   Instagram,
   Dribbble,
   ThumbsUp,
-  RefreshCcw,
-  ThumbsDown,
-  Share2,
   ChevronLeft,
   ChevronRight,
   ChevronDown,
@@ -177,10 +175,6 @@ const CrypticText = ({ text, className }: { text: string; className?: string }) 
 
 import { usePegboardSounds } from "@/hooks/use-pegboard-sounds";
 import { useIsMobile } from "@/hooks/use-mobile";
-
-import { Conversation, ConversationContent } from "@/components/ui/conversation";
-import { Message, MessageContent, MessageAvatar } from "@/components/ui/message";
-import { Actions, Action } from "@/components/ui/actions";
 
 export default function Dashboard() {
   const { playPick, playPlace } = usePegboardSounds();
@@ -812,40 +806,45 @@ export default function Dashboard() {
     if (!query.trim()) return;
     setIsSearching(true);
     
-    // If it's a new search (not from follow-up), start fresh history
-    let currentHistory = isFromAi ? clarificationHistory : [];
-    
     try {
-      const clarificationResponse = await fetch('/api/ai/job-clarification', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: query, history: currentHistory }),
-      });
-      
-      if (clarificationResponse.ok) {
-        const data = await clarificationResponse.json();
+      if (!isFromAi) {
+        const clarificationResponse = await fetch('/api/ai/job-clarification', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: query, history: clarificationHistory }),
+        });
         
-        // Update history with the user's latest input
-        const updatedHistory = [...currentHistory, { role: 'user', content: query }];
-        
-        if (data.response.startsWith('READY:')) {
-          const optimizedQuery = data.response.replace('READY:', '').trim();
-          const response = await fetch(`/api/jobs/search?q=${encodeURIComponent(optimizedQuery)}&platform=${searchPlatform}`);
-          if (response.ok) {
-            const jobsData = await response.json();
-            setJobs(jobsData);
-            setShowSearchResults(true);
-            setShowClarification(false);
-            setAiClarification(null);
-            setClarificationHistory([]);
-            setInputValue("");
+        if (clarificationResponse.ok) {
+          const data = await clarificationResponse.json();
+          if (data.response.startsWith('READY:')) {
+            const optimizedQuery = data.response.replace('READY:', '').trim();
+            const response = await fetch(`/api/jobs/search?q=${encodeURIComponent(optimizedQuery)}&platform=${searchPlatform}`);
+            if (response.ok) {
+              const jobsData = await response.json();
+              setJobs(jobsData);
+              setShowSearchResults(true);
+              setShowClarification(false);
+              setAiClarification(null);
+            }
+          } else {
+            setAiClarification(data.response);
+            setClarificationHistory(prev => [...prev, 
+              { role: 'user', content: query }, 
+              { role: 'assistant', content: data.response }
+            ]);
+            setShowClarification(true);
+            setIsSearching(false);
+            return;
           }
-        } else {
-          setAiClarification(data.response);
-          // Add the AI's follow-up to the history
-          setClarificationHistory([...updatedHistory, { role: 'assistant', content: data.response }]);
-          setShowClarification(true);
-          setInputValue("");
+        }
+      } else {
+        const response = await fetch(`/api/jobs/search?q=${encodeURIComponent(query)}&platform=${searchPlatform}`);
+        if (response.ok) {
+          const jobsData = await response.json();
+          setJobs(jobsData);
+          setShowSearchResults(true);
+          setShowClarification(false);
+          setAiClarification(null);
         }
       }
     } catch (error) {
@@ -1700,115 +1699,59 @@ export default function Dashboard() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -15 }}
                     transition={{ duration: 0.4 }}
-                    className="w-full flex flex-col pt-6 h-[calc(100vh-150px)]"
+                    className="w-full flex flex-col items-center justify-start pt-12 min-h-[calc(100vh-250px)]"
                   >
-                    <div className="flex-1 overflow-hidden flex flex-col bg-white/50 backdrop-blur-sm rounded-3xl border border-black/[0.05] shadow-xl">
-                      <Conversation className="flex-1">
-                        <ConversationContent className="space-y-6 p-6">
-                          {clarificationHistory.map((msg, idx) => (
-                            <Message 
-                              key={idx} 
-                              from={msg.role === 'user' ? 'user' : 'assistant'}
-                              className="animate-in fade-in slide-in-from-bottom-2 duration-300"
-                            >
-                              {msg.role === 'assistant' && (
-                                <MessageAvatar 
-                                  src="/advanced.png" 
-                                  name="AI Assistant"
-                                  className="bg-[#F5F3F1] p-1"
-                                />
-                              )}
-                              <MessageContent className={cn(
-                                "max-w-[85%] text-base leading-relaxed",
-                                msg.role === 'user' ? "bg-[#1A1A1A] text-white" : "bg-white border border-black/[0.05] text-[#1A1A1A]"
-                              )}>
-                                {msg.content}
-                                {msg.role === 'assistant' && idx === clarificationHistory.length - 1 && (
-                                  <Actions className="mt-4 pt-4 border-t border-black/[0.05]">
-                                    <Action tooltip="Retry"><RefreshCcw className="w-4 h-4" /></Action>
-                                    <Action tooltip="Helpful"><ThumbsUp className="w-4 h-4" /></Action>
-                                    <Action tooltip="Not helpful"><ThumbsDown className="w-4 h-4" /></Action>
-                                    <Action tooltip="Copy"><Copy className="w-4 h-4" /></Action>
-                                    <Action tooltip="Share"><Share2 className="w-4 h-4" /></Action>
-                                  </Actions>
-                                )}
-                              </MessageContent>
-                            </Message>
-                          ))}
-                          {isSearching && (
-                            <Message from="assistant">
-                              <MessageAvatar src="/advanced.png" className="bg-[#F5F3F1] p-1" />
-                              <MessageContent className="bg-white border border-black/[0.05] flex items-center gap-3">
-                                <div className="flex gap-1.5">
-                                  <motion.div 
-                                    animate={{ scale: [1, 1.2, 1] }}
-                                    transition={{ repeat: Infinity, duration: 1 }}
-                                    className="w-1.5 h-1.5 rounded-full bg-primary" 
-                                  />
-                                  <motion.div 
-                                    animate={{ scale: [1, 1.2, 1] }}
-                                    transition={{ repeat: Infinity, duration: 1, delay: 0.2 }}
-                                    className="w-1.5 h-1.5 rounded-full bg-primary" 
-                                  />
-                                  <motion.div 
-                                    animate={{ scale: [1, 1.2, 1] }}
-                                    transition={{ repeat: Infinity, duration: 1, delay: 0.4 }}
-                                    className="w-1.5 h-1.5 rounded-full bg-primary" 
-                                  />
-                                </div>
-                                <span className="text-sm text-black/40 font-medium">Analyzing your search...</span>
-                              </MessageContent>
-                            </Message>
-                          )}
-                        </ConversationContent>
-                      </Conversation>
+                    <div className="flex justify-center mb-2">
+                      <Suspense fallback={<div className="w-24 h-24" />}>
+                        <Lottie 
+                          animationData={aiLogoLottie} 
+                          style={{ width: 120, height: 120 }}
+                          loop={true}
+                        />
+                      </Suspense>
+                    </div>
+                    <div className="text-center w-full max-w-2xl">
+                      <h1 className="text-2xl font-semibold mb-6 text-[#1A1A1A]">
+                        {aiClarification}
+                      </h1>
 
-                      <div className="p-6 border-t border-black/[0.05] bg-white/80">
-                        <div className="max-w-3xl mx-auto">
-                          <div className="relative">
-                            <PromptInput
-                              value={inputValue}
-                              onValueChange={setInputValue}
-                              onSubmit={() => handleSearch(inputValue, true)}
-                              className="transition-all relative z-20 shadow-lg border-2 border-primary/10 focus-within:border-primary/30"
-                            >
-                              <PromptInputTextarea 
-                                placeholder="Type your answer here..." 
-                                className="focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none pr-14 py-4 min-h-[60px]"
-                              />
-                              <PromptInputActions className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
-                                <Button 
-                                  size="icon" 
-                                  className="w-10 h-10 rounded-full bg-[#1A1A1A] text-white hover:bg-[#1A1A1A]/90 transition-all group/btn"
-                                  onClick={() => handleSearch(inputValue, true)}
-                                  disabled={!inputValue.trim() || isSearching}
-                                >
-                                  {isSearching ? (
-                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                  ) : (
-                                    <ArrowUp className="w-5 h-5 group-hover/btn:translate-y-[-1px] transition-transform" />
-                                  )}
-                                </Button>
-                              </PromptInputActions>
-                            </PromptInput>
-                          </div>
-                          <div className="flex items-center justify-between mt-3 px-2">
+                      <div className="relative">
+                        <PromptInput
+                          value={inputValue}
+                          onValueChange={setInputValue}
+                          onSubmit={() => handleSearch(inputValue)}
+                          className="transition-all relative z-20"
+                        >
+                          <PromptInputTextarea 
+                            placeholder="Type your answer here..." 
+                            className="focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none pr-14"
+                          />
+                          <PromptInputActions className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
                             <Button 
-                              variant="ghost" 
-                              size="sm"
-                              className="text-xs font-semibold uppercase tracking-wider text-black/40 hover:text-black transition-colors"
-                              onClick={() => {
-                                setShowClarification(false);
-                                setClarificationHistory([]);
-                                setInputValue("");
-                              }}
+                              size="icon" 
+                              className="w-10 h-10 rounded-full bg-[#1A1A1A] text-white hover:bg-[#1A1A1A]/90 transition-all group/btn"
+                              onClick={() => handleSearch(inputValue)}
+                              disabled={!inputValue.trim() || isSearching}
                             >
-                              Restart Search
+                              {isSearching ? (
+                                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                              ) : (
+                                <ArrowUp className="w-5 h-5 group-hover/btn:translate-y-[-1px] transition-transform" />
+                              )}
                             </Button>
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-black/20">AI Search Assistant</span>
-                          </div>
-                        </div>
+                          </PromptInputActions>
+                        </PromptInput>
                       </div>
+                      <Button 
+                        variant="ghost" 
+                        className="mt-4 text-sm text-[#1A1A1A]/40 hover:text-[#1A1A1A]"
+                        onClick={() => {
+                          setShowClarification(false);
+                          setClarificationHistory([]);
+                        }}
+                      >
+                        Start over
+                      </Button>
                     </div>
                   </motion.div>
                 ) : !showSearchResults ? (
