@@ -11,6 +11,23 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || process.env.AI_INTEGRATIONS_GEMINI_API_KEY || "no-key-required");
 
+interface MulterRequest extends Request {
+  file?: Express.Multer.File;
+}
+
+const upload = multer({ storage: multer.memoryStorage() });
+
+const forgotPasswordSchema = z.object({
+  email: z.string().email(),
+});
+
+const resetPasswordSchema = z.object({
+  token: z.string(),
+  newPassword: z.string().min(6),
+});
+
+import { spawn } from "child_process";
+
 export async function registerRoutes(app: Express): Promise<Server> {
   registerChatRoutes(app);
 
