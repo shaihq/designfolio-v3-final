@@ -799,20 +799,47 @@ export default function Dashboard() {
   const [showSearchResults, setShowSearchResults] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleSearch = async (query: string) => {
+  const [searchHistory, setSearchHistory] = useState<Array<{ role: 'user' | 'assistant', content: string }>>([]);
+  const [aiClarification, setAiClarification] = useState<string | null>(null);
+
+  const handleSearch = async (query: string, isFromAi = false) => {
     if (!query.trim()) return;
     setIsSearching(true);
+    
     try {
-      const response = await fetch(`/api/jobs/search?q=${encodeURIComponent(query)}&platform=${searchPlatform}`);
-      if (response.ok) {
-        const data = await response.json();
-        // Filter results on client side just in case API returns mixed results
-        const filteredData = data.filter((job: any) => {
-          const jobUrl = (job.url || job.job_url || "").toLowerCase();
-          return jobUrl.includes(searchPlatform === 'linkedin' ? 'linkedin.com' : 'indeed.com');
+      if (!isFromAi) {
+        const clarificationResponse = await fetch('/api/ai/job-clarification', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: query, history: searchHistory }),
         });
-        setJobs(filteredData);
-        setShowSearchResults(true);
+        
+        if (clarificationResponse.ok) {
+          const data = await clarificationResponse.json();
+          if (data.response.startsWith('READY:')) {
+            const optimizedQuery = data.response.replace('READY:', '').trim();
+            const response = await fetch(`/api/jobs/search?q=${encodeURIComponent(optimizedQuery)}&platform=${searchPlatform}`);
+            if (response.ok) {
+              const jobsData = await response.json();
+              setJobs(jobsData);
+              setShowSearchResults(true);
+              setAiClarification(null);
+            }
+          } else {
+            setAiClarification(data.response);
+            setSearchHistory(prev => [...prev, { role: 'user', content: query }, { role: 'assistant', content: data.response }]);
+            setIsSearching(false);
+            return;
+          }
+        }
+      } else {
+        const response = await fetch(`/api/jobs/search?q=${encodeURIComponent(query)}&platform=${searchPlatform}`);
+        if (response.ok) {
+          const jobsData = await response.json();
+          setJobs(jobsData);
+          setShowSearchResults(true);
+          setAiClarification(null);
+        }
       }
     } catch (error) {
       console.error("Error searching jobs:", error);
@@ -1679,7 +1706,7 @@ export default function Dashboard() {
                     </div>
                     <div className="text-center w-full max-w-2xl">
                       <h1 className="text-2xl font-semibold mb-6 text-[#1A1A1A]">
-                        Hey Shai, what kind of job are you looking for?
+                        {aiClarification || `Hey Shai, what kind of job are you looking for?`}
                       </h1>
 
                       <div className="flex items-center justify-center gap-3 mb-8">
