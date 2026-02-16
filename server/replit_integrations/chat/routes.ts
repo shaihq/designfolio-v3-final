@@ -90,11 +90,11 @@ export function registerChatRoutes(app: Express): void {
       res.setHeader("Connection", "keep-alive");
 
       // Stream response from Gemini
-      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }, requestOptions);
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
       const stream = await model.generateContentStream({
         contents: chatMessages,
         generationConfig: { maxOutputTokens: 8192 },
-      });
+      }, requestOptions);
 
       let fullResponse = "";
 
