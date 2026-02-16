@@ -9,6 +9,8 @@ def search_jobs(query, platform="linkedin", location="Remote", distance=25, job_
     try:
         site_name = [platform] if platform in ["indeed", "linkedin", "zip_recruiter", "glassdoor"] else ["linkedin"]
         
+        print(f"Scraping {site_name} for '{query}' in '{location}'", file=sys.stderr)
+
         jobs = scrape_jobs(
             site_name=site_name,
             search_term=query,
@@ -18,9 +20,13 @@ def search_jobs(query, platform="linkedin", location="Remote", distance=25, job_
             results_wanted=results_wanted,
             hours_old=72,
             description_format="markdown",
-            linkedin_fetch_description=True, # Fetch descriptions for LinkedIn
+            linkedin_fetch_description=True,
         )
         
+        if jobs.empty:
+            print(f"No jobs found for query: {query}", file=sys.stderr)
+            return []
+
         # Convert pandas DataFrame to list of dictionaries
         jobs_list = jobs.to_dict(orient='records')
         
