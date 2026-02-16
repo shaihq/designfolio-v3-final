@@ -6,6 +6,16 @@ import { z } from "zod";
 import multer from "multer";
 import pdf from "pdf-extraction";
 import { getAiCompletion } from "./ai";
+import { registerChatRoutes } from "./replit_integrations/chat";
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({
+  apiKey: process.env.AI_INTEGRATIONS_GEMINI_API_KEY,
+  httpOptions: {
+    apiVersion: "",
+    baseUrl: process.env.AI_INTEGRATIONS_GEMINI_BASE_URL,
+  },
+});
 
 interface MulterRequest extends Request {
   file?: Express.Multer.File;
@@ -25,6 +35,44 @@ const resetPasswordSchema = z.object({
 import { spawn } from "child_process";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  registerChatRoutes(app);
+
+  app.post("/api/ai/job-clarification", async (req, res) => {
+    try {
+      const { prompt, history } = req.body;
+      const model = ai.getGenerativeModel({ model: "gemini-2.5-flash" });
+
+      const systemPrompt = `You are an AI job search assistant. Your goal is to help users refine their job search query so we can find the best matches.
+      If the user's query is vague (e.g., "design jobs"), ask 1-2 clarifying questions about location, experience level, industry, or company size.
+      If the query is clear and specific, respond with "READY" followed by a optimized, concise search string that can be used for JobSpy scraper.
+      
+      Examples:
+      User: "software engineer"
+      Assistant: "That's a broad field! Are you looking for frontend, backend, or full-stack roles? And do you have a preferred location or remote preference?"
+      
+      User: "Senior Product Designer roles at Series B startups, remote in US"
+      Assistant: "READY: Senior Product Designer Series B startup remote US"
+      
+      Current user prompt: "${prompt}"`;
+
+      const result = await model.generateContent({
+        contents: [
+          { role: "user", parts: [{ text: systemPrompt }] },
+          ...(history || []).map((h: any) => ({
+            role: h.role === "assistant" ? "model" : "user",
+            parts: [{ text: h.content }]
+          }))
+        ]
+      });
+
+      const responseText = result.response.text();
+      res.json({ response: responseText });
+    } catch (error) {
+      console.error("AI clarification error:", error);
+      res.status(500).json({ message: "AI clarification failed" });
+    }
+  });
+
   app.get("/api/jobs/search", async (req, res) => {
     const query = req.query.q as string;
     if (!query) {
