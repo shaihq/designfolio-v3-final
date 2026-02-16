@@ -791,16 +791,14 @@ export default function Dashboard() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [visibleTestimonials, setVisibleTestimonials] = useState<Set<number>>(new Set());
   const [isTemplateDialogOpen, setIsTemplateDialogOpen] = useState(false);
-  const [isSearching, setIsSearching] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [jobs, setJobs] = useState<any[]>([]);
   const [selectedJob, setSelectedJob] = useState<any | null>(null);
   const [showSearchResults, setShowSearchResults] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const [searchHistory, setSearchHistory] = useState<Array<{ role: 'user' | 'assistant', content: string }>>([]);
+  const [showClarification, setShowClarification] = useState(false);
   const [aiClarification, setAiClarification] = useState<string | null>(null);
+  const [clarificationHistory, setClarificationHistory] = useState<any[]>([]);
 
   const handleSearch = async (query: string, isFromAi = false) => {
     if (!query.trim()) return;
@@ -811,7 +809,7 @@ export default function Dashboard() {
         const clarificationResponse = await fetch('/api/ai/job-clarification', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ prompt: query, history: searchHistory }),
+          body: JSON.stringify({ prompt: query, history: clarificationHistory }),
         });
         
         if (clarificationResponse.ok) {
@@ -823,11 +821,16 @@ export default function Dashboard() {
               const jobsData = await response.json();
               setJobs(jobsData);
               setShowSearchResults(true);
+              setShowClarification(false);
               setAiClarification(null);
             }
           } else {
             setAiClarification(data.response);
-            setSearchHistory(prev => [...prev, { role: 'user', content: query }, { role: 'assistant', content: data.response }]);
+            setClarificationHistory(prev => [...prev, 
+              { role: 'user', content: query }, 
+              { role: 'assistant', content: data.response }
+            ]);
+            setShowClarification(true);
             setIsSearching(false);
             return;
           }
@@ -838,6 +841,7 @@ export default function Dashboard() {
           const jobsData = await response.json();
           setJobs(jobsData);
           setShowSearchResults(true);
+          setShowClarification(false);
           setAiClarification(null);
         }
       }
@@ -1686,7 +1690,69 @@ export default function Dashboard() {
           {activeTab === "AI Job Search" ? (
             <div className="px-4 sm:px-6 max-w-5xl mx-auto w-full">
               <AnimatePresence mode="wait">
-                {!showSearchResults ? (
+                {showClarification ? (
+                  <motion.div
+                    key="clarification-screen"
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -15 }}
+                    transition={{ duration: 0.4 }}
+                    className="w-full flex flex-col items-center justify-start pt-12 min-h-[calc(100vh-250px)]"
+                  >
+                    <div className="flex justify-center mb-2">
+                      <Suspense fallback={<div className="w-24 h-24" />}>
+                        <Lottie 
+                          animationData={aiLogoLottie} 
+                          style={{ width: 120, height: 120 }}
+                          loop={true}
+                        />
+                      </Suspense>
+                    </div>
+                    <div className="text-center w-full max-w-2xl">
+                      <h1 className="text-2xl font-semibold mb-6 text-[#1A1A1A]">
+                        {aiClarification}
+                      </h1>
+
+                      <div className="relative">
+                        <PromptInput
+                          value={inputValue}
+                          onValueChange={setInputValue}
+                          onSubmit={() => handleSearch(inputValue)}
+                          className="transition-all relative z-20"
+                        >
+                          <PromptInputTextarea 
+                            placeholder="Type your answer here..." 
+                            className="focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none pr-14"
+                          />
+                          <PromptInputActions className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                            <Button 
+                              size="icon" 
+                              className="w-10 h-10 rounded-full bg-[#1A1A1A] text-white hover:bg-[#1A1A1A]/90 transition-all group/btn"
+                              onClick={() => handleSearch(inputValue)}
+                              disabled={!inputValue.trim() || isSearching}
+                            >
+                              {isSearching ? (
+                                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                              ) : (
+                                <ArrowUp className="w-5 h-5 group-hover/btn:translate-y-[-1px] transition-transform" />
+                              )}
+                            </Button>
+                          </PromptInputActions>
+                        </PromptInput>
+                      </div>
+                      <Button 
+                        variant="ghost" 
+                        className="mt-4 text-sm text-[#1A1A1A]/40 hover:text-[#1A1A1A]"
+                        onClick={() => {
+                          setShowClarification(false);
+                          setClarificationHistory([]);
+                        }}
+                      >
+                        Start over
+                      </Button>
+                    </div>
+                  </motion.div>
+                ) : !showSearchResults ? (
                   <motion.div
                     key="search-screen"
                     initial={{ opacity: 0, y: 15 }}
