@@ -34,7 +34,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/ai/job-clarification", async (req, res) => {
     try {
       const { prompt } = req.body;
-      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
       const intentPrompt = `
 Convert this job search query into structured intent.
@@ -47,8 +47,13 @@ Return ONLY valid JSON:
   "seniority": string,
   "location": string,
   "company_type": string,
-  "confidence": number
+  "confidence": number,
+  "is_ready_to_search": boolean,
+  "clarification_question": string
 }
+
+If "is_ready_to_search" is true, "clarification_question" should be null.
+If you need more info (e.g. location, seniority), set "is_ready_to_search" to false and provide a friendly "clarification_question".
 `;
 
       const result = await model.generateContent(intentPrompt);
@@ -63,19 +68,25 @@ Return ONLY valid JSON:
 
       const intent = JSON.parse(jsonText);
       
-      // Convert intent to an optimized search string for JobSpy
-      const searchTerms = [
-        ...(intent.role_titles || []),
-        intent.seniority,
-        intent.location,
-        intent.company_type
-      ].filter(Boolean).join(" ");
+      if (intent.is_ready_to_search) {
+        // Convert intent to an optimized search string for JobSpy
+        const searchTerms = [
+          ...(intent.role_titles || []),
+          intent.seniority,
+          intent.location,
+          intent.company_type
+        ].filter(Boolean).join(" ");
 
-      // Send back both the structured intent and a READY response for the frontend
-      res.json({ 
-        response: `READY: ${searchTerms}`,
-        intent 
-      });
+        res.json({ 
+          response: `READY: ${searchTerms}`,
+          intent 
+        });
+      } else {
+        res.json({
+          response: intent.clarification_question || "Could you tell me more about the role or location you're looking for?",
+          intent
+        });
+      }
     } catch (error) {
       console.error("AI clarification error:", error);
       res.status(500).json({ message: "AI clarification failed" });
