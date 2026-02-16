@@ -41,38 +41,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
         : "";
 
       const intentPrompt = `
-Convert this job search query into structured intent for a job scraper (JobSpy). 
-The goal is to extract clear, concise keywords that will yield high-quality job search results.
+You are a job search intent extractor. Your goal is to determine if a user's job search query is specific enough to run a high-quality search.
 
-Query: "${prompt}"${historyContext}
+Query: "${prompt}"
+${historyContext}
 
-Guidelines for extraction:
-1. role_titles: Extract specific job titles (e.g., ["Senior Product Designer", "UX Designer"]).
-2. location: Extract location or intent. If not specified, flag as missing.
-3. seniority: Extract seniority level (e.g., "Senior", "Junior"). If not specified, flag as missing.
-4. work_type: Extract work type (e.g., "Full-time", "Contract", "Remote"). If not specified, flag as missing.
+You MUST evaluate the query for these 4 CRITICAL pieces of information:
+1. role_titles: Specific job titles (e.g., "Senior Product Designer", "UX Researcher"). 
+2. seniority: Experience level (e.g., "Junior", "Mid-weight", "Senior", "Lead").
+3. location: Specific city, country, or "Remote".
+4. work_type: Job type (e.g., "Full-time", "Contract", "Freelance").
 
-CRITICAL: "is_ready_to_search" MUST be false if any of these are missing or ambiguous:
-- Specific Job Role/Title
-- Seniority / Experience Level
-- Location Intent (even if it is "Remote")
-- Work Type Preference
+STRICT RULE: Set "is_ready_to_search" to true ONLY if ALL 4 pieces of information are explicitly clear from the current query or conversation history.
+If ANY of the 4 are missing, vague, or implied but not stated, you MUST:
+1. Set "is_ready_to_search" to false.
+2. Set "clarification_question" to a friendly, short question asking for ONE of the missing pieces (pick the most important missing one first).
+3. Provide 3-4 specific "options" for that missing piece.
 
 Return ONLY valid JSON:
 {
-  "role_titles": string[],
-  "seniority": string,
-  "location": string,
-  "work_type": string,
-  "company_type": string,
+  "role_titles": string[] | [],
+  "seniority": string | "",
+  "location": string | "",
+  "work_type": string | "",
+  "company_type": string | "",
   "confidence": number,
   "is_ready_to_search": boolean,
-  "clarification_question": string,
+  "clarification_question": string | null,
   "options": string[] | null
 }
-
-If "is_ready_to_search" is true, "clarification_question" and "options" should be null.
-If key information is missing, provide a friendly "clarification_question" focused on the missing piece and a list of 3-4 "options".
 `;
 
       const result = await model.generateContent(intentPrompt);
