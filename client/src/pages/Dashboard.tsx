@@ -818,6 +818,9 @@ export default function Dashboard() {
     setInputValue(""); // Clear input after submission
     
     try {
+      // Add user message to history immediately
+      setClarificationHistory(prev => [...prev, { role: 'user', content: query }]);
+
       if (!isFromAi) {
         const clarificationResponse = await fetch('/api/ai/job-clarification', {
           method: 'POST',
@@ -833,13 +836,6 @@ export default function Dashboard() {
         if (clarificationResponse.ok) {
           const data = await clarificationResponse.json();
           
-          // Add AI response to history with options if provided
-          setClarificationHistory(prev => [...prev, { 
-            role: 'assistant', 
-            content: data.response.replace('READY:', '').trim(),
-            options: data.options // API should return options if applicable
-          }]);
-
           if (data.response.startsWith('READY:')) {
             const optimizedQuery = data.response.replace('READY:', '').trim();
             const location = data.intent?.location || 'Remote';
@@ -853,10 +849,8 @@ export default function Dashboard() {
               setClarificationHistory([]); // Reset history after successful search
             }
           } else {
-            setAiClarification(data.response);
             setClarificationHistory(prev => [...prev, 
-              { role: 'user', content: query }, 
-              { role: 'assistant', content: data.response }
+              { role: 'assistant', content: data.response.trim(), options: data.options }
             ]);
             setShowClarification(true);
             setIsSearching(false);
