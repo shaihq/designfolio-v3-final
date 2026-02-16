@@ -800,6 +800,15 @@ export default function Dashboard() {
   const [showClarification, setShowClarification] = useState(false);
   const [aiClarification, setAiClarification] = useState<string | null>(null);
   const [clarificationHistory, setClarificationHistory] = useState<{ role: 'user' | 'assistant', content: string }[]>([]);
+
+  // Initialize with AI's first question if history is empty
+  useEffect(() => {
+    if (showClarification && clarificationHistory.length === 0) {
+      setClarificationHistory([
+        { role: 'assistant', content: "Hey Shai, what kind of job are you looking for?" }
+      ]);
+    }
+  }, [showClarification]);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -1792,7 +1801,9 @@ export default function Dashboard() {
                         className="mt-4 text-sm text-[#1A1A1A]/40 hover:text-[#1A1A1A] self-center"
                         onClick={() => {
                           setShowClarification(false);
-                          setClarificationHistory([]);
+                          setClarificationHistory([
+                            { role: 'assistant', content: "Hey Shai, what kind of job are you looking for?" }
+                          ]);
                           setAiClarification(null);
                         }}
                       >
