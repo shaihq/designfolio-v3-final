@@ -1740,11 +1740,11 @@ export default function Dashboard() {
                                   <img src="/advanced.png" alt="User" className="w-full h-full object-contain p-2" />
                                 </div>
                               ) : (
-                                <div className="w-12 h-12 flex items-center justify-center">
+                                <div className="w-12 h-12 rounded-full overflow-hidden bg-[#F5F3F1] border border-black/[0.05] shadow-sm flex items-center justify-center">
                                   <Suspense fallback={<div className="w-10 h-10" />}>
                                     <Lottie 
                                       animationData={aiLogoLottie} 
-                                      style={{ width: 60, height: 60 }}
+                                      style={{ width: 45, height: 45 }}
                                       loop={true}
                                     />
                                   </Suspense>
@@ -1780,39 +1780,52 @@ export default function Dashboard() {
                                 {option}
                               </Button>
                             ))}
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="rounded-full bg-white border-black/[0.1] hover:bg-black/[0.05] text-[#1A1A1A] text-sm py-4 px-6 h-auto"
+                              onClick={() => {
+                                setInputValue('');
+                                setShowCustomInput(true);
+                              }}
+                            >
+                              Custom
+                            </Button>
                           </motion.div>
                         )}
                         <div ref={chatEndRef} />
                       </div>
 
-                      <div className="relative">
-                        <PromptInput
-                          value={inputValue}
-                          onValueChange={setInputValue}
-                          onSubmit={() => handleSearch(inputValue)}
-                          className="transition-all relative z-20"
-                        >
-                          <PromptInputTextarea 
-                            placeholder="Type your answer here..." 
-                            className="focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none pr-14"
-                            autoFocus
-                          />
-                          <PromptInputActions className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
-                            <Button 
-                              size="icon" 
-                              className="w-10 h-10 rounded-full bg-[#1A1A1A] text-white hover:bg-[#1A1A1A]/90 transition-all group/btn"
-                              onClick={() => handleSearch(inputValue)}
-                              disabled={!inputValue.trim() || isSearching}
-                            >
-                              {isSearching ? (
-                                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                              ) : (
-                                <ArrowUp className="w-5 h-5 group-hover/btn:translate-y-[-1px] transition-transform" />
-                              )}
-                            </Button>
-                          </PromptInputActions>
-                        </PromptInput>
-                      </div>
+                      {(clarificationHistory.length === 1 || showCustomInput || !clarificationHistory[clarificationHistory.length - 1].options) && (
+                        <div className="relative">
+                          <PromptInput
+                            value={inputValue}
+                            onValueChange={setInputValue}
+                            onSubmit={() => handleSearch(inputValue)}
+                            className="transition-all relative z-20"
+                          >
+                            <PromptInputTextarea 
+                              placeholder="Type your answer here..." 
+                              className="focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none pr-14"
+                              autoFocus
+                            />
+                            <PromptInputActions className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                              <Button 
+                                size="icon" 
+                                className="w-10 h-10 rounded-full bg-[#1A1A1A] text-white hover:bg-[#1A1A1A]/90 transition-all group/btn"
+                                onClick={() => handleSearch(inputValue)}
+                                disabled={!inputValue.trim() || isSearching}
+                              >
+                                {isSearching ? (
+                                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                ) : (
+                                  <ArrowUp className="w-5 h-5 group-hover/btn:translate-y-[-1px] transition-transform" />
+                                )}
+                              </Button>
+                            </PromptInputActions>
+                          </PromptInput>
+                        </div>
+                      )}
                       <Button 
                         variant="ghost" 
                         className="mt-4 text-sm text-[#1A1A1A]/40 hover:text-[#1A1A1A] self-center"
@@ -1822,6 +1835,7 @@ export default function Dashboard() {
                             { role: 'assistant', content: "Hey Shai, what kind of job are you looking for?" }
                           ]);
                           setAiClarification(null);
+                          setShowCustomInput(false);
                         }}
                       >
                         Start over
