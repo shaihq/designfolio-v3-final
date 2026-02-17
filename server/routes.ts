@@ -52,7 +52,9 @@ You MUST evaluate the query for these 3 CRITICAL pieces of information:
 3. location: Specific city, country, or "Remote".
 
 STRICT RULE: Set "is_ready_to_search" to true ONLY if ALL 3 pieces of information (role_titles, seniority, and location) are explicitly clear from the current query or conversation history.
-If ANY of the 3 are missing, vague, or implied but not stated, you MUST:
+Do NOT ask about work type (full-time, part-time, contract, freelance). It is NOT required.
+
+If ANY of the 3 (role_titles, seniority, location) are missing, vague, or implied but not stated, you MUST:
 1. Set "is_ready_to_search" to false.
 2. Set "clarification_question" to a friendly, short question asking for ONE of the missing pieces (pick the most important missing one first).
 3. Provide 3-4 specific "options" for that missing piece.
