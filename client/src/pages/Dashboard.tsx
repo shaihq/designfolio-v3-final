@@ -184,6 +184,10 @@ export default function Dashboard() {
   const { playPick, playPlace } = usePegboardSounds();
   const isMobile = useIsMobile();
   const [searchPlatform, setSearchPlatform] = useState<'linkedin' | 'indeed'>('linkedin');
+  const [recentSearches, setRecentSearches] = useState<string[]>(() => {
+    const saved = localStorage.getItem('recent-job-searches');
+    return saved ? JSON.parse(saved) : [];
+  });
   const [isThemePanelOpen, setIsThemePanelOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [isResumeDialogOpen, setIsResumeDialogOpen] = useState(false);
@@ -819,6 +823,14 @@ export default function Dashboard() {
 
   const handleSearch = async (query: string, isFromAi = false) => {
     if (!query.trim()) return;
+
+    // Save to recent searches
+    setRecentSearches(prev => {
+      const filtered = prev.filter(s => s !== query);
+      const updated = [query, ...filtered].slice(0, 4);
+      localStorage.setItem('recent-job-searches', JSON.stringify(updated));
+      return updated;
+    });
     setIsSearching(true);
     setInputValue(""); // Clear input after submission
     setShowCustomInput(false); // Reset custom input state on search
@@ -2015,6 +2027,48 @@ export default function Dashboard() {
                           )}
                         </AnimatePresence>
                       </div>
+
+                      {/* Recent Searches Section */}
+                      {recentSearches.length > 0 && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="mt-12 w-full text-left"
+                        >
+                          <div className="flex items-center justify-between mb-4">
+                            <h2 className="text-lg font-semibold text-[#1A1A1A]">Your recent searches</h2>
+                            <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              className="text-xs font-medium text-[#1A1A1A]/40 hover:text-[#1A1A1A] flex items-center gap-1 group"
+                              onClick={() => {
+                                setRecentSearches([]);
+                                localStorage.removeItem('recent-job-searches');
+                              }}
+                            >
+                              Clear all
+                              <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                            </Button>
+                          </div>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            {recentSearches.map((search, idx) => (
+                              <button
+                                key={idx}
+                                onClick={() => {
+                                  setInputValue(search);
+                                  handleSearch(search);
+                                }}
+                                className="flex items-center gap-3 p-4 bg-white border border-black/[0.03] rounded-2xl hover:border-black/[0.08] hover:shadow-sm transition-all text-left group"
+                              >
+                                <div className="w-10 h-10 rounded-xl bg-black/[0.02] flex items-center justify-center shrink-0 group-hover:bg-primary/5 transition-colors">
+                                  <Search className="w-5 h-5 text-[#1A1A1A]/20 group-hover:text-primary transition-colors" />
+                                </div>
+                                <span className="text-sm font-medium text-[#1A1A1A] truncate">{search}</span>
+                              </button>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
                     </div>
                   </motion.div>
                 ) : (
