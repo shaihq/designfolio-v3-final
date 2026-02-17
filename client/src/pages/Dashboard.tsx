@@ -1829,8 +1829,9 @@ export default function Dashboard() {
                             <AIThinkingBlock />
                           ) : (
                             <div className="flex items-center gap-3 px-6 py-4 bg-white border border-black/[0.05] rounded-2xl shadow-sm">
-                              <Loader2 className="w-4 h-4 animate-spin text-primary" />
-                              <span className="text-sm font-medium text-[#1A1A1A] animate-pulse">Designfolio AI is thinking...</span>
+                              <TextShimmer className="text-sm font-medium [--base-color:#1A1A1A] [--base-gradient-color:#000] dark:[--base-color:#1A1A1A] dark:[--base-gradient-color:#000]">
+                                Designfolio AI is thinking...
+                              </TextShimmer>
                             </div>
                           )}
                         </div>
