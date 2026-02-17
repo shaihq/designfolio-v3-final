@@ -184,7 +184,7 @@ export default function Dashboard() {
   const { playPick, playPlace } = usePegboardSounds();
   const isMobile = useIsMobile();
   const [searchPlatform, setSearchPlatform] = useState<'linkedin' | 'indeed'>('linkedin');
-  const [recentSearches, setRecentSearches] = useState<string[]>(() => {
+  const [recentSearches, setRecentSearches] = useState<{ query: string, jobs: any[] }[]>(() => {
     const saved = localStorage.getItem('recent-job-searches');
     return saved ? JSON.parse(saved) : [];
   });
@@ -825,12 +825,6 @@ export default function Dashboard() {
     if (!query.trim()) return;
 
     // Save to recent searches
-    setRecentSearches(prev => {
-      const filtered = prev.filter(s => s !== query);
-      const updated = [query, ...filtered].slice(0, 4);
-      localStorage.setItem('recent-job-searches', JSON.stringify(updated));
-      return updated;
-    });
     setIsSearching(true);
     setInputValue(""); // Clear input after submission
     setShowCustomInput(false); // Reset custom input state on search
@@ -865,6 +859,14 @@ export default function Dashboard() {
               setShowClarification(false);
               setAiClarification(null);
               setClarificationHistory([]); // Reset history after successful search
+              
+              // Save to recent searches with results
+              setRecentSearches(prev => {
+                const filtered = prev.filter(s => s.query !== query);
+                const updated = [{ query, jobs: jobsData }, ...filtered].slice(0, 4);
+                localStorage.setItem('recent-job-searches', JSON.stringify(updated));
+                return updated;
+              });
             }
           } else {
             setClarificationHistory(prev => [...prev, 
@@ -883,6 +885,14 @@ export default function Dashboard() {
           setShowSearchResults(true);
           setShowClarification(false);
           setAiClarification(null);
+
+          // Save to recent searches with results
+          setRecentSearches(prev => {
+            const filtered = prev.filter(s => s.query !== query);
+            const updated = [{ query, jobs: jobsData }, ...filtered].slice(0, 4);
+            localStorage.setItem('recent-job-searches', JSON.stringify(updated));
+            return updated;
+          });
         }
       }
     } catch (error) {
@@ -2055,15 +2065,19 @@ export default function Dashboard() {
                               <button
                                 key={idx}
                                 onClick={() => {
-                                  setInputValue(search);
-                                  handleSearch(search);
+                                  setInputValue(search.query);
+                                  setJobs(search.jobs || []);
+                                  setShowSearchResults(true);
                                 }}
                                 className="flex items-center gap-3 p-4 bg-white border border-black/[0.03] rounded-2xl hover:border-black/[0.08] hover:shadow-sm transition-all text-left group"
                               >
                                 <div className="w-10 h-10 rounded-xl bg-black/[0.02] flex items-center justify-center shrink-0 group-hover:bg-primary/5 transition-colors">
                                   <Search className="w-5 h-5 text-[#1A1A1A]/20 group-hover:text-primary transition-colors" />
                                 </div>
-                                <span className="text-sm font-medium text-[#1A1A1A] truncate">{search}</span>
+                                <div className="flex flex-col min-w-0">
+                                  <span className="text-sm font-medium text-[#1A1A1A] truncate">{search.query}</span>
+                                  <span className="text-[11px] text-[#1A1A1A]/40">{(search.jobs || []).length} jobs found</span>
+                                </div>
                               </button>
                             ))}
                           </div>
