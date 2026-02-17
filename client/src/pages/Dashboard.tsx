@@ -78,7 +78,8 @@ import {
   ExternalLink,
   MapPin,
   Calendar,
-  Banknote
+  Banknote,
+  Loader2
 } from "lucide-react";
 import { SiBehance } from "react-icons/si";
 import { Link } from "wouter";
@@ -1824,7 +1825,14 @@ export default function Dashboard() {
 
                       {isSearching ? (
                         <div className="flex justify-center w-full py-8">
-                          <AIThinkingBlock />
+                          {clarificationHistory.length > 5 ? (
+                            <AIThinkingBlock />
+                          ) : (
+                            <div className="flex items-center gap-3 px-6 py-4 bg-white border border-black/[0.05] rounded-2xl shadow-sm">
+                              <Loader2 className="w-4 h-4 animate-spin text-primary" />
+                              <span className="text-sm font-medium text-[#1A1A1A] animate-pulse">Designfolio AI is thinking...</span>
+                            </div>
+                          )}
                         </div>
                       ) : (
                         (clarificationHistory.length === 1 || showCustomInput || !clarificationHistory[clarificationHistory.length - 1].options) && (
