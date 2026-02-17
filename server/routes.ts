@@ -46,14 +46,13 @@ You are a job search intent extractor. Your goal is to determine if a user's job
 Query: "${prompt}"
 ${historyContext}
 
-You MUST evaluate the query for these 4 CRITICAL pieces of information:
+You MUST evaluate the query for these 3 CRITICAL pieces of information:
 1. role_titles: Specific job titles (e.g., "Senior Product Designer", "UX Researcher"). 
 2. seniority: Experience level (e.g., "Junior", "Mid-weight", "Senior", "Lead").
 3. location: Specific city, country, or "Remote".
-4. work_type: Job type (e.g., "Full-time", "Contract", "Freelance").
 
-STRICT RULE: Set "is_ready_to_search" to true ONLY if ALL 4 pieces of information are explicitly clear from the current query or conversation history.
-If ANY of the 4 are missing, vague, or implied but not stated, you MUST:
+STRICT RULE: Set "is_ready_to_search" to true ONLY if ALL 3 pieces of information (role_titles, seniority, and location) are explicitly clear from the current query or conversation history.
+If ANY of the 3 are missing, vague, or implied but not stated, you MUST:
 1. Set "is_ready_to_search" to false.
 2. Set "clarification_question" to a friendly, short question asking for ONE of the missing pieces (pick the most important missing one first).
 3. Provide 3-4 specific "options" for that missing piece.
@@ -63,7 +62,6 @@ Return ONLY valid JSON:
   "role_titles": string[] | [],
   "seniority": string | "",
   "location": string | "",
-  "work_type": string | "",
   "company_type": string | "",
   "confidence": number,
   "is_ready_to_search": boolean,
@@ -91,7 +89,6 @@ Return ONLY valid JSON:
         const searchTerms = [
           titles,
           intent.seniority,
-          intent.work_type,
           intent.company_type
         ].filter(Boolean).join(" ");
 
