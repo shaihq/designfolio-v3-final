@@ -1721,11 +1721,11 @@ export default function Dashboard() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -15 }}
                     transition={{ duration: 0.4 }}
-                    className="w-full flex flex-col items-center justify-start pt-8 min-h-[calc(100vh-250px)] pb-12"
+                    className="w-full flex flex-col items-center justify-start pt-8 pb-12"
                   >
-                    <div className="w-full max-w-2xl flex flex-col h-full">
+                    <div className="w-full max-w-2xl flex flex-col">
                       {/* Chat History */}
-                      <div className="flex-1 overflow-y-auto space-y-4 mb-8 pr-2 scrollbar-hide max-h-[50vh]">
+                      <div className="space-y-4 mb-8 pr-2">
                         <AnimatePresence mode="popLayout">
                           {clarificationHistory.map((msg, idx) => (
                             <motion.div
