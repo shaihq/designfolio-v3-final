@@ -1789,28 +1789,33 @@ export default function Dashboard() {
                                 damping: 20
                               }
                             }}
-                            className="flex flex-col gap-1 ml-15 pl-1 mt-2 max-w-[400px]"
+                            className="flex flex-col gap-0.5 ml-15 mt-2 max-w-[400px]"
                           >
-                            {clarificationHistory[clarificationHistory.length - 1].options?.map((option) => (
+                            <div className="bg-white border border-black/[0.05] rounded-2xl overflow-hidden shadow-sm">
+                              {clarificationHistory[clarificationHistory.length - 1].options?.map((option, idx) => (
+                                <button
+                                  key={option}
+                                  className={cn(
+                                    "w-full text-left px-4 py-3 text-sm text-[#1A1A1A] hover:bg-black/[0.03] transition-colors flex items-center justify-between group",
+                                    idx !== 0 && "border-t border-black/[0.03]"
+                                  )}
+                                  onClick={() => handleSearch(option)}
+                                >
+                                  <span className="font-medium">{option}</span>
+                                  <ChevronRight className="w-4 h-4 text-black/20 group-hover:text-black/40 transition-colors" />
+                                </button>
+                              ))}
                               <button
-                                key={option}
-                                className="w-full text-left px-4 py-2.5 text-sm text-[#1A1A1A] hover:bg-black/[0.04] rounded-xl transition-colors flex items-center justify-between group"
-                                onClick={() => handleSearch(option)}
+                                className="w-full text-left px-4 py-3 text-sm text-[#1A1A1A]/50 hover:bg-black/[0.03] hover:text-[#1A1A1A] transition-colors flex items-center justify-between group border-t border-black/[0.03]"
+                                onClick={() => {
+                                  setInputValue('');
+                                  setShowCustomInput(true);
+                                }}
                               >
-                                <span>{option}</span>
-                                <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-40 transition-opacity" />
+                                <span>Custom</span>
+                                <ChevronRight className="w-4 h-4 text-black/20 group-hover:text-black/40 transition-colors" />
                               </button>
-                            ))}
-                            <button
-                              className="w-full text-left px-4 py-2.5 text-sm text-[#1A1A1A]/60 hover:bg-black/[0.04] hover:text-[#1A1A1A] rounded-xl transition-colors flex items-center justify-between group border-t border-black/[0.03] mt-1 pt-3"
-                              onClick={() => {
-                                setInputValue('');
-                                setShowCustomInput(true);
-                              }}
-                            >
-                              <span>Custom</span>
-                              <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-40 transition-opacity" />
-                            </button>
+                            </div>
                           </motion.div>
                         )}
                         <div ref={chatEndRef} />
