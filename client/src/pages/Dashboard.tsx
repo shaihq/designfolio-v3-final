@@ -178,6 +178,8 @@ const CrypticText = ({ text, className }: { text: string; className?: string }) 
 import { usePegboardSounds } from "@/hooks/use-pegboard-sounds";
 import { useIsMobile } from "@/hooks/use-mobile";
 
+import { TextShimmer } from "@/components/ui/text-shimmer";
+
 export default function Dashboard() {
   const { playPick, playPlace } = usePegboardSounds();
   const isMobile = useIsMobile();
