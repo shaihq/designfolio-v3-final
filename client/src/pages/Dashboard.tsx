@@ -855,6 +855,7 @@ export default function Dashboard() {
             if (response.ok) {
               const jobsData = await response.json();
               setJobs(jobsData);
+              setInputValue(optimizedQuery); // Store optimized keyword in input
               setShowSearchResults(true);
               setShowClarification(false);
               setAiClarification(null);
@@ -862,8 +863,8 @@ export default function Dashboard() {
               
               // Save to recent searches with results
               setRecentSearches(prev => {
-                const filtered = prev.filter(s => s.query !== query);
-                const updated = [{ query, jobs: jobsData }, ...filtered].slice(0, 4);
+                const filtered = prev.filter(s => s.query !== optimizedQuery);
+                const updated = [{ query: optimizedQuery, jobs: jobsData }, ...filtered].slice(0, 4);
                 localStorage.setItem('recent-job-searches', JSON.stringify(updated));
                 return updated;
               });
@@ -882,6 +883,7 @@ export default function Dashboard() {
         if (response.ok) {
           const jobsData = await response.json();
           setJobs(jobsData);
+          setInputValue(query); // Store keyword in input
           setShowSearchResults(true);
           setShowClarification(false);
           setAiClarification(null);
@@ -2111,10 +2113,9 @@ export default function Dashboard() {
                           <div className="bg-white dark:bg-white border-2 border-border rounded-full hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)] transition-all duration-300 ease-out relative overflow-hidden">
                             <Input 
                               value={inputValue}
-                              onChange={(e) => setInputValue(e.target.value)}
-                              onKeyDown={(e) => e.key === 'Enter' && handleSearch(inputValue)}
+                              readOnly
                               placeholder="Search roles..."
-                              className="border-0 bg-transparent h-12 pl-12 pr-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-base placeholder:text-muted-foreground/60 w-full"
+                              className="border-0 bg-transparent h-12 pl-12 pr-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-base placeholder:text-muted-foreground/60 w-full cursor-default"
                             />
                           </div>
                         </div>
