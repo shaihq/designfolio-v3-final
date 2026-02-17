@@ -34,6 +34,7 @@ import {
   CarouselNext 
 } from "@/components/ui/carousel";
 import { PromptInput, PromptInputTextarea, PromptInputActions } from "@/components/ui/prompt-input"
+import AIThinkingBlock from "@/components/ui/ai-thinking-block";
 import { PromptSuggestion } from "@/components/ui/prompt-suggestion"
 import { 
   Sparkles, 
@@ -1821,35 +1822,37 @@ export default function Dashboard() {
                         <div ref={chatEndRef} />
                       </div>
 
-                      {(clarificationHistory.length === 1 || showCustomInput || !clarificationHistory[clarificationHistory.length - 1].options) && (
-                        <div className="relative">
-                          <PromptInput
-                            value={inputValue}
-                            onValueChange={setInputValue}
-                            onSubmit={() => handleSearch(inputValue)}
-                            className="transition-all relative z-20"
-                          >
-                            <PromptInputTextarea 
-                              placeholder="Type your answer here..." 
-                              className="focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none pr-14"
-                              autoFocus
-                            />
-                            <PromptInputActions className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
-                              <Button 
-                                size="icon" 
-                                className="w-10 h-10 rounded-full bg-[#1A1A1A] text-white hover:bg-[#1A1A1A]/90 transition-all group/btn"
-                                onClick={() => handleSearch(inputValue)}
-                                disabled={!inputValue.trim() || isSearching}
-                              >
-                                {isSearching ? (
-                                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                ) : (
-                                  <ArrowUp className="w-5 h-5 group-hover/btn:translate-y-[-1px] transition-transform" />
-                                )}
-                              </Button>
-                            </PromptInputActions>
-                          </PromptInput>
+                      {isSearching ? (
+                        <div className="flex justify-center w-full py-8">
+                          <AIThinkingBlock />
                         </div>
+                      ) : (
+                        (clarificationHistory.length === 1 || showCustomInput || !clarificationHistory[clarificationHistory.length - 1].options) && (
+                          <div className="relative">
+                            <PromptInput
+                              value={inputValue}
+                              onValueChange={setInputValue}
+                              onSubmit={() => handleSearch(inputValue)}
+                              className="transition-all relative z-20"
+                            >
+                              <PromptInputTextarea 
+                                placeholder="Type your answer here..." 
+                                className="focus:ring-0 focus-visible:ring-0 focus:outline-none focus-visible:outline-none pr-14"
+                                autoFocus
+                              />
+                              <PromptInputActions className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                                <Button 
+                                  size="icon" 
+                                  className="w-10 h-10 rounded-full bg-[#1A1A1A] text-white hover:bg-[#1A1A1A]/90 transition-all group/btn"
+                                  onClick={() => handleSearch(inputValue)}
+                                  disabled={!inputValue.trim() || isSearching}
+                                >
+                                  <ArrowUp className="w-5 h-5 group-hover/btn:translate-y-[-1px] transition-transform" />
+                                </Button>
+                              </PromptInputActions>
+                            </PromptInput>
+                          </div>
+                        )
                       )}
                       <Button 
                         variant="ghost" 
