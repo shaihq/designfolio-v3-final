@@ -1778,10 +1778,9 @@ export default function Dashboard() {
                         {/* Smart Options */}
                         {clarificationHistory.length > 0 && clarificationHistory[clarificationHistory.length - 1].role === 'assistant' && clarificationHistory[clarificationHistory.length - 1].options && (
                           <motion.div 
-                            initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                            initial={{ opacity: 0, y: 10 }}
                             animate={{ 
                               opacity: 1, 
-                              scale: 1, 
                               y: 0,
                               transition: {
                                 delay: 0.2,
@@ -1790,30 +1789,28 @@ export default function Dashboard() {
                                 damping: 20
                               }
                             }}
-                            className="flex flex-wrap gap-2 ml-15 pl-15 mt-2"
+                            className="flex flex-col gap-1 ml-15 pl-1 mt-2 max-w-[400px]"
                           >
                             {clarificationHistory[clarificationHistory.length - 1].options?.map((option) => (
-                              <Button
+                              <button
                                 key={option}
-                                variant="outline"
-                                size="sm"
-                                className="rounded-full bg-white border-black/[0.1] hover:bg-black/[0.05] text-[#1A1A1A] text-sm py-4 px-6 h-auto"
+                                className="w-full text-left px-4 py-2.5 text-sm text-[#1A1A1A] hover:bg-black/[0.04] rounded-xl transition-colors flex items-center justify-between group"
                                 onClick={() => handleSearch(option)}
                               >
-                                {option}
-                              </Button>
+                                <span>{option}</span>
+                                <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-40 transition-opacity" />
+                              </button>
                             ))}
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              className="rounded-full bg-white border-black/[0.1] hover:bg-black/[0.05] text-[#1A1A1A] text-sm py-4 px-6 h-auto"
+                            <button
+                              className="w-full text-left px-4 py-2.5 text-sm text-[#1A1A1A]/60 hover:bg-black/[0.04] hover:text-[#1A1A1A] rounded-xl transition-colors flex items-center justify-between group border-t border-black/[0.03] mt-1 pt-3"
                               onClick={() => {
                                 setInputValue('');
                                 setShowCustomInput(true);
                               }}
                             >
-                              Custom
-                            </Button>
+                              <span>Custom</span>
+                              <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-40 transition-opacity" />
+                            </button>
                           </motion.div>
                         )}
                         <div ref={chatEndRef} />
