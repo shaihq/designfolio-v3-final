@@ -83,7 +83,8 @@ import {
 } from "lucide-react";
 import { SiBehance } from "react-icons/si";
 import { Link } from "wouter";
-import {
+import { PricingPopup } from "@/components/pricing/PricingPopup";
+import { 
   DndContext,
   closestCenter,
   KeyboardSensor,
@@ -341,6 +342,7 @@ export default function Dashboard() {
   const [scrollOffset, setScrollOffset] = useState(0);
   const rafRef = useRef<number | null>(null);
   const pinBoardRef = useRef<HTMLDivElement>(null);
+  const [isPricingOpen, setIsPricingOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
   const [user, setUser] = useState({
     name: "Shai!",
@@ -2489,6 +2491,7 @@ export default function Dashboard() {
                                     
                                     <StardustButton 
                                       data-testid="button-upgrade-to-pro"
+                                      onClick={() => setIsPricingOpen(true)}
                                     >
                                       {isMobileOrTablet ? 'Upgrade Now' : 'Get Lifetime Access'}
                                     </StardustButton>
