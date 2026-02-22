@@ -13,9 +13,9 @@ export const PricingPopup = ({ isOpen, onClose }: PricingPopupProps) => {
   const [selectedPlan, setSelectedPlan] = React.useState<"1month" | "3months" | "lifetime">("1month");
 
   const plans = {
-    "1month": { price: "₹1,199", label: "one-time payment" },
-    "3months": { price: "₹2,999", label: "one-time payment" },
-    "lifetime": { price: "₹4,999", label: "one-time payment" },
+    "1month": { price: "₹1,999", label: "one-time payment" },
+    "3months": { price: "₹3,999", label: "one-time payment" },
+    "lifetime": { price: "₹6,999", label: "one-time payment" },
   };
 
   return (
@@ -57,11 +57,14 @@ export const PricingPopup = ({ isOpen, onClose }: PricingPopupProps) => {
               </button>
               <button
                 onClick={() => setSelectedPlan("3months")}
-                className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold transition-all ${
+                className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold transition-all relative ${
                   selectedPlan === "3months" ? "bg-white shadow-sm text-gray-900" : "text-gray-500 hover:text-gray-700"
                 }`}
               >
                 3 Months
+                <span className="absolute -top-2 -right-1 bg-[#5CC894] text-white text-[8px] px-1.5 py-0.5 rounded-full shadow-sm">
+                  Save 33%
+                </span>
               </button>
               <button
                 onClick={() => setSelectedPlan("lifetime")}
@@ -92,7 +95,7 @@ export const PricingPopup = ({ isOpen, onClose }: PricingPopupProps) => {
             <div className="mt-5 flex items-center justify-center gap-1.5 bg-[#FFF7D6] py-2 px-3 rounded-full border border-[#FFE8A3]">
               <span className="text-sm">⏰</span>
               <span className="text-[#856404] font-semibold text-[11px] uppercase tracking-wider">
-                Best value: Lifetime at ₹4,999 — unlock forever
+                Best value: Lifetime at ₹6,999 — unlock forever
               </span>
             </div>
 
