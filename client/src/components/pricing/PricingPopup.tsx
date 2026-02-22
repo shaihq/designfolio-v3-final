@@ -92,12 +92,14 @@ export const PricingPopup = ({ isOpen, onClose }: PricingPopupProps) => {
             </Button>
 
             {/* Best Value Badge */}
-            <div className="mt-5 flex items-center justify-center gap-1.5 bg-[#FFF7D6] py-2 px-3 rounded-full border border-[#FFE8A3]">
-              <span className="text-sm">⏰</span>
-              <span className="text-[#856404] font-semibold text-[11px] uppercase tracking-wider">
-                Best value: Lifetime at ₹5,499 — unlock forever
-              </span>
-            </div>
+            {selectedPlan === "lifetime" && (
+              <div className="mt-5 flex items-center justify-center gap-1.5 bg-[#FFF7D6] py-2 px-3 rounded-full border border-[#FFE8A3]">
+                <span className="text-sm">⏰</span>
+                <span className="text-[#856404] font-semibold text-[11px] uppercase tracking-wider">
+                  Lifetime price increasing next month
+                </span>
+              </div>
+            )}
 
             {/* Features List */}
             <div className="mt-6 space-y-3">
