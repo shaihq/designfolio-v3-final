@@ -14,8 +14,8 @@ export const PricingPopup = ({ isOpen, onClose }: PricingPopupProps) => {
 
   const plans = {
     "1month": { price: "₹1,999", label: "one-time payment" },
-    "3months": { price: "₹3,999", label: "one-time payment" },
-    "lifetime": { price: "₹6,999", label: "one-time payment" },
+    "3months": { price: "₹4,999", label: "one-time payment" },
+    "lifetime": { price: "₹5,499", label: "one-time payment" },
   };
 
   return (
@@ -62,7 +62,7 @@ export const PricingPopup = ({ isOpen, onClose }: PricingPopupProps) => {
                 }`}
               >
                 3 Months
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#5CC894] text-white text-[8px] px-1.5 py-0.5 rounded-full shadow-sm whitespace-nowrap">
+                <span className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#5CC894] text-white text-[8px] px-1.5 py-0.5 rounded-full shadow-sm whitespace-nowrap">
                   Save 33%
                 </span>
               </button>
@@ -95,7 +95,7 @@ export const PricingPopup = ({ isOpen, onClose }: PricingPopupProps) => {
             <div className="mt-5 flex items-center justify-center gap-1.5 bg-[#FFF7D6] py-2 px-3 rounded-full border border-[#FFE8A3]">
               <span className="text-sm">⏰</span>
               <span className="text-[#856404] font-semibold text-[11px] uppercase tracking-wider">
-                Best value: Lifetime at ₹6,999 — unlock forever
+                Best value: Lifetime at ₹5,499 — unlock forever
               </span>
             </div>
 
