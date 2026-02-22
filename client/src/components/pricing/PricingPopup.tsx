@@ -13,9 +13,24 @@ export const PricingPopup = ({ isOpen, onClose }: PricingPopupProps) => {
   const [selectedPlan, setSelectedPlan] = React.useState<"1month" | "3months" | "lifetime">("1month");
 
   const plans = {
-    "1month": { price: "₹1,999", label: "one-time payment" },
-    "3months": { price: "₹4,999", label: "one-time payment" },
-    "lifetime": { price: "₹5,499", label: "one-time payment" },
+    "1month": { 
+      price: "₹1,999", 
+      label: "one-time payment",
+      title: "First hand Pass",
+      subtext: "Build your first serious portfolio. Explore what’s possible."
+    },
+    "3months": { 
+      price: "₹4,999", 
+      label: "one-time payment",
+      title: "Job Sprint Pass",
+      subtext: "Looking to build a complete portfolio at warp speed and land job opportunities?"
+    },
+    "lifetime": { 
+      price: "₹5,499", 
+      label: "one-time payment",
+      title: "Infinite Access Pass",
+      subtext: "Your portfolio shouldn’t disappear after the job hunt. Own it for life with this plan."
+    },
   };
 
   return (
@@ -39,10 +54,10 @@ export const PricingPopup = ({ isOpen, onClose }: PricingPopupProps) => {
 
           <div className="px-6 pb-8 pt-4">
             <h2 className="text-[22px] font-bold text-gray-900 leading-tight">
-              Designfolio Lifetime Access
+              {plans[selectedPlan].title}
             </h2>
-            <p className="text-gray-500 mt-1.5 text-sm leading-relaxed">
-              Just one payment. That's it. You get everything, forever.
+            <p className="text-gray-500 mt-1.5 text-sm leading-relaxed whitespace-pre-line">
+              {plans[selectedPlan].subtext}
             </p>
 
             {/* Plan Selector */}
