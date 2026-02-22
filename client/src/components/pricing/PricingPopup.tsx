@@ -16,20 +16,20 @@ export const PricingPopup = ({ isOpen, onClose }: PricingPopupProps) => {
     "1month": { 
       price: "₹1,999", 
       label: "one-time payment",
-      title: "First hand Pass",
+      title: "For Beginners",
       subtext: "Build your first serious portfolio. Explore what’s possible."
     },
     "3months": { 
       price: "₹4,999", 
       label: "one-time payment",
-      title: "Job Sprint Pass",
-      subtext: "Looking to build a complete portfolio at warp speed and land job opportunities?"
+      title: "For Job Seekers",
+      subtext: "Build a complete portfolio and start landing interviews fast."
     },
     "lifetime": { 
       price: "₹5,499", 
       label: "one-time payment",
-      title: "Lifetime Access Pass",
-      subtext: "Your portfolio shouldn’t disappear after the job hunt. Own it for life with this plan."
+      title: "Lifetime Access",
+      subtext: "Own your portfolio forever. No expiry. No resets."
     },
   };
 
