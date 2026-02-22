@@ -28,7 +28,7 @@ export const PricingPopup = ({ isOpen, onClose }: PricingPopupProps) => {
     "lifetime": { 
       price: "₹5,499", 
       label: "one-time payment",
-      title: "Infinite Access Pass",
+      title: "Lifetime Access Pass",
       subtext: "Your portfolio shouldn’t disappear after the job hunt. Own it for life with this plan."
     },
   };
