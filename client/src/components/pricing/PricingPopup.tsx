@@ -61,10 +61,12 @@ export const PricingPopup = ({ isOpen, onClose }: PricingPopupProps) => {
                   selectedPlan === "3months" ? "bg-white shadow-sm text-gray-900" : "text-gray-500 hover:text-gray-700"
                 }`}
               >
-                3 Months
-                <span className="absolute -top-2 -right-1 bg-[#5CC894] text-white text-[8px] px-1.5 py-0.5 rounded-full shadow-sm">
-                  Save 33%
-                </span>
+                <div className="flex flex-col items-center justify-center">
+                  <span>3 Months</span>
+                  <span className="bg-[#5CC894] text-white text-[7px] px-1 py-0.5 rounded-full shadow-sm mt-0.5">
+                    Save 33%
+                  </span>
+                </div>
               </button>
               <button
                 onClick={() => setSelectedPlan("lifetime")}
