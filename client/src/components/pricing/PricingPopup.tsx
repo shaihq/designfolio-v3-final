@@ -57,13 +57,13 @@ export const PricingPopup = ({ isOpen, onClose }: PricingPopupProps) => {
               </button>
               <button
                 onClick={() => setSelectedPlan("3months")}
-                className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
+                className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-semibold transition-all relative ${
                   selectedPlan === "3months" ? "bg-white shadow-sm text-gray-900" : "text-gray-500 hover:text-gray-700"
                 }`}
               >
-                <span>3 Months</span>
-                <span className="bg-[#FEE2E2] text-[#B91C1C] text-[9px] px-1.5 py-0.5 rounded-full font-bold">
-                  save 33%
+                3 Months
+                <span className="absolute -top-2 -right-1 bg-[#5CC894] text-white text-[8px] px-1.5 py-0.5 rounded-full shadow-sm">
+                  Save 33%
                 </span>
               </button>
               <button
