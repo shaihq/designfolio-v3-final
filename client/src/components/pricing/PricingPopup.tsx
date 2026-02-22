@@ -117,7 +117,23 @@ export const PricingPopup = ({ isOpen, onClose }: PricingPopupProps) => {
             )}
 
             {/* Features List */}
-            <div className="mt-6 space-y-3">
+            <div className="mt-8 pt-6 border-t border-gray-100">
+              <p className="text-center text-[11px] font-medium text-gray-400 uppercase tracking-wider mb-4">
+                Trusted by 20000+ designers
+              </p>
+              <div className="flex justify-center items-center gap-4 opacity-40 grayscale flex-wrap">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <img 
+                    key={i} 
+                    src={`/company logos/companylogos0${i}.svg`} 
+                    alt="Company logo" 
+                    className="h-4 w-auto"
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-8 space-y-3">
               {[
                 "Use your own custom domain",
                 "Access all templates — now & forever",
