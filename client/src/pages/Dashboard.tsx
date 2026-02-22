@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { useState, useEffect, useRef, Suspense, lazy } from "react";
 const Lottie = lazy(() => import("lottie-react"));
-import aiLogoLottie from "../../public/ai-logo-lottie.json";
+import aiLogoLottie from "@/assets/ai-logo-lottie.json";
 import { toast } from "@/hooks/use-toast";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
