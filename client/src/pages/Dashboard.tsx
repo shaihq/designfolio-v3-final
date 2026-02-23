@@ -1597,12 +1597,17 @@ export default function Dashboard() {
                 >
                   Publish Site
                 </Button>
-                <Avatar className="w-10 h-10 rounded-full" data-testid="avatar-user">
-                  <AvatarImage src={user.avatar} alt={user.name} className="rounded-full" />
-                  <AvatarFallback className="text-base rounded-full" style={{ backgroundColor: '#FF553E', color: '#FFFFFF' }}>
-                    {user.name.charAt(0).toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
+                <div className="relative group cursor-pointer" data-testid="avatar-user">
+                  <Avatar className="w-10 h-10 rounded-full border-2 border-background shadow-sm">
+                    <AvatarImage src={user.avatar} alt={user.name} className="rounded-full" />
+                    <AvatarFallback className="text-base rounded-full" style={{ backgroundColor: '#FF553E', color: '#FFFFFF' }}>
+                      {user.name.charAt(0).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-white dark:bg-zinc-800 border border-black/10 dark:border-white/10 px-1.5 py-0.5 rounded-full shadow-sm whitespace-nowrap">
+                    <span className="text-[8px] font-bold uppercase tracking-wider text-black dark:text-white leading-none block">Free</span>
+                  </div>
+                </div>
               </div>
 
               {/* Mobile Menu */}
@@ -1621,12 +1626,17 @@ export default function Dashboard() {
                   <SheetContent className="w-80">
                     <div className="flex flex-col gap-4 mt-8">
                       <div className="flex items-center gap-3 mb-4">
-                        <Avatar className="w-10 h-10 rounded-full" data-testid="avatar-user-mobile">
-                          <AvatarImage src={user.avatar} alt={user.name} className="rounded-full" />
-                          <AvatarFallback className="text-base rounded-full" style={{ backgroundColor: '#FF553E', color: '#FFFFFF' }}>
-                            {user.name.charAt(0).toUpperCase()}
-                          </AvatarFallback>
-                        </Avatar>
+                        <div className="relative inline-block">
+                          <Avatar className="w-10 h-10 rounded-full border-2 border-background shadow-sm" data-testid="avatar-user-mobile">
+                            <AvatarImage src={user.avatar} alt={user.name} className="rounded-full" />
+                            <AvatarFallback className="text-base rounded-full" style={{ backgroundColor: '#FF553E', color: '#FFFFFF' }}>
+                              {user.name.charAt(0).toUpperCase()}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-white dark:bg-zinc-800 border border-black/10 dark:border-white/10 px-1.5 py-0.5 rounded-full shadow-sm whitespace-nowrap">
+                            <span className="text-[8px] font-bold uppercase tracking-wider text-black dark:text-white leading-none block">Free</span>
+                          </div>
+                        </div>
                         <div>
                           <div className="font-semibold">{user.name}</div>
                           <div className="text-sm text-foreground/50">{user.role}</div>
