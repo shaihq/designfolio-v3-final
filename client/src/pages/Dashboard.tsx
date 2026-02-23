@@ -1623,7 +1623,7 @@ export default function Dashboard() {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-64 p-2 rounded-2xl shadow-xl bg-white border-black/5 dark:bg-zinc-950 dark:border-white/5">
                     <DropdownMenuItem 
-                      className="flex items-center gap-3 p-3 rounded-xl cursor-pointer bg-[#F5F3F1] dark:bg-white/[0.05] focus:bg-[#E5E3E1] dark:focus:bg-white/[0.08] group transition-colors"
+                      className="flex items-center gap-3 p-3 rounded-xl cursor-pointer bg-orange-50/30 dark:bg-orange-500/5 focus:bg-orange-50/50 dark:focus:bg-orange-500/10 group transition-colors mb-2"
                       onClick={() => setIsUpgradePopupOpen(true)}
                     >
                       <div className="w-10 h-10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform overflow-hidden">
