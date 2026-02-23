@@ -8,7 +8,13 @@ Usage: Include httpOptions with baseUrl and empty apiVersion when using AI Integ
 */
 
 // This is using Replit's AI Integrations service, which provides Gemini-compatible API access without requiring your own Gemini API key.
-const genAI = new GoogleGenAI(process.env.AI_INTEGRATIONS_GEMINI_API_KEY || "no-key-required");
+let genAI: GoogleGenAI | null = null;
+try {
+  const apiKey = process.env.AI_INTEGRATIONS_GEMINI_API_KEY || "no-key-required";
+  genAI = new GoogleGenAI(apiKey);
+} catch (error) {
+  console.error("Failed to initialize GoogleGenAI:", error);
+}
 
 // Re-configure for Replit AI Integrations baseUrl if provided
 const requestOptions = process.env.AI_INTEGRATIONS_GEMINI_BASE_URL ? {
@@ -76,6 +82,10 @@ export function registerChatRoutes(app: Express): void {
 
       // Save user message
       await chatStorage.createMessage(conversationId, "user", content);
+
+      if (!genAI) {
+        return res.status(503).json({ error: "AI service is currently unavailable. Please check your API key configuration." });
+      }
 
       // Get conversation history for context
       const messages = await chatStorage.getMessagesByConversation(conversationId);
