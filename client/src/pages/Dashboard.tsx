@@ -1623,14 +1623,14 @@ export default function Dashboard() {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-64 p-2 rounded-2xl shadow-xl bg-white border-black/5 dark:bg-zinc-950 dark:border-white/5">
                     <DropdownMenuItem 
-                      className="flex items-center gap-3 p-3 rounded-xl cursor-pointer bg-[#FFF8E6] dark:bg-zinc-900 focus:bg-[#FFF2CC] dark:focus:bg-zinc-800 group transition-colors mb-2 border border-[#FFE8A3]/50 dark:border-white/5"
+                      className="flex items-center gap-3 p-2.5 rounded-xl cursor-pointer border border-black/10 dark:border-white/10 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors mb-2 group"
                       onClick={() => setIsUpgradePopupOpen(true)}
                     >
-                      <div className="w-10 h-10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform overflow-hidden">
-                        <Suspense fallback={<Crown className="w-5 h-5 text-[#FF553E]" />}>
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform overflow-hidden">
+                        <Suspense fallback={<Crown className="w-4 h-4 text-[#FF553E]" />}>
                           <Lottie 
                             animationData={diamondLottie} 
-                            style={{ width: 56, height: 56 }}
+                            style={{ width: 44, height: 44 }}
                             loop={true}
                           />
                         </Suspense>
