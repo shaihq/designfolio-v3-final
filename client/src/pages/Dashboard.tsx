@@ -1623,10 +1623,10 @@ export default function Dashboard() {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-64 p-2 rounded-2xl shadow-xl bg-white border-black/5 dark:bg-zinc-950 dark:border-white/5">
                     <DropdownMenuItem 
-                      className="flex items-center gap-3 p-2.5 rounded-xl cursor-pointer border border-black/10 dark:border-white/10 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors mb-2 group"
+                      className="flex items-center gap-3 p-3 rounded-xl cursor-pointer focus:bg-black/[0.03] dark:focus:bg-white/[0.03]"
                       onClick={() => setIsUpgradePopupOpen(true)}
                     >
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform overflow-hidden">
+                      <div className="w-8 h-8 rounded-full bg-black/[0.03] dark:bg-white/[0.03] flex items-center justify-center group-hover:scale-110 transition-transform overflow-hidden">
                         <Suspense fallback={<Crown className="w-4 h-4 text-[#FF553E]" />}>
                           <Lottie 
                             animationData={diamondLottie} 
