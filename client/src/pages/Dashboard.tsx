@@ -1620,16 +1620,16 @@ export default function Dashboard() {
                       </div>
                     </div>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-64 p-2 rounded-2xl shadow-xl border-black/5 dark:border-white/5">
+                  <DropdownMenuContent align="end" className="w-64 p-2 rounded-2xl shadow-xl bg-white border-black/5 dark:bg-zinc-950 dark:border-white/5">
                     <DropdownMenuItem 
-                      className="flex items-center gap-3 p-3 rounded-xl cursor-pointer focus:bg-primary/5 group"
+                      className="flex items-center gap-3 p-3 rounded-xl cursor-pointer focus:bg-[#FF553E]/5 group"
                       onClick={() => setIsUpgradePopupOpen(true)}
                     >
-                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                      <div className="w-8 h-8 rounded-full bg-[#FF553E]/10 flex items-center justify-center text-[#FF553E] group-hover:scale-110 transition-transform">
                         <Crown className="w-4 h-4 fill-current" />
                       </div>
                       <div className="flex flex-col">
-                        <span className="font-semibold text-sm">Upgrade PRO</span>
+                        <span className="font-semibold text-sm text-[#FF553E]">Upgrade PRO</span>
                       </div>
                     </DropdownMenuItem>
                     
