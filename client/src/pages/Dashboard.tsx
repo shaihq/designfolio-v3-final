@@ -1626,11 +1626,11 @@ export default function Dashboard() {
                       className="flex items-center gap-3 p-3 rounded-xl cursor-pointer focus:bg-black/[0.03] dark:focus:bg-white/[0.03] group"
                       onClick={() => setIsUpgradePopupOpen(true)}
                     >
-                      <div className="w-8 h-8 rounded-full bg-[#FF553E]/10 flex items-center justify-center group-hover:scale-110 transition-transform overflow-hidden">
+                      <div className="w-8 h-8 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform overflow-hidden">
                         <Suspense fallback={<Crown className="w-4 h-4 text-[#FF553E]" />}>
                           <Lottie 
                             animationData={diamondLottie} 
-                            style={{ width: 32, height: 32 }}
+                            style={{ width: 42, height: 42 }}
                             loop={true}
                           />
                         </Suspense>
