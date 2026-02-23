@@ -1623,7 +1623,7 @@ export default function Dashboard() {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-64 p-2 rounded-2xl shadow-xl bg-white border-black/5 dark:bg-zinc-950 dark:border-white/5">
                     <DropdownMenuItem 
-                      className="flex items-center gap-3 p-3 rounded-xl cursor-pointer focus:bg-black/[0.03] dark:focus:bg-white/[0.03] group"
+                      className="flex items-center gap-3 p-3 rounded-xl cursor-pointer bg-[#F5F3F1] dark:bg-white/[0.05] focus:bg-[#E5E3E1] dark:focus:bg-white/[0.08] group transition-colors"
                       onClick={() => setIsUpgradePopupOpen(true)}
                     >
                       <div className="w-10 h-10 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform overflow-hidden">
@@ -1639,8 +1639,6 @@ export default function Dashboard() {
                         <span className="font-semibold text-sm">Upgrade PRO</span>
                       </div>
                     </DropdownMenuItem>
-                    
-                    <DropdownMenuSeparator className="my-1 bg-black/5 dark:bg-white/5" />
                     
                     <DropdownMenuItem className="flex items-center gap-3 p-3 rounded-xl cursor-pointer focus:bg-black/[0.03] dark:focus:bg-white/[0.03]">
                       <div className="w-8 h-8 rounded-full bg-black/[0.03] dark:bg-white/[0.03] flex items-center justify-center text-foreground/60">
