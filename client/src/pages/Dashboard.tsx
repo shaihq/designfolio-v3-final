@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { useState, useEffect, useRef, Suspense, lazy } from "react";
 const Lottie = lazy(() => import("lottie-react"));
 import aiLogoLottie from "@/assets/ai-logo-lottie.json";
+import diamondLottie from "../../public/diamond-lottie.json";
 import { toast } from "@/hooks/use-toast";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -1625,8 +1626,14 @@ export default function Dashboard() {
                       className="flex items-center gap-3 p-3 rounded-xl cursor-pointer focus:bg-black/[0.03] dark:focus:bg-white/[0.03] group"
                       onClick={() => setIsUpgradePopupOpen(true)}
                     >
-                      <div className="w-8 h-8 rounded-full bg-[#FF553E]/10 flex items-center justify-center text-[#FF553E] group-hover:scale-110 transition-transform">
-                        <Crown className="w-4 h-4 fill-current" />
+                      <div className="w-8 h-8 rounded-full bg-[#FF553E]/10 flex items-center justify-center group-hover:scale-110 transition-transform overflow-hidden">
+                        <Suspense fallback={<Crown className="w-4 h-4 text-[#FF553E]" />}>
+                          <Lottie 
+                            animationData={diamondLottie} 
+                            style={{ width: 32, height: 32 }}
+                            loop={true}
+                          />
+                        </Suspense>
                       </div>
                       <div className="flex flex-col">
                         <span className="font-semibold text-sm">Upgrade PRO</span>
