@@ -37,6 +37,13 @@ import { PromptInput, PromptInputTextarea, PromptInputActions } from "@/componen
 import AIThinkingBlock from "@/components/ui/ai-thinking-block";
 import { PromptSuggestion } from "@/components/ui/prompt-suggestion"
 import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import { 
   Sparkles, 
   Share2, 
   Bell, 
@@ -79,7 +86,9 @@ import {
   MapPin,
   Calendar,
   Banknote,
-  Loader2
+  Loader2,
+  Settings,
+  LogOut
 } from "lucide-react";
 import { SiBehance } from "react-icons/si";
 import { Link } from "wouter";
@@ -1597,17 +1606,61 @@ export default function Dashboard() {
                 >
                   Publish Site
                 </Button>
-                <div className="relative group cursor-pointer" data-testid="avatar-user">
-                  <Avatar className="w-10 h-10 rounded-full border-2 border-background shadow-sm">
-                    <AvatarImage src={user.avatar} alt={user.name} className="rounded-full" />
-                    <AvatarFallback className="text-base rounded-full" style={{ backgroundColor: '#FF553E', color: '#FFFFFF' }}>
-                      {user.name.charAt(0).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-white dark:bg-zinc-800 border border-black/10 dark:border-white/10 px-1.5 py-0.5 rounded-full shadow-sm whitespace-nowrap">
-                    <span className="text-[8px] font-bold uppercase tracking-wider text-black dark:text-white leading-none block">Free</span>
-                  </div>
-                </div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <div className="relative group cursor-pointer" data-testid="avatar-user">
+                      <Avatar className="w-10 h-10 rounded-full border-2 border-background shadow-sm">
+                        <AvatarImage src={user.avatar} alt={user.name} className="rounded-full" />
+                        <AvatarFallback className="text-base rounded-full" style={{ backgroundColor: '#FF553E', color: '#FFFFFF' }}>
+                          {user.name.charAt(0).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-white dark:bg-zinc-800 border border-black/10 dark:border-white/10 px-1.5 py-0.5 rounded-full shadow-sm whitespace-nowrap">
+                        <span className="text-[8px] font-bold uppercase tracking-wider text-black dark:text-white leading-none block">Free</span>
+                      </div>
+                    </div>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-64 p-2 rounded-2xl shadow-xl border-black/5 dark:border-white/5">
+                    <DropdownMenuItem 
+                      className="flex items-center gap-3 p-3 rounded-xl cursor-pointer focus:bg-primary/5 group"
+                      onClick={() => setIsUpgradePopupOpen(true)}
+                    >
+                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                        <Crown className="w-4 h-4 fill-current" />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="font-semibold text-sm">Upgrade PRO</span>
+                      </div>
+                    </DropdownMenuItem>
+                    
+                    <DropdownMenuSeparator className="my-1 bg-black/5 dark:bg-white/5" />
+                    
+                    <DropdownMenuItem className="flex items-center gap-3 p-3 rounded-xl cursor-pointer focus:bg-black/[0.03] dark:focus:bg-white/[0.03]">
+                      <div className="w-8 h-8 rounded-full bg-black/[0.03] dark:bg-white/[0.03] flex items-center justify-center text-foreground/60">
+                        <Settings className="w-4 h-4" />
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="font-semibold text-sm">Settings</span>
+                        <span className="text-[10px] text-foreground/50">Custom Domain, Billing and more</span>
+                      </div>
+                    </DropdownMenuItem>
+                    
+                    <DropdownMenuSeparator className="my-1 bg-black/5 dark:bg-white/5" />
+                    
+                    <DropdownMenuItem 
+                      className="flex items-center gap-3 p-3 rounded-xl cursor-pointer text-destructive focus:bg-destructive/5 focus:text-destructive"
+                      onClick={() => {
+                        // Handle logout logic here
+                        toast({ title: "Logging out..." });
+                      }}
+                    >
+                      <div className="w-8 h-8 rounded-full bg-destructive/10 flex items-center justify-center">
+                        <LogOut className="w-4 h-4" />
+                      </div>
+                      <span className="font-semibold text-sm">Logout</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
 
               {/* Mobile Menu */}
