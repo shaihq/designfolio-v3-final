@@ -4051,7 +4051,8 @@ export default function Dashboard() {
                     <div className="grid grid-cols-1 gap-3">
                       {[
                         { id: 'default', name: 'Default', description: 'Standard bento-style layout' },
-                        { id: 'macos', name: 'MacOS', description: 'Desktop-inspired interface' }
+                        { id: 'macos', name: 'MacOS', description: 'Desktop-inspired interface' },
+                        { id: 'copilot', name: 'Copilot', description: 'AI-assisted side-by-side view' }
                       ].map((layout) => (
                         <button
                           key={layout.id}
@@ -4428,6 +4429,38 @@ export default function Dashboard() {
                 </div>
                 <TabsContent value="layouts" className="flex-1 p-6 m-0" data-testid="content-layouts-mobile">
                   <div className="space-y-4">
+                    <p className="text-sm text-foreground/60 mb-4">Choose a layout for your portfolio</p>
+                    <div className="grid grid-cols-1 gap-3">
+                      {[
+                        { id: 'default', name: 'Default', description: 'Standard bento-style layout' },
+                        { id: 'macos', name: 'MacOS', description: 'Desktop-inspired interface' },
+                        { id: 'copilot', name: 'Copilot', description: 'AI-assisted side-by-side view' }
+                      ].map((layout) => (
+                        <button
+                          key={layout.id}
+                          onClick={() => {
+                            setSelectedLayout(layout.id);
+                            localStorage.setItem('dashboard-layout', layout.id);
+                          }}
+                          className={`p-4 rounded-md border-2 transition-all hover-elevate text-left ${
+                            selectedLayout === layout.id ? 'border-primary bg-primary/5' : 'border-border bg-card/50'
+                          }`}
+                          data-testid={`button-layout-mobile-${layout.id}`}
+                        >
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <p className="font-semibold text-sm">{layout.name}</p>
+                              <p className="text-xs text-foreground/60 mt-1">{layout.description}</p>
+                            </div>
+                            {selectedLayout === layout.id && (
+                              <div className="h-5 w-5 rounded-full bg-primary flex items-center justify-center">
+                                <Check className="h-3 w-3 text-white" />
+                              </div>
+                            )}
+                          </div>
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </TabsContent>
                 <TabsContent value="background" className="flex-1 p-6 m-0" data-testid="content-background-mobile">
