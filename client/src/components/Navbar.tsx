@@ -41,13 +41,13 @@ export default function Navbar() {
             </Link>
             
             <div className="flex items-center gap-2 sm:gap-4">
-              <Link href="/login" className="text-sm sm:text-[15px] text-foreground hover-elevate px-2 sm:px-3 py-2 rounded-md" data-testid="link-login">
+              <Link href="/login" className="text-[15px] text-foreground hover-elevate px-2 sm:px-3 py-2 rounded-md" data-testid="link-login">
                 Login
               </Link>
               <Link href="/signup">
                 <Button 
                   size="default" 
-                  className="bg-foreground text-background border border-foreground rounded-full px-4 sm:px-4 md:px-6 h-9 sm:h-10 text-[11px] sm:text-sm md:text-base font-medium hover:bg-foreground/80 transition-colors" 
+                  className="bg-foreground text-background border border-foreground rounded-full px-4 sm:px-4 md:px-6 h-9 sm:h-10 text-[15px] font-medium hover:bg-foreground/80 transition-colors" 
                   data-testid="button-getstarted"
                 >
                   Try now!
