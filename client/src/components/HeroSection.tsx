@@ -673,8 +673,7 @@ export default function HeroSection({ activeTab: propActiveTab, onTabChange }: H
                   as="h1"
                   preset="blur"
                   per="word"
-                  className="font-['EudoxusSans'] font-bold text-[clamp(2.5rem,8vw,3.75rem)] leading-[1.1] mb-4 sm:mb-6" 
-                  style={{ color: 'rgb(23, 22, 24)' }}
+                  className="font-['EudoxusSans'] font-bold text-[clamp(2.5rem,8vw,3.75rem)] leading-[1.1] mb-4 sm:mb-6 text-[rgb(23,22,24)]" 
                   data-testid="text-hero-headline"
                   delay={0.1}
                 >
@@ -682,8 +681,7 @@ export default function HeroSection({ activeTab: propActiveTab, onTabChange }: H
                 </TextEffect>
                 
                 <motion.p 
-                  className="font-['Inter'] font-normal text-base md:text-[1rem] leading-relaxed max-w-3xl mx-auto mb-6 sm:mb-8" 
-                  style={{ color: 'rgb(125, 125, 125)' }}
+                  className="font-['Inter'] font-normal text-base md:text-[1rem] leading-relaxed max-w-3xl mx-auto mb-6 sm:mb-8 text-[rgb(125,125,125)]" 
                   data-testid="text-hero-description"
                   initial={{ opacity: 0, filter: "blur(4px)", y: 8 }}
                   animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}

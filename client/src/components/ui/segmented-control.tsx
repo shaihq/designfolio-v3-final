@@ -18,7 +18,7 @@ export function SegmentedControl({
   return (
     <div
       className={cn(
-        "inline-flex w-full p-1 bg-muted/50 backdrop-blur-sm rounded-full border border-border/50",
+        "inline-flex p-1 bg-muted/50 backdrop-blur-sm rounded-full border border-border/50 w-fit mx-auto",
         className
       )}
     >
