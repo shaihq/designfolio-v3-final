@@ -708,7 +708,9 @@ export default function HeroSection({ activeTab: propActiveTab, onTabChange }: H
                     <div className={`flex items-center bg-white dark:bg-background border rounded-full w-full transition-all duration-300 ease-out cursor-text overflow-hidden ${
                       error 
                         ? 'border-red-500 shadow-[0_0_0_4px_rgba(239,68,68,0.1)]' 
-                        : 'border-border hover:border-foreground/10 focus-within:border-foreground/20'
+                        : isFocused 
+                          ? 'border-foreground/30 shadow-[0_0_0_4px_hsl(var(--foreground)/0.08)]' 
+                          : 'border-border hover:border-foreground/10'
                     }`}>
                       <div className="relative flex-1 h-12 sm:h-14">
                         <Input 

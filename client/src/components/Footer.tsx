@@ -90,8 +90,10 @@ export default function Footer() {
               <div className="relative w-full sm:flex-1">
                 <div className={`flex items-center bg-background border rounded-full w-full transition-all duration-300 ease-out cursor-text overflow-hidden ${
                   error 
-                    ? 'border-destructive shadow-[0_0_0_4px_rgba(239,68,68,0.1) ]' 
-                    : 'border-border hover:border-foreground/10 focus-within:border-foreground/20'
+                    ? 'border-destructive shadow-[0_0_0_4px_rgba(239,68,68,0.1)]' 
+                    : isFocused 
+                      ? 'border-foreground/30 shadow-[0_0_0_4px_hsl(var(--foreground)/0.08)]' 
+                      : 'border-border hover:border-foreground/10'
                 }`}>
                   <div className="relative flex-1 h-12 sm:h-14">
                     <Input 
