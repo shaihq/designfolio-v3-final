@@ -86,14 +86,14 @@ export default function Footer() {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-stretch justify-center gap-3 max-w-2xl mx-auto pt-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-2 max-w-xl mx-auto pt-4">
               <div className="relative w-full sm:flex-1">
-                <div className={`flex items-center bg-background border-2 rounded-full w-full transition-all duration-300 ease-out cursor-text overflow-hidden ${
+                <div className={`flex items-center bg-background border rounded-full w-full transition-all duration-300 ease-out cursor-text overflow-hidden ${
                   error 
-                    ? 'border-destructive shadow-[0_0_0_4px_rgba(239,68,68,0.12)]' 
-                    : 'border-border hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)]'
+                    ? 'border-destructive shadow-[0_0_0_4px_rgba(239,68,68,0.1) ]' 
+                    : 'border-border hover:border-foreground/10 focus-within:border-foreground/20'
                 }`}>
-                  <div className="relative flex-1 h-14 sm:h-16">
+                  <div className="relative flex-1 h-12 sm:h-14">
                     <Input 
                       type="text"
                       value={inputValue}
@@ -104,28 +104,28 @@ export default function Footer() {
                       onFocus={() => setIsFocused(true)}
                       onBlur={() => setIsFocused(false)}
                       placeholder={isFocused && !inputValue ? "username" : ""}
-                      className="border-0 bg-transparent h-full w-full px-5 sm:px-6 focus-visible:ring-0 focus-visible:ring-offset-0 !text-lg text-foreground placeholder:!text-lg placeholder:text-muted-foreground/60 relative z-10"
+                      className="border-0 bg-transparent h-full w-full px-5 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-base placeholder:text-muted-foreground/50 relative z-10"
                       data-testid="input-name-footer"
                     />
                     {!inputValue && !isFocused && (
                       <motion.span
                         key={currentNameIndex}
-                        initial={{ opacity: 0, y: 10 }}
+                        initial={{ opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
+                        exit={{ opacity: 0, y: -8 }}
                         transition={{ duration: 0.3 }}
-                        className="absolute left-5 sm:left-6 top-0 h-full flex items-center pointer-events-none text-lg text-foreground/60"
+                        className="absolute left-5 top-0 h-full flex items-center pointer-events-none text-base text-foreground/50"
                       >
                         {names[currentNameIndex]}
                       </motion.span>
                     )}
                   </div>
-                  <span className="text-base sm:text-lg text-muted-foreground/60 pr-5 sm:pr-6 whitespace-nowrap">
+                  <span className="text-sm sm:text-base text-muted-foreground/50 pr-5 whitespace-nowrap font-medium">
                     .designfolio.me
                   </span>
                 </div>
                 {error && (
-                  <p className="text-sm text-destructive mt-2 ml-5" data-testid="error-username-footer">
+                  <p className="text-xs text-destructive mt-1.5 ml-4" data-testid="error-username-footer">
                     {error}
                   </p>
                 )}
@@ -138,7 +138,7 @@ export default function Footer() {
                   }
                   console.log("Username submitted:", inputValue);
                 }}
-                className="rounded-full h-14 sm:h-16 px-8 sm:px-10 text-base sm:text-lg font-semibold transition-colors w-full sm:w-auto whitespace-nowrap bg-[#FF553E] hover:bg-[#E64935] text-white border-none"
+                className="rounded-full h-12 sm:h-14 px-7 text-sm sm:text-base font-medium transition-all w-full sm:w-auto whitespace-nowrap bg-[#FF553E] hover:bg-[#E64935] text-white border-none shadow-sm active:scale-[0.98]"
                 data-testid="button-start-building-footer"
               >
                 Get started for free

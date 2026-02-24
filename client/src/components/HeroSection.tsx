@@ -695,7 +695,7 @@ export default function HeroSection({ activeTab: propActiveTab, onTabChange }: H
                 </motion.p>
 
                 <motion.div 
-                  className="flex flex-col sm:flex-row items-stretch justify-center gap-3 max-w-2xl mx-auto"
+                  className="flex flex-col sm:flex-row items-center justify-center gap-2 max-w-xl mx-auto"
                   initial={{ opacity: 0, filter: "blur(4px)", y: 8 }}
                   animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
                   transition={{ 
@@ -705,12 +705,12 @@ export default function HeroSection({ activeTab: propActiveTab, onTabChange }: H
                   }}
                 >
                   <div className="relative w-full sm:flex-1">
-                    <div className={`flex items-center bg-white dark:bg-white border-2 rounded-full w-full transition-all duration-300 ease-out cursor-text overflow-hidden ${
+                    <div className={`flex items-center bg-white dark:bg-background border rounded-full w-full transition-all duration-300 ease-out cursor-text overflow-hidden ${
                       error 
-                        ? 'border-red-500 shadow-[0_0_0_4px_rgba(239,68,68,0.12)]' 
-                        : 'border-border hover:border-foreground/20 focus-within:border-foreground/30 focus-within:shadow-[0_0_0_4px_hsl(var(--foreground)/0.12)]'
+                        ? 'border-red-500 shadow-[0_0_0_4px_rgba(239,68,68,0.1)]' 
+                        : 'border-border hover:border-foreground/10 focus-within:border-foreground/20'
                     }`}>
-                      <div className="relative flex-1 h-14 sm:h-16">
+                      <div className="relative flex-1 h-12 sm:h-14">
                         <Input 
                           type="text"
                           value={inputValue}
@@ -721,28 +721,28 @@ export default function HeroSection({ activeTab: propActiveTab, onTabChange }: H
                           onFocus={() => setIsFocused(true)}
                           onBlur={() => setIsFocused(false)}
                           placeholder={isFocused && !inputValue ? "username" : ""}
-                          className="border-0 bg-transparent h-full w-full px-5 sm:px-6 focus-visible:ring-0 focus-visible:ring-offset-0 !text-lg text-foreground placeholder:!text-lg placeholder:text-muted-foreground/60 relative z-10"
+                          className="border-0 bg-transparent h-full w-full px-5 focus-visible:ring-0 focus-visible:ring-offset-0 text-base text-foreground placeholder:text-base placeholder:text-muted-foreground/50 relative z-10"
                           data-testid="input-name"
                         />
                       {!inputValue && !isFocused && (
                         <motion.span
                           key={currentNameIndex}
-                          initial={{ opacity: 0, y: 10 }}
+                          initial={{ opacity: 0, y: 8 }}
                           animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
+                          exit={{ opacity: 0, y: -8 }}
                           transition={{ duration: 0.3 }}
-                          className="absolute left-5 sm:left-6 top-0 h-full flex items-center pointer-events-none text-lg text-foreground"
+                          className="absolute left-5 top-0 h-full flex items-center pointer-events-none text-base text-foreground/50"
                         >
                           {names[currentNameIndex]}
                         </motion.span>
                       )}
                       </div>
-                      <span className="text-base sm:text-lg text-muted-foreground/60 pr-5 sm:pr-6 whitespace-nowrap">
+                      <span className="text-sm sm:text-base text-muted-foreground/50 pr-5 whitespace-nowrap font-medium">
                         .designfolio.me
                       </span>
                     </div>
                     {error && (
-                      <p className="text-sm text-red-500 mt-2 ml-5" data-testid="error-username">
+                      <p className="text-xs text-red-500 mt-1.5 ml-4" data-testid="error-username">
                         {error}
                       </p>
                     )}
@@ -755,7 +755,7 @@ export default function HeroSection({ activeTab: propActiveTab, onTabChange }: H
                       }
                       console.log("Username submitted:", inputValue);
                     }}
-                    className="text-white rounded-full h-14 sm:h-16 px-8 sm:px-10 text-base sm:text-lg font-semibold no-default-hover-elevate no-default-active-elevate transition-colors w-full sm:w-auto whitespace-nowrap"
+                    className="text-white rounded-full h-12 sm:h-14 px-7 text-sm sm:text-base font-medium transition-all w-full sm:w-auto whitespace-nowrap shadow-sm active:scale-[0.98]"
                     style={{ backgroundColor: '#FF553E', borderColor: '#FF553E' }}
                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E64935'}
                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FF553E'}
