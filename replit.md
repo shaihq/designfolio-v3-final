@@ -36,7 +36,7 @@ Preferred communication style: Simple, everyday language.
 
 ### Data Storage Solutions
 
-**Database ORM**: Drizzle ORM configured for PostgreSQL with the Neon serverless driver. Schema definitions use Drizzle's type-safe schema builder with Zod integration for runtime validation.
+**Database ORM**: Drizzle ORM configured for PostgreSQL with the node-postgres (pg) driver. Schema definitions use Drizzle's type-safe schema builder with Zod integration for runtime validation.
 
 **Schema Design**: Currently implements a minimal user schema with UUID primary keys (using PostgreSQL's `gen_random_uuid()`), username, and password fields. The schema uses Drizzle-Zod for creating insert schemas with type inference.
 
@@ -75,7 +75,7 @@ Preferred communication style: Simple, everyday language.
 
 ### Backend Services
 
-- **Neon Database**: Serverless PostgreSQL database (via `@neondatabase/serverless` driver)
+- **PostgreSQL Database**: Replit's built-in PostgreSQL database (via `pg` driver with `drizzle-orm/node-postgres`)
 - **Drizzle ORM**: Type-safe ORM with PostgreSQL dialect support
 - **Connect PG Simple**: PostgreSQL session store for Express sessions
 

@@ -1,6 +1,6 @@
 import { pgTable, text, varchar, timestamp, jsonb, serial, integer } from "drizzle-orm/pg-core";
-import { drizzle } from "drizzle-orm/neon-serverless";
-import { Pool } from "@neondatabase/serverless";
+import { drizzle } from "drizzle-orm/node-postgres";
+import pg from "pg";
 import { 
   type User, type InsertUser, 
   type PasswordResetToken, type InsertPasswordResetToken, 
@@ -11,7 +11,7 @@ import {
 import { randomUUID } from "crypto";
 import { eq, desc } from "drizzle-orm";
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 const db = drizzle(pool);
 
 export interface IStorage {
