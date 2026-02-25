@@ -94,7 +94,7 @@ export default function FeaturesSection() {
   return (
     <section id="howitworks" className="py-8 sm:py-12 md:py-16 px-6 bg-background">
       <div className="max-w-5xl mx-auto">
-        <div className="mt-20 mb-12">
+        <div className="mt-8 mb-8">
           <TestimonialsMinimal />
         </div>
 

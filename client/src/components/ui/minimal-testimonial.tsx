@@ -48,17 +48,17 @@ export function TestimonialsMinimal() {
   }, [active])
 
   return (
-    <div className="w-full max-w-2xl mx-auto px-6 py-16 text-center">
+    <div className="w-full max-w-2xl mx-auto px-6 py-6 text-center">
       {/* Quote */}
-      <div className="relative min-h-[140px] mb-12 flex items-center justify-center">
+      <div className="relative min-h-[100px] mb-6 flex items-center justify-center">
         <AnimatePresence mode="wait">
           <motion.p
             key={active}
-            initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+            initial={{ opacity: 0, y: 5, filter: "blur(4px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="text-xl md:text-2xl font-light leading-relaxed text-foreground"
+            exit={{ opacity: 0, y: -5, filter: "blur(4px)" }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="text-lg md:text-xl font-light leading-relaxed text-foreground"
           >
             "{testimonials[active].quote}"
           </motion.p>
@@ -66,8 +66,8 @@ export function TestimonialsMinimal() {
       </div>
 
       {/* Author Row */}
-      <div className="flex flex-col items-center gap-6">
-        <div className="flex items-center gap-6">
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex items-center gap-4">
           {/* Avatars */}
           <div className="flex -space-x-2">
             {testimonials.map((t, i) => (
@@ -78,7 +78,7 @@ export function TestimonialsMinimal() {
                   setProgress(0)
                 }}
                 className={`
-                  relative w-10 h-10 rounded-full overflow-hidden ring-2 ring-background
+                  relative w-8 h-8 rounded-full overflow-hidden ring-2 ring-background
                   transition-all duration-300 ease-out
                   ${active === i ? "z-10 scale-110" : "grayscale hover:grayscale-0 hover:scale-105"}
                 `}
@@ -89,17 +89,17 @@ export function TestimonialsMinimal() {
           </div>
 
           {/* Divider */}
-          <div className="h-8 w-px bg-border" />
+          <div className="h-6 w-px bg-border" />
 
           {/* Active Author Info */}
-          <div className="text-left min-w-[140px]">
+          <div className="text-left min-w-[120px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={active}
-                initial={{ opacity: 0, x: -10 }}
+                initial={{ opacity: 0, x: -5 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 10 }}
-                transition={{ duration: 0.3 }}
+                exit={{ opacity: 0, x: 5 }}
+                transition={{ duration: 0.2 }}
                 className="flex flex-col justify-center"
               >
                 <span className="text-sm font-medium text-foreground">{testimonials[active].name}</span>
@@ -110,9 +110,9 @@ export function TestimonialsMinimal() {
         </div>
 
         {/* Progress Bar */}
-        <div className="w-48 h-0.5 bg-muted rounded-full overflow-hidden">
+        <div className="w-32 h-0.5 bg-muted rounded-full overflow-hidden">
           <motion.div 
-            className="h-full bg-foreground/20"
+            className="h-full bg-foreground/10"
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.1, ease: "linear" }}
