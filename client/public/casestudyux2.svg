@@ -6,7 +6,7 @@
 </mask>
 <g mask="url(#mask0_2485_1551)">
 <path d="M332.572 -13.584H-26.1582V187.04H332.572V-13.584Z" fill="url(#pattern0_2485_1551)"/>
-<rect x="-49.8789" y="-52.0312" width="386.879" height="257.919" fill="url(#pattern1_2485_1551)"/>
+<rect x="-132" y="-79.4048" width="469" height="312.667" fill="url(#pattern1_2485_1551)"/>
 <mask id="mask1_2485_1551" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="159" y="-13" width="119" height="256">
 <path d="M278 -13H159.974V242.565H278V-13Z" fill="white"/>
 </mask>
