@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { TestimonialsMinimal } from "@/components/ui/minimal-testimonial";
 import Lottie from "lottie-react";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -93,6 +94,10 @@ export default function FeaturesSection() {
   return (
     <section id="howitworks" className="py-8 sm:py-12 md:py-16 px-6 bg-background">
       <div className="max-w-5xl mx-auto">
+        <div className="mt-20 mb-12">
+          <TestimonialsMinimal />
+        </div>
+
         <h2 className="font-heading font-semibold text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-4xl text-center text-foreground mb-4 sm:mb-6" data-testid="text-features-heading">
           Done fighting with Framer?<br />Meet Designfolio!
         </h2>
@@ -280,6 +285,10 @@ export default function FeaturesSection() {
               );
             })}
           </div>
+        </div>
+
+        <div className="mt-20 mb-12">
+          <TestimonialsMinimal />
         </div>
       </div>
     </section>
