@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 
 const testimonials = [
   {
@@ -30,7 +31,7 @@ const testimonials = [
   },
 ]
 
-const AUTO_PLAY_DURATION = 5000 // 5 seconds
+const AUTO_PLAY_DURATION = 8000 // 8 seconds
 
 export function TestimonialsMinimal() {
   const [active, setActive] = useState(0)
@@ -73,7 +74,18 @@ export function TestimonialsMinimal() {
 
       {/* Author Row */}
       <div className="flex flex-col items-center gap-4">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
+          <button
+            onClick={() => {
+              setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+              setProgress(0)
+            }}
+            className="p-1 rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+            aria-label="Previous testimonial"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+
           {/* Avatars */}
           <div className="flex -space-x-2">
             {testimonials.map((t, i) => (
@@ -93,6 +105,17 @@ export function TestimonialsMinimal() {
               </button>
             ))}
           </div>
+
+          <button
+            onClick={() => {
+              setActive((prev) => (prev + 1) % testimonials.length)
+              setProgress(0)
+            }}
+            className="p-1 rounded-full hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+            aria-label="Next testimonial"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
 
           {/* Divider */}
           <div className="h-6 w-px bg-border" />
