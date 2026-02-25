@@ -42,7 +42,7 @@ export default function Footer() {
                   data-testid="image-footer-illustration"
                 />
                 <img 
-                  src="/footerimageformob" 
+                  src="/footerimageformob.svg" 
                   alt="Footer illustration mobile" 
                   className="block sm:hidden w-full h-auto"
                   data-testid="image-footer-illustration-mobile"
