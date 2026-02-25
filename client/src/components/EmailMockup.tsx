@@ -2,7 +2,7 @@ import { BorderBeam } from "@/components/ui/border-beam";
 
 export default function EmailMockup() {
   return (
-    <section className="max-w-4xl mx-auto py-8 sm:py-12 md:py-16 px-4 sm:px-6 relative bg-cover bg-center bg-no-repeat rounded-[2rem] overflow-hidden" style={{ backgroundImage: 'url("/portfoliomock.png")' }}>
+    <section className="max-w-5xl mx-auto py-8 sm:py-12 md:py-16 px-4 sm:px-6 relative bg-cover bg-center bg-no-repeat rounded-[2rem] overflow-hidden" style={{ backgroundImage: 'url("/portfoliomock.png")' }}>
       <div className="relative">
         {/* Floating SVG Arrow - Positioned outside and top-right of the mockup */}
         <div className="absolute -top-12 -right-12 w-16 h-32 sm:w-24 sm:h-48 opacity-[0.8] pointer-events-none z-20 hidden md:block rotate-[15deg]">
