@@ -64,7 +64,7 @@ const FlickeringGrid: React.FC<FlickeringGridProps> = ({
 
       const squares = new Float32Array(cols * rows);
       for (let i = 0; i < squares.length; i++) {
-        squares[i] = Math.random() * maxOpacity * 0.5;
+        squares[i] = Math.random() * maxOpacity;
       }
 
       return { cols, rows, squares, dpr };
@@ -76,7 +76,7 @@ const FlickeringGrid: React.FC<FlickeringGridProps> = ({
     (squares: Float32Array, deltaTime: number) => {
       for (let i = 0; i < squares.length; i++) {
         if (Math.random() < flickerChance * deltaTime) {
-          squares[i] = Math.random() * maxOpacity * 0.5;
+          squares[i] = Math.random() * maxOpacity;
         }
       }
     },
