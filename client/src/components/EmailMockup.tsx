@@ -3,7 +3,7 @@ import { BorderBeam } from "@/components/ui/border-beam";
 export default function EmailMockup() {
   return (
     <section className="max-w-6xl mx-auto py-8 sm:py-12 md:py-16 px-4 sm:px-6 relative bg-cover bg-center bg-no-repeat rounded-[2rem]" style={{ backgroundImage: 'url("/portfoliomock.png")' }}>
-      <div className="relative">
+      <div className="relative max-w-4xl mx-auto">
         <div 
           className="rounded-[1.25rem] sm:rounded-[1.75rem] p-[2px] relative z-10 bg-gradient-to-r from-border/80 via-border/20 to-border/80 shadow-xl"
           data-testid="container-portfolio-gradient"
