@@ -97,14 +97,6 @@ export default function FeaturesSection() {
           Done fighting with Framer?<br />Meet Designfolio!
         </h2>
         
-        <div className="flex justify-center mb-8 sm:mb-12">
-          <div className="bg-pink-50 border border-pink-200 rounded-full px-4 sm:px-6 py-2.5 sm:py-3.5" data-testid="badge-time-wasted">
-            <span className="text-sm sm:text-base text-foreground">
-              It's been 3 months. You've applied to 40+ jobs — but your work still lives in random Figma links.
-            </span>
-          </div>
-        </div>
-
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-8 sm:mb-12">
           {features.map((feature, index) => (
             <div
