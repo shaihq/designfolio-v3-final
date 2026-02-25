@@ -93,20 +93,22 @@ export default function FeaturesSection() {
   }, []);
 
   return (
-    <section id="howitworks" className="py-8 sm:py-12 md:py-16 px-6 bg-background relative overflow-hidden">
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
-        <FlickeringGrid 
-          squareSize={3}
-          gridGap={5}
-          color="#6B7280"
-          maxOpacity={0.2}
-          flickerChance={0.1}
-          className="w-full h-full"
-        />
-      </div>
-      <div className="max-w-5xl mx-auto relative z-10">
-        <div className="mt-8 mb-8">
-          <TestimonialsMinimal />
+    <section id="howitworks" className="py-8 sm:py-12 md:py-16 px-6 bg-background">
+      <div className="max-w-5xl mx-auto">
+        <div className="mt-8 mb-8 relative">
+          <div className="absolute inset-0 z-0 pointer-events-none opacity-40 overflow-hidden rounded-3xl">
+            <FlickeringGrid 
+              squareSize={4}
+              gridGap={6}
+              color="#6B7280"
+              maxOpacity={0.5}
+              flickerChance={0.3}
+              className="w-full h-full"
+            />
+          </div>
+          <div className="relative z-10">
+            <TestimonialsMinimal />
+          </div>
         </div>
 
         <h2 className="font-heading font-semibold text-2xl sm:text-3xl md:text-3xl lg:text-4xl xl:text-4xl text-center text-foreground mb-4 sm:mb-6" data-testid="text-features-heading">
