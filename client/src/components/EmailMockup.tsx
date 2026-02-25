@@ -4,11 +4,6 @@ export default function EmailMockup() {
   return (
     <section className="max-w-5xl mx-auto py-8 sm:py-12 md:py-16 px-4 sm:px-6 relative bg-cover bg-center bg-no-repeat rounded-[2rem]" style={{ backgroundImage: 'url("/portfoliomock.png")' }}>
       <div className="relative">
-        {/* Floating SVG Arrow - Positioned outside and top-right of the mockup */}
-        <div className="absolute -top-16 -right-16 w-16 h-32 sm:w-24 sm:h-48 opacity-[0.8] pointer-events-none z-30 hidden md:block rotate-[15deg]">
-          <img src="/arrownow.svg" alt="Arrow" className="w-full h-full" />
-        </div>
-
         <div 
           className="rounded-[1.25rem] sm:rounded-[1.75rem] p-[2px] relative z-10 bg-gradient-to-r from-border/80 via-border/20 to-border/80 shadow-xl"
           data-testid="container-portfolio-gradient"
