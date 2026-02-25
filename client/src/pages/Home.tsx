@@ -18,12 +18,12 @@ export default function Home() {
     <div className="min-h-screen bg-background overflow-x-hidden">
       <Navbar />
       <div className="pt-16 sm:pt-20">
+        <TrustedBySection />
         <HeroSection 
           activeTab={activeTab} 
           onTabChange={setActiveTab} 
         />
         {activeTab === "Claim Domain" && <EmailMockup />}
-        <TrustedBySection />
         <FeaturesSection />
         <AiToolsSection />
         <FeaturesShowcase />

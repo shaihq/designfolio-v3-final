@@ -13,7 +13,7 @@ export default function TrustedBySection({ backgroundColor }: { backgroundColor?
     <section className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 overflow-hidden w-full">
       <div className="max-w-5xl mx-auto">
         <h3 className="text-center text-xs sm:text-sm md:text-base font-medium text-foreground/50 mb-6 sm:mb-8 md:mb-10" data-testid="text-trusted-heading">
-          Trusted by 20000+ designers—humble brag
+          Helping 25,000+ Product Folks to Land their Dream Roles
         </h3>
         
         <div className="relative overflow-hidden">
