@@ -116,26 +116,23 @@ export function TestimonialsMinimal() {
           >
             <ChevronRight className="w-4 h-4" />
           </button>
+        </div>
 
-          {/* Divider */}
-          <div className="h-6 w-px bg-border" />
-
-          {/* Active Author Info */}
-          <div className="text-left min-w-[120px]">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={active}
-                initial={{ opacity: 0, x: -5 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 5 }}
-                transition={{ duration: 0.2 }}
-                className="flex flex-col justify-center"
-              >
-                <span className="text-sm font-medium text-foreground">{testimonials[active].name}</span>
-                <span className="text-xs text-muted-foreground">{testimonials[active].role}</span>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+        {/* Active Author Info */}
+        <div className="text-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -5 }}
+              transition={{ duration: 0.2 }}
+              className="flex flex-col items-center justify-center"
+            >
+              <span className="text-sm font-medium text-foreground">{testimonials[active].name}</span>
+              <span className="text-xs text-muted-foreground">{testimonials[active].role}</span>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         {/* Progress Bar */}
