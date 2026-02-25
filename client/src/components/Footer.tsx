@@ -38,8 +38,14 @@ export default function Footer() {
                 <img 
                   src="/footerimage.svg" 
                   alt="Footer illustration" 
-                  className="w-full h-auto"
+                  className="hidden sm:block w-full h-auto"
                   data-testid="image-footer-illustration"
+                />
+                <img 
+                  src="/footerimageformob" 
+                  alt="Footer illustration mobile" 
+                  className="block sm:hidden w-full h-auto"
+                  data-testid="image-footer-illustration-mobile"
                 />
               </div>
             </div>
