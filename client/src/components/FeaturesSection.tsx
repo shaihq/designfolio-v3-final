@@ -286,10 +286,6 @@ export default function FeaturesSection() {
             })}
           </div>
         </div>
-
-        <div className="mt-20 mb-12">
-          <TestimonialsMinimal />
-        </div>
       </div>
     </section>
   );

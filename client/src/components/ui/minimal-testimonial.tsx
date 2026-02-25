@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 
 const testimonials = [
   {
@@ -23,68 +24,99 @@ const testimonials = [
   },
 ]
 
+const AUTO_PLAY_DURATION = 5000 // 5 seconds
+
 export function TestimonialsMinimal() {
   const [active, setActive] = useState(0)
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    const startTime = Date.now()
+    const interval = setInterval(() => {
+      const elapsed = Date.now() - startTime
+      const newProgress = (elapsed / AUTO_PLAY_DURATION) * 100
+      
+      if (newProgress >= 100) {
+        setActive((prev) => (prev + 1) % testimonials.length)
+        setProgress(0)
+      } else {
+        setProgress(newProgress)
+      }
+    }, 16) // ~60fps
+
+    return () => clearInterval(interval)
+  }, [active])
 
   return (
-    <div className="w-full max-w-xl mx-auto px-6 py-16">
+    <div className="w-full max-w-2xl mx-auto px-6 py-16 text-center">
       {/* Quote */}
-      <div className="relative min-h-[120px] mb-12">
-        {testimonials.map((t, i) => (
-          <p
-            key={i}
-            className={`
-              absolute inset-0 text-xl md:text-2xl font-light leading-relaxed text-foreground
-              transition-all duration-500 ease-out
-              ${
-                active === i
-                  ? "opacity-100 translate-y-0 blur-0"
-                  : "opacity-0 translate-y-4 blur-sm pointer-events-none"
-              }
-            `}
+      <div className="relative min-h-[140px] mb-12 flex items-center justify-center">
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={active}
+            initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="text-xl md:text-2xl font-light leading-relaxed text-foreground"
           >
-            "{t.quote}"
-          </p>
-        ))}
+            "{testimonials[active].quote}"
+          </motion.p>
+        </AnimatePresence>
       </div>
 
       {/* Author Row */}
-      <div className="flex items-center gap-6">
-        {/* Avatars */}
-        <div className="flex -space-x-2">
-          {testimonials.map((t, i) => (
-            <button
-              key={i}
-              onClick={() => setActive(i)}
-              className={`
-                relative w-10 h-10 rounded-full overflow-hidden ring-2 ring-background
-                transition-all duration-300 ease-out
-                ${active === i ? "z-10 scale-110" : "grayscale hover:grayscale-0 hover:scale-105"}
-              `}
-            >
-              <img src={t.image || "/placeholder.svg"} alt={t.name} className="w-full h-full object-cover" />
-            </button>
-          ))}
+      <div className="flex flex-col items-center gap-6">
+        <div className="flex items-center gap-6">
+          {/* Avatars */}
+          <div className="flex -space-x-2">
+            {testimonials.map((t, i) => (
+              <button
+                key={i}
+                onClick={() => {
+                  setActive(i)
+                  setProgress(0)
+                }}
+                className={`
+                  relative w-10 h-10 rounded-full overflow-hidden ring-2 ring-background
+                  transition-all duration-300 ease-out
+                  ${active === i ? "z-10 scale-110" : "grayscale hover:grayscale-0 hover:scale-105"}
+                `}
+              >
+                <img src={t.image || "/placeholder.svg"} alt={t.name} className="w-full h-full object-cover" />
+              </button>
+            ))}
+          </div>
+
+          {/* Divider */}
+          <div className="h-8 w-px bg-border" />
+
+          {/* Active Author Info */}
+          <div className="text-left min-w-[140px]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 10 }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-col justify-center"
+              >
+                <span className="text-sm font-medium text-foreground">{testimonials[active].name}</span>
+                <span className="text-xs text-muted-foreground">{testimonials[active].role}</span>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
 
-        {/* Divider */}
-        <div className="h-8 w-px bg-border" />
-
-        {/* Active Author Info */}
-        <div className="relative flex-1 min-h-[44px]">
-          {testimonials.map((t, i) => (
-            <div
-              key={i}
-              className={`
-                absolute inset-0 flex flex-col justify-center
-                transition-all duration-400 ease-out
-                ${active === i ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2 pointer-events-none"}
-              `}
-            >
-              <span className="text-sm font-medium text-foreground">{t.name}</span>
-              <span className="text-xs text-muted-foreground">{t.role}</span>
-            </div>
-          ))}
+        {/* Progress Bar */}
+        <div className="w-48 h-0.5 bg-muted rounded-full overflow-hidden">
+          <motion.div 
+            className="h-full bg-foreground/20"
+            initial={{ width: 0 }}
+            animate={{ width: `${progress}%` }}
+            transition={{ duration: 0.1, ease: "linear" }}
+          />
         </div>
       </div>
     </div>
