@@ -101,9 +101,9 @@ export default function FeaturesSection() {
               squareSize={4}
               gridGap={6}
               color="#6B7280"
-              maxOpacity={0.5}
-              flickerChance={0.3}
-              className="w-full h-full"
+              maxOpacity={0.2}
+              flickerChance={0.1}
+              className="w-full h-full [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_90%)]"
             />
           </div>
           <div className="relative z-10">
