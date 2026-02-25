@@ -5,22 +5,28 @@ import { motion, AnimatePresence } from "framer-motion"
 
 const testimonials = [
   {
-    quote: "Working with them transformed our entire brand identity. The attention to detail was exceptional.",
-    name: "Sarah Chen",
-    role: "CEO at Stripe",
-    image: "https://images.unsplash.com/photo-1701615004837-40d8573b6652?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDB8fGF2YXRhcnN8ZW58MHx8MHx8fDA%3D$0",
+    quote: "The customisations are awesome and incredibly helpful in bringing out the true flavour of my design projects! 🙌🏼 Totally worth spending time on — such a GOATed portfolio builder!",
+    name: "Ashutosh Vashishtha",
+    role: "Design Evangelist at Apple",
+    image: "/ashuthosh.png",
   },
   {
-    quote: "A rare talent who combines strategic thinking with flawless execution. Highly recommended.",
-    name: "Marcus Johnson",
-    role: "Design Lead at Linear",
-    image: "https://images.unsplash.com/photo-1639149888905-fb39731f2e6c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDN8fGF2YXRhcnN8ZW58MHx8MHx8fDA%3D$0",
+    quote: "I was procrastinating on building my portfolio for a year, but Designfolio completely changed that — it helped me go from Word/Figma case studies to a live website in just 20 minutes.",
+    name: "Ishita Chaudhary",
+    role: "Product & Business @ Cisco",
+    image: "/ishita.png",
   },
   {
-    quote: "The most seamless collaboration I've experienced. They truly understand modern design.",
-    name: "Elena Voss",
-    role: "Founder at Notion",
-    image: "https://plus.unsplash.com/premium_photo-1689977830819-d00b3a9b7363?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTJ8fGF2YXRhcnN8ZW58MHx8MHx8fDA%3D$0",
+    quote: "Designfolio is the ideal launchpad for designers and product managers to showcase their skills with an extremely efficient portfolio builder that covers every section recruiters care about.",
+    name: "Suvigya Nijhawan",
+    role: "Product @ Google",
+    image: "/suvigya.png",
+  },
+  {
+    quote: "Designfolio has been a fantastic way to showcase my work in a clean, customizable format that reflects my personal style while keeping everything polished and professional",
+    name: "Aditya Krishna",
+    role: "Design Manager @ Multiplier",
+    image: "/aditya.png",
   },
 ]
 
