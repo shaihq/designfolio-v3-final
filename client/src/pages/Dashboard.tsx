@@ -5093,37 +5093,37 @@ export default function Dashboard() {
                   { 
                     id: "home", 
                     name: "Home", 
-                    icon: "/macosicons/header.png" 
+                    icon: "/macosicons/header.svg" 
                   },
                   { 
                     id: "works", 
                     name: "Works", 
-                    icon: "/macosicons/projects.png" 
+                    icon: "/macosicons/projects.svg" 
                   },
                   { 
                     id: "work_experience", 
                     name: "Work Experience", 
-                    icon: "/macosicons/work-experience.png" 
+                    icon: "/macosicons/work-experience.svg" 
                   },
                   { 
                     id: "about", 
                     name: "About Me", 
-                    icon: "/macosicons/aboutme.png" 
+                    icon: "/macosicons/aboutme.svg" 
                   },
                   { 
                     id: "feedback", 
                     name: "Testimonials", 
-                    icon: "/macosicons/testimonials.png" 
+                    icon: "/macosicons/testimonials.svg" 
                   },
                   { 
                     id: "toolbox", 
                     name: "Toolbox", 
-                    icon: "/macosicons/tools.png" 
+                    icon: "/macosicons/tools.svg" 
                   },
                   { 
                     id: "contact", 
                     name: "Contact", 
-                    icon: "/macosicons/contact.png" 
+                    icon: "/macosicons/contact.svg" 
                   },
                 ]}
                 openApps={[activeTab, isResumeDialogOpen ? 'resume' : ''].filter(Boolean)}
