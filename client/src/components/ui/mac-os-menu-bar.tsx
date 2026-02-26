@@ -295,31 +295,28 @@ const MacOSMenuBar: React.FC<MacOSMenuBarProps> = ({
           onClick={handleAppleMenuClick}
           className="cursor-pointer hover:opacity-80 transition-opacity duration-150"
         >
-          <svg width="18" height="18" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
-            <path d="M35.8607 14.3457H34.0718V21.5131H35.8607V14.3457Z" fill="white"/>
-            <path d="M10.757 14.3476H12.5459V12.5469H14.3466V10.758H21.514V12.5469H23.3147V10.758H28.6932V12.5469H30.4821V26.8935H32.2828V23.3157H34.0717V21.515H32.2828V14.3476H34.0717V12.5469H32.2828V5.37954H30.4821V7.16845H28.6932V5.37954H25.1036V3.57886H12.5459V5.37954H10.757V7.16845H8.9681V10.758H7.16742V5.37954H5.37851V10.758H3.5896V12.5469H10.757V14.3476Z" fill="white"/>
-            <path d="M30.482 26.8928H28.6931V28.6935H30.482V26.8928Z" fill="white"/>
-            <path d="M30.482 3.57886H28.6931V5.37954H30.482V3.57886Z" fill="white"/>
-            <path d="M28.6931 23.3154H26.8924V25.1043H28.6931V23.3154Z" fill="white"/>
-            <path d="M28.6931 17.9246H26.8924V21.5142H28.6931V17.9246Z" fill="white"/>
-            <path d="M28.6931 1.78955H26.8924V3.57846H28.6931V1.78955Z" fill="white"/>
-            <path d="M12.5459 28.6943V32.2898H8.96807V34.0787H5.37848V35.8676H34.0717V34.0787H30.4821V32.2898H26.8925V30.4891H28.6932V28.7002L12.5459 28.6943ZM25.1036 34.0728H17.9362V32.2898H14.3466V30.4891H25.1094L25.1036 34.0728Z" fill="white"/>
-            <path d="M26.8926 25.1047H21.5141V26.8936H26.8926V25.1047Z" fill="white"/>
-            <path d="M21.5139 23.3154H19.725V25.1043H21.5139V23.3154Z" fill="white"/>
-            <path d="M19.7251 17.9246H17.9362V21.5142H19.7251V17.9246Z" fill="white"/>
-            <path d="M21.514 12.5457H17.9362V14.3463H21.514V12.5457Z" fill="white"/>
-            <path d="M14.3465 14.3457H12.5458V21.5131H14.3465V14.3457Z" fill="white"/>
-            <path d="M26.8925 0H10.757V1.78891H26.8925V0Z" fill="white"/>
-            <path d="M12.5459 26.8928H10.757V28.6935H12.5459V26.8928Z" fill="white"/>
-            <path d="M12.5459 21.5139H10.757V23.3146H12.5459V21.5139Z" fill="white"/>
-            <path d="M3.5896 23.3154V25.1043H8.9681V26.8932H10.757V23.3154H3.5896Z" fill="white"/>
-            <path d="M10.757 1.78955H8.96808V3.57846H10.757V1.78955Z" fill="white"/>
-            <path d="M8.96804 3.57886H7.16736V5.37954H8.96804V3.57886Z" fill="white"/>
-            <path d="M7.16739 14.3457H5.37848V16.1346H7.16739V14.3457Z" fill="white"/>
-            <path d="M5.37851 16.135H3.5896V19.7246H5.37851V16.135Z" fill="white"/>
-            <path d="M3.58938 21.5139H1.7887V23.3146H3.58938V21.5139Z" fill="white"/>
-            <path d="M3.58938 12.5457H1.7887V14.3463H3.58938V12.5457Z" fill="white"/>
-            <path d="M1.78891 14.3457H0V21.5131H1.78891V14.3457Z" fill="white"/>
+          <svg width="18" height="18" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
+            <g clip-path="url(#clip0_1128_6494)">
+              <path d="M30.472 3.045H28.952V1.525H27.432V-0.00500488H6.09197V12.195H1.52197V13.715H9.14197V12.195H7.62197V1.525H24.382V7.615H30.472V22.855H28.952V25.905H30.472V30.475H32.002V4.575H30.472V3.045Z" fill="white"/>
+              <path d="M30.4719 30.475H7.62195V31.995H30.4719V30.475Z" fill="white"/>
+              <path d="M28.952 19.805H27.432V22.855H28.952V19.805Z" fill="white"/>
+              <path d="M27.432 16.765H25.902V19.805H27.432V16.765Z" fill="white"/>
+              <path d="M25.902 15.235H10.672V16.765H25.902V15.235Z" fill="white"/>
+              <path d="M21.332 7.61499H19.812V9.14499H21.332V7.61499Z" fill="white"/>
+              <path d="M19.8119 10.665H15.2419V12.195H19.8119V10.665Z" fill="white"/>
+              <path d="M15.2419 7.61499H13.7119V9.14499H15.2419V7.61499Z" fill="white"/>
+              <path d="M10.672 13.715H9.14197V15.235H10.672V13.715Z" fill="white"/>
+              <path d="M7.62192 27.425H6.09192V30.475H7.62192V27.425Z" fill="white"/>
+              <path d="M6.0919 24.385H4.5719V27.425H6.0919V24.385Z" fill="white"/>
+              <path d="M4.572 21.335H3.052V24.385H4.572V21.335Z" fill="white"/>
+              <path d="M3.05197 18.285H1.52197V21.335H3.05197V18.285Z" fill="white"/>
+              <path d="M1.52195 13.715H0.00195312V18.285H1.52195V13.715Z" fill="white"/>
+            </g>
+            <defs>
+              <clipPath id="clip0_1128_6494">
+                <rect width="32" height="32" fill="white"/>
+              </clipPath>
+            </defs>
           </svg>
         </div>
 
