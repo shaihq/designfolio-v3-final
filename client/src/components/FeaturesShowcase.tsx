@@ -27,25 +27,6 @@ export default function FeaturesShowcase() {
     <section id="otheraitools" className="w-full py-16 px-6">
       <div className="max-w-5xl mx-auto space-y-12">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-          <div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold font-heading leading-tight" data-testid="text-showcase-headline">
-              Can telling your story be simple?{" "}
-              <span 
-                className="inline-block px-3 py-1 text-xl sm:text-2xl lg:text-3xl font-bold tracking-wide uppercase align-middle"
-                style={{
-                  background: '#FF8C00',
-                  color: '#fff',
-                  transform: 'rotate(-2deg)',
-                  fontFamily: "'Kalam', cursive",
-                  borderRadius: '6px'
-                }}
-                data-testid="badge-yes-ai"
-              >
-                YES WITH AI
-              </span>
-            </h2>
-          </div>
-
           <div className="space-y-3">
             {features.map((feature, index) => (
               <div key={index} className="flex items-center gap-2" data-testid={`feature-item-${index}`}>
