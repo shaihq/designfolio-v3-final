@@ -111,9 +111,14 @@ export default function FeaturesSection() {
           </div>
         </div>
 
-        <h2 className="font-heading font-semibold text-[33.1666px] leading-tight text-center text-foreground mb-4 sm:mb-6" data-testid="text-features-heading">
-          Done fighting with Framer?<br />Meet Designfolio!
-        </h2>
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="font-heading font-semibold text-[33.1666px] leading-tight text-foreground mb-2" data-testid="text-features-heading">
+            How does it work?
+          </h2>
+          <p className="text-muted-foreground text-lg">
+            I know what you're thinking...
+          </p>
+        </div>
         
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-8 sm:mb-12">
           {features.map((feature, index) => (
