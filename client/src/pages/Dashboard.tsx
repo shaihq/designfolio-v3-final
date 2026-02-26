@@ -5078,7 +5078,7 @@ export default function Dashboard() {
                   { 
                     id: "home", 
                     name: "Home", 
-                    icon: "/macosicons/aboutme.png" 
+                    icon: "https://cdn.jim-nielsen.com/macos/1024/finder-2021-09-10.png?rf=1024" 
                   },
                   { 
                     id: "works", 
@@ -5086,24 +5086,29 @@ export default function Dashboard() {
                     icon: "/macosicons/projects.png" 
                   },
                   { 
-                    id: "feedback", 
-                    name: "Testimonials", 
-                    icon: "/macosicons/testimonials.png" 
-                  },
-                  { 
                     id: "work_experience", 
                     name: "Work Experience", 
                     icon: "/macosicons/work-experience.png" 
                   },
                   { 
-                    id: "contact", 
-                    name: "Contact", 
-                    icon: "/macosicons/contact.png" 
+                    id: "about", 
+                    name: "About Me", 
+                    icon: "/macosicons/aboutme.png" 
+                  },
+                  { 
+                    id: "feedback", 
+                    name: "Testimonials", 
+                    icon: "/macosicons/testimonials.png" 
                   },
                   { 
                     id: "toolbox", 
                     name: "Toolbox", 
                     icon: "/macosicons/tools.png" 
+                  },
+                  { 
+                    id: "contact", 
+                    name: "Contact", 
+                    icon: "/macosicons/contact.png" 
                   },
                 ]}
                 openApps={[activeTab, isResumeDialogOpen ? 'resume' : ''].filter(Boolean)}
@@ -5116,10 +5121,11 @@ export default function Dashboard() {
                   const sectionMap: Record<string, string> = {
                     home: 'home',
                     works: 'section-works',
+                    about: 'section-about',
+                    work_experience: 'section-work-experience',
                     feedback: 'section-testimonials',
-                    contact: 'footer',
                     toolbox: 'section-toolbox',
-                    work_experience: 'section-work-experience'
+                    contact: 'footer'
                   };
                   
                   const targetId = sectionMap[appId];
