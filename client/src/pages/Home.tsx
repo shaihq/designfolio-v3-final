@@ -26,7 +26,6 @@ export default function Home() {
         {activeTab === "Claim Domain" && <EmailMockup />}
         <FeaturesSection />
         <AiToolsSection />
-        <FeaturesShowcase />
         <Footer />
         <FooterBottom />
         <ScrollingBanner />
