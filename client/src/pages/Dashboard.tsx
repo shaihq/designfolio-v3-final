@@ -5078,27 +5078,32 @@ export default function Dashboard() {
                   { 
                     id: "home", 
                     name: "Home", 
-                    icon: "https://cdn.jim-nielsen.com/macos/1024/finder-2021-09-10.png?rf=1024" 
+                    icon: "/macosicons/aboutme.png" 
                   },
                   { 
                     id: "works", 
                     name: "Works", 
-                    icon: "https://cdn.jim-nielsen.com/macos/1024/photos-2021-05-28.png?rf=1024" 
+                    icon: "/macosicons/projects.png" 
                   },
                   { 
                     id: "feedback", 
                     name: "Testimonials", 
-                    icon: "https://cdn.jim-nielsen.com/macos/1024/mail-2021-05-25.png?rf=1024" 
+                    icon: "/macosicons/testimonials.png" 
                   },
                   { 
                     id: "resume", 
                     name: "Resume", 
-                    icon: "https://cdn.jim-nielsen.com/macos/1024/notes-2021-05-25.png?rf=1024" 
+                    icon: "/macosicons/work-experience.png" 
                   },
                   { 
                     id: "contact", 
                     name: "Contact", 
-                    icon: "https://cdn.jim-nielsen.com/macos/1024/safari-2021-06-02.png?rf=1024" 
+                    icon: "/macosicons/contact.png" 
+                  },
+                  { 
+                    id: "tools", 
+                    name: "Tools", 
+                    icon: "/macosicons/tools.png" 
                   },
                 ]}
                 openApps={[activeTab, isResumeDialogOpen ? 'resume' : ''].filter(Boolean)}
