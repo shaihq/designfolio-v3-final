@@ -5093,7 +5093,7 @@ export default function Dashboard() {
                   { 
                     id: "home", 
                     name: "Home", 
-                    icon: "https://cdn.jim-nielsen.com/macos/1024/finder-2021-09-10.png?rf=1024" 
+                    icon: "/macosicons/header.png" 
                   },
                   { 
                     id: "works", 
