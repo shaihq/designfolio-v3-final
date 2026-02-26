@@ -5091,8 +5091,8 @@ export default function Dashboard() {
                     icon: "/macosicons/testimonials.png" 
                   },
                   { 
-                    id: "resume", 
-                    name: "Resume", 
+                    id: "work_experience", 
+                    name: "Work Experience", 
                     icon: "/macosicons/work-experience.png" 
                   },
                   { 
@@ -5101,8 +5101,8 @@ export default function Dashboard() {
                     icon: "/macosicons/contact.png" 
                   },
                   { 
-                    id: "tools", 
-                    name: "Tools", 
+                    id: "toolbox", 
+                    name: "Toolbox", 
                     icon: "/macosicons/tools.png" 
                   },
                 ]}
@@ -5113,14 +5113,25 @@ export default function Dashboard() {
                     return;
                   }
                   setActiveTab(appId);
-                  if (appId === "home") {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  } else if (appId === "works") {
-                    document.getElementById('section-works')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                  } else if (appId === "feedback") {
-                    document.getElementById('section-testimonials')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                  } else if (appId === "contact") {
-                    document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' });
+                  const sectionMap: Record<string, string> = {
+                    home: 'home',
+                    works: 'section-works',
+                    feedback: 'section-testimonials',
+                    contact: 'footer',
+                    toolbox: 'section-toolbox',
+                    work_experience: 'section-work-experience'
+                  };
+                  
+                  const targetId = sectionMap[appId];
+                  if (targetId) {
+                    if (targetId === 'home') {
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else {
+                      const element = document.getElementById(targetId);
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }
+                    }
                   }
                 }}
               />
