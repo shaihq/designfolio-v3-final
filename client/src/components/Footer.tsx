@@ -29,7 +29,7 @@ export default function Footer() {
         <Card className="p-8 sm:p-12">
           <div className="space-y-8">
             <div className="space-y-4">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold font-heading leading-tight text-center" data-testid="text-footer-headline">
+              <h2 className="text-[33.1666px] leading-tight font-bold font-heading text-center" data-testid="text-footer-headline">
                 It was supposed to take a weekend,
                 <br />
                 not a quarter.

@@ -57,7 +57,7 @@ export default function AiToolsSection() {
   return (
     <section className="py-16 px-6 bg-[#FCFAFA]">
       <div className="max-w-5xl mx-auto text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 flex items-center justify-center gap-2">
+        <h2 className="text-[33.1666px] leading-tight font-bold font-heading text-foreground mb-4 flex items-center justify-center gap-2">
           ...and so much more <Sparkles className="h-6 w-6 text-yellow-400 fill-yellow-400" />
         </h2>
         <p className="text-muted-foreground text-lg">
