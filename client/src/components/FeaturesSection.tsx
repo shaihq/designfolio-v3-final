@@ -112,12 +112,12 @@ export default function FeaturesSection() {
         </div>
 
         <div className="text-center mb-8 sm:mb-12">
-          <h2 className="font-heading font-semibold text-[33.1666px] leading-tight text-foreground mb-2" data-testid="text-features-heading">
-            How does it work?
-          </h2>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-muted-foreground text-lg mb-2">
             I know what you're thinking...
           </p>
+          <h2 className="font-heading font-semibold text-[33.1666px] leading-tight text-foreground" data-testid="text-features-heading">
+            How does it work?
+          </h2>
         </div>
         
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-8 sm:mb-12">
