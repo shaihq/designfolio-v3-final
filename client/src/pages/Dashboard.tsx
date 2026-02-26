@@ -601,6 +601,16 @@ export default function Dashboard() {
       id: 'wall7',
       name: 'Wallpaper 7',
       path: '/wallpaper/wall7.png'
+    },
+    {
+      id: 'wall8',
+      name: 'Wallpaper 8',
+      path: '/wallpaper/wall8.png'
+    },
+    {
+      id: 'wall9',
+      name: 'Wallpaper 9',
+      path: '/wallpaper/wall9.png'
     }
   ];
 
@@ -639,6 +649,11 @@ export default function Dashboard() {
       id: 'darkwall7',
       name: 'Dark Wallpaper 7',
       path: '/wallpaper/darkui/darkwall7.png'
+    },
+    {
+      id: 'darkwall9',
+      name: 'Dark Wallpaper 9',
+      path: '/wallpaper/darkui/darkwall9.png'
     }
   ];
 
