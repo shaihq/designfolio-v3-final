@@ -60,11 +60,10 @@ export default function AiToolsSection() {
         <h2 className="text-[33.1666px] leading-tight font-semibold font-heading text-foreground mb-4 flex items-center justify-center gap-2">
           ...and so much more <Sparkles className="h-6 w-6 text-yellow-400 fill-yellow-400" />
         </h2>
-        <p className="text-muted-foreground text-lg">
+        <p className="text-muted-foreground text-[16px]">
           Use these AI tools and save all your time — thank us later!
         </p>
       </div>
-
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
         {aiTools.map((tool, index) => (
           <motion.div
