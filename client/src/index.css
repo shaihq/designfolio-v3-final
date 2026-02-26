@@ -42,6 +42,14 @@ body {
 
 @font-face {
   font-family: 'EudoxusSans';
+  src: url('/fonts/exodus/EudoxusSans-Medium.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'EudoxusSans';
   src: url('/fonts/exodus/EudoxusSans-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;

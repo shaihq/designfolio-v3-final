@@ -111,7 +111,7 @@ export default function FeaturesSection() {
           </div>
         </div>
 
-        <h2 className="font-heading font-bold text-[33.1666px] leading-tight text-center text-foreground mb-4 sm:mb-6" data-testid="text-features-heading">
+        <h2 className="font-heading font-semibold text-[33.1666px] leading-tight text-center text-foreground mb-4 sm:mb-6" data-testid="text-features-heading">
           Done fighting with Framer?<br />Meet Designfolio!
         </h2>
         
