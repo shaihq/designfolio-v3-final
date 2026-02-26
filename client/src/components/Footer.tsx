@@ -30,9 +30,9 @@ export default function Footer() {
           <div className="space-y-8">
             <div className="space-y-4">
               <h2 className="text-[33.1666px] leading-tight font-semibold font-heading text-center" data-testid="text-footer-headline">
-                It was supposed to take a weekend,
+                Yo. I'm Shai
                 <br />
-                not a quarter.
+                (I built Designfolio)
               </h2>
               <div className="pt-4">
                 <img 
