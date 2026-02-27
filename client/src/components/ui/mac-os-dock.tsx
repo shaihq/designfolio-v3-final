@@ -364,16 +364,18 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
               onMouseDown={() => setActiveWindowId(app.id)}
               className={`fixed z-40 overflow-hidden bg-[#f0f0f0] border border-[#ccc] shadow-2xl flex flex-col pointer-events-auto transition-all ${
                 isMaximized
-                  ? 'inset-0 max-w-none h-full rounded-none border-0'
+                  ? 'max-w-none rounded-none border-0'
                   : isMobile 
                     ? 'inset-x-0 top-0 bottom-[100px] max-w-none h-auto rounded-none border-x-0 border-t-0' 
                     : 'max-w-4xl h-[70vh] rounded-lg'
               } ${isActive ? 'shadow-2xl ring-1 ring-black/5' : 'shadow-lg opacity-95'}`}
               style={isMaximized ? {
                 zIndex: isActive ? 50 : 40,
-                left: 0,
-                top: 0,
-                transform: 'none'
+                left: '50%',
+                top: 'calc(50% - 50px)', // Centered like the mobile view but full width/height of the bounding area
+                transform: 'translate(-50%, -50%)',
+                width: '100vw',
+                height: 'calc(100vh - 140px)' // Constrained by the top menu (40px) and dock (100px)
               } : isMobile ? {
                 left: '50%',
                 top: 'calc(50% - 50px)',
