@@ -234,7 +234,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
   const padding = Math.max(8, baseIconSize * 0.12);
 
   return (
-    <div className="flex flex-col items-center w-full h-full relative overflow-hidden pointer-events-none">
+    <div className="flex flex-col items-center w-full h-full relative pointer-events-none">
       {/* Windows Layer */}
       <div className="flex-1 w-full relative pointer-events-none">
         {apps.map((app) => {
