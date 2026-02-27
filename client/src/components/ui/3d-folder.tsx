@@ -15,9 +15,10 @@ interface AnimatedFolderProps {
   title: string
   projects: Project[]
   className?: string
+  onProjectClick?: (project: Project, index: number) => void
 }
 
-export function AnimatedFolder({ title, projects, className }: AnimatedFolderProps) {
+export function AnimatedFolder({ title, projects, className, onProjectClick }: AnimatedFolderProps) {
   const [isHovered, setIsHovered] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
   const [sourceRect, setSourceRect] = useState<DOMRect | null>(null)
@@ -25,6 +26,10 @@ export function AnimatedFolder({ title, projects, className }: AnimatedFolderPro
   const cardRefs = useRef<(HTMLDivElement | null)[]>([])
 
   const handleProjectClick = (project: Project, index: number) => {
+    if (onProjectClick) {
+      onProjectClick(project, index)
+      return
+    }
     const cardEl = cardRefs.current[index]
     if (cardEl) {
       setSourceRect(cardEl.getBoundingClientRect())

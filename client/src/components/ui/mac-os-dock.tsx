@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { X, Minus, Square } from "lucide-react";
+import { X, Minus, Square, ChevronLeft, ChevronRight, RefreshCw, Lock } from "lucide-react";
 import Button3D from "./button-3d";
 import { Gravity, MatterBody } from "./gravity";
 import { PixelRocketHero } from "./pixel-rocket-voyager";
@@ -223,6 +223,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
   const [activeWindowId, setActiveWindowId] = useState<string | null>(apps[0]?.id || null);
   const [minimizedWindows, setMinimizedWindows] = useState<string[]>([]);
   const [maximizedWindows, setMaximizedWindows] = useState<string[]>([]);
+  const [browserWindows, setBrowserWindows] = useState<any[]>([]);
   const [windowPositions, setWindowPositions] = useState<Record<string, { x: number; y: number }>>(() => {
     const initialPositions: Record<string, { x: number; y: number }> = {};
     if (typeof window !== 'undefined') {
@@ -244,6 +245,28 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
     { id: 'proj4', name: 'Pulse-Engine', icon: '🔥', category: 'Systems', date: 'Mar 01' },
     { id: 'proj5', name: 'Vortex-App', icon: '🌀', category: 'Web', date: 'Feb 20' },
   ];
+
+  const handleOpenBrowser = useCallback((project: any) => {
+    const browserId = `browser-${project.id}-${Date.now()}`;
+    const offset = (openWindows.length + browserWindows.length) * 20;
+    
+    setBrowserWindows(prev => [...prev, { ...project, browserId }]);
+    setWindowPositions(prev => ({
+      ...prev,
+      [browserId]: { 
+        x: (window.innerWidth / 2) + offset, 
+        y: (window.innerHeight * 0.45) + offset 
+      }
+    }));
+    setActiveWindowId(browserId);
+  }, [openWindows.length, browserWindows.length]);
+
+  const closeBrowser = (browserId: string) => {
+    setBrowserWindows(prev => prev.filter(b => b.browserId !== browserId));
+    if (activeWindowId === browserId) {
+      setActiveWindowId(null);
+    }
+  };
 
   const handleAppClick = (appId: string, index: number) => {
     if (iconRefs.current[index]) {
@@ -502,6 +525,11 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                                     { id: `${proj.id}-2`, title: 'Documentation', image: '📄' },
                                     { id: `${proj.id}-3`, title: 'Assets', image: '🎨' }
                                   ]}
+                                  onProjectClick={(project) => {
+                                    if (proj.id === 'proj1') {
+                                      handleOpenBrowser(project);
+                                    }
+                                  }}
                                 />
                               ))}
                             </div>
@@ -511,6 +539,81 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                     ) : (
                       <PixelRocketHero />
                     )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+
+        {/* Browser Windows Layer */}
+        {browserWindows.map((browser) => {
+          const pos = windowPositions[browser.browserId] || { x: 0, y: 0 };
+          const isActive = activeWindowId === browser.browserId;
+
+          return (
+            <div 
+              key={browser.browserId}
+              onMouseDown={() => setActiveWindowId(browser.browserId)}
+              className={`fixed z-40 overflow-hidden bg-white border border-[#d1d1d1] shadow-2xl flex flex-col pointer-events-auto w-[896px] h-[70vh] rounded-lg transition-shadow ${isActive ? 'shadow-2xl ring-1 ring-black/5' : 'shadow-lg opacity-95'}`}
+              style={{
+                left: pos.x,
+                top: pos.y,
+                transform: 'translate(-50%, -50%)',
+                zIndex: isActive ? 60 : 40
+              }}
+            >
+              {/* Browser Header */}
+              <div 
+                onMouseDown={(e) => handleMouseDown(browser.browserId, e)}
+                className="h-10 bg-[#e7e7e7] border-b border-gray-300 flex items-center px-3 justify-between select-none cursor-move active:cursor-grabbing"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 rounded-sm flex items-center justify-center bg-gray-200 text-[10px]">
+                    {browser.image}
+                  </div>
+                  <span className="text-[11px] text-gray-600 truncate max-w-[200px]">
+                    {browser.title} - Microsoft Edge
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <button className="h-10 w-11 flex items-center justify-center hover:bg-gray-300">
+                    <Minus size={14} className="text-gray-600" />
+                  </button>
+                  <button className="h-10 w-11 flex items-center justify-center hover:bg-gray-300">
+                    <Square size={10} className="text-gray-600" />
+                  </button>
+                  <button onClick={() => closeBrowser(browser.browserId)} className="h-10 w-11 flex items-center justify-center hover:bg-[#e81123] hover:text-white transition-colors">
+                    <X size={16} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Browser Content Shell */}
+              <div className="flex-1 flex flex-col bg-white">
+                <div className="h-12 border-b border-gray-200 p-2 flex items-center gap-2">
+                   <div className="flex gap-1">
+                      <button className="p-1.5 rounded hover:bg-gray-100 disabled:opacity-30">
+                        <ChevronLeft size={16} />
+                      </button>
+                      <button className="p-1.5 rounded hover:bg-gray-100 disabled:opacity-30">
+                        <ChevronRight size={16} />
+                      </button>
+                      <button className="p-1.5 rounded hover:bg-gray-100">
+                        <RefreshCw size={14} />
+                      </button>
+                   </div>
+                   <div className="flex-1 flex items-center bg-[#f0f2f5] rounded-full px-3 py-1 border border-gray-200">
+                     <Lock size={10} className="text-gray-400 mr-2" />
+                     <span className="text-[11px] text-gray-600">https://{browser.title.toLowerCase().replace(/\s+/g, '-')}.com</span>
+                   </div>
+                </div>
+                <div className="flex-1 overflow-auto flex flex-col items-center justify-center p-12 text-center">
+                  <div className="text-8xl mb-8 opacity-20 grayscale">{browser.image}</div>
+                  <h2 className="text-2xl font-bold mb-4">{browser.title}</h2>
+                  <p className="text-gray-500 max-w-sm mx-auto">Welcome to the preview window. This project is currently being synchronized and will be available shortly.</p>
+                  <div className="mt-8 w-64 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div className="w-1/3 h-full bg-[#007aff] animate-pulse" />
                   </div>
                 </div>
               </div>
