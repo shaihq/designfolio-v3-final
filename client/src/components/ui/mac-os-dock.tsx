@@ -433,6 +433,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                       matterBodyOptions={{ friction: 0.5, restitution: 0.2 }}
                       x="30%"
                       y="10%"
+                      isDraggable={true}
                     >
                       <div className="text-xl sm:text-2xl md:text-3xl bg-[#0015ff] text-white rounded-full hover:cursor-pointer px-8 py-4">
                         react
@@ -442,6 +443,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                       matterBodyOptions={{ friction: 0.5, restitution: 0.2 }}
                       x="30%"
                       y="30%"
+                      isDraggable={true}
                     >
                       <div className="text-xl sm:text-2xl md:text-3xl bg-[#E794DA] text-white rounded-full hover:cursor-grab px-8 py-4 ">
                         typescript
@@ -452,6 +454,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                       x="40%"
                       y="20%"
                       angle={10}
+                      isDraggable={true}
                     >
                       <div className="text-xl sm:text-2xl md:text-3xl bg-[#1f464d]  text-white rounded-full hover:cursor-grab px-8 py-4 ">
                         motion
@@ -461,6 +464,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                       matterBodyOptions={{ friction: 0.5, restitution: 0.2 }}
                       x="75%"
                       y="10%"
+                      isDraggable={true}
                     >
                       <div className="text-xl sm:text-2xl md:text-3xl bg-[#ff5941]  text-white [#E794DA] rounded-full hover:cursor-grab px-8 py-4 ">
                         tailwind
@@ -470,6 +474,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                       matterBodyOptions={{ friction: 0.5, restitution: 0.2 }}
                       x="80%"
                       y="20%"
+                      isDraggable={true}
                     >
                       <div className="text-xl sm:text-2xl md:text-3xl bg-orange-500  text-white [#E794DA] rounded-full hover:cursor-grab px-8 py-4 ">
                         drei
@@ -479,6 +484,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                       matterBodyOptions={{ friction: 0.5, restitution: 0.2 }}
                       x="50%"
                       y="10%"
+                      isDraggable={true}
                     >
                       <div className="text-xl sm:text-2xl md:text-3xl bg-[#ffd726]  text-white [#E794DA] rounded-full hover:cursor-grab px-8 py-4 ">
                         matter-js
