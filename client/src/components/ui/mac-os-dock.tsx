@@ -81,6 +81,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
 
   const [config, setConfig] = useState(getResponsiveConfig);
   const { baseIconSize, maxScale, effectWidth } = config;
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const minScale = 1.0;
   const baseSpacing = Math.max(4, baseIconSize * 0.08);
 
@@ -335,8 +336,18 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
             <div 
               key={`window-${app.id}`}
               onMouseDown={() => setActiveWindowId(app.id)}
-              className={`fixed z-40 w-full max-w-4xl h-[70vh] overflow-hidden bg-[#f0f0f0] border border-[#ccc] shadow-2xl flex flex-col rounded-lg pointer-events-auto transition-shadow ${isActive ? 'shadow-2xl ring-1 ring-black/5' : 'shadow-lg opacity-95'}`}
-              style={{
+              className={`fixed z-40 w-full overflow-hidden bg-[#f0f0f0] border border-[#ccc] shadow-2xl flex flex-col pointer-events-auto transition-all ${
+                isMobile 
+                  ? 'inset-x-0 top-0 bottom-[100px] max-w-none h-auto rounded-none border-x-0 border-t-0' 
+                  : 'max-w-4xl h-[70vh] rounded-lg'
+              } ${isActive ? 'shadow-2xl ring-1 ring-black/5' : 'shadow-lg opacity-95'}`}
+              style={isMobile ? {
+                left: '50%',
+                top: 'calc(50% - 50px)',
+                transform: 'translate(-50%, -50%)',
+                zIndex: isActive ? 50 : 40,
+                height: 'calc(100vh - 140px)'
+              } : {
                 left: pos.x,
                 top: pos.y,
                 transform: 'translate(-50%, -50%)',
@@ -345,8 +356,8 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
             >
               {/* macOS Window Header */}
               <div 
-                onMouseDown={(e) => handleMouseDown(app.id, e)}
-                className="h-10 bg-[#e5e5e5] border-b border-[#ccc] flex items-center px-4 justify-between select-none cursor-default active:cursor-grabbing"
+                onMouseDown={(e) => !isMobile && handleMouseDown(app.id, e)}
+                className={`h-10 bg-[#e5e5e5] border-b border-[#ccc] flex items-center px-4 justify-between select-none ${isMobile ? 'cursor-default' : 'cursor-default active:cursor-grabbing'}`}
               >
                 <div className="flex gap-2 items-center">
                   <div className="flex gap-1.5 mr-4">
