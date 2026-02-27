@@ -217,6 +217,8 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
 
   const [openWindows, setOpenWindows] = useState<string[]>(apps.slice(0, 1).map(a => a.id));
   const [activeWindowId, setActiveWindowId] = useState<string | null>(apps[0]?.id || null);
+  const [minimizedWindows, setMinimizedWindows] = useState<string[]>([]);
+  const [maximizedWindows, setMaximizedWindows] = useState<string[]>([]);
   const [windowPositions, setWindowPositions] = useState<Record<string, { x: number; y: number }>>(() => {
     const initialPositions: Record<string, { x: number; y: number }> = {};
     if (typeof window !== 'undefined') {
@@ -244,15 +246,36 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
         }));
       }
     }
+    // If it was minimized, restore it
+    setMinimizedWindows(prev => prev.filter(id => id !== appId));
     setActiveWindowId(appId);
     onAppClick(appId);
   };
 
   const closeWindow = (appId: string) => {
     setOpenWindows(prev => prev.filter(id => id !== appId));
+    setMinimizedWindows(prev => prev.filter(id => id !== appId));
+    setMaximizedWindows(prev => prev.filter(id => id !== appId));
     if (activeWindowId === appId) {
       setActiveWindowId(null);
     }
+  };
+
+  const toggleMinimize = (appId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setMinimizedWindows(prev => 
+      prev.includes(appId) ? prev.filter(id => id !== appId) : [...prev, appId]
+    );
+    if (activeWindowId === appId) {
+      setActiveWindowId(null);
+    }
+  };
+
+  const toggleMaximize = (appId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setMaximizedWindows(prev => 
+      prev.includes(appId) ? prev.filter(id => id !== appId) : [...prev, appId]
+    );
   };
 
   const handleMouseDown = (appId: string, e: React.MouseEvent) => {
@@ -327,7 +350,10 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
       <div className="flex-1 w-full relative pointer-events-none">
         {apps.map((app) => {
           const isOpen = openWindows.includes(app.id);
-          if (!isOpen) return null;
+          const isMinimized = minimizedWindows.includes(app.id);
+          const isMaximized = maximizedWindows.includes(app.id);
+          
+          if (!isOpen || isMinimized) return null;
 
           const pos = windowPositions[app.id] || { x: 0, y: 0 };
           const isActive = activeWindowId === app.id;
@@ -336,12 +362,19 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
             <div 
               key={`window-${app.id}`}
               onMouseDown={() => setActiveWindowId(app.id)}
-              className={`fixed z-40 w-full overflow-hidden bg-[#f0f0f0] border border-[#ccc] shadow-2xl flex flex-col pointer-events-auto transition-all ${
-                isMobile 
-                  ? 'inset-x-0 top-0 bottom-[100px] max-w-none h-auto rounded-none border-x-0 border-t-0' 
-                  : 'max-w-4xl h-[70vh] rounded-lg'
+              className={`fixed z-40 overflow-hidden bg-[#f0f0f0] border border-[#ccc] shadow-2xl flex flex-col pointer-events-auto transition-all ${
+                isMaximized
+                  ? 'inset-0 max-w-none h-full rounded-none border-0'
+                  : isMobile 
+                    ? 'inset-x-0 top-0 bottom-[100px] max-w-none h-auto rounded-none border-x-0 border-t-0' 
+                    : 'max-w-4xl h-[70vh] rounded-lg'
               } ${isActive ? 'shadow-2xl ring-1 ring-black/5' : 'shadow-lg opacity-95'}`}
-              style={isMobile ? {
+              style={isMaximized ? {
+                zIndex: isActive ? 50 : 40,
+                left: 0,
+                top: 0,
+                transform: 'none'
+              } : isMobile ? {
                 left: '50%',
                 top: 'calc(50% - 50px)',
                 transform: 'translate(-50%, -50%)',
@@ -356,8 +389,8 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
             >
               {/* macOS Window Header */}
               <div 
-                onMouseDown={(e) => !isMobile && handleMouseDown(app.id, e)}
-                className={`h-10 bg-[#e5e5e5] border-b border-[#ccc] flex items-center px-4 justify-between select-none ${isMobile ? 'cursor-default' : 'cursor-move active:cursor-grabbing'}`}
+                onMouseDown={(e) => !isMobile && !isMaximized && handleMouseDown(app.id, e)}
+                className={`h-10 bg-[#e5e5e5] border-b border-[#ccc] flex items-center px-4 justify-between select-none ${isMobile || isMaximized ? 'cursor-default' : 'cursor-move active:cursor-grabbing'}`}
               >
                 <div className="flex gap-2 items-center">
                   <div className="text-sm font-medium text-[#444] flex items-center gap-1">
@@ -365,8 +398,14 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                   </div>
                 </div>
                 <div className="flex items-center gap-4 text-[#666]">
-                  <Minus className="w-4 h-4 cursor-pointer hover:text-[#444]" />
-                  <Square className="w-3 h-3 cursor-pointer hover:text-[#444]" />
+                  <Minus 
+                    className="w-4 h-4 cursor-pointer hover:text-[#444]" 
+                    onClick={(e) => toggleMinimize(app.id, e)}
+                  />
+                  <Square 
+                    className="w-3 h-3 cursor-pointer hover:text-[#444]" 
+                    onClick={(e) => toggleMaximize(app.id, e)}
+                  />
                   <X 
                     className="w-4 h-4 cursor-pointer hover:text-[#444]" 
                     onClick={() => closeWindow(app.id)}
