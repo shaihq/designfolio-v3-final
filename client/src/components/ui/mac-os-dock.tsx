@@ -216,7 +216,15 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
 
   const [openWindows, setOpenWindows] = useState<string[]>(apps.slice(0, 1).map(a => a.id));
   const [activeWindowId, setActiveWindowId] = useState<string | null>(apps[0]?.id || null);
-  const [windowPositions, setWindowPositions] = useState<Record<string, { x: number; y: number }>>({});
+  const [windowPositions, setWindowPositions] = useState<Record<string, { x: number; y: number }>>(() => {
+    const initialPositions: Record<string, { x: number; y: number }> = {};
+    if (typeof window !== 'undefined') {
+      apps.slice(0, 1).forEach(app => {
+        initialPositions[app.id] = { x: window.innerWidth / 2, y: window.innerHeight * 0.45 };
+      });
+    }
+    return initialPositions;
+  });
   const [isDragging, setIsDragging] = useState<string | null>(null);
   const dragOffset = useRef({ x: 0, y: 0 });
 
