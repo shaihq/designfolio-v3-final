@@ -352,7 +352,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
               className={`fixed z-40 overflow-hidden bg-[#f0f0f0] border border-[#ccc] shadow-2xl flex flex-col pointer-events-auto ${
                 isMaximized || isMobile
                   ? 'max-w-none rounded-none border-0 transition-all duration-300'
-                  : 'max-w-4xl h-[70vh] rounded-lg transition-shadow'
+                  : 'w-[896px] h-[70vh] rounded-lg transition-shadow'
               } ${isActive ? 'shadow-2xl ring-1 ring-black/5' : 'shadow-lg opacity-95'}`}
               style={isMaximized || isMobile ? {
                 zIndex: isActive ? 50 : 40,
