@@ -555,7 +555,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
             <div 
               key={browser.browserId}
               onMouseDown={() => setActiveWindowId(browser.browserId)}
-              className={`fixed z-40 overflow-hidden bg-white border border-[#d1d1d1] shadow-2xl flex flex-col pointer-events-auto w-[896px] h-[70vh] rounded-lg transition-shadow ${isActive ? 'shadow-2xl ring-1 ring-black/5' : 'shadow-lg opacity-95'}`}
+              className={`fixed z-40 overflow-hidden bg-[#faf9f6] border border-[#d1d1d1] shadow-2xl flex flex-col pointer-events-auto w-[896px] h-[70vh] rounded-lg transition-shadow ${isActive ? 'shadow-2xl ring-1 ring-black/5' : 'shadow-lg opacity-95'}`}
               style={{
                 left: pos.x,
                 top: pos.y,
@@ -563,56 +563,58 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                 zIndex: isActive ? 60 : 40
               }}
             >
-              {/* Browser Header */}
+              {/* macOS-style Window Header for Browser */}
               <div 
                 onMouseDown={(e) => handleMouseDown(browser.browserId, e)}
-                className="h-10 bg-[#e7e7e7] border-b border-gray-300 flex items-center px-3 justify-between select-none cursor-move active:cursor-grabbing"
+                className="h-10 bg-[#e8e6e1] border-b border-[#d1d1d1] flex items-center px-4 justify-between select-none cursor-move active:cursor-grabbing"
               >
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 rounded-sm flex items-center justify-center bg-gray-200 text-[10px]">
-                    {browser.image}
+                <div className="flex gap-2 items-center">
+                  <div className="text-sm font-medium text-[#444] flex items-center gap-2">
+                    <span className="opacity-70">🌐</span>
+                    <span className="font-azeretMono">{browser.title}</span> <span className="opacity-50 text-[10px]">⌄</span>
                   </div>
-                  <span className="text-[11px] text-gray-600 truncate max-w-[200px]">
-                    {browser.title} - Microsoft Edge
-                  </span>
                 </div>
-                <div className="flex items-center">
-                  <button className="h-10 w-11 flex items-center justify-center hover:bg-gray-300">
-                    <Minus size={14} className="text-gray-600" />
-                  </button>
-                  <button className="h-10 w-11 flex items-center justify-center hover:bg-gray-300">
-                    <Square size={10} className="text-gray-600" />
-                  </button>
-                  <button onClick={() => closeBrowser(browser.browserId)} className="h-10 w-11 flex items-center justify-center hover:bg-[#e81123] hover:text-white transition-colors">
-                    <X size={16} />
-                  </button>
+                <div className="flex items-center gap-4 text-[#666]">
+                  <Minus 
+                    className="w-4 h-4 cursor-pointer hover:text-[#444]" 
+                  />
+                  <Square 
+                    className="w-3 h-3 cursor-pointer hover:text-[#444]" 
+                  />
+                  <X 
+                    className="w-4 h-4 cursor-pointer hover:text-[#444]" 
+                    onClick={() => closeBrowser(browser.browserId)}
+                  />
                 </div>
               </div>
 
               {/* Browser Content Shell */}
               <div className="flex-1 flex flex-col bg-white">
-                <div className="h-12 border-b border-gray-200 p-2 flex items-center gap-2">
-                   <div className="flex gap-1">
-                      <button className="p-1.5 rounded hover:bg-gray-100 disabled:opacity-30">
+                <div className="h-12 bg-[#f4f2ee] border-b border-[#e0ddd8] flex items-center px-4 gap-4">
+                   <div className="flex bg-white/50 border border-[#dcd9d4] rounded-md overflow-hidden h-8 items-center">
+                      <button className="px-3 py-1 border-r border-[#dcd9d4] hover:bg-white text-[#888] text-sm">
                         <ChevronLeft size={16} />
                       </button>
-                      <button className="p-1.5 rounded hover:bg-gray-100 disabled:opacity-30">
+                      <button className="px-3 py-1 hover:bg-white text-[#888] text-sm">
                         <ChevronRight size={16} />
                       </button>
-                      <button className="p-1.5 rounded hover:bg-gray-100">
-                        <RefreshCw size={14} />
-                      </button>
                    </div>
-                   <div className="flex-1 flex items-center bg-[#f0f2f5] rounded-full px-3 py-1 border border-gray-200">
-                     <Lock size={10} className="text-gray-400 mr-2" />
-                     <span className="text-[11px] text-gray-600">https://{browser.title.toLowerCase().replace(/\s+/g, '-')}.com</span>
+                   <div className="flex-1 flex items-center bg-white border border-[#dcd9d4] rounded-md h-8 px-3 shadow-sm">
+                     <Lock size={12} className="text-[#888] mr-2" />
+                     <span className="text-[11px] text-[#555] font-azeretMono">https://{browser.title.toLowerCase().replace(/\s+/g, '-')}.com</span>
+                     <div className="ml-auto">
+                       <RefreshCw size={12} className="text-[#aaa]" />
+                     </div>
                    </div>
                 </div>
-                <div className="flex-1 overflow-auto flex flex-col items-center justify-center p-12 text-center">
+                
+                <div className="flex-1 overflow-auto flex flex-col items-center justify-center p-12 text-center bg-white m-4 rounded-md border border-[#e0ddd8] shadow-sm font-azeretMono">
                   <div className="text-8xl mb-8 opacity-20 grayscale">{browser.image}</div>
-                  <h2 className="text-2xl font-bold mb-4">{browser.title}</h2>
-                  <p className="text-gray-500 max-w-sm mx-auto">Welcome to the preview window. This project is currently being synchronized and will be available shortly.</p>
-                  <div className="mt-8 w-64 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                  <h2 className="text-2xl font-bold mb-4 text-[#222]">{browser.title}</h2>
+                  <p className="text-[#666] max-w-sm mx-auto text-sm leading-relaxed">
+                    Welcome to the preview window. This project is currently being synchronized and will be available shortly.
+                  </p>
+                  <div className="mt-8 w-64 h-1.5 bg-[#f0f2f5] rounded-full overflow-hidden">
                     <div className="w-1/3 h-full bg-[#007aff] animate-pulse" />
                   </div>
                 </div>
