@@ -365,8 +365,10 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                   </div>
                 </div>
                 <div className="flex items-center gap-4 text-[#666]">
+                  <Minus className="w-4 h-4 cursor-pointer hover:text-[#444]" />
+                  <Square className="w-3 h-3 cursor-pointer hover:text-[#444]" />
                   <X 
-                    className="w-4 h-4 cursor-pointer" 
+                    className="w-4 h-4 cursor-pointer hover:text-[#444]" 
                     onClick={() => closeWindow(app.id)}
                   />
                 </div>
