@@ -2308,7 +2308,7 @@ export default function Dashboard() {
               </AnimatePresence>
             </div>
           ) : (
-            <div className="max-w-4xl mx-auto px-6">
+            <div className="max-w-4xl mx-auto px-6 pl-[0px] pr-[0px]">
               {/* Profile Card */}
           <div className="z-10 mb-3">
             <Card className="bg-white border-0 rounded-2xl relative" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
