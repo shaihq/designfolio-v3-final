@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { X, Minus, Square } from "lucide-react";
 import Button3D from "./button-3d";
+import { Gravity, MatterBody } from "./gravity";
 
 // Types for the component
 interface DockApp {
@@ -419,11 +420,31 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
               </div>
 
               {/* macOS Window Content Area */}
-              <div className="flex-1 bg-white m-4 rounded-md border border-[#e0ddd8] shadow-sm p-8 overflow-auto">
-                <div className="max-w-3xl mx-auto">
-                  <h1 className="text-2xl font-bold mb-4">New content goes here</h1>
-                  <p className="text-gray-500">This is a placeholder for the {app.name} application content.</p>
-                </div>
+              <div className="flex-1 bg-white m-4 rounded-md border border-[#e0ddd8] shadow-sm p-8 overflow-hidden relative">
+                <Gravity className="w-full h-full">
+                  <div className="max-w-3xl mx-auto relative z-10 pointer-events-none">
+                    <h1 className="text-2xl font-bold mb-4">New content goes here</h1>
+                    <p className="text-gray-500">This is a placeholder for the {app.name} application content.</p>
+                  </div>
+                  
+                  <MatterBody x="30%" y="10%" angle={10}>
+                    <div className="bg-[#e6a855] text-black px-6 py-3 rounded-xl font-bold shadow-lg cursor-grab active:cursor-grabbing select-none border-b-4 border-[#b37d36]">
+                      Drag Me!
+                    </div>
+                  </MatterBody>
+
+                  <MatterBody x="60%" y="20%" angle={-15}>
+                    <div className="bg-white border-2 border-[#e6a855] text-[#e6a855] px-4 py-2 rounded-lg font-bold shadow-md cursor-grab active:cursor-grabbing select-none">
+                      Physics
+                    </div>
+                  </MatterBody>
+
+                  <MatterBody x="45%" y="40%" bodyType="circle">
+                    <div className="w-16 h-16 bg-[#faf9f6] border-2 border-[#d1d1d1] rounded-full flex items-center justify-center shadow-inner cursor-grab active:cursor-grabbing select-none">
+                      <span className="text-xl">✨</span>
+                    </div>
+                  </MatterBody>
+                </Gravity>
               </div>
             </div>
           );
