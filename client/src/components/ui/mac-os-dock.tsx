@@ -380,7 +380,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                 <div className="flex gap-2 items-center">
                   <div className="text-sm font-medium text-[#444] flex items-center gap-2">
                     <span className="opacity-70">📄</span>
-                    {app.name}.mdx <span className="opacity-50 text-[10px]">⌄</span>
+                    {app.id === 'projects' ? 'projects.mdx' : `${app.name}.mdx`} <span className="opacity-50 text-[10px]">⌄</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-4 text-[#666]">
@@ -425,7 +425,13 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
               <div className="flex-1 bg-white m-4 rounded-md border border-[#e0ddd8] shadow-sm overflow-hidden relative custom-scrollbar">
                 <div className="w-full h-full overflow-y-auto custom-scrollbar">
                   <div className="w-full h-full flex flex-col relative font-azeretMono">
-                    <PixelRocketHero />
+                    {app.id === 'projects' ? (
+                      <div className="p-8 text-[#444]">
+                        {/* Projects content will go here */}
+                      </div>
+                    ) : (
+                      <PixelRocketHero />
+                    )}
                   </div>
                 </div>
               </div>
