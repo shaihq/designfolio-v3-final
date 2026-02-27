@@ -357,7 +357,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
               {/* macOS Window Header */}
               <div 
                 onMouseDown={(e) => !isMobile && handleMouseDown(app.id, e)}
-                className={`h-10 bg-[#e5e5e5] border-b border-[#ccc] flex items-center px-4 justify-between select-none ${isMobile ? 'cursor-default' : 'cursor-default active:cursor-grabbing'}`}
+                className={`h-10 bg-[#e5e5e5] border-b border-[#ccc] flex items-center px-4 justify-between select-none ${isMobile ? 'cursor-default' : 'cursor-move active:cursor-grabbing'}`}
               >
                 <div className="flex gap-2 items-center">
                   <div className="flex gap-1.5 mr-4">
