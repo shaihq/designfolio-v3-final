@@ -38,7 +38,7 @@ export const PixelRocketHero = () => {
     }
   }, [textControls, buttonControls]);
 
-  const headline = "To the Moon!";
+  const headline = "Shai Krish";
   
   return (
     <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden bg-[#1a0033]" style={{ fontFamily: "'Press Start 2P', system-ui" }}>
@@ -47,7 +47,7 @@ export const PixelRocketHero = () => {
         <h1 className="text-3xl font-bold tracking-tighter text-white md:text-5xl" style={{ textShadow: '2px 2px 0px #ff00ff' }}>
             {headline.split("").map((char, i) => (
                 <motion.span key={i} custom={i} initial={{ opacity: 0, y: 50 }} animate={textControls} style={{ display: 'inline-block' }}>
-                    {char}
+                    {char === " " ? "\u00A0" : char}
                 </motion.span>
             ))}
         </h1>
@@ -57,11 +57,11 @@ export const PixelRocketHero = () => {
           animate={textControls}
           className="mx-auto mt-4 max-w-lg text-xs leading-relaxed text-slate-300"
         >
-          Embark on a new cosmic journey. Explore decentralized galaxies and claim your stake in the pixelated universe.
+          With 8+ years of experience designing SaaS platforms, I’ve led CRM design at Freshworks and SenseHQ. Also, I have designed experiences in sports, medtech, the gig economy, fintech, and gamified learning.
         </motion.p>
         <motion.div initial={{ opacity: 0 }} animate={buttonControls} className="mt-8">
           <button className="rounded-none border-2 border-white bg-black px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-white hover:text-black">
-            Launch Mission
+            Show Projects
           </button>
         </motion.div>
       </div>
