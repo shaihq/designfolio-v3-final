@@ -214,15 +214,75 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
     }, 200);
   };
 
-  const [openWindowId, setOpenWindowId] = useState<string | null>(apps[0]?.id || null);
+  const [openWindows, setOpenWindows] = useState<string[]>(apps.slice(0, 1).map(a => a.id));
+  const [activeWindowId, setActiveWindowId] = useState<string | null>(apps[0]?.id || null);
+  const [windowPositions, setWindowPositions] = useState<Record<string, { x: number; y: number }>>({});
+  const [isDragging, setIsDragging] = useState<string | null>(null);
+  const dragOffset = useRef({ x: 0, y: 0 });
 
   const handleAppClick = (appId: string, index: number) => {
     if (iconRefs.current[index]) {
       createBounceAnimation(iconRefs.current[index]!);
     }
-    setOpenWindowId(appId);
+    
+    if (!openWindows.includes(appId)) {
+      setOpenWindows(prev => [...prev, appId]);
+      // Initialize position if not exists
+      if (!windowPositions[appId]) {
+        setWindowPositions(prev => ({
+          ...prev,
+          [appId]: { x: window.innerWidth / 2, y: window.innerHeight * 0.45 }
+        }));
+      }
+    }
+    setActiveWindowId(appId);
     onAppClick(appId);
   };
+
+  const closeWindow = (appId: string) => {
+    setOpenWindows(prev => prev.filter(id => id !== appId));
+    if (activeWindowId === appId) {
+      setActiveWindowId(null);
+    }
+  };
+
+  const handleMouseDown = (appId: string, e: React.MouseEvent) => {
+    setActiveWindowId(appId);
+    setIsDragging(appId);
+    const pos = windowPositions[appId] || { x: window.innerWidth / 2, y: window.innerHeight * 0.45 };
+    dragOffset.current = {
+      x: e.clientX - pos.x,
+      y: e.clientY - pos.y
+    };
+  };
+
+  useEffect(() => {
+    const handleMouseMoveGlobal = (e: MouseEvent) => {
+      if (isDragging) {
+        setWindowPositions(prev => ({
+          ...prev,
+          [isDragging]: {
+            x: e.clientX - dragOffset.current.x,
+            y: e.clientY - dragOffset.current.y
+          }
+        }));
+      }
+    };
+
+    const handleMouseUpGlobal = () => {
+      setIsDragging(null);
+    };
+
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMoveGlobal);
+      window.addEventListener('mouseup', handleMouseUpGlobal);
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMoveGlobal);
+      window.removeEventListener('mouseup', handleMouseUpGlobal);
+    };
+  }, [isDragging]);
 
   // Calculate content width
   const contentWidth = currentPositions.length > 0 
@@ -238,22 +298,35 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
       {/* Windows Layer */}
       <div className="flex-1 w-full relative pointer-events-none">
         {apps.map((app) => {
-          const isOpen = openWindowId === app.id;
+          const isOpen = openWindows.includes(app.id);
           if (!isOpen) return null;
+
+          const pos = windowPositions[app.id] || { x: 0, y: 0 };
+          const isActive = activeWindowId === app.id;
 
           return (
             <div 
               key={`window-${app.id}`}
-              className="fixed left-[50%] top-[45%] z-40 w-full max-w-4xl h-[70vh] translate-x-[-50%] translate-y-[-50%] overflow-hidden bg-[#f0f0f0] border border-[#ccc] shadow-2xl flex flex-col rounded-lg pointer-events-auto"
+              onMouseDown={() => setActiveWindowId(app.id)}
+              className={`fixed z-40 w-full max-w-4xl h-[70vh] overflow-hidden bg-[#f0f0f0] border border-[#ccc] shadow-2xl flex flex-col rounded-lg pointer-events-auto transition-shadow ${isActive ? 'shadow-2xl ring-1 ring-black/5' : 'shadow-lg opacity-95'}`}
+              style={{
+                left: pos.x,
+                top: pos.y,
+                transform: 'translate(-50%, -50%)',
+                zIndex: isActive ? 50 : 40
+              }}
             >
               {/* macOS Window Header */}
-              <div className="h-10 bg-[#e5e5e5] border-b border-[#ccc] flex items-center px-4 justify-between select-none">
+              <div 
+                onMouseDown={(e) => handleMouseDown(app.id, e)}
+                className="h-10 bg-[#e5e5e5] border-b border-[#ccc] flex items-center px-4 justify-between select-none cursor-default active:cursor-grabbing"
+              >
                 <div className="flex gap-2 items-center">
                   <div className="flex gap-1.5 mr-4">
                     <button 
                       onClick={(e) => {
                         e.stopPropagation();
-                        setOpenWindowId(null);
+                        closeWindow(app.id);
                       }}
                       className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e] hover:brightness-90 transition-all" 
                     />
@@ -269,7 +342,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                   <Square className="w-3 h-3" />
                   <X 
                     className="w-4 h-4 cursor-pointer" 
-                    onClick={() => setOpenWindowId(null)}
+                    onClick={() => closeWindow(app.id)}
                   />
                 </div>
               </div>
@@ -317,7 +390,8 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
             inset 0 1px 0 rgba(255, 255, 255, 0.15),
             inset 0 -1px 0 rgba(0, 0, 0, 0.2)
           `,
-          padding: `${padding}px`
+          padding: `${padding}px`,
+          zIndex: 100
         }}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
@@ -333,7 +407,8 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
             const scale = currentScales[index];
             const position = currentPositions[index] || 0;
             const scaledSize = baseIconSize * scale;
-            const isOpen = openWindowId === app.id;
+            const isOpen = openWindows.includes(app.id);
+            const isActive = activeWindowId === app.id;
             
             return (
               <div
@@ -373,7 +448,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                       width: `${Math.max(3, baseIconSize * 0.06)}px`,
                       height: `${Math.max(3, baseIconSize * 0.06)}px`,
                       borderRadius: '50%',
-                      backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                      backgroundColor: isActive ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.5)',
                       boxShadow: '0 0 4px rgba(0, 0, 0, 0.3)',
                     }}
                   />
