@@ -41,11 +41,10 @@ export const PixelRocketHero = () => {
   const headline = "To the Moon!";
   
   return (
-    <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden bg-sky-100" style={{ fontFamily: "'Press Start 2P', system-ui" }}>
+    <div className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden bg-[#1a0033]" style={{ fontFamily: "'Press Start 2P', system-ui" }}>
       <PixelVoyagerCanvas />
-      <HeroNav />
       <div className="relative z-10 text-center px-4">
-        <h1 className="text-3xl font-bold tracking-tighter text-slate-900 md:text-5xl" style={{ textShadow: '2px 2px 0px #ff00ff' }}>
+        <h1 className="text-3xl font-bold tracking-tighter text-white md:text-5xl" style={{ textShadow: '2px 2px 0px #ff00ff' }}>
             {headline.split("").map((char, i) => (
                 <motion.span key={i} custom={i} initial={{ opacity: 0, y: 50 }} animate={textControls} style={{ display: 'inline-block' }}>
                     {char}
@@ -56,36 +55,18 @@ export const PixelRocketHero = () => {
           custom={headline.length}
           initial={{ opacity: 0, y: 30 }}
           animate={textControls}
-          className="mx-auto mt-4 max-w-lg text-xs leading-relaxed text-slate-600"
+          className="mx-auto mt-4 max-w-lg text-xs leading-relaxed text-slate-300"
         >
           Embark on a new cosmic journey. Explore decentralized galaxies and claim your stake in the pixelated universe.
         </motion.p>
         <motion.div initial={{ opacity: 0 }} animate={buttonControls} className="mt-8">
-          <button className="rounded-none border-2 border-slate-800 bg-white px-6 py-3 text-sm font-semibold text-slate-800 transition-all hover:bg-slate-200">
+          <button className="rounded-none border-2 border-white bg-black px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-white hover:text-black">
             Launch Mission
           </button>
         </motion.div>
       </div>
     </div>
   );
-};
-
-// --- Navigation Component ---
-const HeroNav = () => {
-    return (
-        <motion.nav 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { delay: 1, duration: 1 } }}
-            className="absolute top-0 left-0 right-0 z-20 p-4"
-        >
-            <div className="max-w-7xl mx-auto flex justify-between items-center">
-                <div className="flex items-center gap-2">
-                    <span className="text-xl font-bold text-cyan-500">🚀</span>
-                    <span className="text-lg font-bold text-slate-800">Voyager</span>
-                </div>
-            </div>
-        </motion.nav>
-    );
 };
 
 // --- Three.js Canvas Component ---
@@ -109,13 +90,13 @@ const PixelVoyagerCanvas = () => {
     const mouse = new THREE.Vector2(0, 0);
     const clock = new THREE.Clock();
     
-    const isDarkMode = false; // Forced light mode
+    const isDarkMode = true; // Use dark mode settings for the canvas
 
     // Post-processing for bloom effect
     const renderScene = new RenderPass(scene, camera);
     const bloomPass = new UnrealBloomPass(new THREE.Vector2(width, height), 1.5, 0.4, 0.85);
     bloomPass.threshold = 0;
-    bloomPass.strength = 0.6;
+    bloomPass.strength = 1.2;
     bloomPass.radius = 0;
     const composer = new EffectComposer(renderer);
     composer.addPass(renderScene);
@@ -132,7 +113,7 @@ const PixelVoyagerCanvas = () => {
         starVertices.push(x, y, z);
     }
     starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
-    const starMaterial = new THREE.PointsMaterial({ color: 0x555555, size: 0.1 });
+    const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.1 });
     const stars = new THREE.Points(starGeometry, starMaterial);
     scene.add(stars);
 
@@ -170,7 +151,7 @@ const PixelVoyagerCanvas = () => {
     const trailSize = 200;
     const trailGeo = new THREE.BoxGeometry(pixelSize * 1.5, pixelSize * 1.5, pixelSize * 1.5);
     for(let i=0; i<trailSize; i++) {
-        const trailMat = new THREE.MeshBasicMaterial({ color: Math.random() > 0.5 ? 0xff4500 : 0xffa500 });
+        const trailMat = new THREE.MeshBasicMaterial({ color: Math.random() > 0.5 ? 0xff00ff : 0xee82ee });
         const particle = new THREE.Mesh(trailGeo, trailMat);
         particle.visible = false;
         scene.add(particle);
