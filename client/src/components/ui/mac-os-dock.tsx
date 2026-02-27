@@ -9,6 +9,7 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { X, Minus, Square } from "lucide-react";
+import Button3D from "./button-3d";
 
 // Types for the component
 interface DockApp {
@@ -412,9 +413,9 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                   </div>
                 </div>
                 
-                <button className="bg-[#e6a855] hover:bg-[#d69845] text-black text-xs font-bold px-4 py-2 rounded-md shadow-[0_2px_0_#b37d36] active:shadow-none active:translate-y-[1px] transition-all">
+                <Button3D>
                   EDIT
-                </button>
+                </Button3D>
               </div>
 
               {/* macOS Window Content Area */}
