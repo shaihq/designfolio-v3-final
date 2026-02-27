@@ -12,6 +12,7 @@ import { X, Minus, Square } from "lucide-react";
 import Button3D from "./button-3d";
 import { Gravity, MatterBody } from "./gravity";
 import { PixelRocketHero } from "./pixel-rocket-voyager";
+import { AnimatedFolder } from "./3d-folder";
 
 // Types for the component
 interface DockApp {
@@ -493,25 +494,15 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                           <div className="flex-1 p-6 overflow-y-auto">
                             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-8">
                               {projects.map((proj) => (
-                                <div 
-                                  key={proj.id} 
-                                  className="group flex flex-col items-center gap-1.5 cursor-pointer"
-                                >
-                                  <div className="relative">
-                                    <div className="w-14 h-14 bg-gradient-to-br from-[#f0f0f0] to-[#e0e0e0] rounded-lg shadow-sm border border-[#d1d1d1] flex items-center justify-center text-2xl group-hover:shadow-md group-active:scale-95 transition-all duration-200">
-                                      {proj.icon}
-                                    </div>
-                                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-white rounded-full border border-[#d1d1d1] flex items-center justify-center shadow-xs">
-                                      <div className="w-1.5 h-1.5 rounded-full bg-[#28c841]" />
-                                    </div>
-                                  </div>
-                                  <div className="flex flex-col items-center text-center px-1">
-                                    <span className="text-[11px] font-medium text-[#333] leading-tight group-hover:bg-[#0063e1] group-hover:text-white px-1.5 py-0.5 rounded transition-colors truncate max-w-full">
-                                      {proj.name}
-                                    </span>
-                                    <span className="text-[9px] text-[#999] mt-0.5 font-medium uppercase tracking-tight">{proj.category}</span>
-                                  </div>
-                                </div>
+                                <AnimatedFolder
+                                  key={proj.id}
+                                  title={proj.name}
+                                  projects={[
+                                    { id: `${proj.id}-1`, title: proj.name, image: proj.icon },
+                                    { id: `${proj.id}-2`, title: 'Documentation', image: '📄' },
+                                    { id: `${proj.id}-3`, title: 'Assets', image: '🎨' }
+                                  ]}
+                                />
                               ))}
                             </div>
                           </div>
