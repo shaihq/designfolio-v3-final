@@ -223,6 +223,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
   const [activeWindowId, setActiveWindowId] = useState<string | null>(apps[0]?.id || null);
   const [minimizedWindows, setMinimizedWindows] = useState<string[]>([]);
   const [maximizedWindows, setMaximizedWindows] = useState<string[]>([]);
+  const [animatingWindow, setAnimatingWindow] = useState<{id: string, type: 'open' | 'minimize'} | null>(null);
   const [browserWindows, setBrowserWindows] = useState<any[]>([]);
   const [windowPositions, setWindowPositions] = useState<Record<string, { x: number; y: number }>>(() => {
     const initialPositions: Record<string, { x: number; y: number }> = {};
@@ -274,6 +275,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
     }
     
     if (!openWindows.includes(appId)) {
+      setAnimatingWindow({ id: appId, type: 'open' });
       setOpenWindows(prev => [...prev, appId]);
       // Initialize position if not exists
       if (!windowPositions[appId]) {
@@ -287,9 +289,14 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
           }
         }));
       }
+      setTimeout(() => setAnimatingWindow(null), 500);
     }
     // If it was minimized, restore it
-    setMinimizedWindows(prev => prev.filter(id => id !== appId));
+    if (minimizedWindows.includes(appId)) {
+      setAnimatingWindow({ id: appId, type: 'open' });
+      setMinimizedWindows(prev => prev.filter(id => id !== appId));
+      setTimeout(() => setAnimatingWindow(null), 500);
+    }
     setActiveWindowId(appId);
     onAppClick(appId);
   };
@@ -305,9 +312,17 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
 
   const toggleMinimize = (appId: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    setMinimizedWindows(prev => 
-      prev.includes(appId) ? prev.filter(id => id !== appId) : [...prev, appId]
-    );
+    if (!minimizedWindows.includes(appId)) {
+      setAnimatingWindow({ id: appId, type: 'minimize' });
+      setTimeout(() => {
+        setMinimizedWindows(prev => [...prev, appId]);
+        setAnimatingWindow(null);
+      }, 500);
+    } else {
+      setAnimatingWindow({ id: appId, type: 'open' });
+      setMinimizedWindows(prev => prev.filter(id => id !== appId));
+      setTimeout(() => setAnimatingWindow(null), 500);
+    }
     if (activeWindowId === appId) {
       setActiveWindowId(null);
     }
@@ -377,15 +392,49 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
     <div className="flex flex-col items-center w-full h-full relative pointer-events-none">
       {/* Windows Layer */}
       <div className="flex-1 w-full relative pointer-events-none">
-        {apps.map((app) => {
+        {apps.map((app, index) => {
           const isOpen = openWindows.includes(app.id);
           const isMinimized = minimizedWindows.includes(app.id);
           const isMaximized = maximizedWindows.includes(app.id);
+          const isAnimating = animatingWindow?.id === app.id;
           
-          if (!isOpen || isMinimized) return null;
+          if (!isOpen || (isMinimized && !isAnimating)) return null;
 
           const pos = windowPositions[app.id] || { x: 0, y: 0 };
           const isActive = activeWindowId === app.id;
+          
+          // Animation logic for opening/minimizing
+          let animationStyles = {};
+          if (isAnimating) {
+            const dockPos = currentPositions[index] || 0;
+            const dockRect = dockRef.current?.getBoundingClientRect();
+            const targetX = dockRect ? dockRect.left + dockPos + padding : window.innerWidth / 2;
+            const targetY = dockRect ? dockRect.top + baseIconSize / 2 : window.innerHeight;
+
+            const isOpening = animatingWindow.type === 'open';
+            
+            animationStyles = {
+              transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+              opacity: isOpening ? [0, 1] : [1, 0],
+              transform: isOpening 
+                ? [`translate(${targetX - pos.x}px, ${targetY - pos.y}px) scale(0.1) rotate(5deg)`, `translate(-50%, -50%) scale(1) rotate(0deg)`][isActive ? 1 : 1] // Simple toggle logic for ease
+                : `translate(${targetX - pos.x}px, ${targetY - pos.y}px) scale(0.1) rotate(5deg)`,
+              transformOrigin: 'center center',
+            };
+
+            // Using keyframes for smoother feel if possible, but standard transition is safer for fast edit
+            if (isOpening) {
+              animationStyles = {
+                ...animationStyles,
+                animation: 'macWindowOpen 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards'
+              };
+            } else {
+              animationStyles = {
+                ...animationStyles,
+                animation: 'macWindowMinimize 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards'
+              };
+            }
+          }
 
           return (
             <div 
@@ -397,20 +446,33 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                   ? 'max-w-none rounded-none border-0 transition-all duration-300'
                   : 'w-[896px] h-[70vh] rounded-lg transition-shadow'
               } ${isActive ? 'shadow-2xl ring-1 ring-black/5' : 'shadow-lg opacity-95'}`}
-              style={isMaximized || isMobile ? {
-                zIndex: isActive ? 50 : 40,
-                left: '0',
-                top: '40px',
-                width: '100vw',
-                height: 'calc(100vh - 140px)',
-                transform: 'none'
-              } : {
-                left: pos.x,
-                top: pos.y,
-                transform: 'translate(-50%, -50%)',
-                zIndex: isActive ? 50 : 40
+              style={{
+                ...(isMaximized || isMobile ? {
+                  zIndex: isActive ? 50 : 40,
+                  left: '0',
+                  top: '40px',
+                  width: '100vw',
+                  height: 'calc(100vh - 140px)',
+                  transform: 'none'
+                } : {
+                  left: pos.x,
+                  top: pos.y,
+                  transform: 'translate(-50%, -50%)',
+                  zIndex: isActive ? 50 : 40
+                }),
+                ...animationStyles
               }}
             >
+              <style dangerouslySetInnerHTML={{ __html: `
+                @keyframes macWindowOpen {
+                  0% { transform: translate(calc(${currentPositions[index] || 0}px - ${pos.x}px), calc(100vh - ${pos.y}px)) scale(0.1); opacity: 0; }
+                  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                }
+                @keyframes macWindowMinimize {
+                  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                  100% { transform: translate(calc(${currentPositions[index] || 0}px - ${pos.x}px), calc(100vh - ${pos.y}px)) scale(0.1); opacity: 0; }
+                }
+              `}} />
               {/* macOS Window Header */}
               <div 
                 onMouseDown={(e) => !isMobile && !isMaximized && handleMouseDown(app.id, e)}
