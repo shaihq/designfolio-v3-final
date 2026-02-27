@@ -98,7 +98,7 @@ export function AnimatedFolder({ title, projects, className }: AnimatedFolderPro
               zIndex: 20,
             }}
           >
-            {projects.slice(0, 3).map((project, index) => (
+            {projects.slice(0, 1).map((project, index) => (
               <ProjectCard
                 key={project.id}
                 ref={(el) => {
@@ -134,7 +134,7 @@ export function AnimatedFolder({ title, projects, className }: AnimatedFolderPro
       </div>
 
       <ImageLightbox
-        projects={projects.slice(0, 3)}
+        projects={projects.slice(0, 1)}
         currentIndex={selectedIndex ?? 0}
         isOpen={selectedIndex !== null}
         onClose={handleCloseLightbox}
@@ -163,7 +163,7 @@ function ProjectCard({ image, title, delay, isVisible, index, onClick, isSelecte
         left: "-24px",
         top: "-24px",
         transform: isVisible
-          ? `translateY(${-20 - index * 15}px) rotate(${index * 5 - 5}deg)`
+          ? `translateY(-30px) rotate(0deg)`
           : `translateY(0) rotate(0deg)`,
         transitionDelay: `${delay}ms`,
         zIndex: 20 - index,
