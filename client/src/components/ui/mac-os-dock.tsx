@@ -214,11 +214,13 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
     }, 200);
   };
 
+  const [openWindowId, setOpenWindowId] = useState<string | null>(apps[0]?.id || null);
+
   const handleAppClick = (appId: string, index: number) => {
     if (iconRefs.current[index]) {
       createBounceAnimation(iconRefs.current[index]!);
     }
-    
+    setOpenWindowId(appId);
     onAppClick(appId);
   };
 
@@ -262,101 +264,112 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
           const scale = currentScales[index];
           const position = currentPositions[index] || 0;
           const scaledSize = baseIconSize * scale;
+          const isOpen = openWindowId === app.id;
           
           return (
-            <Dialog key={app.id}>
-              <DialogTrigger asChild>
-                <div
-                  ref={(el) => { iconRefs.current[index] = el; }}
-                  className="absolute cursor-pointer flex flex-col items-center justify-end"
-                  title={app.name}
-                  onClick={() => handleAppClick(app.id, index)}
+            <React.Fragment key={app.id}>
+              <div
+                ref={(el) => { iconRefs.current[index] = el; }}
+                className="absolute cursor-pointer flex flex-col items-center justify-end"
+                title={app.name}
+                onClick={() => handleAppClick(app.id, index)}
+                style={{
+                  left: `${position - scaledSize / 2}px`,
+                  bottom: '0px',
+                  width: `${scaledSize}px`,
+                  height: `${scaledSize}px`,
+                  transformOrigin: 'bottom center',
+                  zIndex: Math.round(scale * 10)
+                }}
+              >
+                <img
+                  src={app.icon}
+                  alt={app.name}
+                  width={scaledSize}
+                  height={scaledSize}
+                  className="object-contain"
                   style={{
-                    left: `${position - scaledSize / 2}px`,
-                    bottom: '0px',
-                    width: `${scaledSize}px`,
-                    height: `${scaledSize}px`,
-                    transformOrigin: 'bottom center',
-                    zIndex: Math.round(scale * 10)
+                    filter: `drop-shadow(0 ${scale > 1.2 ? Math.max(2, baseIconSize * 0.05) : Math.max(1, baseIconSize * 0.03)}px ${scale > 1.2 ? Math.max(4, baseIconSize * 0.1) : Math.max(2, baseIconSize * 0.06)}px rgba(0,0,0,${0.2 + (scale - 1) * 0.15}))`
                   }}
-                >
-                  <img
-                    src={app.icon}
-                    alt={app.name}
-                    width={scaledSize}
-                    height={scaledSize}
-                    className="object-contain"
+                />
+                
+                {/* App Indicator Dot */}
+                {(isOpen || openApps.includes(app.id)) && (
+                  <div 
+                    className="absolute"
                     style={{
-                      filter: `drop-shadow(0 ${scale > 1.2 ? Math.max(2, baseIconSize * 0.05) : Math.max(1, baseIconSize * 0.03)}px ${scale > 1.2 ? Math.max(4, baseIconSize * 0.1) : Math.max(2, baseIconSize * 0.06)}px rgba(0,0,0,${0.2 + (scale - 1) * 0.15}))`
+                      bottom: `${Math.max(-2, -baseIconSize * 0.05)}px`,
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      width: `${Math.max(3, baseIconSize * 0.06)}px`,
+                      height: `${Math.max(3, baseIconSize * 0.06)}px`,
+                      borderRadius: '50%',
+                      backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                      boxShadow: '0 0 4px rgba(0, 0, 0, 0.3)',
                     }}
                   />
-                  
-                  {/* App Indicator Dot */}
-                  {openApps.includes(app.id) && (
-                    <div 
-                      className="absolute"
-                      style={{
-                        bottom: `${Math.max(-2, -baseIconSize * 0.05)}px`,
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        width: `${Math.max(3, baseIconSize * 0.06)}px`,
-                        height: `${Math.max(3, baseIconSize * 0.06)}px`,
-                        borderRadius: '50%',
-                        backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                        boxShadow: '0 0 4px rgba(0, 0, 0, 0.3)',
-                      }}
-                    />
-                  )}
-                </div>
-              </DialogTrigger>
-              <DialogContent className="max-w-4xl w-[90vw] h-[80vh] p-0 overflow-hidden bg-[#f0f0f0] border-none shadow-2xl flex flex-col rounded-lg">
-                {/* macOS Window Header */}
-                <div className="h-10 bg-[#e5e5e5] border-b border-[#ccc] flex items-center px-4 justify-between select-none">
-                  <div className="flex gap-2 items-center">
-                    <div className="flex gap-1.5 mr-4">
-                      <div className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e]" />
-                      <div className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]" />
-                      <div className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]" />
+                )}
+              </div>
+
+              {isOpen && (
+                <div 
+                  className="fixed left-[50%] top-[45%] z-40 w-full max-w-4xl h-[70vh] translate-x-[-50%] translate-y-[-50%] overflow-hidden bg-[#f0f0f0] border border-[#ccc] shadow-2xl flex flex-col rounded-lg"
+                  style={{ pointerEvents: 'auto' }}
+                >
+                  {/* macOS Window Header */}
+                  <div className="h-10 bg-[#e5e5e5] border-b border-[#ccc] flex items-center px-4 justify-between select-none">
+                    <div className="flex gap-2 items-center">
+                      <div className="flex gap-1.5 mr-4">
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setOpenWindowId(null);
+                          }}
+                          className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e] hover:brightness-90 transition-all" 
+                        />
+                        <div className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]" />
+                        <div className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]" />
+                      </div>
+                      <div className="text-sm font-medium text-[#444] flex items-center gap-1">
+                        {app.name} <span className="opacity-50">⌄</span>
+                      </div>
                     </div>
-                    <DialogTitle className="text-sm font-medium text-[#444] flex items-center gap-1">
-                      {app.name} <span className="opacity-50">⌄</span>
-                    </DialogTitle>
+                    <div className="flex items-center gap-4 text-[#666]">
+                      <Minus className="w-4 h-4" />
+                      <Square className="w-3 h-3" />
+                      <X 
+                        className="w-4 h-4 cursor-pointer" 
+                        onClick={() => setOpenWindowId(null)}
+                      />
+                    </div>
                   </div>
-                  <div className="flex items-center gap-4 text-[#666]">
-                    <Minus className="w-4 h-4" />
-                    <Square className="w-3 h-3" />
-                    <X className="w-4 h-4" />
-                  </div>
-                </div>
 
-                {/* macOS Window Toolbar */}
-                <div className="h-12 bg-[#f6f6f6] border-b border-[#ddd] flex items-center px-4 gap-4 overflow-x-auto">
-                  <div className="flex bg-white border border-[#ccc] rounded-md overflow-hidden">
-                    <button className="px-3 py-1 border-r border-[#ccc] hover:bg-gray-50 text-[#666]">↺</button>
-                    <button className="px-3 py-1 hover:bg-gray-50 text-[#666]">↻</button>
+                  {/* macOS Window Toolbar */}
+                  <div className="h-12 bg-[#f6f6f6] border-b border-[#ddd] flex items-center px-4 gap-4 overflow-x-auto">
+                    <div className="flex bg-white border border-[#ccc] rounded-md overflow-hidden">
+                      <button className="px-3 py-1 border-r border-[#ccc] hover:bg-gray-50 text-[#666]">↺</button>
+                      <button className="px-3 py-1 hover:bg-gray-50 text-[#666]">↻</button>
+                    </div>
+                    <div className="flex bg-white border border-[#ccc] rounded-md overflow-hidden h-8 items-center px-2 text-xs text-[#666] min-w-[80px]">
+                      Zoom ⌄
+                    </div>
+                    <div className="flex gap-1">
+                      <button className="w-8 h-8 flex items-center justify-center font-bold text-[#444] hover:bg-white/50 rounded">B</button>
+                      <button className="w-8 h-8 flex items-center justify-center italic text-[#444] hover:bg-white/50 rounded">I</button>
+                      <button className="w-8 h-8 flex items-center justify-center line-through text-[#444] hover:bg-white/50 rounded">S</button>
+                    </div>
                   </div>
-                  <div className="flex bg-white border border-[#ccc] rounded-md overflow-hidden h-8 items-center px-2 text-xs text-[#666] min-w-[80px]">
-                    Zoom ⌄
-                  </div>
-                  <div className="flex gap-1">
-                    <button className="w-8 h-8 flex items-center justify-center font-bold text-[#444] hover:bg-white/50 rounded">B</button>
-                    <button className="w-8 h-8 flex items-center justify-center italic text-[#444] hover:bg-white/50 rounded">I</button>
-                    <button className="w-8 h-8 flex items-center justify-center line-through text-[#444] hover:bg-white/50 rounded">S</button>
-                  </div>
-                </div>
 
-                {/* macOS Window Content Area */}
-                <div className="flex-1 bg-white m-4 rounded shadow-inner p-8 overflow-auto">
-                  <DialogDescription className="sr-only">
-                    Window content for {app.name}
-                  </DialogDescription>
-                  <div className="max-w-3xl mx-auto">
-                    <h1 className="text-2xl font-bold mb-4">New content goes here</h1>
-                    <p className="text-gray-500">This is a placeholder for the {app.name} application content.</p>
+                  {/* macOS Window Content Area */}
+                  <div className="flex-1 bg-white m-4 rounded shadow-inner p-8 overflow-auto">
+                    <div className="max-w-3xl mx-auto">
+                      <h1 className="text-2xl font-bold mb-4">New content goes here</h1>
+                      <p className="text-gray-500">This is a placeholder for the {app.name} application content.</p>
+                    </div>
                   </div>
                 </div>
-              </DialogContent>
-            </Dialog>
+              )}
+            </React.Fragment>
           );
         })}
       </div>
