@@ -304,10 +304,10 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
           const windowWidth = 896; // max-w-4xl is 56rem = 896px
           const windowHeight = window.innerHeight * 0.7; // h-[70vh]
           
-          const minX = (windowWidth / 2);
-          const maxX = window.innerWidth - (windowWidth / 2);
-          const minY = 40 + (windowHeight / 2); // 40px for top menu
-          const maxY = window.innerHeight - 100 - (windowHeight / 2); // 100px for dock area
+          const minX = 0;
+          const maxX = window.innerWidth;
+          const minY = 40; // 40px for top menu
+          const maxY = window.innerHeight - 100; // 100px for dock area
 
           return {
             ...prev,
@@ -363,25 +363,17 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
               key={`window-${app.id}`}
               onMouseDown={() => setActiveWindowId(app.id)}
               className={`fixed z-40 overflow-hidden bg-[#f0f0f0] border border-[#ccc] shadow-2xl flex flex-col pointer-events-auto transition-all ${
-                isMaximized
+                isMaximized || isMobile
                   ? 'max-w-none rounded-none border-0'
-                  : isMobile 
-                    ? 'inset-x-0 top-0 bottom-[100px] max-w-none h-auto rounded-none border-x-0 border-t-0' 
-                    : 'max-w-4xl h-[70vh] rounded-lg'
+                  : 'max-w-4xl h-[70vh] rounded-lg'
               } ${isActive ? 'shadow-2xl ring-1 ring-black/5' : 'shadow-lg opacity-95'}`}
-              style={isMaximized ? {
+              style={isMaximized || isMobile ? {
                 zIndex: isActive ? 50 : 40,
-                left: '50%',
-                top: 'calc(50% - 50px)', // Centered like the mobile view but full width/height of the bounding area
-                transform: 'translate(-50%, -50%)',
+                left: '0',
+                top: '40px',
                 width: '100vw',
-                height: 'calc(100vh - 140px)' // Constrained by the top menu (40px) and dock (100px)
-              } : isMobile ? {
-                left: '50%',
-                top: 'calc(50% - 50px)',
-                transform: 'translate(-50%, -50%)',
-                zIndex: isActive ? 50 : 40,
-                height: 'calc(100vh - 140px)'
+                height: 'calc(100vh - 140px)',
+                transform: 'none'
               } : {
                 left: pos.x,
                 top: pos.y,
