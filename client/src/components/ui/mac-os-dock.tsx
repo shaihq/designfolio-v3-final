@@ -259,13 +259,32 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
   useEffect(() => {
     const handleMouseMoveGlobal = (e: MouseEvent) => {
       if (isDragging) {
-        setWindowPositions(prev => ({
-          ...prev,
-          [isDragging]: {
-            x: e.clientX - dragOffset.current.x,
-            y: e.clientY - dragOffset.current.y
-          }
-        }));
+        setWindowPositions(prev => {
+          const currentPos = prev[isDragging] || { x: window.innerWidth / 2, y: window.innerHeight * 0.45 };
+          const newX = e.clientX - dragOffset.current.x;
+          const newY = e.clientY - dragOffset.current.y;
+
+          // Bounding box logic
+          // Top boundary: Mac menu height (approx 32px-40px)
+          // Bottom boundary: Viewport height minus dock area (approx 100px)
+          // Width: Viewport width
+          
+          const windowWidth = 896; // max-w-4xl is 56rem = 896px
+          const windowHeight = window.innerHeight * 0.7; // h-[70vh]
+          
+          const minX = (windowWidth / 2);
+          const maxX = window.innerWidth - (windowWidth / 2);
+          const minY = 40 + (windowHeight / 2); // 40px for top menu
+          const maxY = window.innerHeight - 100 - (windowHeight / 2); // 100px for dock area
+
+          return {
+            ...prev,
+            [isDragging]: {
+              x: Math.max(minX, Math.min(maxX, newX)),
+              y: Math.max(minY, Math.min(maxY, newY))
+            }
+          };
+        });
       }
     };
 
