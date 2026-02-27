@@ -351,6 +351,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
             <div 
               key={`window-${app.id}`}
               onMouseDown={() => setActiveWindowId(app.id)}
+              onWheel={(e) => e.stopPropagation()}
               className={`fixed z-40 overflow-hidden bg-[#faf9f6] border border-[#d1d1d1] shadow-2xl flex flex-col pointer-events-auto ${
                 isMaximized || isMobile
                   ? 'max-w-none rounded-none border-0 transition-all duration-300'
