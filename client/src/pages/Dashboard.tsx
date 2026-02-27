@@ -1828,7 +1828,11 @@ export default function Dashboard() {
       </Dialog>
 
       <main className={`pb-6 ${activeTab === "AI Job Search" ? "min-h-[calc(100vh-100px)]" : ""}`}>
-          {activeTab === "AI Job Search" ? (
+          {selectedLayout === 'macos' && activeTab !== "AI Job Search" ? (
+            <div className="flex items-center justify-center min-h-[60vh]">
+              {/* This area is ready for the new macOS specific content */}
+            </div>
+          ) : activeTab === "AI Job Search" ? (
             <div className="px-4 sm:px-6 max-w-5xl mx-auto w-full">
               <AnimatePresence mode="wait">
                 {showClarification ? (
@@ -2304,7 +2308,7 @@ export default function Dashboard() {
               </AnimatePresence>
             </div>
           ) : (
-            <>
+            <div className="max-w-4xl mx-auto px-6">
               {/* Profile Card */}
           <div className="z-10 mb-3">
             <Card className="bg-white border-0 rounded-2xl relative" style={{ boxShadow: '0 0 0 1px rgba(0,0,0,0.03), 0 0 40px rgba(0,0,0,0.015)' }}>
