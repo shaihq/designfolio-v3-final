@@ -437,52 +437,81 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
               </div>
 
               {/* macOS Window Content Area */}
-              <div className="flex-1 bg-white m-4 rounded-md border border-[#e0ddd8] shadow-sm overflow-hidden relative custom-scrollbar">
+              <div className={`flex-1 overflow-hidden relative ${app.id === 'works' ? '' : 'bg-white m-4 rounded-md border border-[#e0ddd8] shadow-sm'}`}>
                 <div className="w-full h-full overflow-y-auto custom-scrollbar">
                   <div className="w-full h-full flex flex-col relative font-azeretMono">
                     {app.id === 'works' ? (
-                      <div className="flex h-full">
-                        {/* Sidebar */}
-                        <div className="w-48 bg-[#f6f5f3] border-r border-[#e0ddd8] p-4 flex flex-col gap-6">
+                      <div className="flex h-full bg-[#faf9f6]">
+                        {/* Finder Sidebar */}
+                        <div className="w-44 bg-[#ebe9e4]/50 backdrop-blur-md border-r border-[#d1d1d1] p-3 flex flex-col gap-6">
                           <div>
-                            <div className="text-[10px] font-bold text-[#999] uppercase tracking-wider mb-3 px-2">Favorites</div>
-                            <div className="flex flex-col gap-1">
-                              {['Recents', 'Applications', 'Desktop', 'Documents', 'Downloads'].map((item) => (
+                            <div className="text-[10px] font-bold text-[#8e8c87] uppercase tracking-wider mb-2 px-2">Favorites</div>
+                            <div className="flex flex-col gap-0.5">
+                              {[
+                                { name: 'AirDrop', icon: '📡' },
+                                { name: 'Recents', icon: '🕒' },
+                                { name: 'Applications', icon: '🚀' },
+                                { name: 'Desktop', icon: '🖥️' },
+                                { name: 'Documents', icon: '📄' },
+                                { name: 'Downloads', icon: '⬇️' }
+                              ].map((item) => (
                                 <div 
-                                  key={item} 
-                                  className={`px-2 py-1.5 rounded-md text-xs cursor-pointer ${item === 'Recents' ? 'bg-[#e5e4e1] text-[#222] font-medium' : 'text-[#666] hover:bg-[#efeeec]'}`}
+                                  key={item.name} 
+                                  className={`px-2 py-1.5 rounded-md text-[11px] flex items-center gap-2 cursor-pointer transition-colors ${item.name === 'Desktop' ? 'bg-[#d1cfca] text-[#222] font-semibold' : 'text-[#555] hover:bg-[#e1dfda]'}`}
                                 >
-                                  {item}
+                                  <span className="text-sm opacity-80">{item.icon}</span>
+                                  {item.name}
                                 </div>
                               ))}
                             </div>
                           </div>
                           <div>
-                            <div className="text-[10px] font-bold text-[#999] uppercase tracking-wider mb-3 px-2">Tags</div>
-                            <div className="flex flex-col gap-2 px-2">
-                              <div className="flex items-center gap-2 text-[10px] text-[#666]"><div className="w-2 h-2 rounded-full bg-red-400" /> Red</div>
-                              <div className="flex items-center gap-2 text-[10px] text-[#666]"><div className="w-2 h-2 rounded-full bg-orange-400" /> Orange</div>
+                            <div className="text-[10px] font-bold text-[#8e8c87] uppercase tracking-wider mb-2 px-2">Tags</div>
+                            <div className="flex flex-col gap-1.5 px-2">
+                              <div className="flex items-center gap-2 text-[10px] text-[#555] cursor-pointer hover:text-[#222]"><div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57] shadow-sm" /> Work</div>
+                              <div className="flex items-center gap-2 text-[10px] text-[#555] cursor-pointer hover:text-[#222]"><div className="w-2.5 h-2.5 rounded-full bg-[#febc2e] shadow-sm" /> Personal</div>
+                              <div className="flex items-center gap-2 text-[10px] text-[#555] cursor-pointer hover:text-[#222]"><div className="w-2.5 h-2.5 rounded-full bg-[#28c841] shadow-sm" /> Important</div>
                             </div>
                           </div>
                         </div>
 
-                        {/* File Grid */}
-                        <div className="flex-1 bg-white p-6 overflow-y-auto">
-                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-                            {projects.map((proj) => (
-                              <div 
-                                key={proj.id} 
-                                className="group flex flex-col items-center gap-2 cursor-pointer"
-                              >
-                                <div className="w-16 h-16 bg-[#f9f8f6] border border-[#e8e6e1] rounded-xl shadow-sm flex items-center justify-center text-3xl group-hover:bg-[#efeeec] group-hover:scale-105 transition-all">
-                                  {proj.icon}
+                        {/* Finder Main View */}
+                        <div className="flex-1 flex flex-col bg-white">
+                          {/* Breadcrumbs / Path Bar */}
+                          <div className="h-8 border-b border-[#e0ddd8] flex items-center px-4 gap-2 text-[10px] text-[#888] bg-[#fdfdfb]">
+                            <span>Macintosh HD</span>
+                            <span className="opacity-40">›</span>
+                            <span>Users</span>
+                            <span className="opacity-40">›</span>
+                            <span>Shared</span>
+                            <span className="opacity-40">›</span>
+                            <span className="text-[#444] font-medium">Projects</span>
+                          </div>
+
+                          <div className="flex-1 p-6 overflow-y-auto">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-8">
+                              {projects.map((proj) => (
+                                <div 
+                                  key={proj.id} 
+                                  className="group flex flex-col items-center gap-1.5 cursor-pointer"
+                                >
+                                  <div className="relative">
+                                    <div className="w-14 h-14 bg-gradient-to-br from-[#f0f0f0] to-[#e0e0e0] rounded-lg shadow-sm border border-[#d1d1d1] flex items-center justify-center text-2xl group-hover:shadow-md group-active:scale-95 transition-all duration-200">
+                                      {proj.icon}
+                                    </div>
+                                    <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-white rounded-full border border-[#d1d1d1] flex items-center justify-center shadow-xs">
+                                      <div className="w-1.5 h-1.5 rounded-full bg-[#28c841]" />
+                                    </div>
+                                  </div>
+                                  <div className="flex flex-col items-center text-center px-1">
+                                    <span className="text-[11px] font-medium text-[#333] leading-tight group-hover:bg-[#0063e1] group-hover:text-white px-1.5 py-0.5 rounded transition-colors truncate max-w-full">
+                                      {proj.name}
+                                    </span>
+                                    <span className="text-[9px] text-[#999] mt-0.5 font-medium uppercase tracking-tight">{proj.category}</span>
+                                  </div>
                                 </div>
-                                <div className="flex flex-col items-center text-center">
-                                  <span className="text-xs font-medium text-[#333] truncate w-24">{proj.name}</span>
-                                  <span className="text-[10px] text-[#999]">{proj.category} • {proj.date}</span>
-                                </div>
-                              </div>
-                            ))}
+                              ))}
+                            </div>
                           </div>
                         </div>
                       </div>
