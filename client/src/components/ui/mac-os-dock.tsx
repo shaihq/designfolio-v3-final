@@ -415,26 +415,28 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
               </div>
 
               {/* macOS Window Toolbar */}
-              <div className="h-12 bg-[#f4f2ee] border-b border-[#e0ddd8] flex items-center px-4 gap-4 overflow-x-auto justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="flex bg-white/50 border border-[#dcd9d4] rounded-md overflow-hidden">
-                    <button className="px-3 py-1 border-r border-[#dcd9d4] hover:bg-white text-[#888] text-sm">↺</button>
-                    <button className="px-3 py-1 hover:bg-white text-[#888] text-sm">↻</button>
+              {app.id !== 'works' && (
+                <div className="h-12 bg-[#f4f2ee] border-b border-[#e0ddd8] flex items-center px-4 gap-4 overflow-x-auto justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="flex bg-white/50 border border-[#dcd9d4] rounded-md overflow-hidden">
+                      <button className="px-3 py-1 border-r border-[#dcd9d4] hover:bg-white text-[#888] text-sm">↺</button>
+                      <button className="px-3 py-1 hover:bg-white text-[#888] text-sm">↻</button>
+                    </div>
+                    <div className="flex bg-white/50 border border-[#dcd9d4] rounded-md overflow-hidden h-8 items-center px-2 text-xs text-[#888] min-w-[80px] cursor-pointer hover:bg-white">
+                      Zoom <span className="ml-1 opacity-50">⌄</span>
+                    </div>
+                    <div className="flex gap-1">
+                      <button className="w-8 h-8 flex items-center justify-center font-bold text-[#444] hover:bg-white rounded">B</button>
+                      <button className="w-8 h-8 flex items-center justify-center italic text-[#444] hover:bg-white rounded">I</button>
+                      <button className="w-8 h-8 flex items-center justify-center line-through text-[#444] hover:bg-white rounded">S</button>
+                    </div>
                   </div>
-                  <div className="flex bg-white/50 border border-[#dcd9d4] rounded-md overflow-hidden h-8 items-center px-2 text-xs text-[#888] min-w-[80px] cursor-pointer hover:bg-white">
-                    Zoom <span className="ml-1 opacity-50">⌄</span>
-                  </div>
-                  <div className="flex gap-1">
-                    <button className="w-8 h-8 flex items-center justify-center font-bold text-[#444] hover:bg-white rounded">B</button>
-                    <button className="w-8 h-8 flex items-center justify-center italic text-[#444] hover:bg-white rounded">I</button>
-                    <button className="w-8 h-8 flex items-center justify-center line-through text-[#444] hover:bg-white rounded">S</button>
-                  </div>
+                  
+                  <Button3D>
+                    EDIT
+                  </Button3D>
                 </div>
-                
-                <Button3D>
-                  EDIT
-                </Button3D>
-              </div>
+              )}
 
               {/* macOS Window Content Area */}
               <div className={`flex-1 overflow-hidden relative ${app.id === 'works' ? '' : 'bg-white m-4 rounded-md border border-[#e0ddd8] shadow-sm'}`}>
