@@ -4089,6 +4089,17 @@ export default function Dashboard() {
                           onClick={() => {
                             setSelectedLayout(layout.id);
                             localStorage.setItem('dashboard-layout', layout.id);
+                            
+                            // Auto-select wall8.png if macOS layout is selected
+                            if (layout.id === 'macos') {
+                              const wall8 = lightWallpapers.find(w => w.id === 'wall8');
+                              if (wall8) {
+                                setSelectedWallpaper(wall8.path);
+                                setIsDarkWallpapers(false);
+                                localStorage.setItem('dashboard-wallpaper', wall8.path);
+                                localStorage.setItem('dashboard-wallpaper-mode', 'light');
+                              }
+                            }
                           }}
                           className={`p-4 rounded-md border-2 transition-all hover-elevate text-left ${
                             selectedLayout === layout.id ? 'border-primary bg-primary/5' : 'border-border bg-card/50'
@@ -4471,6 +4482,17 @@ export default function Dashboard() {
                           onClick={() => {
                             setSelectedLayout(layout.id);
                             localStorage.setItem('dashboard-layout', layout.id);
+                            
+                            // Auto-select wall8.png if macOS layout is selected
+                            if (layout.id === 'macos') {
+                              const wall8 = lightWallpapers.find(w => w.id === 'wall8');
+                              if (wall8) {
+                                setSelectedWallpaper(wall8.path);
+                                setIsDarkWallpapers(false);
+                                localStorage.setItem('dashboard-wallpaper', wall8.path);
+                                localStorage.setItem('dashboard-wallpaper-mode', 'light');
+                              }
+                            }
                           }}
                           className={`p-4 rounded-md border-2 transition-all hover-elevate text-left ${
                             selectedLayout === layout.id ? 'border-primary bg-primary/5' : 'border-border bg-card/50'
