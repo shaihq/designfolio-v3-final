@@ -5089,7 +5089,7 @@ export default function Dashboard() {
       
       {/* Floating Dock */}
       {activeTab !== "AI Job Search" && (
-        <div className="fixed bottom-1 sm:bottom-4 left-0 right-0 z-[100] flex justify-center pointer-events-none">
+        <div className="fixed bottom-0 sm:bottom-2 left-0 right-0 z-[100] flex justify-center pointer-events-none">
           <div className="pointer-events-auto">
             {selectedLayout === 'macos' ? (
               <MacOSDock 
