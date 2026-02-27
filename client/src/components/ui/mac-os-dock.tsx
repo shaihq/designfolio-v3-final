@@ -225,9 +225,10 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
   const [windowPositions, setWindowPositions] = useState<Record<string, { x: number; y: number }>>(() => {
     const initialPositions: Record<string, { x: number; y: number }> = {};
     if (typeof window !== 'undefined') {
-      apps.slice(0, 1).forEach(app => {
-        initialPositions[app.id] = { x: window.innerWidth / 2, y: window.innerHeight * 0.45 };
-      });
+      // Only set initial position for the first app (Home)
+      if (apps.length > 0) {
+        initialPositions[apps[0].id] = { x: window.innerWidth / 2, y: window.innerHeight * 0.45 };
+      }
     }
     return initialPositions;
   });
@@ -243,9 +244,14 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
       setOpenWindows(prev => [...prev, appId]);
       // Initialize position if not exists
       if (!windowPositions[appId]) {
+        // Offset new windows slightly so they don't overlap perfectly
+        const offset = openWindows.length * 20;
         setWindowPositions(prev => ({
           ...prev,
-          [appId]: { x: window.innerWidth / 2, y: window.innerHeight * 0.45 }
+          [appId]: { 
+            x: (window.innerWidth / 2) + offset, 
+            y: (window.innerHeight * 0.45) + offset 
+          }
         }));
       }
     }
@@ -380,7 +386,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                 <div className="flex gap-2 items-center">
                   <div className="text-sm font-medium text-[#444] flex items-center gap-2">
                     <span className="opacity-70">📄</span>
-                    {app.id === 'projects' ? 'projects.mdx' : `${app.name}.mdx`} <span className="opacity-50 text-[10px]">⌄</span>
+                    {app.id === 'works' ? 'projects.mdx' : `${app.name}.mdx`} <span className="opacity-50 text-[10px]">⌄</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-4 text-[#666]">
@@ -425,7 +431,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
               <div className="flex-1 bg-white m-4 rounded-md border border-[#e0ddd8] shadow-sm overflow-hidden relative custom-scrollbar">
                 <div className="w-full h-full overflow-y-auto custom-scrollbar">
                   <div className="w-full h-full flex flex-col relative font-azeretMono">
-                    {app.id === 'projects' ? (
+                    {app.id === 'works' ? (
                       <div className="p-8 text-[#444]">
                         {/* Projects content will go here */}
                       </div>
