@@ -1097,6 +1097,17 @@ export default function Dashboard() {
   const handleTemplateSelect = (templateId: string) => {
     const template = caseStudyTemplates.find(t => t.id === templateId);
     if (template) {
+      // Auto-select wall8.png if macOS template is selected
+      if (templateId === 'macos') {
+        const wall8 = lightWallpapers.find(w => w.id === 'wall8');
+        if (wall8) {
+          setSelectedWallpaper(wall8.path);
+          setIsDarkWallpapers(false);
+          localStorage.setItem('dashboard-wallpaper', wall8.path);
+          localStorage.setItem('dashboard-wallpaper-mode', 'light');
+        }
+      }
+
       const newProject = {
         id: Date.now(),
         title: template.mockProject.title,
