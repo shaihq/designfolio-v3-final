@@ -296,24 +296,11 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
           const newX = e.clientX - dragOffset.current.x;
           const newY = e.clientY - dragOffset.current.y;
 
-          // Bounding box logic
-          // Top boundary: Mac menu height (approx 32px-40px)
-          // Bottom boundary: Viewport height minus dock area (approx 100px)
-          // Width: Viewport width
-          
-          const windowWidth = 896; // max-w-4xl is 56rem = 896px
-          const windowHeight = window.innerHeight * 0.7; // h-[70vh]
-          
-          const minX = 0;
-          const maxX = window.innerWidth;
-          const minY = 40; // 40px for top menu
-          const maxY = window.innerHeight - 100; // 100px for dock area
-
           return {
             ...prev,
             [isDragging]: {
-              x: Math.max(minX, Math.min(maxX, newX)),
-              y: Math.max(minY, Math.min(maxY, newY))
+              x: newX,
+              y: newY
             }
           };
         });
@@ -362,10 +349,10 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
             <div 
               key={`window-${app.id}`}
               onMouseDown={() => setActiveWindowId(app.id)}
-              className={`fixed z-40 overflow-hidden bg-[#f0f0f0] border border-[#ccc] shadow-2xl flex flex-col pointer-events-auto transition-all ${
+              className={`fixed z-40 overflow-hidden bg-[#f0f0f0] border border-[#ccc] shadow-2xl flex flex-col pointer-events-auto ${
                 isMaximized || isMobile
-                  ? 'max-w-none rounded-none border-0'
-                  : 'max-w-4xl h-[70vh] rounded-lg'
+                  ? 'max-w-none rounded-none border-0 transition-all duration-300'
+                  : 'max-w-4xl h-[70vh] rounded-lg transition-shadow'
               } ${isActive ? 'shadow-2xl ring-1 ring-black/5' : 'shadow-lg opacity-95'}`}
               style={isMaximized || isMobile ? {
                 zIndex: isActive ? 50 : 40,
