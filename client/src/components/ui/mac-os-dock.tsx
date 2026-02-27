@@ -2,10 +2,13 @@
 
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { X, Minus, Square } from "lucide-react";
 
 // Types for the component
 interface DockApp {
@@ -261,8 +264,8 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
           const scaledSize = baseIconSize * scale;
           
           return (
-            <Popover key={app.id}>
-              <PopoverTrigger asChild>
+            <Dialog key={app.id}>
+              <DialogTrigger asChild>
                 <div
                   ref={(el) => { iconRefs.current[index] = el; }}
                   className="absolute cursor-pointer flex flex-col items-center justify-end"
@@ -305,16 +308,55 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                     />
                   )}
                 </div>
-              </PopoverTrigger>
-              <PopoverContent className="w-80" side="top" align="center" sideOffset={10}>
-                <div className="flex flex-col gap-2 p-2">
-                  <h3 className="font-medium">{app.name}</h3>
-                  <div className="text-sm text-muted-foreground">
-                    New content goes here
+              </DialogTrigger>
+              <DialogContent className="max-w-4xl w-[90vw] h-[80vh] p-0 overflow-hidden bg-[#f0f0f0] border-none shadow-2xl flex flex-col rounded-lg">
+                {/* macOS Window Header */}
+                <div className="h-10 bg-[#e5e5e5] border-b border-[#ccc] flex items-center px-4 justify-between select-none">
+                  <div className="flex gap-2 items-center">
+                    <div className="flex gap-1.5 mr-4">
+                      <div className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e]" />
+                      <div className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]" />
+                      <div className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]" />
+                    </div>
+                    <DialogTitle className="text-sm font-medium text-[#444] flex items-center gap-1">
+                      {app.name} <span className="opacity-50">⌄</span>
+                    </DialogTitle>
+                  </div>
+                  <div className="flex items-center gap-4 text-[#666]">
+                    <Minus className="w-4 h-4" />
+                    <Square className="w-3 h-3" />
+                    <X className="w-4 h-4" />
                   </div>
                 </div>
-              </PopoverContent>
-            </Popover>
+
+                {/* macOS Window Toolbar */}
+                <div className="h-12 bg-[#f6f6f6] border-b border-[#ddd] flex items-center px-4 gap-4 overflow-x-auto">
+                  <div className="flex bg-white border border-[#ccc] rounded-md overflow-hidden">
+                    <button className="px-3 py-1 border-r border-[#ccc] hover:bg-gray-50 text-[#666]">↺</button>
+                    <button className="px-3 py-1 hover:bg-gray-50 text-[#666]">↻</button>
+                  </div>
+                  <div className="flex bg-white border border-[#ccc] rounded-md overflow-hidden h-8 items-center px-2 text-xs text-[#666] min-w-[80px]">
+                    Zoom ⌄
+                  </div>
+                  <div className="flex gap-1">
+                    <button className="w-8 h-8 flex items-center justify-center font-bold text-[#444] hover:bg-white/50 rounded">B</button>
+                    <button className="w-8 h-8 flex items-center justify-center italic text-[#444] hover:bg-white/50 rounded">I</button>
+                    <button className="w-8 h-8 flex items-center justify-center line-through text-[#444] hover:bg-white/50 rounded">S</button>
+                  </div>
+                </div>
+
+                {/* macOS Window Content Area */}
+                <div className="flex-1 bg-white m-4 rounded shadow-inner p-8 overflow-auto">
+                  <DialogDescription className="sr-only">
+                    Window content for {app.name}
+                  </DialogDescription>
+                  <div className="max-w-3xl mx-auto">
+                    <h1 className="text-2xl font-bold mb-4">New content goes here</h1>
+                    <p className="text-gray-500">This is a placeholder for the {app.name} application content.</p>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
           );
         })}
       </div>
