@@ -235,6 +235,15 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
   const [isDragging, setIsDragging] = useState<string | null>(null);
   const dragOffset = useRef({ x: 0, y: 0 });
 
+  // Projects / Finder state
+  const projects = [
+    { id: 'proj1', name: 'Neural-Sync', icon: '🧠', category: 'AI', date: 'Feb 12' },
+    { id: 'proj2', name: 'Quantum-Dash', icon: '⚡', category: 'Dev', date: 'Jan 28' },
+    { id: 'proj3', name: 'Aether-UI', icon: '🎨', category: 'Design', date: 'Feb 05' },
+    { id: 'proj4', name: 'Pulse-Engine', icon: '🔥', category: 'Systems', date: 'Mar 01' },
+    { id: 'proj5', name: 'Vortex-App', icon: '🌀', category: 'Web', date: 'Feb 20' },
+  ];
+
   const handleAppClick = (appId: string, index: number) => {
     if (iconRefs.current[index]) {
       createBounceAnimation(iconRefs.current[index]!);
@@ -385,8 +394,8 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
               >
                 <div className="flex gap-2 items-center">
                   <div className="text-sm font-medium text-[#444] flex items-center gap-2">
-                    <span className="opacity-70">📄</span>
-                    {app.id === 'works' ? 'projects.mdx' : `${app.name}.mdx`} <span className="opacity-50 text-[10px]">⌄</span>
+                    <span className="opacity-70">{app.id === 'works' ? '📂' : '📄'}</span>
+                    {app.id === 'works' ? 'Projects' : `${app.name}.mdx`} <span className="opacity-50 text-[10px]">⌄</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-4 text-[#666]">
@@ -432,8 +441,50 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                 <div className="w-full h-full overflow-y-auto custom-scrollbar">
                   <div className="w-full h-full flex flex-col relative font-azeretMono">
                     {app.id === 'works' ? (
-                      <div className="p-8 text-[#444]">
-                        {/* Projects content will go here */}
+                      <div className="flex h-full">
+                        {/* Sidebar */}
+                        <div className="w-48 bg-[#f6f5f3] border-r border-[#e0ddd8] p-4 flex flex-col gap-6">
+                          <div>
+                            <div className="text-[10px] font-bold text-[#999] uppercase tracking-wider mb-3 px-2">Favorites</div>
+                            <div className="flex flex-col gap-1">
+                              {['Recents', 'Applications', 'Desktop', 'Documents', 'Downloads'].map((item) => (
+                                <div 
+                                  key={item} 
+                                  className={`px-2 py-1.5 rounded-md text-xs cursor-pointer ${item === 'Recents' ? 'bg-[#e5e4e1] text-[#222] font-medium' : 'text-[#666] hover:bg-[#efeeec]'}`}
+                                >
+                                  {item}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                          <div>
+                            <div className="text-[10px] font-bold text-[#999] uppercase tracking-wider mb-3 px-2">Tags</div>
+                            <div className="flex flex-col gap-2 px-2">
+                              <div className="flex items-center gap-2 text-[10px] text-[#666]"><div className="w-2 h-2 rounded-full bg-red-400" /> Red</div>
+                              <div className="flex items-center gap-2 text-[10px] text-[#666]"><div className="w-2 h-2 rounded-full bg-orange-400" /> Orange</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* File Grid */}
+                        <div className="flex-1 bg-white p-6 overflow-y-auto">
+                          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+                            {projects.map((proj) => (
+                              <div 
+                                key={proj.id} 
+                                className="group flex flex-col items-center gap-2 cursor-pointer"
+                              >
+                                <div className="w-16 h-16 bg-[#f9f8f6] border border-[#e8e6e1] rounded-xl shadow-sm flex items-center justify-center text-3xl group-hover:bg-[#efeeec] group-hover:scale-105 transition-all">
+                                  {proj.icon}
+                                </div>
+                                <div className="flex flex-col items-center text-center">
+                                  <span className="text-xs font-medium text-[#333] truncate w-24">{proj.name}</span>
+                                  <span className="text-[10px] text-[#999]">{proj.category} • {proj.date}</span>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     ) : (
                       <PixelRocketHero />
