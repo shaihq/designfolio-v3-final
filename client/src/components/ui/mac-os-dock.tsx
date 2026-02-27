@@ -360,24 +360,11 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                 className={`h-10 bg-[#e5e5e5] border-b border-[#ccc] flex items-center px-4 justify-between select-none ${isMobile ? 'cursor-default' : 'cursor-move active:cursor-grabbing'}`}
               >
                 <div className="flex gap-2 items-center">
-                  <div className="flex gap-1.5 mr-4">
-                    <button 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        closeWindow(app.id);
-                      }}
-                      className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e] hover:brightness-90 transition-all" 
-                    />
-                    <div className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]" />
-                    <div className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29]" />
-                  </div>
                   <div className="text-sm font-medium text-[#444] flex items-center gap-1">
                     {app.name} <span className="opacity-50">⌄</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-4 text-[#666]">
-                  <Minus className="w-4 h-4" />
-                  <Square className="w-3 h-3" />
                   <X 
                     className="w-4 h-4 cursor-pointer" 
                     onClick={() => closeWindow(app.id)}
