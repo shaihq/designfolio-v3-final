@@ -11,6 +11,7 @@ import {
 import { X, Minus, Square } from "lucide-react";
 import Button3D from "./button-3d";
 import { Gravity, MatterBody } from "./gravity";
+import { PixelRocketHero } from "./pixel-rocket-voyager";
 
 // Types for the component
 interface DockApp {
@@ -422,8 +423,9 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
 
               {/* macOS Window Content Area */}
               <div className="flex-1 bg-white m-4 rounded-md border border-[#e0ddd8] shadow-sm overflow-hidden relative custom-scrollbar">
-                <div className="w-full h-full overflow-y-auto p-8 custom-scrollbar">
-                  <div className="w-full flex flex-col relative font-azeretMono">
+                <div className="w-full h-full overflow-y-auto custom-scrollbar">
+                  <div className="w-full h-full flex flex-col relative font-azeretMono">
+                    <PixelRocketHero />
                   </div>
                 </div>
               </div>
