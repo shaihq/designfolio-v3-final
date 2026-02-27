@@ -2,12 +2,13 @@
 
 import { useState, useRef, useEffect, useLayoutEffect, useCallback } from "react"
 import { cn } from "@/lib/utils"
-import { X, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react"
+import { X, ExternalLink, ChevronLeft, ChevronRight, Minus, Square, Search, RefreshCw, Lock, Star, ChevronDown, User } from "lucide-react"
 
 interface Project {
   id: string
   image: string
   title: string
+  url?: string
 }
 
 interface AnimatedFolderProps {
@@ -133,14 +134,12 @@ export function AnimatedFolder({ title, projects, className }: AnimatedFolderPro
         </h3>
       </div>
 
-      <ImageLightbox
+      <BrowserWindow
         projects={projects.slice(0, 1)}
         currentIndex={selectedIndex ?? 0}
         isOpen={selectedIndex !== null}
         onClose={handleCloseLightbox}
-        sourceRect={sourceRect}
         onCloseComplete={handleCloseComplete}
-        onNavigate={handleNavigate}
       />
     </>
   )
@@ -176,41 +175,21 @@ function ProjectCard({ image, title, delay, isVisible, index, onClick, isSelecte
   )
 }
 
-function ImageLightbox({
+function BrowserWindow({
   projects,
   currentIndex,
   isOpen,
   onClose,
-  sourceRect,
   onCloseComplete,
-  onNavigate,
 }: any) {
   const [animationPhase, setAnimationPhase] = useState<"initial" | "animating" | "complete">("initial")
   const [isClosing, setIsClosing] = useState(false)
   const [shouldRender, setShouldRender] = useState(false)
   const [internalIndex, setInternalIndex] = useState(currentIndex)
-  const [prevIndex, setPrevIndex] = useState(currentIndex)
-  const [isSliding, setIsSliding] = useState(false)
-  const [slideDirection, setSlideDirection] = useState<"left" | "right">("right")
-
-  useEffect(() => {
-    if (isOpen && currentIndex !== internalIndex && !isSliding) {
-      const direction = currentIndex > internalIndex ? "left" : "right"
-      setSlideDirection(direction)
-      setPrevIndex(internalIndex)
-      setIsSliding(true)
-      setTimeout(() => {
-        setInternalIndex(currentIndex)
-        setIsSliding(false)
-      }, 400)
-    }
-  }, [currentIndex, isOpen, internalIndex, isSliding])
 
   useEffect(() => {
     if (isOpen) {
       setInternalIndex(currentIndex)
-      setPrevIndex(currentIndex)
-      setIsSliding(false)
       setShouldRender(true)
       setAnimationPhase("initial")
       setIsClosing(false)
@@ -238,29 +217,124 @@ function ImageLightbox({
 
   if (!shouldRender) return null
 
+  const currentProject = projects[internalIndex]
+
   return (
     <div
-      className="fixed inset-0 z-[1000] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[1000] flex items-center justify-center p-4 md:p-8"
       onClick={handleClose}
       style={{
         opacity: isClosing ? 0 : 1,
         transition: "opacity 400ms",
       }}
     >
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-md" />
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
+      
       <div 
-        className="relative bg-white rounded-xl shadow-2xl overflow-hidden max-w-2xl w-full aspect-video flex items-center justify-center text-4xl"
+        className="relative bg-[#f3f3f3] rounded-lg shadow-2xl overflow-hidden w-full max-w-5xl h-[80vh] flex flex-col border border-gray-400"
         onClick={e => e.stopPropagation()}
         style={{
-          transform: animationPhase === "initial" ? "scale(0.5)" : "scale(1)",
-          transition: "transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1)",
+          transform: animationPhase === "initial" ? "scale(0.9) translateY(20px)" : "scale(1) translateY(0)",
+          opacity: animationPhase === "initial" ? 0 : 1,
+          transition: "transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 400ms",
         }}
       >
-        {projects[internalIndex]?.image}
-        <button onClick={handleClose} className="absolute top-4 right-4 p-2 bg-black/10 rounded-full hover:bg-black/20 transition-colors">
-          <X size={20} />
-        </button>
+        {/* Title Bar */}
+        <div className="h-10 bg-[#e7e7e7] flex items-center justify-between px-3 border-b border-gray-300 shrink-0 select-none">
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded-sm flex items-center justify-center bg-gray-200 text-[10px] text-gray-500">
+              {currentProject?.image}
+            </div>
+            <span className="text-[11px] text-gray-600 truncate max-w-[200px]">
+              {currentProject?.title || "New Tab"} - Microsoft Edge
+            </span>
+          </div>
+          <div className="flex items-center">
+            <button className="h-10 w-11 flex items-center justify-center hover:bg-gray-300 transition-colors">
+              <Minus size={14} className="text-gray-600" />
+            </button>
+            <button className="h-10 w-11 flex items-center justify-center hover:bg-gray-300 transition-colors">
+              <Square size={10} className="text-gray-600" />
+            </button>
+            <button onClick={handleClose} className="h-10 w-11 flex items-center justify-center hover:bg-[#e81123] hover:text-white transition-colors">
+              <X size={16} className="text-gray-600 group-hover:text-inherit" />
+            </button>
+          </div>
+        </div>
+
+        {/* Toolbar */}
+        <div className="bg-white border-b border-gray-200 p-2 flex flex-col gap-2 shrink-0">
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
+              <button className="p-1.5 rounded-full hover:bg-gray-100 disabled:opacity-30">
+                <ChevronLeft size={18} className="text-gray-600" />
+              </button>
+              <button className="p-1.5 rounded-full hover:bg-gray-100 disabled:opacity-30">
+                <ChevronRight size={18} className="text-gray-600" />
+              </button>
+              <button className="p-1.5 rounded-full hover:bg-gray-100">
+                <RefreshCw size={16} className="text-gray-600" />
+              </button>
+            </div>
+
+            <div className="flex-1 flex items-center bg-[#f0f2f5] rounded-full px-3 py-1.5 border border-transparent hover:border-gray-300 transition-all group">
+              <div className="flex items-center gap-2 mr-2">
+                <Lock size={12} className="text-gray-500" />
+              </div>
+              <input 
+                type="text" 
+                readOnly
+                value={`https://${currentProject?.title?.toLowerCase()?.replace(/\s+/g, '-') || 'replit'}.com`}
+                className="bg-transparent border-none outline-none text-xs text-gray-700 w-full"
+              />
+              <div className="flex items-center gap-2 ml-2">
+                <Star size={14} className="text-gray-500 cursor-pointer hover:text-yellow-500" />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-1">
+              <button className="p-1.5 rounded hover:bg-gray-100">
+                <User size={18} className="text-gray-600" />
+              </button>
+              <button className="p-1.5 rounded hover:bg-gray-100 font-bold text-gray-600">
+                ...
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Browser Content */}
+        <div className="flex-1 bg-white overflow-auto flex flex-col items-center justify-center text-center p-8">
+          <div className="max-w-md space-y-6">
+            <div className="text-8xl mb-8 opacity-20 grayscale">
+              {currentProject?.image}
+            </div>
+            <h1 className="text-2xl font-semibold text-gray-800">
+              {currentProject?.title}
+            </h1>
+            <p className="text-gray-500 leading-relaxed">
+              Welcome to the preview window for {currentProject?.title}. This project is currently under synchronization.
+            </p>
+            <div className="pt-8 flex flex-col items-center gap-4">
+              <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+                <div className="w-1/3 h-full bg-[#007aff] animate-pulse" />
+              </div>
+              <span className="text-[11px] text-gray-400 uppercase tracking-widest font-bold">
+                Connection Secure
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Status Bar */}
+        <div className="h-6 bg-[#f3f3f3] border-t border-gray-200 px-3 flex items-center justify-between shrink-0">
+          <span className="text-[10px] text-gray-500">Ready</span>
+          <div className="flex items-center gap-3">
+             <span className="text-[10px] text-gray-500">100%</span>
+          </div>
+        </div>
       </div>
     </div>
   )
 }
+
