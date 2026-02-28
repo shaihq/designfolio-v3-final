@@ -1589,6 +1589,9 @@ export default function Dashboard() {
             >
               <WeatherWidget />
               <CalendarWidget />
+              <div className="w-84 h-64 bg-black/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden shadow-2xl p-0">
+                <DivOrigami />
+              </div>
             </motion.div>
 
             {/* Right side widgets */}
@@ -1597,9 +1600,6 @@ export default function Dashboard() {
               animate={{ opacity: 1, x: 0 }}
               className="absolute right-8 top-24 flex flex-col gap-6 pointer-events-auto"
             >
-              <div className="w-84 h-64 bg-black/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
-                <DivOrigami />
-              </div>
             </motion.div>
           </div>
         )}
