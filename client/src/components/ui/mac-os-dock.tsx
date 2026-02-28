@@ -240,13 +240,51 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
   const dragOffset = useRef({ x: 0, y: 0 });
 
   // Projects / Finder state
-  const projects = [
+  const [projects, setProjects] = useState([
     { id: 'proj1', name: 'Neural-Sync', icon: '🧠', category: 'AI', date: 'Feb 12' },
     { id: 'proj2', name: 'Quantum-Dash', icon: '⚡', category: 'Dev', date: 'Jan 28' },
     { id: 'proj3', name: 'Aether-UI', icon: '🎨', category: 'Design', date: 'Feb 05' },
     { id: 'proj4', name: 'Pulse-Engine', icon: '🔥', category: 'Systems', date: 'Mar 01' },
     { id: 'proj5', name: 'Vortex-App', icon: '🌀', category: 'Web', date: 'Feb 20' },
-  ];
+  ]);
+
+  const [draggedProjectIndex, setDraggedProjectIndex] = useState<number | null>(null);
+
+  const handleDragStart = (e: React.DragEvent, index: number) => {
+    setDraggedProjectIndex(index);
+    // Required for Firefox
+    e.dataTransfer.setData('text/plain', index.toString());
+    e.dataTransfer.effectAllowed = 'move';
+    
+    // Create a ghost image if needed, but standard browser drag is fine for now
+    const target = e.currentTarget as HTMLElement;
+    target.style.opacity = '0.5';
+  };
+
+  const handleDragEnd = (e: React.DragEvent) => {
+    setDraggedProjectIndex(null);
+    const target = e.currentTarget as HTMLElement;
+    target.style.opacity = '1';
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  };
+
+  const handleDrop = (e: React.DragEvent, targetIndex: number) => {
+    e.preventDefault();
+    if (draggedProjectIndex === null || draggedProjectIndex === targetIndex) return;
+
+    const newProjects = [...projects];
+    const draggedProject = newProjects[draggedProjectIndex];
+    
+    // Remove from old position and insert at new position
+    newProjects.splice(draggedProjectIndex, 1);
+    newProjects.splice(targetIndex, 0, draggedProject);
+    
+    setProjects(newProjects);
+  };
 
   const handleOpenBrowser = useCallback((project: any) => {
     const browserId = `browser-${project.id}-${Date.now()}`;
@@ -656,8 +694,16 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
 
                           <div className="flex-1 p-8 overflow-y-auto">
                             <div className={`grid ${isMobile ? "grid-cols-2" : "grid-cols-3"} gap-x-6 gap-y-10 max-w-4xl mx-auto`}>
-                              {projects.map((proj) => (
-                                <div key={proj.id} className="transform scale-110 origin-center">
+                              {projects.map((proj, index) => (
+                                <div 
+                                  key={proj.id} 
+                                  className={`transform scale-110 origin-center cursor-move transition-all duration-200 ${draggedProjectIndex === index ? 'opacity-0 scale-90' : 'opacity-100'}`}
+                                  draggable
+                                  onDragStart={(e) => handleDragStart(e, index)}
+                                  onDragEnd={handleDragEnd}
+                                  onDragOver={handleDragOver}
+                                  onDrop={(e) => handleDrop(e, index)}
+                                >
                                   <AnimatedFolder
                                     title={proj.name}
                                     projects={[
