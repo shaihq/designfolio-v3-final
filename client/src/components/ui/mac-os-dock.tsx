@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { X, Minus, Square, ChevronLeft, ChevronRight, RefreshCw, Lock } from "lucide-react";
+import { X, Minus, Square, ChevronLeft, ChevronRight, RefreshCw, Lock, Trash2, EyeOff } from "lucide-react";
 import Button3D from "./button-3d";
 import { Gravity, MatterBody } from "./gravity";
 import { PixelRocketHero } from "./pixel-rocket-voyager";
@@ -978,6 +978,17 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                     <div className="ml-auto">
                       <RefreshCw size={10} className="text-[#888]" />
                     </div>
+                  </div>
+                  <div className="flex items-center gap-1 border-l border-[#d1d1d1] ml-1 pl-2">
+                    <button className="p-1.5 hover:bg-red-50 text-red-500/70 hover:text-red-500 rounded transition-colors" title="Delete Project">
+                      <Trash2 size={14} />
+                    </button>
+                    <button className="p-1.5 hover:bg-black/5 text-[#666] rounded transition-colors" title="Hide Project">
+                      <EyeOff size={14} />
+                    </button>
+                    <button className="p-1.5 hover:bg-black/5 text-[#666] rounded transition-colors" title="Add Password">
+                      <Lock size={14} />
+                    </button>
                   </div>
                 </div>
 
