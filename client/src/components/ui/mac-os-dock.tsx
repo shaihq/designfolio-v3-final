@@ -227,6 +227,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
   const [maximizedWindows, setMaximizedWindows] = useState<string[]>([]);
   const [animatingWindow, setAnimatingWindow] = useState<{id: string, type: 'open' | 'minimize'} | null>(null);
   const [browserWindows, setBrowserWindows] = useState<any[]>([]);
+  const [pdfWindows, setPdfWindows] = useState<any[]>([]);
   const [windowPositions, setWindowPositions] = useState<Record<string, { x: number; y: number }>>(() => {
     const initialPositions: Record<string, { x: number; y: number }> = {};
     if (typeof window !== 'undefined') {
@@ -307,6 +308,28 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
   const closeBrowser = (browserId: string) => {
     setBrowserWindows(prev => prev.filter(b => b.browserId !== browserId));
     if (activeWindowId === browserId) {
+      setActiveWindowId(null);
+    }
+  };
+
+  const handleOpenPdf = useCallback((title: string) => {
+    const pdfId = `pdf-${Date.now()}`;
+    const offset = (openWindows.length + browserWindows.length + pdfWindows.length) * 20;
+    
+    setPdfWindows(prev => [...prev, { id: pdfId, title }]);
+    setWindowPositions(prev => ({
+      ...prev,
+      [pdfId]: { 
+        x: (window.innerWidth / 2) + offset, 
+        y: (window.innerHeight * 0.45) + offset 
+      }
+    }));
+    setActiveWindowId(pdfId);
+  }, [openWindows.length, browserWindows.length, pdfWindows.length]);
+
+  const closePdf = (pdfId: string) => {
+    setPdfWindows(prev => prev.filter(p => p.id !== pdfId));
+    if (activeWindowId === pdfId) {
       setActiveWindowId(null);
     }
   };
@@ -976,7 +999,10 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                                 <div className="text-[10px] uppercase tracking-wider opacity-50 mb-1">GitHub</div>
                                 <div className="font-medium">github.com/shai-dev</div>
                               </div>
-                              <div className="p-4 rounded-lg bg-[#f7f6f3] border border-[#e9e9e7] hover:bg-[#efeee9] transition-colors cursor-pointer group">
+                              <div 
+                                className="p-4 rounded-lg bg-[#f7f6f3] border border-[#e9e9e7] hover:bg-[#efeee9] transition-colors cursor-pointer group"
+                                onClick={() => handleOpenPdf('Resume_Shai.pdf')}
+                              >
                                 <div className="text-[10px] uppercase tracking-wider opacity-50 mb-1">Resume</div>
                                 <div className="font-medium text-[#007aff] hover:underline">View Resume</div>
                               </div>
@@ -1023,6 +1049,159 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                     ) : (
                       <PixelRocketHero />
                     )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+
+        {/* PDF Viewer Windows Layer */}
+        {pdfWindows.map((pdf) => {
+          const pos = windowPositions[pdf.id] || { x: 0, y: 0 };
+          const isActive = activeWindowId === pdf.id;
+          const isMinimized = minimizedWindows.includes(pdf.id);
+          
+          if (isMinimized) return null;
+
+          return (
+            <div 
+              key={pdf.id}
+              onMouseDown={() => setActiveWindowId(pdf.id)}
+              onWheel={(e) => e.stopPropagation()}
+              className={`fixed z-40 overflow-hidden bg-[#525659] border border-[#333] shadow-2xl flex flex-col pointer-events-auto ${
+                isMobile ? 'max-w-none rounded-xl' : 'w-[800px] h-[85vh] rounded-lg'
+              } ${isActive ? 'shadow-2xl ring-1 ring-black/5' : 'shadow-lg opacity-95'}`}
+              style={{
+                ...(isMobile ? {
+                  zIndex: isActive ? 60 : 40,
+                  left: '2.5%',
+                  top: '50px',
+                  width: '95vw',
+                  height: 'calc(100vh - 160px)',
+                  transform: 'none',
+                  borderRadius: '12px'
+                } : {
+                  left: pos.x,
+                  top: pos.y,
+                  transform: 'translate(-50%, -50%)',
+                  zIndex: isActive ? 60 : 40,
+                  willChange: isDragging === pdf.id ? 'left, top' : 'auto',
+                  transition: isDragging === pdf.id ? 'none' : 'all 0.3s ease'
+                })
+              }}
+            >
+              {/* macOS-style Window Header for PDF Viewer */}
+              <div 
+                onMouseDown={(e) => handleMouseDown(pdf.id, e)}
+                className="h-9 bg-[#323639] border-b border-[#1a1a1a] flex items-center px-3 justify-between select-none cursor-move active:cursor-grabbing rounded-t-lg"
+              >
+                <div className="flex gap-2 items-center">
+                  <div className="flex gap-1.5 px-1">
+                    <div className="w-3 h-3 rounded-full bg-[#ff5f57] border border-[#e0443e]"></div>
+                    <div className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]"></div>
+                    <div className="w-3 h-3 rounded-full bg-[#28c940] border border-[#1aab29]"></div>
+                  </div>
+                  <div className="text-[12px] font-medium text-[#eee] flex items-center gap-1 ml-2">
+                    <span className="opacity-70">📄</span>
+                    <span className="font-sans">{pdf.title}</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="p-1 hover:bg-white/10 rounded text-[#ccc]" onClick={() => closePdf(pdf.id)}>
+                    <X className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+              </div>
+
+              {/* PDF Toolbar */}
+              <div className="h-12 bg-[#323639] border-b border-[#1a1a1a] flex items-center px-4 justify-between">
+                <div className="flex items-center gap-4 text-[#eee]">
+                  <div className="flex items-center gap-2 bg-[#202124] px-3 py-1 rounded border border-[#444] text-xs">
+                    <span>1 / 2</span>
+                  </div>
+                  <div className="h-4 w-[1px] bg-[#444]"></div>
+                  <div className="flex items-center gap-3">
+                    <Minus size={14} className="cursor-pointer hover:text-white" />
+                    <span className="text-xs w-8 text-center">100%</span>
+                    <Square size={12} className="cursor-pointer hover:text-white" />
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <button className="p-1.5 hover:bg-white/10 rounded text-[#eee]">
+                    <RefreshCw size={14} />
+                  </button>
+                  <button className="bg-[#007aff] text-white px-3 py-1 rounded text-xs font-medium hover:bg-[#0062cc]">
+                    Download
+                  </button>
+                </div>
+              </div>
+
+              {/* PDF Content (Mock) */}
+              <div className="flex-1 bg-[#525659] overflow-auto p-8 flex justify-center">
+                <div className="bg-white w-full max-w-[600px] shadow-2xl p-12 text-[#333] font-serif min-h-[842px]">
+                  <div className="border-b-2 border-black pb-4 mb-8">
+                    <h1 className="text-3xl font-bold uppercase tracking-tighter">Shai Dev</h1>
+                    <p className="text-sm italic mt-1">Full Stack Engineer & Product Designer</p>
+                    <div className="flex gap-4 text-[10px] mt-2 opacity-70">
+                      <span>github.com/shai-dev</span>
+                      <span>•</span>
+                      <span>shai@example.com</span>
+                      <span>•</span>
+                      <span>San Francisco, CA</span>
+                    </div>
+                  </div>
+
+                  <section className="mb-8">
+                    <h2 className="text-sm font-bold uppercase border-b border-black/10 mb-3">Executive Summary</h2>
+                    <p className="text-xs leading-relaxed">
+                      Creative engineer with 5+ years of experience building high-performance web applications and immersive user interfaces. 
+                      Specialized in React, Three.js, and AI integration. Proven track record of leading product design for 
+                      scaled systems with over 100k+ active users.
+                    </p>
+                  </section>
+
+                  <section className="mb-8">
+                    <h2 className="text-sm font-bold uppercase border-b border-black/10 mb-3">Experience</h2>
+                    <div className="mb-4">
+                      <div className="flex justify-between items-baseline">
+                        <h3 className="text-xs font-bold">Lead Engineer @ Neural-Sync</h3>
+                        <span className="text-[10px] opacity-60">2023 - Present</span>
+                      </div>
+                      <ul className="text-[10px] list-disc list-inside mt-2 space-y-1 opacity-80">
+                        <li>Architected real-time AI synchronization layer using WebSockets and Redis.</li>
+                        <li>Reduced designer iteration time by 40% through custom 3D prototyping tools.</li>
+                        <li>Led a cross-functional team of 8 engineers and designers.</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <div className="flex justify-between items-baseline">
+                        <h3 className="text-xs font-bold">UI Engineer @ Aether Labs</h3>
+                        <span className="text-[10px] opacity-60">2020 - 2023</span>
+                      </div>
+                      <ul className="text-[10px] list-disc list-inside mt-2 space-y-1 opacity-80">
+                        <li>Developed a proprietary design system used by 50+ internal developers.</li>
+                        <li>Implemented complex data visualizations using D3.js and Three.js.</li>
+                      </ul>
+                    </div>
+                  </section>
+
+                  <section>
+                    <h2 className="text-sm font-bold uppercase border-b border-black/10 mb-3">Technical Skills</h2>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <h4 className="text-[10px] font-bold opacity-60 uppercase mb-1">Frontend</h4>
+                        <p className="text-[10px]">React, TypeScript, Next.js, Tailwind CSS, Three.js, Framer Motion</p>
+                      </div>
+                      <div>
+                        <h4 className="text-[10px] font-bold opacity-60 uppercase mb-1">Backend</h4>
+                        <p className="text-[10px]">Node.js, Python, PostgreSQL, Redis, Docker, AWS</p>
+                      </div>
+                    </div>
+                  </section>
+                  
+                  <div className="mt-12 pt-8 border-t border-black/5 text-center opacity-30 text-[8px]">
+                    PDF Generated on February 28, 2026 • Page 1 of 2
                   </div>
                 </div>
               </div>
