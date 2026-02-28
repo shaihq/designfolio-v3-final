@@ -961,7 +961,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                           <section>
                             <div className="flex items-center gap-2 pb-2 border-b border-[#e9e9e7] mb-4">
                               <span className="text-xl">📧</span>
-                              <h2 className="text-lg font-semibold">Digital Presence</h2>
+                              <h2 className="text-lg font-semibold">Contact Details</h2>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                               <div className="p-4 rounded-lg bg-[#f7f6f3] border border-[#e9e9e7] hover:bg-[#efeee9] transition-colors cursor-pointer group">
@@ -969,8 +969,16 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                                 <div className="font-medium">hello@shai.dev</div>
                               </div>
                               <div className="p-4 rounded-lg bg-[#f7f6f3] border border-[#e9e9e7] hover:bg-[#efeee9] transition-colors cursor-pointer group">
+                                <div className="text-[10px] uppercase tracking-wider opacity-50 mb-1">Phone</div>
+                                <div className="font-medium">+1 (555) 123-4567</div>
+                              </div>
+                              <div className="p-4 rounded-lg bg-[#f7f6f3] border border-[#e9e9e7] hover:bg-[#efeee9] transition-colors cursor-pointer group">
                                 <div className="text-[10px] uppercase tracking-wider opacity-50 mb-1">GitHub</div>
                                 <div className="font-medium">github.com/shai-dev</div>
+                              </div>
+                              <div className="p-4 rounded-lg bg-[#f7f6f3] border border-[#e9e9e7] hover:bg-[#efeee9] transition-colors cursor-pointer group">
+                                <div className="text-[10px] uppercase tracking-wider opacity-50 mb-1">Resume</div>
+                                <div className="font-medium text-[#007aff] hover:underline">View Resume</div>
                               </div>
                             </div>
                           </section>
@@ -989,24 +997,27 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                                 <span className="w-6 h-6 flex items-center justify-center bg-black text-white rounded text-[10px] font-bold">X</span>
                                 <span className="flex-1 border-b border-[#e9e9e7] pb-1">x.com/shai_codes</span>
                               </div>
+                              <div className="flex items-center gap-3 p-2 hover:bg-[#f7f6f3] rounded-md cursor-pointer transition-colors">
+                                <span className="w-6 h-6 flex items-center justify-center bg-gradient-to-tr from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white rounded text-[10px] font-bold">IG</span>
+                                <span className="flex-1 border-b border-[#e9e9e7] pb-1">instagram.com/shai.builds</span>
+                              </div>
+                              <div className="flex items-center gap-3 p-2 hover:bg-[#f7f6f3] rounded-md cursor-pointer transition-colors">
+                                <span className="w-6 h-6 flex items-center justify-center bg-[#ea4c89] text-white rounded text-[10px] font-bold">Dr</span>
+                                <span className="flex-1 border-b border-[#e9e9e7] pb-1">dribbble.com/shai</span>
+                              </div>
                             </div>
                           </section>
 
                           <section>
                             <div className="flex items-center gap-2 pb-2 border-b border-[#e9e9e7] mb-4">
-                              <span className="text-xl">📍</span>
-                              <h2 className="text-lg font-semibold">Location</h2>
+                              <span className="text-xl">✍️</span>
+                              <h2 className="text-lg font-semibold">Blogs</h2>
                             </div>
-                            <div className="p-6 rounded-xl border border-[#e9e9e7] bg-white shadow-sm italic text-lg text-center opacity-80">
-                              "Currently based in the digital ether, primarily operating out of San Francisco, CA."
+                            <div className="flex items-center gap-3 p-2 hover:bg-[#f7f6f3] rounded-md cursor-pointer transition-colors">
+                              <span className="w-6 h-6 flex items-center justify-center bg-black text-white rounded text-[10px] font-bold">M</span>
+                              <span className="flex-1 border-b border-[#e9e9e7] pb-1 text-[#37352f]">medium.com/@shai</span>
                             </div>
                           </section>
-                          
-                          <div className="pt-10 flex justify-center">
-                            <div className="px-4 py-1.5 bg-[#ebebeb] hover:bg-[#dfdfdf] rounded text-xs font-medium cursor-pointer transition-colors">
-                              Copy all contact info
-                            </div>
-                          </div>
                         </div>
                       </div>
                     ) : (
