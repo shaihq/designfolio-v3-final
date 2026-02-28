@@ -120,7 +120,7 @@ const TestimonialWidget = () => {
   return (
     <div className="w-80 h-auto min-h-[160px] bg-[#F5C75D] rounded-[32px] p-1 shadow-lg font-sans overflow-hidden">
       <div className="px-4 py-3 flex justify-between items-center text-[#4A3708] font-medium text-[13px]">
-        <span>{new Date().toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}</span>
+        <span>Testimonial</span>
         <div className="flex items-center gap-3">
           <div className="flex gap-1">
             <div className="w-1 h-1 rounded-full bg-[#4A3708]/40" />
@@ -135,7 +135,6 @@ const TestimonialWidget = () => {
              style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
         <LayoutGroup>
           <div className="relative z-10">
-            <div className="text-black font-bold text-lg mb-4">Testimonial</div>
             <div className="flex flex-col justify-center overflow-hidden">
               <TextRotate
                 texts={testimonials.map(t => t.text)}
