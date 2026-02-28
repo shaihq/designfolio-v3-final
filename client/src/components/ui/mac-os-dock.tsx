@@ -627,7 +627,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                           </div>
                         </div>
                       </div>
-                    ) : app.id === 'work_experience' ? (
+                    ) : (app.id === 'work_experience' || app.id === 'about' || app.id === 'contact') ? (
                       <div className="w-full h-full bg-white" />
                     ) : (
                       <PixelRocketHero />
