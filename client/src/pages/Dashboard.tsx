@@ -5239,16 +5239,6 @@ export default function Dashboard() {
                     icon: "/macosicons/aboutme.svg" 
                   },
                   { 
-                    id: "feedback", 
-                    name: "Testimonials", 
-                    icon: "/macosicons/testimonials.svg" 
-                  },
-                  { 
-                    id: "toolbox", 
-                    name: "Toolbox", 
-                    icon: "/macosicons/tools.svg" 
-                  },
-                  { 
                     id: "contact", 
                     name: "Contact", 
                     icon: "/macosicons/contact.svg" 
