@@ -559,7 +559,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                     {app.id === 'works' ? (
                       <div className="flex h-full bg-[#faf9f6]">
                         {/* Finder Sidebar */}
-                        <div className="w-44 bg-[#ebe9e4]/50 backdrop-blur-md border-r border-[#d1d1d1] p-3 flex flex-col gap-6">
+                        <div className="w-44 bg-[#ebe9e4]/50 backdrop-blur-md border-r border-[#d1d1d1] p-3 flex-col ${isMobile ? "hidden" : "flex"} gap-6">
                           <div>
                             <div className="text-[10px] font-bold text-[#8e8c87] uppercase tracking-wider mb-2 px-2">Favorites</div>
                             <div className="flex flex-col gap-0.5">
@@ -605,7 +605,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                           </div>
 
                           <div className="flex-1 p-8 overflow-y-auto">
-                            <div className="grid grid-cols-3 gap-x-6 gap-y-10 max-w-4xl mx-auto">
+                            <div className="grid grid ${isMobile ? "grid-cols-2" : "grid ${isMobile ? "grid-cols-2" : "grid-cols-3"}"} gap-x-6 gap-y-10 max-w-4xl mx-auto">
                               {projects.map((proj) => (
                                 <div key={proj.id} className="transform scale-110 origin-center">
                                   <AnimatedFolder
