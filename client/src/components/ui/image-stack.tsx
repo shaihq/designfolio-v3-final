@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, PanInfo, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -11,9 +11,10 @@ interface Card {
 
 interface ImgStackProps {
   images: string[];
+  autoPlayInterval?: number;
 }
 
-export default function ImgStack({ images }: ImgStackProps) {
+export default function ImgStack({ images, autoPlayInterval = 5000 }: ImgStackProps) {
     const [cards, setCards] = useState<Card[]>(
         images.map((src, index) => ({
             id: index,
@@ -24,6 +25,16 @@ export default function ImgStack({ images }: ImgStackProps) {
     const [isAnimating, setIsAnimating] = useState<boolean>(false);
     const dragStartPos = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
     const minDragDistance: number = 50;
+
+    useEffect(() => {
+        if (!autoPlayInterval) return;
+        
+        const interval = setInterval(() => {
+            handleNext();
+        }, autoPlayInterval);
+
+        return () => clearInterval(interval);
+    }, [autoPlayInterval, isAnimating]);
 
     const getCardStyles = (index: number) => {
         const baseRotation = 2;
@@ -91,7 +102,7 @@ export default function ImgStack({ images }: ImgStackProps) {
             {/* Navigation Buttons */}
             <button 
                 onClick={handlePrev}
-                className="absolute left-0 z-[60] p-2 bg-black/20 hover:bg-black/40 rounded-full text-white backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 -translate-x-4"
+                className="absolute left-0 z-[60] p-2 bg-black/20 hover:bg-black/40 rounded-full text-white backdrop-blur-sm transition-all -translate-x-4"
             >
                 <ChevronLeft size={24} />
             </button>
@@ -142,7 +153,7 @@ export default function ImgStack({ images }: ImgStackProps) {
 
             <button 
                 onClick={handleNext}
-                className="absolute right-0 z-[60] p-2 bg-black/20 hover:bg-black/40 rounded-full text-white backdrop-blur-sm transition-all opacity-0 group-hover:opacity-100 translate-x-4"
+                className="absolute right-0 z-[60] p-2 bg-black/20 hover:bg-black/40 rounded-full text-white backdrop-blur-sm transition-all translate-x-4"
             >
                 <ChevronRight size={24} />
             </button>
