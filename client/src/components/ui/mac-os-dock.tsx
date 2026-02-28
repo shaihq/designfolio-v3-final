@@ -627,13 +627,6 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                   <div className="flex items-center gap-4">
                     {app.id === 'work_experience' ? (
                       <div className="flex items-center gap-3">
-                        <div className="flex bg-black/30 border border-[#333] rounded-md overflow-hidden h-8 items-center px-2">
-                          <div className="flex gap-2 items-center text-[11px] text-[#888]">
-                            <span className="text-[#007aff]">main*</span>
-                            <span className="opacity-30">|</span>
-                            <span>UTF-8</span>
-                          </div>
-                        </div>
                         <div className="flex gap-1">
                           <button className="h-8 px-2 flex items-center justify-center gap-1.5 text-[11px] text-[#aaa] hover:bg-white/5 rounded border border-transparent hover:border-[#333] transition-all">
                             <RefreshCw size={12} className="text-[#007aff]" />
