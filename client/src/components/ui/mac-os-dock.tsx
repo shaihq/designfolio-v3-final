@@ -627,7 +627,139 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                           </div>
                         </div>
                       </div>
-                    ) : (app.id === 'work_experience' || app.id === 'about' || app.id === 'contact') ? (
+                    ) : app.id === 'work_experience' ? (
+                      <div className="w-full h-full bg-[#1e1e1e] text-[#d4d4d4] font-mono text-xs p-0 flex flex-col overflow-hidden">
+                        {/* IDE Header/Tabs */}
+                        <div className="flex bg-[#2d2d2d] border-b border-[#1e1e1e]">
+                          <div className="px-3 py-2 bg-[#1e1e1e] border-t border-t-[#007aff] flex items-center gap-2">
+                            <span className="text-[#e06c75]">index.ts</span>
+                            <X size={10} className="opacity-50" />
+                          </div>
+                          <div className="px-3 py-2 opacity-50 flex items-center gap-2 border-r border-[#1e1e1e]">
+                            <span>experience.json</span>
+                            <X size={10} />
+                          </div>
+                        </div>
+                        
+                        {/* IDE Content */}
+                        <div className="flex-1 flex overflow-hidden">
+                          {/* Line Numbers */}
+                          <div className="w-10 bg-[#1e1e1e] border-r border-[#333] flex flex-col items-end pr-2 pt-4 text-[#858585] select-none">
+                            {Array.from({ length: 30 }).map((_, i) => (
+                              <div key={i} className="leading-5">{i + 1}</div>
+                            ))}
+                          </div>
+                          
+                          {/* Code Area */}
+                          <div className="flex-1 p-4 pt-4 overflow-y-auto custom-scrollbar leading-5">
+                            <div>
+                              <span className="text-[#c678dd]">const</span> <span className="text-[#e06c75]">workExperience</span>: <span className="text-[#e5c07b]">Experience[]</span> = [
+                            </div>
+                            
+                            <div className="pl-4 mt-2">
+                              <span className="text-[#abb2bf]">{`{`}</span>
+                            </div>
+                            <div className="pl-8">
+                              <span className="text-[#d19a66]">company</span>: <span className="text-[#98c379]">"Tech Frontiers AI"</span>,
+                            </div>
+                            <div className="pl-8">
+                              <span className="text-[#d19a66]">role</span>: <span className="text-[#98c379]">"Senior Full Stack Engineer"</span>,
+                            </div>
+                            <div className="pl-8">
+                              <span className="text-[#d19a66]">duration</span>: <span className="text-[#98c379]">"2023 - Present"</span>,
+                            </div>
+                            <div className="pl-8">
+                              <span className="text-[#d19a66]">achievements</span>: [
+                            </div>
+                            <div className="pl-12 text-[#98c379]">
+                              "Architected a distributed neural-sync engine handling 10k+ concurrent streams",
+                            </div>
+                            <div className="pl-12 text-[#98c379]">
+                              "Reduced latency by 45% through custom WebAssembly memory management",
+                            </div>
+                            <div className="pl-12 text-[#98c379]">
+                              "Led a team of 6 developers in shipping the Pulse-Engine core"
+                            </div>
+                            <div className="pl-8">
+                              ]
+                            </div>
+                            <div className="pl-4">
+                              <span className="text-[#abb2bf]">{`},`}</span>
+                            </div>
+
+                            <div className="pl-4 mt-2">
+                              <span className="text-[#abb2bf]">{`{`}</span>
+                            </div>
+                            <div className="pl-8">
+                              <span className="text-[#d19a66]">company</span>: <span className="text-[#98c379]">"Quantum Systems"</span>,
+                            </div>
+                            <div className="pl-8">
+                              <span className="text-[#d19a66]">role</span>: <span className="text-[#98c379]">"Frontend Specialist"</span>,
+                            </div>
+                            <div className="pl-8">
+                              <span className="text-[#d19a66]">duration</span>: <span className="text-[#98c379]">"2021 - 2023"</span>,
+                            </div>
+                            <div className="pl-8">
+                              <span className="text-[#d19a66]">achievements</span>: [
+                            </div>
+                            <div className="pl-12 text-[#98c379]">
+                              "Built a real-time quantum state visualizer using Three.js and GLSL",
+                            </div>
+                            <div className="pl-12 text-[#98c379]">
+                              "Optimized dashboard performance resulting in 60fps animations on mobile",
+                            </div>
+                            <div className="pl-12 text-[#98c379]">
+                              "Implemented comprehensive UI testing suite increasing stability by 30%"
+                            </div>
+                            <div className="pl-8">
+                              ]
+                            </div>
+                            <div className="pl-4">
+                              <span className="text-[#abb2bf]">{`},`}</span>
+                            </div>
+
+                            <div className="pl-4 mt-2">
+                              <span className="text-[#abb2bf]">{`{`}</span>
+                            </div>
+                            <div className="pl-8">
+                              <span className="text-[#d19a66]">company</span>: <span className="text-[#98c379]">"Aether Design Lab"</span>,
+                            </div>
+                            <div className="pl-8">
+                              <span className="text-[#d19a66]">role</span>: <span className="text-[#98c379]">"Junior Developer"</span>,
+                            </div>
+                            <div className="pl-8 text-[#5c6370]">
+                              // Early career - focused on rapid prototyping and design tokens
+                            </div>
+                            <div className="pl-8">
+                              <span className="text-[#d19a66]">duration</span>: <span className="text-[#98c379]">"2019 - 2021"</span>
+                            </div>
+                            <div className="pl-4">
+                              <span className="text-[#abb2bf]">{`}`}</span>
+                            </div>
+                            
+                            <div className="mt-2">
+                              <span className="text-[#abb2bf]">{`];`}</span>
+                            </div>
+                            
+                            <div className="mt-4">
+                              <span className="text-[#c678dd]">export default</span> <span className="text-[#e06c75]">workExperience</span>;
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* IDE Footer */}
+                        <div className="h-6 bg-[#007aff] text-white flex items-center px-2 justify-between text-[10px]">
+                          <div className="flex gap-3">
+                            <span>Main*</span>
+                            <span>Ln 14, Col 22</span>
+                          </div>
+                          <div className="flex gap-3">
+                            <span>UTF-8</span>
+                            <span>TypeScript JSX</span>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (app.id === 'about' || app.id === 'contact') ? (
                       <div className="w-full h-full bg-white" />
                     ) : (
                       <PixelRocketHero />
