@@ -335,6 +335,14 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
   };
 
   const handleAppClick = (appId: string, index: number) => {
+    if (appId === 'resume') {
+      handleOpenPdf('Resume_Shai.pdf');
+      if (iconRefs.current[index]) {
+        createBounceAnimation(iconRefs.current[index]!);
+      }
+      return;
+    }
+
     if (iconRefs.current[index]) {
       createBounceAnimation(iconRefs.current[index]!);
     }

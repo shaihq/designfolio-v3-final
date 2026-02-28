@@ -5252,6 +5252,11 @@ export default function Dashboard() {
                     icon: "/macosicons/aboutme.svg" 
                   },
                   { 
+                    id: "resume", 
+                    name: "Resume", 
+                    icon: "/macosicons/resume.svg" 
+                  },
+                  { 
                     id: "contact", 
                     name: "Contact", 
                     icon: "/macosicons/contact.svg" 
