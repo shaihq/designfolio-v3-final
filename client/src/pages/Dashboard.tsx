@@ -108,16 +108,49 @@ const WeatherWidget = () => (
   </div>
 );
 
-const CalendarWidget = () => (
-  <div className="w-40 h-40 bg-white border border-black/5 rounded-3xl p-4 flex flex-col shadow-xl font-sans">
-    <div className="text-red-500 text-xs font-bold uppercase tracking-widest mb-1">Friday</div>
-    <div className="text-5xl font-light text-black/80">28</div>
-    <div className="mt-auto space-y-1">
-      <div className="h-1 w-8 bg-blue-500 rounded-full" />
-      <div className="text-[10px] text-black/40 font-medium font-sans">No more events today</div>
+const TestimonialWidget = () => {
+  const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const testimonials = [
+    { text: "Shai is an exceptional designer who consistently delivers high-quality work.", author: "Sarah J., Product Manager" },
+    { text: "One of the best designers I've worked with. Highly recommended!", author: "Michael R., Tech Lead" },
+    { text: "Creative, efficient, and a great communicator.", author: "Elena M., CEO" }
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div className="w-40 h-40 bg-white border border-black/5 rounded-3xl p-4 flex flex-col shadow-xl font-sans overflow-hidden">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={testimonialIndex}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col h-full"
+        >
+          <div className="text-[#FF553E] text-[10px] font-bold uppercase tracking-widest mb-2">Testimonial</div>
+          <div className="text-[11px] font-medium text-black/80 leading-relaxed italic flex-1 flex items-center">
+            "{testimonials[testimonialIndex].text}"
+          </div>
+          <div className="mt-2">
+            <div className="h-0.5 w-6 bg-[#FF553E] rounded-full mb-1" />
+            <div className="text-[9px] text-black/40 font-bold font-sans uppercase truncate">
+              {testimonials[testimonialIndex].author}
+            </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
     </div>
-  </div>
-);
+  );
+};
+
+const CalendarWidget = () => <TestimonialWidget />;
 
 import { Link } from "wouter";
 import { PricingPopup } from "@/components/pricing/PricingPopup";
@@ -1587,7 +1620,6 @@ export default function Dashboard() {
               animate={{ opacity: 1, x: 0 }}
               className="absolute left-8 top-24 flex flex-col gap-6 pointer-events-auto"
             >
-              <WeatherWidget />
               <CalendarWidget />
               <div className="w-84 h-64 bg-transparent p-0 flex items-center justify-center">
                 <DivOrigami />
