@@ -834,9 +834,8 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                           <div className="flex flex-col gap-8 text-white/90 max-w-2xl mx-auto w-full">
                             <div className="border-b-2 border-white/20 pb-4">
                               <h1 className="text-5xl font-bold tracking-tight mb-2 text-white italic drop-shadow-[2px_2px_0px_rgba(255,255,255,0.2)]">
-                                About Me.mdx
+                                Yo! I am shai
                               </h1>
-                              <p className="text-xl text-white/60 italic font-medium">Class of 2026 • AI & Systems Design</p>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -849,41 +848,32 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                                 </section>
 
                                 <section>
-                                  <h2 className="text-2xl font-bold text-[#fecaca] mb-3 underline decoration-wavy">Core Stack</h2>
-                                  <ul className="list-disc list-inside space-y-1 text-lg italic">
-                                    <li>React / Next.js / Three.js</li>
-                                    <li>TypeScript / Rust / Go</li>
-                                    <li>PyTorch / LLM Fine-tuning</li>
-                                    <li>Distributed Systems</li>
-                                  </ul>
+                                  <h2 className="text-2xl font-bold text-[#fecaca] mb-3 underline decoration-wavy">Skills</h2>
+                                  <div className="flex flex-wrap gap-3 mt-2">
+                                    <div className="px-4 py-2 bg-[#86efac]/10 border border-[#86efac]/30 rounded-full text-[#86efac] text-xs font-bold -rotate-2">
+                                      #Innovation
+                                    </div>
+                                    <div className="px-4 py-2 bg-[#93c5fd]/10 border border-[#93c5fd]/30 rounded-full text-[#93c5fd] text-xs font-bold rotate-1">
+                                      #Architecture
+                                    </div>
+                                    <div className="px-4 py-2 bg-[#fef08a]/10 border border-[#fef08a]/30 rounded-full text-[#fef08a] text-xs font-bold rotate-3">
+                                      #CreativeCoding
+                                    </div>
+                                  </div>
                                 </section>
                               </div>
 
                               <div className="space-y-6">
-                                <div className="bg-white/5 backdrop-blur-sm border-2 border-dashed border-white/20 rounded-xl p-6 rotate-1 shadow-inner">
-                                  <h3 className="text-xl font-bold text-[#fed7aa] mb-3">Current Focus</h3>
-                                  <p className="text-base italic">
-                                    Optimizing real-time inference for edge devices and creating generative UI patterns that adapt to user behavior.
-                                  </p>
-                                </div>
-
-                                <div className="flex flex-wrap gap-4 mt-4">
-                                  <div className="px-4 py-2 bg-[#86efac]/10 border border-[#86efac]/30 rounded-full text-[#86efac] text-sm font-bold -rotate-2">
-                                    #Innovation
-                                  </div>
-                                  <div className="px-4 py-2 bg-[#93c5fd]/10 border border-[#93c5fd]/30 rounded-full text-[#93c5fd] text-sm font-bold rotate-1">
-                                    #Architecture
-                                  </div>
-                                  <div className="px-4 py-2 bg-[#fef08a]/10 border border-[#fef08a]/30 rounded-full text-[#fef08a] text-sm font-bold rotate-3">
-                                    #CreativeCoding
-                                  </div>
-                                </div>
+                                <section>
+                                  <h2 className="text-2xl font-bold text-[#fed7aa] mb-3 underline decoration-wavy">Tools</h2>
+                                  <ul className="list-disc list-inside space-y-1 text-lg italic">
+                                    <li>VS Code / Cursor</li>
+                                    <li>Figma / Spline</li>
+                                    <li>Docker / Kubernetes</li>
+                                    <li>PostgreSQL / Redis</li>
+                                  </ul>
+                                </section>
                               </div>
-                            </div>
-
-                            <div className="mt-8 pt-6 border-t border-white/10 flex justify-between items-center italic text-sm text-white/40">
-                              <span>"The best way to predict the future is to invent it."</span>
-                              <span>— A. Kay</span>
                             </div>
                           </div>
                         </div>
