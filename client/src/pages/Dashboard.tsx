@@ -91,7 +91,54 @@ import {
   Settings,
   LogOut
 } from "lucide-react";
-import { SiBehance } from "react-icons/si";
+import { SiBehance, SiAmazon, SiGithub, SiGoogle, SiMeta, SiTwitch } from "react-icons/si";
+import { DivOrigami } from "@/components/ui/animated-logo-rolodex";
+
+// Widget components for macOS desktop
+const WeatherWidget = () => (
+  <div className="w-40 h-40 bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-4 flex flex-col justify-between shadow-xl">
+    <div className="flex justify-between items-start">
+      <span className="text-2xl">☀️</span>
+      <span className="text-xs font-medium text-white/60">SFO</span>
+    </div>
+    <div>
+      <div className="text-3xl font-bold text-white">72°</div>
+      <div className="text-[10px] text-white/60 uppercase tracking-wider font-bold">Mostly Sunny</div>
+    </div>
+  </div>
+);
+
+const CalendarWidget = () => (
+  <div className="w-40 h-40 bg-white border border-black/5 rounded-3xl p-4 flex flex-col shadow-xl font-sans">
+    <div className="text-red-500 text-xs font-bold uppercase tracking-widest mb-1">Friday</div>
+    <div className="text-5xl font-light text-black/80">28</div>
+    <div className="mt-auto space-y-1">
+      <div className="h-1 w-8 bg-blue-500 rounded-full" />
+      <div className="text-[10px] text-black/40 font-medium font-sans">No more events today</div>
+    </div>
+  </div>
+);
+
+const PortfolioStatsWidget = () => (
+  <div className="w-84 h-40 bg-white/80 backdrop-blur-xl border border-black/5 rounded-3xl p-5 flex flex-col shadow-xl font-sans">
+    <div className="flex justify-between items-center mb-4">
+      <h3 className="text-sm font-bold text-black/70">Portfolio Growth</h3>
+      <span className="text-[10px] bg-green-100 text-green-600 px-2 py-0.5 rounded-full font-bold">+12.5%</span>
+    </div>
+    <div className="flex-1 flex items-end gap-1.5">
+      {[40, 70, 45, 90, 65, 80, 50, 95, 75, 100].map((h, i) => (
+        <div key={i} className="flex-1 bg-black/5 rounded-t-sm relative group">
+          <motion.div 
+            initial={{ height: 0 }}
+            animate={{ height: `${h}%` }}
+            className="absolute bottom-0 left-0 right-0 bg-[#FF553E] rounded-t-sm opacity-80"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
 import { Link } from "wouter";
 import { PricingPopup } from "@/components/pricing/PricingPopup";
 import { 
@@ -1551,7 +1598,34 @@ export default function Dashboard() {
       )}
       {/* Main Content */}
       <div className="flex-1 w-full min-w-0 transition-all duration-300 relative" style={{ zIndex: 5, marginRight: !isMobileOrTablet && (isThemePanelOpen || isEditTestimonialOpen || isFooterPanelOpen || isAboutMePanelOpen || !!selectedJob) ? '320px' : '0' }}>
-        <div className="max-w-4xl mx-auto px-6">
+        {/* macOS Widgets Layer */}
+        {selectedLayout === 'macos' && (
+          <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+            {/* Left side widgets */}
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="absolute left-8 top-24 flex flex-col gap-6 pointer-events-auto"
+            >
+              <WeatherWidget />
+              <CalendarWidget />
+            </motion.div>
+
+            {/* Right side widgets */}
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="absolute right-8 top-24 flex flex-col gap-6 pointer-events-auto"
+            >
+              <PortfolioStatsWidget />
+              <div className="w-84 h-64 bg-black/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
+                <DivOrigami />
+              </div>
+            </motion.div>
+          </div>
+        )}
+
+        <div className="max-w-4xl mx-auto px-6 relative z-10">
           {/* Floating Navbar */}
           <div 
             className="sticky top-0 pt-6 z-50 transition-all duration-300"
