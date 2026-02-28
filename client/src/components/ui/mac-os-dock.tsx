@@ -468,7 +468,11 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
               key={`window-${app.id}`}
               onMouseDown={() => setActiveWindowId(app.id)}
               onWheel={(e) => e.stopPropagation()}
-              className={`fixed z-40 overflow-hidden bg-[#faf9f6] border border-[#d1d1d1] shadow-2xl flex flex-col pointer-events-auto ${
+              className={`fixed z-40 overflow-hidden border shadow-2xl flex flex-col pointer-events-auto ${
+                app.id === 'work_experience' 
+                  ? 'bg-[#1e1e1e] border-[#333]' 
+                  : 'bg-[#faf9f6] border-[#d1d1d1]'
+              } ${
                 isMaximized || isMobile
                   ? 'max-w-none rounded-none border-0 transition-all duration-300'
                   : 'w-[896px] h-[70vh] rounded-lg transition-shadow'
@@ -504,25 +508,33 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
               {/* macOS Window Header */}
               <div 
                 onMouseDown={(e) => !isMobile && !isMaximized && handleMouseDown(app.id, e)}
-                className={`h-10 bg-[#e8e6e1] border-b border-[#d1d1d1] flex items-center px-4 justify-between select-none ${isMobile || isMaximized ? 'cursor-default' : 'cursor-move active:cursor-grabbing'}`}
+                className={`h-10 border-b flex items-center px-4 justify-between select-none ${
+                  app.id === 'work_experience'
+                    ? 'bg-[#2d2d2d] border-[#1e1e1e]'
+                    : 'bg-[#e8e6e1] border-[#d1d1d1]'
+                } ${isMobile || isMaximized ? 'cursor-default' : 'cursor-move active:cursor-grabbing'}`}
               >
                 <div className="flex gap-2 items-center">
-                  <div className="text-sm font-medium text-[#444] flex items-center gap-2">
+                  <div className={`text-sm font-medium flex items-center gap-2 ${
+                    app.id === 'work_experience' ? 'text-[#d4d4d4]' : 'text-[#444]'
+                  }`}>
                     <span className="opacity-70">{app.id === 'works' ? '📂' : '📄'}</span>
                     {app.id === 'works' ? 'Projects' : `${app.name}.mdx`} <span className="opacity-50 text-[10px]">⌄</span>
                   </div>
                 </div>
-                <div className="flex items-center gap-4 text-[#666]">
+                <div className={`flex items-center gap-4 ${
+                  app.id === 'work_experience' ? 'text-[#aaa]' : 'text-[#666]'
+                }`}>
                   <Minus 
-                    className="w-4 h-4 cursor-pointer hover:text-[#444]" 
+                    className="w-4 h-4 cursor-pointer hover:opacity-70" 
                     onClick={(e) => toggleMinimize(app.id, e)}
                   />
                   <Square 
-                    className="w-3 h-3 cursor-pointer hover:text-[#444]" 
+                    className="w-3 h-3 cursor-pointer hover:opacity-70" 
                     onClick={(e) => toggleMaximize(app.id, e)}
                   />
                   <X 
-                    className="w-4 h-4 cursor-pointer hover:text-[#444]" 
+                    className="w-4 h-4 cursor-pointer hover:opacity-70" 
                     onClick={() => closeWindow(app.id)}
                   />
                 </div>
@@ -530,19 +542,45 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
 
               {/* macOS Window Toolbar */}
               {app.id !== 'works' && (
-                <div className="h-12 bg-[#f4f2ee] border-b border-[#e0ddd8] flex items-center px-4 gap-4 overflow-x-auto justify-between">
+                <div className={`h-12 border-b flex items-center px-4 gap-4 overflow-x-auto justify-between ${
+                  app.id === 'work_experience'
+                    ? 'bg-[#252525] border-[#1e1e1e]'
+                    : 'bg-[#f4f2ee] border-[#e0ddd8]'
+                }`}>
                   <div className="flex items-center gap-4">
-                    <div className="flex bg-white/50 border border-[#dcd9d4] rounded-md overflow-hidden">
-                      <button className="px-3 py-1 border-r border-[#dcd9d4] hover:bg-white text-[#888] text-sm">↺</button>
-                      <button className="px-3 py-1 hover:bg-white text-[#888] text-sm">↻</button>
+                    <div className={`flex border rounded-md overflow-hidden ${
+                      app.id === 'work_experience'
+                        ? 'bg-black/20 border-[#333]'
+                        : 'bg-white/50 border-[#dcd9d4]'
+                    }`}>
+                      <button className={`px-3 py-1 border-r text-sm ${
+                        app.id === 'work_experience'
+                          ? 'border-[#333] hover:bg-white/5 text-[#aaa]'
+                          : 'border-[#dcd9d4] hover:bg-white text-[#888]'
+                      }`}>↺</button>
+                      <button className={`px-3 py-1 text-sm ${
+                        app.id === 'work_experience'
+                          ? 'hover:bg-white/5 text-[#aaa]'
+                          : 'hover:bg-white text-[#888]'
+                      }`}>↻</button>
                     </div>
-                    <div className="flex bg-white/50 border border-[#dcd9d4] rounded-md overflow-hidden h-8 items-center px-2 text-xs text-[#888] min-w-[80px] cursor-pointer hover:bg-white">
+                    <div className={`flex border rounded-md overflow-hidden h-8 items-center px-2 text-xs min-w-[80px] cursor-pointer ${
+                      app.id === 'work_experience'
+                        ? 'bg-black/20 border-[#333] text-[#aaa] hover:bg-white/5'
+                        : 'bg-white/50 border-[#dcd9d4] text-[#888] hover:bg-white'
+                    }`}>
                       Zoom <span className="ml-1 opacity-50">⌄</span>
                     </div>
                     <div className="flex gap-1">
-                      <button className="w-8 h-8 flex items-center justify-center font-bold text-[#444] hover:bg-white rounded">B</button>
-                      <button className="w-8 h-8 flex items-center justify-center italic text-[#444] hover:bg-white rounded">I</button>
-                      <button className="w-8 h-8 flex items-center justify-center line-through text-[#444] hover:bg-white rounded">S</button>
+                      <button className={`w-8 h-8 flex items-center justify-center font-bold rounded ${
+                        app.id === 'work_experience' ? 'text-[#ccc] hover:bg-white/5' : 'text-[#444] hover:bg-white'
+                      }`}>B</button>
+                      <button className={`w-8 h-8 flex items-center justify-center italic rounded ${
+                        app.id === 'work_experience' ? 'text-[#ccc] hover:bg-white/5' : 'text-[#444] hover:bg-white'
+                      }`}>I</button>
+                      <button className={`w-8 h-8 flex items-center justify-center line-through rounded ${
+                        app.id === 'work_experience' ? 'text-[#ccc] hover:bg-white/5' : 'text-[#444] hover:bg-white'
+                      }`}>S</button>
                     </div>
                   </div>
                   
@@ -553,7 +591,13 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
               )}
 
               {/* macOS Window Content Area */}
-              <div className={`flex-1 overflow-hidden relative ${app.id === 'works' ? '' : 'bg-white m-4 rounded-md border border-[#e0ddd8] shadow-sm'}`}>
+              <div className={`flex-1 overflow-hidden relative ${
+                app.id === 'works' 
+                  ? '' 
+                  : app.id === 'work_experience'
+                    ? 'bg-[#1e1e1e] m-4 rounded-md border border-[#333] shadow-sm'
+                    : 'bg-white m-4 rounded-md border border-[#e0ddd8] shadow-sm'
+              }`}>
                 <div className="w-full h-full overflow-y-auto custom-scrollbar">
                   <div className="w-full h-full flex flex-col relative font-azeretMono">
                     {app.id === 'works' ? (
