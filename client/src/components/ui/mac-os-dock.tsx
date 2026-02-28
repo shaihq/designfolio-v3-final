@@ -653,11 +653,11 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                       </div>
                     ) : (
                       <>
-                        <div className="flex bg-white/50 border border-[#dcd9d4] rounded-md overflow-hidden">
+                        <div className={`flex bg-white/50 border border-[#dcd9d4] rounded-md overflow-hidden ${isMobile ? 'hidden' : ''}`}>
                           <button className="px-3 py-1 border-r border-[#dcd9d4] hover:bg-white text-[#888] text-sm">↺</button>
                           <button className="px-3 py-1 hover:bg-white text-[#888] text-sm">↻</button>
                         </div>
-                        <div className="flex bg-white/50 border border-[#dcd9d4] rounded-md overflow-hidden h-8 items-center px-2 text-xs text-[#888] min-w-[80px] cursor-pointer hover:bg-white">
+                        <div className={`flex bg-white/50 border border-[#dcd9d4] rounded-md overflow-hidden h-8 items-center px-2 text-xs text-[#888] min-w-[80px] cursor-pointer hover:bg-white ${isMobile ? 'hidden' : ''}`}>
                           Zoom <span className="ml-1 opacity-50">⌄</span>
                         </div>
                         <div className="flex gap-1">
