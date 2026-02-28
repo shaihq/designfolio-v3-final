@@ -25,6 +25,15 @@ body {
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
 @font-face {
+  font-family: 'Chalkboard';
+  src: url('https://fonts.cdnfonts.com/s/14873/Chalkboard.woff') format('woff');
+}
+
+.font-chalkboard {
+  font-family: 'Chalkboard', 'Comic Sans MS', 'Marker Felt', sans-serif;
+}
+
+@font-face {
   font-family: 'GeneralSans';
   src: url('/fonts/GeneralSans-Regular.otf') format('opentype');
   font-weight: 400;

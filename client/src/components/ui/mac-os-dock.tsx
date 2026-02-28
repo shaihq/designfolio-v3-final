@@ -811,7 +811,80 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                           </div>
                         </div>
                       </div>
-                    ) : (app.id === 'about' || app.id === 'contact') ? (
+                    ) : app.id === 'about' ? (
+                      <div className="w-full h-full bg-[#1e3d2f] relative overflow-hidden flex flex-col p-8 font-chalkboard">
+                        {/* Chalkboard Background Pattern */}
+                        <div 
+                          className="absolute inset-0 opacity-20 pointer-events-none" 
+                          style={{ 
+                            backgroundImage: `url("https://www.transparenttextures.com/patterns/chalkboard.png")`,
+                            backgroundColor: '#1e3d2f'
+                          }} 
+                        />
+                        <div className="absolute inset-0 opacity-10 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
+                        
+                        {/* Chalk Content */}
+                        <div className="relative z-10 flex flex-col gap-8 text-white/90 max-w-2xl mx-auto w-full">
+                          <div className="border-b-2 border-white/20 pb-4">
+                            <h1 className="text-5xl font-bold tracking-tight mb-2 text-white italic drop-shadow-[2px_2px_0px_rgba(255,255,255,0.2)]">
+                              About Me.mdx
+                            </h1>
+                            <p className="text-xl text-white/60 italic font-medium">Class of 2026 • AI & Systems Design</p>
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="space-y-6">
+                              <section>
+                                <h2 className="text-2xl font-bold text-[#fef08a] mb-3 underline decoration-wavy">Background</h2>
+                                <p className="text-lg leading-relaxed italic">
+                                  Deeply passionate about bridging the gap between <span className="text-[#93c5fd]">Neural Networks</span> and <span className="text-[#86efac]">Intuitive UX</span>. I build systems that don't just work, but feel magical.
+                                </p>
+                              </section>
+
+                              <section>
+                                <h2 className="text-2xl font-bold text-[#fecaca] mb-3 underline decoration-wavy">Core Stack</h2>
+                                <ul className="list-disc list-inside space-y-1 text-lg italic">
+                                  <li>React / Next.js / Three.js</li>
+                                  <li>TypeScript / Rust / Go</li>
+                                  <li>PyTorch / LLM Fine-tuning</li>
+                                  <li>Distributed Systems</li>
+                                </ul>
+                              </section>
+                            </div>
+
+                            <div className="space-y-6">
+                              <div className="bg-white/5 backdrop-blur-sm border-2 border-dashed border-white/20 rounded-xl p-6 rotate-1 shadow-inner">
+                                <h3 className="text-xl font-bold text-[#fed7aa] mb-3">Current Focus</h3>
+                                <p className="text-base italic">
+                                  Optimizing real-time inference for edge devices and creating generative UI patterns that adapt to user behavior.
+                                </p>
+                              </div>
+
+                              <div className="flex flex-wrap gap-4 mt-4">
+                                <div className="px-4 py-2 bg-[#86efac]/10 border border-[#86efac]/30 rounded-full text-[#86efac] text-sm font-bold -rotate-2">
+                                  #Innovation
+                                </div>
+                                <div className="px-4 py-2 bg-[#93c5fd]/10 border border-[#93c5fd]/30 rounded-full text-[#93c5fd] text-sm font-bold rotate-1">
+                                  #Architecture
+                                </div>
+                                <div className="px-4 py-2 bg-[#fef08a]/10 border border-[#fef08a]/30 rounded-full text-[#fef08a] text-sm font-bold rotate-3">
+                                  #CreativeCoding
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="mt-8 pt-6 border-t border-white/10 flex justify-between items-center italic text-sm text-white/40">
+                            <span>"The best way to predict the future is to invent it."</span>
+                            <span>— A. Kay</span>
+                          </div>
+                        </div>
+
+                        {/* Visual Chalk Dust / Scratches */}
+                        <div className="absolute top-10 right-10 w-32 h-32 border-4 border-white/5 rounded-full opacity-20 -rotate-12" />
+                        <div className="absolute bottom-20 left-10 w-48 h-1 bg-white/5 rotate-3 opacity-20" />
+                      </div>
+                    ) : (app.id === 'contact') ? (
                       <div className="w-full h-full bg-white" />
                     ) : (
                       <PixelRocketHero />
