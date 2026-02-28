@@ -228,6 +228,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
   const [animatingWindow, setAnimatingWindow] = useState<{id: string, type: 'open' | 'minimize'} | null>(null);
   const [browserWindows, setBrowserWindows] = useState<any[]>([]);
   const [pdfWindows, setPdfWindows] = useState<any[]>([]);
+  const [animatingPdf, setAnimatingPdf] = useState<{id: string, type: 'open' | 'minimize'} | null>(null);
   const [windowPositions, setWindowPositions] = useState<Record<string, { x: number; y: number }>>(() => {
     const initialPositions: Record<string, { x: number; y: number }> = {};
     if (typeof window !== 'undefined') {
@@ -317,6 +318,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
     const offset = (openWindows.length + browserWindows.length + pdfWindows.length) * 20;
     
     setPdfWindows(prev => [...prev, { id: pdfId, title }]);
+    setAnimatingPdf({ id: pdfId, type: 'open' });
     setWindowPositions(prev => ({
       ...prev,
       [pdfId]: { 
@@ -325,13 +327,18 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
       }
     }));
     setActiveWindowId(pdfId);
+    setTimeout(() => setAnimatingPdf(null), 500);
   }, [openWindows.length, browserWindows.length, pdfWindows.length]);
 
   const closePdf = (pdfId: string) => {
-    setPdfWindows(prev => prev.filter(p => p.id !== pdfId));
-    if (activeWindowId === pdfId) {
-      setActiveWindowId(null);
-    }
+    setAnimatingPdf({ id: pdfId, type: 'minimize' });
+    setTimeout(() => {
+      setPdfWindows(prev => prev.filter(p => p.id !== pdfId));
+      setAnimatingPdf(null);
+      if (activeWindowId === pdfId) {
+        setActiveWindowId(null);
+      }
+    }, 500);
   };
 
   const handleAppClick = (appId: string, index: number) => {
@@ -1069,8 +1076,28 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
           const pos = windowPositions[pdf.id] || { x: 0, y: 0 };
           const isActive = activeWindowId === pdf.id;
           const isMinimized = minimizedWindows.includes(pdf.id);
+          const isAnimating = animatingPdf?.id === pdf.id;
           
-          if (isMinimized) return null;
+          if (isMinimized && !isAnimating) return null;
+
+          // Animation logic for opening/minimizing PDF
+          let animationStyles = {};
+          if (isAnimating) {
+            const resumeAppIndex = apps.findIndex(app => app.id === 'resume');
+            const dockPos = currentPositions[resumeAppIndex] || (apps.length - 1) * (baseIconSize + baseSpacing);
+            const dockRect = dockRef.current?.getBoundingClientRect();
+            const targetX = dockRect ? dockRect.left + dockPos + padding : window.innerWidth / 2;
+            const targetY = dockRect ? dockRect.top + baseIconSize / 2 : window.innerHeight;
+
+            const isOpening = animatingPdf.type === 'open';
+            
+            animationStyles = {
+              animation: isOpening 
+                ? 'pdfWindowOpen 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards'
+                : 'pdfWindowMinimize 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards',
+              transformOrigin: 'center center',
+            };
+          }
 
           return (
             <div 
@@ -1096,9 +1123,20 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                   zIndex: isActive ? 60 : 40,
                   willChange: isDragging === pdf.id ? 'left, top' : 'auto',
                   transition: isDragging === pdf.id ? 'none' : 'all 0.3s ease'
-                })
+                }),
+                ...animationStyles
               }}
             >
+              <style dangerouslySetInnerHTML={{ __html: `
+                @keyframes pdfWindowOpen {
+                  0% { transform: translate(calc(${currentPositions[apps.findIndex(a => a.id === 'resume')] || 0}px - ${pos.x}px), calc(100vh - ${pos.y}px)) scale(0.1); opacity: 0; }
+                  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                }
+                @keyframes pdfWindowMinimize {
+                  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                  100% { transform: translate(calc(${currentPositions[apps.findIndex(a => a.id === 'resume')] || 0}px - ${pos.x}px), calc(100vh - ${pos.y}px)) scale(0.1); opacity: 0; }
+                }
+              `}} />
               {/* macOS-style Window Header for PDF Viewer */}
               <div 
                 onMouseDown={(e) => handleMouseDown(pdf.id, e)}
