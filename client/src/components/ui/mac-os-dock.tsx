@@ -274,6 +274,33 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
       createBounceAnimation(iconRefs.current[index]!);
     }
     
+    // Auto-minimize other windows on mobile when opening a new one
+    if (isMobile) {
+      setOpenWindows(prev => {
+        const otherWindows = prev.filter(id => id !== appId);
+        setMinimizedWindows(currentMin => {
+          const newMin = [...currentMin];
+          otherWindows.forEach(id => {
+            if (!newMin.includes(id)) newMin.push(id);
+          });
+          return newMin;
+        });
+        return prev;
+      });
+
+      setBrowserWindows(prev => {
+        const otherBrowsers = prev.filter(b => b.browserId !== appId);
+        setMinimizedWindows(currentMin => {
+          const newMin = [...currentMin];
+          otherBrowsers.forEach(b => {
+            if (!newMin.includes(b.browserId)) newMin.push(b.browserId);
+          });
+          return newMin;
+        });
+        return prev;
+      });
+    }
+
     if (!openWindows.includes(appId)) {
       setAnimatingWindow({ id: appId, type: 'open' });
       setOpenWindows(prev => [...prev, appId]);
@@ -449,11 +476,12 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
               style={{
                 ...(isMaximized || isMobile ? {
                   zIndex: isActive ? 50 : 40,
-                  left: '0',
-                  top: '40px',
-                  width: '100vw',
-                  height: 'calc(100vh - 140px)',
-                  transform: 'none'
+                  left: isMobile ? '2.5%' : '0',
+                  top: isMobile ? '50px' : '40px',
+                  width: isMobile ? '95vw' : '100vw',
+                  height: isMobile ? 'calc(100vh - 160px)' : 'calc(100vh - 140px)',
+                  transform: 'none',
+                  borderRadius: isMobile ? '12px' : '0'
                 } : {
                   left: pos.x,
                   top: pos.y,
@@ -613,18 +641,33 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
         {browserWindows.map((browser) => {
           const pos = windowPositions[browser.browserId] || { x: 0, y: 0 };
           const isActive = activeWindowId === browser.browserId;
+          const isMinimized = minimizedWindows.includes(browser.browserId);
+          
+          if (isMinimized) return null;
 
           return (
             <div 
               key={browser.browserId}
               onMouseDown={() => setActiveWindowId(browser.browserId)}
               onWheel={(e) => e.stopPropagation()}
-              className={`fixed z-40 overflow-hidden bg-[#faf9f6] border border-[#d1d1d1] shadow-2xl flex flex-col pointer-events-auto w-[896px] h-[70vh] rounded-lg transition-shadow ${isActive ? 'shadow-2xl ring-1 ring-black/5' : 'shadow-lg opacity-95'}`}
+              className={`fixed z-40 overflow-hidden bg-[#faf9f6] border border-[#d1d1d1] shadow-2xl flex flex-col pointer-events-auto transition-all duration-300 ${
+                isMobile ? 'max-w-none rounded-xl' : 'w-[896px] h-[70vh] rounded-lg'
+              } ${isActive ? 'shadow-2xl ring-1 ring-black/5' : 'shadow-lg opacity-95'}`}
               style={{
-                left: pos.x,
-                top: pos.y,
-                transform: 'translate(-50%, -50%)',
-                zIndex: isActive ? 60 : 40
+                ...(isMobile ? {
+                  zIndex: isActive ? 60 : 40,
+                  left: '2.5%',
+                  top: '50px',
+                  width: '95vw',
+                  height: 'calc(100vh - 160px)',
+                  transform: 'none',
+                  borderRadius: '12px'
+                } : {
+                  left: pos.x,
+                  top: pos.y,
+                  transform: 'translate(-50%, -50%)',
+                  zIndex: isActive ? 60 : 40
+                })
               }}
             >
               {/* macOS-style Window Header for Browser */}
