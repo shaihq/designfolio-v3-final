@@ -13,6 +13,7 @@ import Button3D from "./button-3d";
 import { Gravity, MatterBody } from "./gravity";
 import { PixelRocketHero } from "./pixel-rocket-voyager";
 import { AnimatedFolder } from "./3d-folder";
+import ImgStack from "./image-stack";
 
 // Types for the component
 interface DockApp {
@@ -872,6 +873,16 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                                     <li>Docker / Kubernetes</li>
                                     <li>PostgreSQL / Redis</li>
                                   </ul>
+                                </section>
+                                <section className="mt-8">
+                                  <ImgStack images={[
+                                    '/portraits/portrait1.png',
+                                    '/portraits/portrait2.png',
+                                    '/portraits/portrait3.png',
+                                    '/portraits/portrait4.png',
+                                    '/portraits/sticker1.png',
+                                    '/portraits/sticker2.png'
+                                  ]} />
                                 </section>
                               </div>
                             </div>
