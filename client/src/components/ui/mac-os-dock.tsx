@@ -548,44 +548,52 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                     : 'bg-[#f4f2ee] border-[#e0ddd8]'
                 }`}>
                   <div className="flex items-center gap-4">
-                    <div className={`flex border rounded-md overflow-hidden ${
-                      app.id === 'work_experience'
-                        ? 'bg-black/20 border-[#333]'
-                        : 'bg-white/50 border-[#dcd9d4]'
-                    }`}>
-                      <button className={`px-3 py-1 border-r text-sm ${
-                        app.id === 'work_experience'
-                          ? 'border-[#333] hover:bg-white/5 text-[#aaa]'
-                          : 'border-[#dcd9d4] hover:bg-white text-[#888]'
-                      }`}>↺</button>
-                      <button className={`px-3 py-1 text-sm ${
-                        app.id === 'work_experience'
-                          ? 'hover:bg-white/5 text-[#aaa]'
-                          : 'hover:bg-white text-[#888]'
-                      }`}>↻</button>
-                    </div>
-                    <div className={`flex border rounded-md overflow-hidden h-8 items-center px-2 text-xs min-w-[80px] cursor-pointer ${
-                      app.id === 'work_experience'
-                        ? 'bg-black/20 border-[#333] text-[#aaa] hover:bg-white/5'
-                        : 'bg-white/50 border-[#dcd9d4] text-[#888] hover:bg-white'
-                    }`}>
-                      Zoom <span className="ml-1 opacity-50">⌄</span>
-                    </div>
-                    <div className="flex gap-1">
-                      <button className={`w-8 h-8 flex items-center justify-center font-bold rounded ${
-                        app.id === 'work_experience' ? 'text-[#ccc] hover:bg-white/5' : 'text-[#444] hover:bg-white'
-                      }`}>B</button>
-                      <button className={`w-8 h-8 flex items-center justify-center italic rounded ${
-                        app.id === 'work_experience' ? 'text-[#ccc] hover:bg-white/5' : 'text-[#444] hover:bg-white'
-                      }`}>I</button>
-                      <button className={`w-8 h-8 flex items-center justify-center line-through rounded ${
-                        app.id === 'work_experience' ? 'text-[#ccc] hover:bg-white/5' : 'text-[#444] hover:bg-white'
-                      }`}>S</button>
-                    </div>
+                    {app.id === 'work_experience' ? (
+                      <div className="flex items-center gap-3">
+                        <div className="flex bg-black/30 border border-[#333] rounded-md overflow-hidden h-8 items-center px-2">
+                          <div className="flex gap-2 items-center text-[11px] text-[#888]">
+                            <span className="text-[#007aff]">main*</span>
+                            <span className="opacity-30">|</span>
+                            <span>UTF-8</span>
+                          </div>
+                        </div>
+                        <div className="flex gap-1">
+                          <button className="h-8 px-2 flex items-center justify-center gap-1.5 text-[11px] text-[#aaa] hover:bg-white/5 rounded border border-transparent hover:border-[#333] transition-all">
+                            <RefreshCw size={12} className="text-[#007aff]" />
+                            <span>Build</span>
+                          </button>
+                          <button className="h-8 px-2 flex items-center justify-center gap-1.5 text-[11px] text-[#aaa] hover:bg-white/5 rounded border border-transparent hover:border-[#333] transition-all">
+                            <div className="w-2 h-2 rounded-full bg-[#28c841]" />
+                            <span>Run</span>
+                          </button>
+                        </div>
+                        <div className="h-4 w-px bg-[#333] mx-1" />
+                        <div className="flex gap-1 text-[11px] text-[#666]">
+                          <span className="hover:text-[#aaa] cursor-pointer">Terminal</span>
+                          <span className="hover:text-[#aaa] cursor-pointer ml-2">Debug</span>
+                          <span className="hover:text-[#aaa] cursor-pointer ml-2">Console</span>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="flex bg-white/50 border border-[#dcd9d4] rounded-md overflow-hidden">
+                          <button className="px-3 py-1 border-r border-[#dcd9d4] hover:bg-white text-[#888] text-sm">↺</button>
+                          <button className="px-3 py-1 hover:bg-white text-[#888] text-sm">↻</button>
+                        </div>
+                        <div className="flex bg-white/50 border border-[#dcd9d4] rounded-md overflow-hidden h-8 items-center px-2 text-xs text-[#888] min-w-[80px] cursor-pointer hover:bg-white">
+                          Zoom <span className="ml-1 opacity-50">⌄</span>
+                        </div>
+                        <div className="flex gap-1">
+                          <button className="w-8 h-8 flex items-center justify-center font-bold text-[#444] hover:bg-white rounded">B</button>
+                          <button className="w-8 h-8 flex items-center justify-center italic text-[#444] hover:bg-white rounded">I</button>
+                          <button className="w-8 h-8 flex items-center justify-center line-through text-[#444] hover:bg-white rounded">S</button>
+                        </div>
+                      </>
+                    )}
                   </div>
                   
                   <Button3D>
-                    EDIT
+                    {app.id === 'work_experience' ? 'COMMIT' : 'EDIT'}
                   </Button3D>
                 </div>
               )}
