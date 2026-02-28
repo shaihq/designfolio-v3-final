@@ -5,22 +5,22 @@ import { twMerge } from "tailwind-merge";
 
 export const DivOrigami = () => {
   return (
-    <div className="flex flex-col items-center justify-center gap-12 bg-transparent px-4 py-8 md:flex-row">
+    <div className="flex flex-col items-center justify-center bg-transparent">
       <LogoRolodex
         items={[
-          <LogoItem key={1} className="bg-orange-300 text-neutral-900">
+          <LogoItem key={1} className="bg-[#FDFCFB] text-neutral-500">
             <SiAmazon />
           </LogoItem>,
-          <LogoItem key={2} className="bg-green-300 text-neutral-900">
+          <LogoItem key={2} className="bg-[#F5F2EE] text-neutral-500">
             <SiGoogle />
           </LogoItem>,
-          <LogoItem key={3} className="bg-blue-300 text-neutral-900">
+          <LogoItem key={3} className="bg-[#EAE4DD] text-neutral-500">
             <SiMeta />
           </LogoItem>,
-          <LogoItem key={4} className="bg-white text-black">
+          <LogoItem key={4} className="bg-[#DED5C9] text-neutral-500">
             <SiGithub />
           </LogoItem>,
-          <LogoItem key={5} className="bg-purple-300 text-neutral-900">
+          <LogoItem key={5} className="bg-[#F2EBE3] text-neutral-500">
             <SiTwitch />
           </LogoItem>,
         ]}
@@ -49,11 +49,12 @@ const LogoRolodex = ({ items }: { items: React.ReactNode[] }) => {
   return (
     <div
       style={{
-        transform: "rotateY(-20deg)",
+        transform: "rotateY(-15deg) rotateX(5deg)",
         transformStyle: "preserve-3d",
       }}
-      className="relative z-0 h-44 w-60 shrink-0 rounded-xl border border-neutral-700 bg-neutral-800 shadow-2xl"
+      className="relative z-0 h-44 w-60 shrink-0 rounded-xl border border-black/5 bg-[#FFFCEB] shadow-lg"
     >
+      <div className="absolute top-0 left-0 right-0 h-6 bg-black/5 rounded-t-xl" />
       <AnimatePresence mode="sync">
         <motion.div
           style={{
@@ -101,8 +102,9 @@ const LogoRolodex = ({ items }: { items: React.ReactNode[] }) => {
         style={{
           transform: "translateZ(1px)",
         }}
-        className="absolute left-0 right-0 top-1/2 z-[999999999] -translate-y-1/2 border-t-2 border-neutral-800"
+        className="absolute left-0 right-0 top-1/2 z-[999999999] -translate-y-1/2 border-t border-black/5"
       />
+      <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-black/5 blur-sm rounded-br-xl" />
     </div>
   );
 };
@@ -111,7 +113,7 @@ const LogoItem = ({ children, className }: { children: React.ReactNode, classNam
   return (
     <div
       className={twMerge(
-        "grid h-36 w-52 place-content-center rounded-lg bg-neutral-700 text-6xl text-neutral-50",
+        "grid h-36 w-52 place-content-center rounded-sm bg-neutral-100 text-6xl text-neutral-50 shadow-sm",
         className
       )}
     >
