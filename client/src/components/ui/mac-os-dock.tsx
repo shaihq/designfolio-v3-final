@@ -671,14 +671,76 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                    </div>
                 </div>
                 
-                <div className="flex-1 overflow-auto flex flex-col items-center justify-center p-12 text-center bg-white m-4 rounded-md border border-[#e0ddd8] shadow-sm font-azeretMono">
-                  <div className="text-8xl mb-8 opacity-20 grayscale">{browser.image}</div>
-                  <h2 className="text-2xl font-bold mb-4 text-[#222]">{browser.title}</h2>
-                  <p className="text-[#666] max-w-sm mx-auto text-sm leading-relaxed">
-                    Welcome to the preview window. This project is currently being synchronized and will be available shortly.
-                  </p>
-                  <div className="mt-8 w-64 h-1.5 bg-[#f0f2f5] rounded-full overflow-hidden">
-                    <div className="w-1/3 h-full bg-[#007aff] animate-pulse" />
+                <div className="flex-1 overflow-auto bg-white m-4 rounded-md border border-[#e0ddd8] shadow-sm font-azeretMono">
+                  <div className="max-w-4xl mx-auto">
+                    {/* Hero Section */}
+                    <div className="relative h-64 w-full overflow-hidden bg-gradient-to-br from-[#007aff] to-[#00c6ff]">
+                      <div className="absolute inset-0 flex items-center justify-center text-9xl opacity-20 grayscale transform -rotate-12 scale-150">
+                        {browser.image}
+                      </div>
+                      <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-white text-center">
+                        <div className="bg-white/20 backdrop-blur-md rounded-2xl p-4 mb-4 shadow-xl border border-white/30">
+                          <span className="text-6xl">{browser.image}</span>
+                        </div>
+                        <h1 className="text-4xl font-black tracking-tight mb-2 drop-shadow-lg">
+                          {browser.title}
+                        </h1>
+                        <p className="text-white/80 font-medium tracking-wide uppercase text-xs">
+                          Case Study • 2026 • AI Research
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Content Section */}
+                    <div className="p-12 text-left">
+                      <div className="grid grid-cols-3 gap-12 mb-12 border-b border-[#f0f2f5] pb-12">
+                        <div>
+                          <h3 className="text-[10px] font-bold text-[#888] uppercase tracking-widest mb-2">Role</h3>
+                          <p className="text-sm text-[#444] font-semibold">Lead Product Designer</p>
+                        </div>
+                        <div>
+                          <h3 className="text-[10px] font-bold text-[#888] uppercase tracking-widest mb-2">Duration</h3>
+                          <p className="text-sm text-[#444] font-semibold">6 Months</p>
+                        </div>
+                        <div>
+                          <h3 className="text-[10px] font-bold text-[#888] uppercase tracking-widest mb-2">Impact</h3>
+                          <p className="text-sm text-[#444] font-semibold">+40% Efficiency</p>
+                        </div>
+                      </div>
+
+                      <div className="max-w-2xl">
+                        <h2 className="text-2xl font-bold mb-6 text-[#222]">The Challenge</h2>
+                        <p className="text-[#666] text-base leading-relaxed mb-8">
+                          {browser.title} was built to bridge the gap between complex neural networks and human-centric interfaces. 
+                          The primary objective was to create a seamless synchronization layer that allows designers to iterate 
+                          on AI-driven assets in real-time without technical friction.
+                        </p>
+
+                        <div className="bg-[#f9fafb] border border-[#e5e7eb] rounded-xl p-6 mb-8">
+                          <h4 className="text-sm font-bold text-[#222] mb-3 flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#007aff]"></span>
+                            Key Insights
+                          </h4>
+                          <ul className="space-y-3">
+                            <li className="text-sm text-[#555] flex gap-3">
+                              <span className="text-[#007aff]">01</span>
+                              Users felt overwhelmed by raw data visualizations.
+                            </li>
+                            <li className="text-sm text-[#555] flex gap-3">
+                              <span className="text-[#007aff]">02</span>
+                              Real-time feedback loops reduced decision fatigue.
+                            </li>
+                          </ul>
+                        </div>
+
+                        <h2 className="text-2xl font-bold mb-6 text-[#222]">The Solution</h2>
+                        <p className="text-[#666] text-base leading-relaxed">
+                          We implemented a recursive feedback architecture that prioritizes visual clarity. 
+                          By abstracting the underlying complexity into intuitive 3D components, we achieved 
+                          a 40% increase in workflow efficiency for the core user group.
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
