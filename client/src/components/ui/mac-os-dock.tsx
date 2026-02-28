@@ -373,31 +373,28 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
     };
   };
 
+  const handleMouseMoveGlobal = useCallback((e: MouseEvent) => {
+    if (isDragging) {
+      const newX = e.clientX - dragOffset.current.x;
+      const newY = e.clientY - dragOffset.current.y;
+
+      setWindowPositions(prev => ({
+        ...prev,
+        [isDragging]: {
+          x: newX,
+          y: newY
+        }
+      }));
+    }
+  }, [isDragging]);
+
   useEffect(() => {
-    const handleMouseMoveGlobal = (e: MouseEvent) => {
-      if (isDragging) {
-        setWindowPositions(prev => {
-          const currentPos = prev[isDragging] || { x: window.innerWidth / 2, y: window.innerHeight * 0.45 };
-          const newX = e.clientX - dragOffset.current.x;
-          const newY = e.clientY - dragOffset.current.y;
-
-          return {
-            ...prev,
-            [isDragging]: {
-              x: newX,
-              y: newY
-            }
-          };
-        });
-      }
-    };
-
     const handleMouseUpGlobal = () => {
       setIsDragging(null);
     };
 
     if (isDragging) {
-      window.addEventListener('mousemove', handleMouseMoveGlobal);
+      window.addEventListener('mousemove', handleMouseMoveGlobal, { passive: true });
       window.addEventListener('mouseup', handleMouseUpGlobal);
     }
 
@@ -405,7 +402,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
       window.removeEventListener('mousemove', handleMouseMoveGlobal);
       window.removeEventListener('mouseup', handleMouseUpGlobal);
     };
-  }, [isDragging]);
+  }, [isDragging, handleMouseMoveGlobal]);
 
   // Calculate content width
   const contentWidth = currentPositions.length > 0 
@@ -913,7 +910,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
               key={browser.browserId}
               onMouseDown={() => setActiveWindowId(browser.browserId)}
               onWheel={(e) => e.stopPropagation()}
-              className={`fixed z-40 overflow-hidden bg-[#faf9f6] border border-[#d1d1d1] shadow-2xl flex flex-col pointer-events-auto transition-all duration-300 ${
+              className={`fixed z-40 overflow-hidden bg-[#faf9f6] border border-[#d1d1d1] shadow-2xl flex flex-col pointer-events-auto ${
                 isMobile ? 'max-w-none rounded-xl' : 'w-[896px] h-[70vh] rounded-lg'
               } ${isActive ? 'shadow-2xl ring-1 ring-black/5' : 'shadow-lg opacity-95'}`}
               style={{
@@ -929,7 +926,9 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                   left: pos.x,
                   top: pos.y,
                   transform: 'translate(-50%, -50%)',
-                  zIndex: isActive ? 60 : 40
+                  zIndex: isActive ? 60 : 40,
+                  willChange: isDragging === browser.browserId ? 'left, top' : 'auto',
+                  transition: isDragging === browser.browserId ? 'none' : 'all 0.3s ease'
                 })
               }}
             >
