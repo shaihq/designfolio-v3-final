@@ -118,7 +118,7 @@ const TestimonialWidget = () => {
   ];
 
   return (
-    <div className="w-80 h-40 bg-white border border-black/5 rounded-3xl p-6 flex flex-col shadow-xl font-sans overflow-hidden">
+    <div className="w-80 h-40 bg-white border border-black/5 rounded-xl p-6 flex flex-col shadow-md font-sans overflow-hidden">
       <LayoutGroup>
         <div className="text-[#FF553E] text-[10px] font-bold uppercase tracking-widest mb-4">Testimonial</div>
         <div className="flex-1 flex flex-col justify-center overflow-hidden">
