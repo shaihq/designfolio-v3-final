@@ -118,40 +118,54 @@ const TestimonialWidget = () => {
   ];
 
   return (
-    <div className="w-80 h-40 bg-white border border-black/5 rounded-xl p-6 flex flex-col shadow-md font-sans overflow-hidden">
-      <LayoutGroup>
-        <div className="text-[#FF553E] text-[10px] font-bold uppercase tracking-widest mb-4">Testimonial</div>
-        <div className="flex-1 flex flex-col justify-center overflow-hidden">
-          <TextRotate
-            texts={testimonials.map(t => t.text)}
-            staggerFrom={"first"}
-            staggerDuration={0.01}
-            initial={{ opacity: 0, x: 10 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -10 }}
-            transition={{ type: "spring", damping: 30, stiffness: 400 }}
-            rotationInterval={4000}
-            splitBy="words"
-            mainClassName="text-[13px] font-medium text-black/80 leading-tight italic"
-          />
-          <motion.div
-            className="h-0.5 w-6 bg-[#FF553E] rounded-full my-4"
-            layout
-          />
-          <TextRotate
-            texts={testimonials.map(t => t.author)}
-            staggerFrom={"first"}
-            staggerDuration={0.025}
-            initial={{ opacity: 0, x: 10 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -10 }}
-            transition={{ type: "spring", damping: 30, stiffness: 400 }}
-            rotationInterval={4000}
-            splitBy="characters"
-            mainClassName="text-[10px] text-black/40 font-bold font-sans uppercase truncate"
-          />
+    <div className="w-80 h-auto min-h-[160px] bg-[#F5C75D] rounded-[32px] p-1 shadow-lg font-sans overflow-hidden">
+      <div className="px-4 py-3 flex justify-between items-center text-[#4A3708] font-medium text-[13px]">
+        <span>{new Date().toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}</span>
+        <div className="flex items-center gap-3">
+          <div className="flex gap-1">
+            <div className="w-1 h-1 rounded-full bg-[#4A3708]/40" />
+            <div className="w-1 h-1 rounded-full bg-[#4A3708]/40" />
+            <div className="w-1 h-1 rounded-full bg-[#4A3708]/40" />
+          </div>
+          <span>Done</span>
         </div>
-      </LayoutGroup>
+      </div>
+      <div className="bg-white rounded-[28px] p-6 h-full min-h-[120px] relative">
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+             style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
+        <LayoutGroup>
+          <div className="relative z-10">
+            <div className="text-black font-bold text-lg mb-4">Testimonial</div>
+            <div className="flex flex-col justify-center overflow-hidden">
+              <TextRotate
+                texts={testimonials.map(t => t.text)}
+                staggerFrom={"first"}
+                staggerDuration={0.01}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                rotationInterval={4000}
+                splitBy="words"
+                mainClassName="text-[14px] font-medium text-black/90 leading-relaxed italic"
+              />
+              <div className="h-px w-full bg-black/5 my-4" />
+              <TextRotate
+                texts={testimonials.map(t => t.author)}
+                staggerFrom={"first"}
+                staggerDuration={0.025}
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                rotationInterval={4000}
+                splitBy="characters"
+                mainClassName="text-[11px] text-black/50 font-bold uppercase tracking-wider"
+              />
+            </div>
+          </div>
+        </LayoutGroup>
+      </div>
     </div>
   );
 };
