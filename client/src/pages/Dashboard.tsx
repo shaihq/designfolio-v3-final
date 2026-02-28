@@ -118,7 +118,7 @@ const TestimonialWidget = () => {
   ];
 
   return (
-    <div className="w-80 h-auto min-h-[160px] bg-[#F5C75D] rounded-[32px] p-1 shadow-lg font-sans overflow-hidden">
+    <div className="w-80 h-auto min-h-[160px] bg-[#F5C75D] rounded-2xl p-1 shadow-lg font-sans overflow-hidden">
       <div className="px-4 py-3 flex justify-between items-center text-[#4A3708] font-medium text-[13px]">
         <span>Testimonial</span>
         <div className="flex items-center gap-3">
@@ -130,7 +130,7 @@ const TestimonialWidget = () => {
           <span>Done</span>
         </div>
       </div>
-      <div className="bg-white rounded-[28px] p-6 h-full min-h-[120px] relative">
+      <div className="bg-white rounded-xl p-6 h-full min-h-[120px] relative">
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
              style={{ backgroundImage: 'radial-gradient(#000 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
         <LayoutGroup>
