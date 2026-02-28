@@ -618,6 +618,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
             <div 
               key={browser.browserId}
               onMouseDown={() => setActiveWindowId(browser.browserId)}
+              onWheel={(e) => e.stopPropagation()}
               className={`fixed z-40 overflow-hidden bg-[#faf9f6] border border-[#d1d1d1] shadow-2xl flex flex-col pointer-events-auto w-[896px] h-[70vh] rounded-lg transition-shadow ${isActive ? 'shadow-2xl ring-1 ring-black/5' : 'shadow-lg opacity-95'}`}
               style={{
                 left: pos.x,
@@ -629,52 +630,56 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
               {/* macOS-style Window Header for Browser */}
               <div 
                 onMouseDown={(e) => handleMouseDown(browser.browserId, e)}
-                className="h-10 bg-[#e8e6e1] border-b border-[#d1d1d1] flex items-center px-4 justify-between select-none cursor-move active:cursor-grabbing"
+                className="h-9 bg-[#f6f6f6] border-b border-[#d1d1d1] flex items-center px-3 justify-between select-none cursor-move active:cursor-grabbing rounded-t-lg"
               >
                 <div className="flex gap-2 items-center">
-                  <div className="text-sm font-medium text-[#444] flex items-center gap-2">
+                  <div className="flex gap-1.5 px-1">
+                    <div className="w-3 h-3 rounded-full bg-[#ff5f57] border border-[#e0443e]"></div>
+                    <div className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123]"></div>
+                    <div className="w-3 h-3 rounded-full bg-[#28c940] border border-[#1aab29]"></div>
+                  </div>
+                  <div className="text-[12px] font-medium text-[#444] flex items-center gap-1 ml-2">
                     <span className="opacity-70">🌐</span>
-                    <span className="font-azeretMono">{browser.title}</span> <span className="opacity-50 text-[10px]">⌄</span>
+                    <span className="font-sans">{browser.title}</span>
                   </div>
                 </div>
-                <div className="flex items-center gap-4 text-[#666]">
-                  <Minus 
-                    className="w-4 h-4 cursor-pointer hover:text-[#444]" 
-                  />
-                  <Square 
-                    className="w-3 h-3 cursor-pointer hover:text-[#444]" 
-                  />
-                  <X 
-                    className="w-4 h-4 cursor-pointer hover:text-[#444]" 
-                    onClick={() => closeBrowser(browser.browserId)}
-                  />
+                <div className="flex items-center gap-2">
+                  <div className="p-1 hover:bg-black/5 rounded text-[#666]">
+                    <Minus className="w-3.5 h-3.5" />
+                  </div>
+                  <div className="p-1 hover:bg-black/5 rounded text-[#666]">
+                    <Square className="w-3 h-3" />
+                  </div>
+                  <div className="p-1 hover:bg-red-500 hover:text-white rounded text-[#666] transition-colors" onClick={() => closeBrowser(browser.browserId)}>
+                    <X className="w-3.5 h-3.5" />
+                  </div>
                 </div>
               </div>
 
               {/* Browser Content Shell */}
-              <div className="flex-1 flex flex-col bg-white">
-                <div className="h-12 bg-[#f4f2ee] border-b border-[#e0ddd8] flex items-center px-4 gap-4">
-                   <div className="flex bg-white/50 border border-[#dcd9d4] rounded-md overflow-hidden h-8 items-center">
-                      <button className="px-3 py-1 border-r border-[#dcd9d4] hover:bg-white text-[#888] text-sm">
+              <div className="flex-1 flex flex-col bg-white overflow-hidden">
+                <div className="h-10 bg-[#f6f6f6] border-b border-[#d1d1d1] flex items-center px-3 gap-3">
+                   <div className="flex items-center gap-1">
+                      <button className="p-1.5 hover:bg-black/5 rounded text-[#555] disabled:opacity-30">
                         <ChevronLeft size={16} />
                       </button>
-                      <button className="px-3 py-1 hover:bg-white text-[#888] text-sm">
+                      <button className="p-1.5 hover:bg-black/5 rounded text-[#555] disabled:opacity-30">
                         <ChevronRight size={16} />
                       </button>
                    </div>
-                   <div className="flex-1 flex items-center bg-white border border-[#dcd9d4] rounded-md h-8 px-3 shadow-sm">
-                     <Lock size={12} className="text-[#888] mr-2" />
-                     <span className="text-[11px] text-[#555] font-azeretMono">https://{browser.title.toLowerCase().replace(/\s+/g, '-')}.com</span>
-                     <div className="ml-auto">
-                       <RefreshCw size={12} className="text-[#aaa]" />
-                     </div>
-                   </div>
+                  <div className="flex-1 flex items-center bg-[#e3e3e3]/50 border border-[#c8c8c8] rounded-md h-7 px-3 shadow-inner">
+                    <Lock size={10} className="text-[#666] mr-2" />
+                    <span className="text-[11px] text-[#444] font-sans truncate">https://{browser.title.toLowerCase().replace(/\s+/g, '-')}.com</span>
+                    <div className="ml-auto">
+                      <RefreshCw size={10} className="text-[#888]" />
+                    </div>
+                  </div>
                 </div>
-                
-                <div className="flex-1 overflow-auto bg-white m-4 rounded-md border border-[#e0ddd8] shadow-sm font-azeretMono">
-                  <div className="max-w-4xl mx-auto">
+
+                <div className="flex-1 overflow-auto bg-white font-sans relative">
+                  <div className="max-w-4xl mx-auto pb-12 px-8">
                     {/* Hero Section */}
-                    <div className="relative h-64 w-full overflow-hidden bg-gradient-to-br from-[#007aff] to-[#00c6ff]">
+                    <div className="relative h-64 w-full overflow-hidden rounded-xl bg-gradient-to-br from-[#007aff] to-[#00c6ff] mt-8 shadow-sm">
                       <div className="absolute inset-0 flex items-center justify-center text-9xl opacity-20 grayscale transform -rotate-12 scale-150">
                         {browser.image}
                       </div>
@@ -692,7 +697,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                     </div>
 
                     {/* Content Section */}
-                    <div className="p-12 text-left">
+                    <div className="py-12 text-left">
                       <div className="grid grid-cols-3 gap-12 mb-12 border-b border-[#f0f2f5] pb-12">
                         <div>
                           <h3 className="text-[10px] font-bold text-[#888] uppercase tracking-widest mb-2">Role</h3>
@@ -723,11 +728,11 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                           </h4>
                           <ul className="space-y-3">
                             <li className="text-sm text-[#555] flex gap-3">
-                              <span className="text-[#007aff]">01</span>
+                              <span className="text-[#007aff] font-bold">01</span>
                               Users felt overwhelmed by raw data visualizations.
                             </li>
                             <li className="text-sm text-[#555] flex gap-3">
-                              <span className="text-[#007aff]">02</span>
+                              <span className="text-[#007aff] font-bold">02</span>
                               Real-time feedback loops reduced decision fatigue.
                             </li>
                           </ul>
