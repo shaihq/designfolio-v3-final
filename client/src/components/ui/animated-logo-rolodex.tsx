@@ -101,7 +101,7 @@ const LogoRolodex = ({ items }: { items: React.ReactNode[] }) => {
         style={{
           transform: "translateZ(1px)",
         }}
-        className="absolute left-0 right-0 top-1/2 z-[999999999] -translate-y-1/2 border-t border-black/5"
+        className="absolute left-0 right-0 top-1/2 z-[999999999] -translate-y-1/2 border-t border-black/10"
       />
     </div>
   );
@@ -111,7 +111,7 @@ const LogoItem = ({ children, className }: { children: React.ReactNode, classNam
   return (
     <div
       className={twMerge(
-        "grid h-44 w-80 place-content-center rounded-sm text-6xl shadow-md border-b border-r border-black/5",
+        "grid h-44 w-80 place-content-center text-6xl shadow-sm border-r border-black/5",
         className
       )}
     >
