@@ -8,7 +8,8 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { X, Minus, Square, ChevronLeft, ChevronRight, RefreshCw, Lock, Trash2, EyeOff } from "lucide-react";
+import { Alert } from "@/components/ui/alert";
+import { Info, X, Minus, Square, ChevronLeft, ChevronRight, RefreshCw, Lock, Trash2, EyeOff } from "lucide-react";
 import Button3D from "./button-3d";
 import { Gravity, MatterBody } from "./gravity";
 import { PixelRocketHero } from "./pixel-rocket-voyager";
@@ -695,6 +696,15 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                           </div>
 
                           <div className="flex-1 p-8 overflow-y-auto">
+                            <div className="max-w-4xl mx-auto mb-6">
+                              <Alert
+                                variant="info"
+                                className="bg-blue-50/50 border-blue-200/50 text-blue-700 py-2 shadow-sm"
+                                icon={<Info size={16} className="text-blue-500" />}
+                              >
+                                <span className="text-xs font-medium">Tip: You can re-arrange projects by dragging them into your preferred order.</span>
+                              </Alert>
+                            </div>
                             <div className={`grid ${isMobile ? "grid-cols-2" : "grid-cols-3"} gap-x-6 gap-y-10 max-w-4xl mx-auto`}>
                               {projects.map((proj, index) => (
                                 <div 
