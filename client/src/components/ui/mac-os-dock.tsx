@@ -577,9 +577,9 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                           </div>
 
                           <div className="flex-1 p-8 overflow-y-auto">
-                            <div className="grid grid-cols-2 gap-x-8 gap-y-12 max-w-2xl mx-auto">
+                            <div className="grid grid-cols-3 gap-x-6 gap-y-10 max-w-4xl mx-auto">
                               {projects.map((proj) => (
-                                <div key={proj.id} className="transform scale-125 origin-center">
+                                <div key={proj.id} className="transform scale-110 origin-center">
                                   <AnimatedFolder
                                     title={proj.name}
                                     projects={[
