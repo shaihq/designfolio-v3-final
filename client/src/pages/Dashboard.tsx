@@ -1627,7 +1627,7 @@ export default function Dashboard() {
               className="absolute left-8 top-24 flex flex-col gap-6 pointer-events-auto"
             >
               <CalendarWidget />
-              <div className="w-84 h-64 bg-transparent p-0 flex items-center justify-center">
+              <div className="w-80 h-64 bg-transparent p-0 flex items-center justify-center">
                 <DivOrigami />
               </div>
             </motion.div>
