@@ -326,21 +326,24 @@ const MacOSMenuBar: React.FC<MacOSMenuBarProps> = ({
         </span>
 
         {/* Menu Items */}
-        {menus.map((menu) => (
-          <span
-            key={menu.label}
-            ref={(el) => { menuRefs.current[menu.label] = el; }}
-            onClick={() => handleMenuItemClick(menu.label)}
-            className="text-white text-[13px] cursor-default px-2 py-0.5 rounded hover:bg-white/10 transition-colors"
-          >
-            {menu.label}
-          </span>
-        ))}
+        {menus.map((menu) => {
+          const isMobileHidden = !['File', 'Edit', 'View'].includes(menu.label);
+          return (
+            <span
+              key={menu.label}
+              ref={(el) => { menuRefs.current[menu.label] = el; }}
+              onClick={() => handleMenuItemClick(menu.label)}
+              className={`text-white text-[13px] cursor-default px-2 py-0.5 rounded hover:bg-white/10 transition-colors ${isMobileHidden ? 'hidden md:inline-block' : 'inline-block'}`}
+            >
+              {menu.label}
+            </span>
+          );
+        })}
       </div>
 
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-2 md:space-x-4">
         {/* System Icons */}
-        <div className="flex items-center space-x-3 text-white">
+        <div className="hidden md:flex items-center space-x-3 text-white">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="16" height="10" rx="2" ry="2"></rect><line x1="22" y1="11" x2="22" y2="13"></line><line x1="6" y1="11" x2="14" y2="11"></line></svg>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
         </div>
