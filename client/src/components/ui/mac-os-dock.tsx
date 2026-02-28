@@ -638,7 +638,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                           </button>
                         </div>
                         <div className="h-4 w-px bg-[#333] mx-1" />
-                        <div className="flex gap-1 text-[11px] text-[#666]">
+                        <div className={`flex gap-1 text-[11px] text-[#666] ${isMobile ? 'hidden' : ''}`}>
                           <span className="hover:text-[#aaa] cursor-pointer">Terminal</span>
                           <span className="hover:text-[#aaa] cursor-pointer ml-2">Debug</span>
                           <span className="hover:text-[#aaa] cursor-pointer ml-2">Console</span>
@@ -663,7 +663,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                   </div>
                   
                   <Button3D>
-                    {app.id === 'work_experience' ? 'COMMIT' : 'EDIT'}
+                    EDIT
                   </Button3D>
                 </div>
               )}
