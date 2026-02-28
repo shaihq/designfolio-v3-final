@@ -8,19 +8,19 @@ export const DivOrigami = () => {
     <div className="flex flex-col items-center justify-center bg-transparent">
       <LogoRolodex
         items={[
-          <LogoItem key={1} className="bg-[#FDFCFB] text-neutral-500">
+          <LogoItem key={1} className="bg-[#FEF9C3] text-yellow-900/50">
             <SiAmazon />
           </LogoItem>,
-          <LogoItem key={2} className="bg-[#F5F2EE] text-neutral-500">
+          <LogoItem key={2} className="bg-[#FFEDD5] text-orange-900/50">
             <SiGoogle />
           </LogoItem>,
-          <LogoItem key={3} className="bg-[#EAE4DD] text-neutral-500">
+          <LogoItem key={3} className="bg-[#DCFCE7] text-green-900/50">
             <SiMeta />
           </LogoItem>,
-          <LogoItem key={4} className="bg-[#DED5C9] text-neutral-500">
+          <LogoItem key={4} className="bg-[#DBEAFE] text-blue-900/50">
             <SiGithub />
           </LogoItem>,
-          <LogoItem key={5} className="bg-[#F2EBE3] text-neutral-500">
+          <LogoItem key={5} className="bg-[#F3E8FF] text-purple-900/50">
             <SiTwitch />
           </LogoItem>,
         ]}
@@ -49,12 +49,11 @@ const LogoRolodex = ({ items }: { items: React.ReactNode[] }) => {
   return (
     <div
       style={{
-        transform: "rotateY(-15deg) rotateX(5deg)",
+        transform: "rotateY(-10deg) rotateX(2deg)",
         transformStyle: "preserve-3d",
       }}
-      className="relative z-0 h-44 w-60 shrink-0 rounded-xl border border-black/5 bg-[#FFFCEB] shadow-lg"
+      className="relative z-0 h-44 w-60 shrink-0"
     >
-      <div className="absolute top-0 left-0 right-0 h-6 bg-black/5 rounded-t-xl" />
       <AnimatePresence mode="sync">
         <motion.div
           style={{
@@ -104,7 +103,6 @@ const LogoRolodex = ({ items }: { items: React.ReactNode[] }) => {
         }}
         className="absolute left-0 right-0 top-1/2 z-[999999999] -translate-y-1/2 border-t border-black/5"
       />
-      <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-black/5 blur-sm rounded-br-xl" />
     </div>
   );
 };
@@ -113,7 +111,7 @@ const LogoItem = ({ children, className }: { children: React.ReactNode, classNam
   return (
     <div
       className={twMerge(
-        "grid h-36 w-52 place-content-center rounded-sm bg-neutral-100 text-6xl text-neutral-50 shadow-sm",
+        "grid h-44 w-60 place-content-center rounded-sm text-6xl shadow-md border-b border-r border-black/5",
         className
       )}
     >

@@ -1589,7 +1589,7 @@ export default function Dashboard() {
             >
               <WeatherWidget />
               <CalendarWidget />
-              <div className="w-84 h-64 bg-[#FFFCEB] border border-black/5 rounded-3xl overflow-hidden shadow-xl p-0 flex items-center justify-center">
+              <div className="w-84 h-64 bg-transparent p-0 flex items-center justify-center">
                 <DivOrigami />
               </div>
             </motion.div>
