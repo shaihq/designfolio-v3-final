@@ -124,7 +124,7 @@ const TestimonialWidget = () => {
   }, []);
 
   return (
-    <div className="w-40 h-40 bg-white border border-black/5 rounded-3xl p-4 flex flex-col shadow-xl font-sans overflow-hidden">
+    <div className="w-40 h-40 bg-white border border-black/5 rounded-3xl px-4 py-0 flex flex-col shadow-xl font-sans overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div
           key={testimonialIndex}
