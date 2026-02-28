@@ -839,8 +839,8 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                               </h1>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                              <div className="space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+                              <div className="space-y-8">
                                 <section>
                                   <h2 className="text-2xl font-bold text-[#fef08a] mb-3 underline decoration-wavy">Background</h2>
                                   <p className="text-lg leading-relaxed italic">
@@ -862,9 +862,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                                     </div>
                                   </div>
                                 </section>
-                              </div>
 
-                              <div className="space-y-6">
                                 <section>
                                   <h2 className="text-2xl font-bold text-[#fed7aa] mb-3 underline decoration-wavy">Tools</h2>
                                   <ul className="list-disc list-inside space-y-1 text-lg italic">
@@ -874,16 +872,17 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                                     <li>PostgreSQL / Redis</li>
                                   </ul>
                                 </section>
-                                <section className="mt-8">
-                                  <ImgStack images={[
-                                    '/portraits/portrait1.png',
-                                    '/portraits/portrait2.png',
-                                    '/portraits/portrait3.png',
-                                    '/portraits/portrait4.png',
-                                    '/portraits/sticker1.png',
-                                    '/portraits/sticker2.png'
-                                  ]} />
-                                </section>
+                              </div>
+
+                              <div className="flex items-center justify-center pt-8">
+                                <ImgStack images={[
+                                  '/portraits/portrait1.png',
+                                  '/portraits/portrait2.png',
+                                  '/portraits/portrait3.png',
+                                  '/portraits/portrait4.png',
+                                  '/portraits/sticker1.png',
+                                  '/portraits/sticker2.png'
+                                ]} />
                               </div>
                             </div>
                           </div>
