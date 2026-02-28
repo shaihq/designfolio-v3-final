@@ -26,7 +26,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { 
   Carousel, 
   CarouselContent, 
@@ -108,44 +108,50 @@ const WeatherWidget = () => (
   </div>
 );
 
+import { TextRotate } from "@/components/ui/text-rotate";
+
 const TestimonialWidget = () => {
-  const [testimonialIndex, setTestimonialIndex] = useState(0);
   const testimonials = [
-    { text: "Shai is an exceptional designer who consistently delivers high-quality work.", author: "Sarah J., Product Manager" },
     { text: "One of the best designers I've worked with. Highly recommended!", author: "Michael R., Tech Lead" },
-    { text: "Creative, efficient, and a great communicator.", author: "Elena M., CEO" }
+    { text: "Incredible attention to detail and professional approach.", author: "Sarah J., Product Manager" },
+    { text: "Transformed our complex requirements into an elegant solution.", author: "David K., CEO" }
   ];
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTestimonialIndex((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <div className="w-40 h-40 bg-white border border-black/5 rounded-3xl p-4 flex flex-col shadow-xl font-sans overflow-hidden">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={testimonialIndex}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.5 }}
-          className="flex flex-col h-full"
-        >
-          <div className="text-[#FF553E] text-[10px] font-bold uppercase tracking-widest mb-2">Testimonial</div>
-          <div className="text-[11px] font-medium text-black/80 leading-relaxed italic flex-1 flex items-center">
-            "{testimonials[testimonialIndex].text}"
-          </div>
-          <div className="mt-2">
-            <div className="h-0.5 w-6 bg-[#FF553E] rounded-full mb-1" />
-            <div className="text-[9px] text-black/40 font-bold font-sans uppercase truncate">
-              {testimonials[testimonialIndex].author}
-            </div>
-          </div>
-        </motion.div>
-      </AnimatePresence>
+    <div className="w-80 h-40 bg-white border border-black/5 rounded-3xl p-6 flex flex-col shadow-xl font-sans overflow-hidden">
+      <LayoutGroup>
+        <div className="text-[#FF553E] text-[10px] font-bold uppercase tracking-widest mb-4">Testimonial</div>
+        <div className="flex-1 flex flex-col justify-center overflow-hidden">
+          <TextRotate
+            texts={testimonials.map(t => t.text)}
+            staggerFrom={"first"}
+            staggerDuration={0.01}
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -10 }}
+            transition={{ type: "spring", damping: 30, stiffness: 400 }}
+            rotationInterval={4000}
+            splitBy="words"
+            mainClassName="text-[13px] font-medium text-black/80 leading-tight italic"
+          />
+          <motion.div
+            className="h-0.5 w-6 bg-[#FF553E] rounded-full my-4"
+            layout
+          />
+          <TextRotate
+            texts={testimonials.map(t => t.author)}
+            staggerFrom={"first"}
+            staggerDuration={0.025}
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -10 }}
+            transition={{ type: "spring", damping: 30, stiffness: 400 }}
+            rotationInterval={4000}
+            splitBy="characters"
+            mainClassName="text-[10px] text-black/40 font-bold font-sans uppercase truncate"
+          />
+        </div>
+      </LayoutGroup>
     </div>
   );
 };
