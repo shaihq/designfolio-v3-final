@@ -470,7 +470,7 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
               onMouseDown={() => setActiveWindowId(app.id)}
               onWheel={(e) => e.stopPropagation()}
               className={`fixed z-40 overflow-hidden border shadow-2xl flex flex-col pointer-events-auto ${
-                app.id === 'work_experience' || app.id === 'home'
+                app.id === 'work_experience' 
                   ? 'bg-[#1e1e1e] border-[#333]' 
                   : 'bg-[#faf9f6] border-[#d1d1d1]'
               } ${
@@ -510,21 +510,21 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
               <div 
                 onMouseDown={(e) => !isMobile && !isMaximized && handleMouseDown(app.id, e)}
                 className={`h-10 border-b flex items-center px-4 justify-between select-none ${
-                  app.id === 'work_experience' || app.id === 'home'
+                  app.id === 'work_experience'
                     ? 'bg-[#2d2d2d] border-[#1e1e1e]'
                     : 'bg-[#e8e6e1] border-[#d1d1d1]'
                 } ${isMobile || isMaximized ? 'cursor-default' : 'cursor-move active:cursor-grabbing'}`}
               >
                 <div className="flex gap-2 items-center">
                   <div className={`text-sm font-medium flex items-center gap-2 ${
-                    app.id === 'work_experience' || app.id === 'home' ? 'text-[#d4d4d4]' : 'text-[#444]'
+                    app.id === 'work_experience' ? 'text-[#d4d4d4]' : 'text-[#444]'
                   }`}>
                     <span className="opacity-70">{app.id === 'works' ? '📂' : '📄'}</span>
                     {app.id === 'works' ? 'Projects' : `${app.name}.mdx`} <span className="opacity-50 text-[10px]">⌄</span>
                   </div>
                 </div>
                 <div className={`flex items-center gap-4 ${
-                  app.id === 'work_experience' || app.id === 'home' ? 'text-[#aaa]' : 'text-[#666]'
+                  app.id === 'work_experience' ? 'text-[#aaa]' : 'text-[#666]'
                 }`}>
                   <Minus 
                     className="w-4 h-4 cursor-pointer hover:opacity-70" 
