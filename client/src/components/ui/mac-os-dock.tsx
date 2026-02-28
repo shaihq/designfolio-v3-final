@@ -576,23 +576,24 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                             <span className="text-[#444] font-medium">Projects</span>
                           </div>
 
-                          <div className="flex-1 p-6 overflow-y-auto">
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-4 gap-y-8">
+                          <div className="flex-1 p-8 overflow-y-auto">
+                            <div className="grid grid-cols-2 gap-x-8 gap-y-12 max-w-2xl mx-auto">
                               {projects.map((proj) => (
-                                <AnimatedFolder
-                                  key={proj.id}
-                                  title={proj.name}
-                                  projects={[
-                                    { id: `${proj.id}-1`, title: proj.name, image: proj.icon },
-                                    { id: `${proj.id}-2`, title: 'Documentation', image: '📄' },
-                                    { id: `${proj.id}-3`, title: 'Assets', image: '🎨' }
-                                  ]}
-                                  onProjectClick={(project) => {
-                                    if (proj.id === 'proj1') {
-                                      handleOpenBrowser(project);
-                                    }
-                                  }}
-                                />
+                                <div key={proj.id} className="transform scale-125 origin-center">
+                                  <AnimatedFolder
+                                    title={proj.name}
+                                    projects={[
+                                      { id: `${proj.id}-1`, title: proj.name, image: proj.icon },
+                                      { id: `${proj.id}-2`, title: 'Documentation', image: '📄' },
+                                      { id: `${proj.id}-3`, title: 'Assets', image: '🎨' }
+                                    ]}
+                                    onProjectClick={(project) => {
+                                      if (proj.id === 'proj1') {
+                                        handleOpenBrowser(project);
+                                      }
+                                    }}
+                                  />
+                                </div>
                               ))}
                             </div>
                           </div>
