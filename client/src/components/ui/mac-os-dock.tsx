@@ -267,23 +267,25 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
     target.style.opacity = '1';
   };
 
-  const handleDragOver = (e: React.DragEvent) => {
+  const handleDragOver = (e: React.DragEvent, index: number) => {
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
+    
+    if (draggedProjectIndex !== null && draggedProjectIndex !== index) {
+      const newProjects = [...projects];
+      const draggedProject = newProjects[draggedProjectIndex];
+      
+      newProjects.splice(draggedProjectIndex, 1);
+      newProjects.splice(index, 0, draggedProject);
+      
+      setProjects(newProjects);
+      setDraggedProjectIndex(index);
+    }
   };
 
-  const handleDrop = (e: React.DragEvent, targetIndex: number) => {
+  const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
-    if (draggedProjectIndex === null || draggedProjectIndex === targetIndex) return;
-
-    const newProjects = [...projects];
-    const draggedProject = newProjects[draggedProjectIndex];
-    
-    // Remove from old position and insert at new position
-    newProjects.splice(draggedProjectIndex, 1);
-    newProjects.splice(targetIndex, 0, draggedProject);
-    
-    setProjects(newProjects);
+    setDraggedProjectIndex(null);
   };
 
   const handleOpenBrowser = useCallback((project: any) => {
@@ -697,12 +699,12 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                               {projects.map((proj, index) => (
                                 <div 
                                   key={proj.id} 
-                                  className={`transform scale-110 origin-center cursor-move transition-all duration-200 ${draggedProjectIndex === index ? 'opacity-0 scale-90' : 'opacity-100'}`}
+                                  className={`transform scale-110 origin-center cursor-move transition-all duration-500 ease-in-out ${draggedProjectIndex === index ? 'opacity-50 scale-100 z-50' : 'opacity-100'}`}
                                   draggable
                                   onDragStart={(e) => handleDragStart(e, index)}
                                   onDragEnd={handleDragEnd}
-                                  onDragOver={handleDragOver}
-                                  onDrop={(e) => handleDrop(e, index)}
+                                  onDragOver={(e) => handleDragOver(e, index)}
+                                  onDrop={handleDrop}
                                 >
                                   <AnimatedFolder
                                     title={proj.name}
