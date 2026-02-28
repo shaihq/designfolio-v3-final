@@ -944,7 +944,71 @@ const MacOSDock: React.FC<MacOSDockProps> = ({
                         </div>
                       </div>
                     ) : (app.id === 'contact') ? (
-                      <div className="w-full h-full bg-white" />
+                      <div className="w-full h-full bg-white flex flex-col font-azeretMono text-[#37352f]">
+                        {/* Notion-style Header */}
+                        <div className="px-10 pt-12 pb-4">
+                          <div className="flex items-center gap-4 mb-2 opacity-50 text-sm">
+                            <span>📂</span>
+                            <span>Contacts</span>
+                            <span>/</span>
+                            <span>contact.mdx</span>
+                          </div>
+                          <h1 className="text-4xl font-bold mb-8 text-[#37352f]">Get in touch</h1>
+                        </div>
+
+                        {/* Notion-style Content */}
+                        <div className="px-10 pb-20 space-y-8">
+                          <section>
+                            <div className="flex items-center gap-2 pb-2 border-b border-[#e9e9e7] mb-4">
+                              <span className="text-xl">📧</span>
+                              <h2 className="text-lg font-semibold">Digital Presence</h2>
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div className="p-4 rounded-lg bg-[#f7f6f3] border border-[#e9e9e7] hover:bg-[#efeee9] transition-colors cursor-pointer group">
+                                <div className="text-[10px] uppercase tracking-wider opacity-50 mb-1">Email</div>
+                                <div className="font-medium">hello@shai.dev</div>
+                              </div>
+                              <div className="p-4 rounded-lg bg-[#f7f6f3] border border-[#e9e9e7] hover:bg-[#efeee9] transition-colors cursor-pointer group">
+                                <div className="text-[10px] uppercase tracking-wider opacity-50 mb-1">GitHub</div>
+                                <div className="font-medium">github.com/shai-dev</div>
+                              </div>
+                            </div>
+                          </section>
+
+                          <section>
+                            <div className="flex items-center gap-2 pb-2 border-b border-[#e9e9e7] mb-4">
+                              <span className="text-xl">🌐</span>
+                              <h2 className="text-lg font-semibold">Social Connect</h2>
+                            </div>
+                            <div className="space-y-3">
+                              <div className="flex items-center gap-3 p-2 hover:bg-[#f7f6f3] rounded-md cursor-pointer transition-colors">
+                                <span className="w-6 h-6 flex items-center justify-center bg-[#0077b5] text-white rounded text-[10px] font-bold">in</span>
+                                <span className="flex-1 border-b border-[#e9e9e7] pb-1">linkedin.com/in/shai</span>
+                              </div>
+                              <div className="flex items-center gap-3 p-2 hover:bg-[#f7f6f3] rounded-md cursor-pointer transition-colors">
+                                <span className="w-6 h-6 flex items-center justify-center bg-black text-white rounded text-[10px] font-bold">X</span>
+                                <span className="flex-1 border-b border-[#e9e9e7] pb-1">x.com/shai_codes</span>
+                              </div>
+                            </div>
+                          </section>
+
+                          <section>
+                            <div className="flex items-center gap-2 pb-2 border-b border-[#e9e9e7] mb-4">
+                              <span className="text-xl">📍</span>
+                              <h2 className="text-lg font-semibold">Location</h2>
+                            </div>
+                            <div className="p-6 rounded-xl border border-[#e9e9e7] bg-white shadow-sm italic text-lg text-center opacity-80">
+                              "Currently based in the digital ether, primarily operating out of San Francisco, CA."
+                            </div>
+                          </section>
+                          
+                          <div className="pt-10 flex justify-center">
+                            <div className="px-4 py-1.5 bg-[#ebebeb] hover:bg-[#dfdfdf] rounded text-xs font-medium cursor-pointer transition-colors">
+                              Copy all contact info
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     ) : (
                       <PixelRocketHero />
                     )}
